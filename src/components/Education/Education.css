@@ -18,8 +18,8 @@
 }
 
 .education-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-glow);
+  transform: translateY(-4px);
+  box-shadow: var(--skeuo-extruded-hover);
 }
 
 .edu-icon-wrapper {

@@ -75,7 +75,7 @@
 }
 
 .active-thumb-icon.sun {
-  color: #d97706;
+  color: #f59e0b;
 }
 
 /* Dark Mode: Thumb on right */
@@ -87,8 +87,8 @@
 }
 
 .active-thumb-icon.moon {
-  color: #38bdf8;
-  filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.5));
+  color: #ffffff;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
 }
 
 /* Scroll To Top */
@@ -100,11 +100,11 @@
   height: 48px;
   border-radius: 50%;
   background: var(--gradient-accent);
-  color: white;
+  color: var(--accent-text);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--skeuo-extruded);
   z-index: 99;
   transition: all 0.3s ease;
   animation: slideUp 0.3s ease;
@@ -112,7 +112,7 @@
 
 .scroll-to-top:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 /* Section Header */

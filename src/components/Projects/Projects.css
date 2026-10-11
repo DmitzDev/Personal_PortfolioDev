@@ -38,18 +38,18 @@
 }
 
 .filter-btn.active {
-  background: var(--accent);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+  background: var(--gradient-accent);
+  color: var(--accent-text) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   border-top-color: rgba(255, 255, 255, 0.4);
   border-bottom-color: rgba(0, 0, 0, 0.2);
   font-weight: 700;
 }
 
 [data-theme="dark"] .filter-btn.active {
-  background: var(--accent);
-  color: #0a0f1d;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+  background: var(--gradient-accent);
+  color: var(--accent-text) !important;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.22);
 }
 
 .projects-search {
@@ -59,6 +59,7 @@
   padding: 0.55rem 1.15rem;
   min-width: 280px;
   background: var(--bg-secondary);
+  background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-extruded-sm);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
@@ -98,6 +99,7 @@
   overflow: hidden;
   border-radius: 1rem;
   background: var(--bg-secondary);
+  background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-extruded);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);

@@ -54,6 +54,7 @@
   display: flex;
   gap: 0.4rem;
   background: var(--bg-secondary);
+  background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-extruded-sm);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
@@ -90,6 +91,7 @@
 .btn-resume {
   font-family: 'JetBrains Mono', monospace;
   background: var(--bg-tertiary);
+  background-image: var(--gradient-surface);
   color: var(--accent);
   padding: 0.55rem 1.15rem;
   border-radius: 0.5rem;

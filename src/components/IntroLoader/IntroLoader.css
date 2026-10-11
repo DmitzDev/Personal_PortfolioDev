@@ -41,8 +41,8 @@
   inset: 0;
   background: radial-gradient(
     circle at center,
-    rgba(56, 189, 248, 0.08) 0%,
-    rgba(14, 165, 233, 0.03) 35%,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
     transparent 70%
   );
   pointer-events: none;
@@ -66,8 +66,8 @@
   position: absolute;
   inset: 0;
   background: 
-    linear-gradient(to bottom, transparent calc(50% - 1px), rgba(56, 189, 248, 0.06) calc(50%), transparent calc(50% + 1px)),
-    linear-gradient(to right, transparent calc(50% - 1px), rgba(56, 189, 248, 0.06) calc(50%), transparent calc(50% + 1px));
+    linear-gradient(to bottom, transparent calc(50% - 1px), rgba(255, 255, 255, 0.05) calc(50%), transparent calc(50% + 1px)),
+    linear-gradient(to right, transparent calc(50% - 1px), rgba(255, 255, 255, 0.05) calc(50%), transparent calc(50% + 1px));
 }
 
 /* ==========================================================================
@@ -133,7 +133,7 @@
   position: absolute;
   inset: -16px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
   filter: blur(12px);
   pointer-events: none;
   animation: auraBreath 3s ease-in-out infinite;
@@ -158,8 +158,8 @@
   border-radius: 50%;
   object-fit: cover;
   display: block;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.25);
-  border: 2px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   background: #090c12;
 }
 
@@ -168,14 +168,14 @@
   height: 92px;
   border-radius: 50%;
   background: #11141c;
-  border: 2px solid rgba(56, 189, 248, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.55rem;
   font-weight: 800;
-  color: var(--accent, #38bdf8);
+  color: var(--accent, #ffffff);
 }
 
 /* Identity & Role */
@@ -197,7 +197,7 @@
 }
 
 .intro-wordmark__accent {
-  color: var(--accent, #38bdf8);
+  color: var(--accent, #ffffff);
 }
 
 .intro-role-tag {
@@ -231,9 +231,9 @@
 
 .intro-progress__fill {
   height: 100%;
-  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  background: linear-gradient(90deg, #71717a, #ffffff);
   border-radius: 9999px;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
   transition: width 0.06s linear;
 }
 
@@ -256,12 +256,12 @@
 }
 
 .intro-status-pulse {
-  color: var(--accent, #38bdf8);
+  color: var(--accent, #ffffff);
   font-weight: 800;
 }
 
 .intro-progress__percent {
-  color: var(--accent, #38bdf8);
+  color: var(--accent, #ffffff);
   font-weight: 700;
 }
 

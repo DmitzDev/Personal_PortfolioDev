@@ -1,81 +1,99 @@
 :root {
-  /* Skeuomorphic Light Theme - Precision Studio Aluminum & Architectural Contrast */
-  --bg-primary: #e2e8f0;
+  /* Architectural Light Theme - Precision Studio Titanium & Obsidian */
+  --bg-primary: #f8f9fa;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #d3dbe6;
-  --bg-elevated: #f8fafc;
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --accent: #0284c7;
-  --accent-hover: #0369a1;
-  --accent-light: rgba(2, 132, 199, 0.12);
+  --bg-tertiary: #f1f3f5;
+  --bg-elevated: #e9ecef;
+  --text-primary: #09090b;
+  --text-secondary: #27272a;
+  --text-muted: #71717a;
+  --accent: #09090b;
+  --accent-hover: #27272a;
+  --accent-light: rgba(9, 9, 11, 0.07);
   --accent-text: #ffffff;
-  
+
+  /* Pure Monochrome / Titanium Gradient Palette (Light) */
+  --gradient-text: linear-gradient(180deg, #09090b 35%, #52525b 100%);
+  --gradient-accent: linear-gradient(180deg, #18181b 0%, #09090b 100%);
+  --gradient-accent-hover: linear-gradient(180deg, #27272a 0%, #18181b 100%);
+  --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 244, 245, 0.6) 100%);
+  --gradient-card-border: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(148, 163, 184, 0.25) 100%);
+  --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  --ambient-glow: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.04) 0%, transparent 70%);
+
   /* Physical Skeuomorphic Surface Shadows - Light Mode */
-  --skeuo-extruded: 0 1px 3px rgba(15, 23, 42, 0.08), 0 10px 24px -4px rgba(100, 116, 139, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.08);
-  --skeuo-extruded-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(100, 116, 139, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.07);
-  --skeuo-extruded-hover: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 18px 36px -6px rgba(100, 116, 139, 0.32), 0 0 0 1px rgba(2, 132, 199, 0.4);
-  --skeuo-recessed: inset 0 2px 4px rgba(15, 23, 42, 0.12), inset 0 0 1px rgba(15, 23, 42, 0.16), 0 1px 0 rgba(255, 255, 255, 0.9);
-  --skeuo-recessed-sm: inset 0 1px 3px rgba(15, 23, 42, 0.1), inset 0 0 1px rgba(15, 23, 42, 0.14);
+  --skeuo-extruded: 0 1px 3px rgba(15, 23, 42, 0.08), 0 10px 24px -4px rgba(100, 116, 139, 0.22), 0 0 0 1px rgba(15, 23, 42, 0.07);
+  --skeuo-extruded-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(100, 116, 139, 0.16), 0 0 0 1px rgba(15, 23, 42, 0.06);
+  --skeuo-extruded-hover: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 18px 36px -6px rgba(100, 116, 139, 0.28), 0 0 0 1px rgba(9, 9, 11, 0.4);
+  --skeuo-recessed: inset 0 2px 4px rgba(15, 23, 42, 0.1), inset 0 0 1px rgba(15, 23, 42, 0.14), 0 1px 0 rgba(255, 255, 255, 0.9);
+  --skeuo-recessed-sm: inset 0 1px 3px rgba(15, 23, 42, 0.08), inset 0 0 1px rgba(15, 23, 42, 0.12);
   --skeuo-btn: linear-gradient(145deg, #ffffff, #edf2f7);
   --skeuo-btn-active: linear-gradient(145deg, #d3dbe6, #e2e8f0);
-  --skeuo-border: 1px solid rgba(100, 116, 139, 0.28);
+  --skeuo-border: 1px solid rgba(100, 116, 139, 0.24);
   --skeuo-bevel-top: rgba(255, 255, 255, 0.95);
-  --skeuo-bevel-bottom: rgba(100, 116, 139, 0.45);
-  
-  --border: rgba(100, 116, 139, 0.28);
-  --border-focus: rgba(2, 132, 199, 0.7);
-  --badge-bg: #d3dbe6;
-  --badge-text: #0284c7;
-  
+  --skeuo-bevel-bottom: rgba(100, 116, 139, 0.35);
+
+  --border: rgba(100, 116, 139, 0.24);
+  --border-focus: rgba(9, 9, 11, 0.7);
+  --badge-bg: #e2e8f0;
+  --badge-text: #09090b;
+
   --led-green: #10b981;
-  --led-glow: 0 0 8px #10b981, 0 0 16px rgba(16, 185, 129, 0.4);
-  
-  --bg-nav-scrolled: rgba(226, 232, 240, 0.92);
-  --skeuo-nav-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.1);
+  --led-glow: 0 0 8px #10b981, 0 0 16px rgba(16, 185, 129, 0.35);
+
+  --bg-nav-scrolled: rgba(248, 249, 250, 0.94);
+  --skeuo-nav-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
   --nav-active-bg: #ffffff;
-  --nav-active-text: #0284c7;
+  --nav-active-text: #09090b;
 }
 
 [data-theme="dark"] {
-  /* Bespoke Architectural Dark Theme - Obsidian Titanium & Precision Hardware */
-  --bg-primary: #090a0f;
-  --bg-secondary: #0f121a;
-  --bg-tertiary: #151924;
-  --bg-elevated: #1b2130;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --accent: #38bdf8;
-  --accent-hover: #7dd3fc;
-  --accent-light: rgba(56, 189, 248, 0.12);
-  --accent-text: #0a0f1d;
-  
+  /* Minimalist Titanium Silver & Obsidian Chrome Dark Theme */
+  --bg-primary: #09090b;
+  --bg-secondary: #121215;
+  --bg-tertiary: #18181c;
+  --bg-elevated: #222228;
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent: #ffffff;
+  --accent-hover: #e4e4e7;
+  --accent-light: rgba(255, 255, 255, 0.1);
+  --accent-text: #09090b;
+
+  /* Titanium Silver / Metallic Gradient Palette (Dark) */
+  --gradient-text: linear-gradient(180deg, #ffffff 40%, #a1a1aa 100%);
+  --gradient-accent: linear-gradient(180deg, #ffffff 0%, #e4e4e7 100%);
+  --gradient-accent-hover: linear-gradient(180deg, #f4f4f5 0%, #cbd5e1 100%);
+  --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.008) 100%);
+  --gradient-card-border: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 65%);
+  --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  --ambient-glow: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+
   /* Physical Skeuomorphic Surface Shadows */
-  --skeuo-extruded: 0 1px 1px rgba(255, 255, 255, 0.08) inset, 0 10px 30px -5px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.4);
-  --skeuo-extruded-sm: 0 1px 1px rgba(255, 255, 255, 0.08) inset, 0 4px 14px -2px rgba(0, 0, 0, 0.55);
-  --skeuo-extruded-hover: 0 1px 1px rgba(255, 255, 255, 0.14) inset, 0 16px 36px -6px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.12);
-  --skeuo-recessed: inset 0 2px 6px rgba(0, 0, 0, 0.65), inset 0 0 1px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.04);
-  --skeuo-recessed-sm: inset 0 2px 4px rgba(0, 0, 0, 0.55), inset 0 0 1px rgba(0, 0, 0, 0.8);
-  --skeuo-btn: linear-gradient(145deg, #181d2a, #11141e);
-  --skeuo-btn-active: linear-gradient(145deg, #0e1118, #141824);
-  --skeuo-border: 1px solid rgba(255, 255, 255, 0.08);
-  --skeuo-bevel-top: rgba(255, 255, 255, 0.12);
-  --skeuo-bevel-bottom: rgba(0, 0, 0, 0.7);
-  
-  --border: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(56, 189, 248, 0.6);
-  --badge-bg: #151924;
-  --badge-text: #38bdf8;
-  
+  --skeuo-extruded: 0 1px 1px rgba(255, 255, 255, 0.08) inset, 0 10px 30px -5px rgba(0, 0, 0, 0.75), 0 2px 6px rgba(0, 0, 0, 0.45);
+  --skeuo-extruded-sm: 0 1px 1px rgba(255, 255, 255, 0.08) inset, 0 4px 14px -2px rgba(0, 0, 0, 0.6);
+  --skeuo-extruded-hover: 0 1px 1px rgba(255, 255, 255, 0.16) inset, 0 16px 36px -6px rgba(0, 0, 0, 0.85), 0 0 24px rgba(255, 255, 255, 0.1);
+  --skeuo-recessed: inset 0 2px 6px rgba(0, 0, 0, 0.7), inset 0 0 1px rgba(0, 0, 0, 0.95), 0 1px 0 rgba(255, 255, 255, 0.05);
+  --skeuo-recessed-sm: inset 0 2px 4px rgba(0, 0, 0, 0.6), inset 0 0 1px rgba(0, 0, 0, 0.85);
+  --skeuo-btn: linear-gradient(145deg, #18181c, #121216);
+  --skeuo-btn-active: linear-gradient(145deg, #0e0e11, #141418);
+  --skeuo-border: 1px solid rgba(255, 255, 255, 0.09);
+  --skeuo-bevel-top: rgba(255, 255, 255, 0.14);
+  --skeuo-bevel-bottom: rgba(0, 0, 0, 0.75);
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-focus: rgba(255, 255, 255, 0.7);
+  --badge-bg: #18181c;
+  --badge-text: #ffffff;
+
   --led-green: #10b981;
   --led-glow: 0 0 8px #10b981, 0 0 14px rgba(16, 185, 129, 0.45);
-  
-  --bg-nav-scrolled: rgba(9, 10, 15, 0.92);
-  --skeuo-nav-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+
+  --bg-nav-scrolled: rgba(9, 9, 11, 0.94);
+  --skeuo-nav-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
   --nav-active-bg: var(--bg-tertiary);
-  --nav-active-text: #38bdf8;
+  --nav-active-text: #ffffff;
 }
 
 * {
@@ -183,6 +201,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: var(--accent);
   background: var(--bg-tertiary);
+  background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-recessed-sm);
   border-top: 1px solid var(--skeuo-bevel-bottom);
   border-bottom: 1px solid var(--skeuo-bevel-top);
@@ -198,7 +217,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   letter-spacing: -0.03em;
   margin-bottom: 0.75rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .section-subtitle {
@@ -213,6 +235,7 @@ h1, h2, h3, h4, h5, h6 {
 .glass-card,
 .skeuo-card {
   background: var(--bg-secondary);
+  background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-extruded);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
@@ -272,27 +295,39 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
-  color: #ffffff !important;
+  background: var(--gradient-accent);
+  color: var(--accent-text) !important;
   font-weight: 700;
   font-size: 0.95rem;
   padding: 0.85rem 1.65rem;
   border-radius: 0.65rem;
-  box-shadow: 0 4px 16px -2px rgba(2, 132, 199, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  position: relative;
+}
+
+[data-theme="dark"] .btn-primary {
+  box-shadow: 0 4px 18px -2px rgba(255, 255, 255, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #09090b !important;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.45);
-  color: #ffffff !important;
+  background: var(--gradient-accent-hover);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 8px 28px -4px rgba(255, 255, 255, 0.35), 0 0 20px rgba(255, 255, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  color: #09090b !important;
 }
 
 .btn-primary:active {
   transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-secondary {

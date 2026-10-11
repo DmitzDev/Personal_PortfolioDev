@@ -50,6 +50,14 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
+  font-weight: 850;
+}
+
+[data-theme="dark"] .navbar .logo-accent {
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #cbd5e1 60%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .desktop-nav {

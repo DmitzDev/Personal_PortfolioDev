@@ -37,6 +37,10 @@
 }
 
 [data-theme="dark"] .hero-title {
+  background: linear-gradient(180deg, #e2e8f0 30%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-shadow: none;
 }
 
@@ -46,12 +50,21 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
-  font-weight: 850;
-  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
+  font-weight: 900;
+}
+
+[data-theme="dark"] .title-accent {
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #cbd5e1 60%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 [data-theme="light"] .title-accent {
-  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.12));
+  background: linear-gradient(135deg, #020617 0%, #0f172a 40%, #334155 75%, #64748b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Role Console */

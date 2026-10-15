@@ -257,42 +257,43 @@
   color: var(--text-muted);
 }
 
-/* Clean Icon Grid */
+/* Pure Icon Cluster - No Background Box */
 .tech-icons-cluster {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.65rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 .tech-icon-box {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  border-radius: 0.75rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded-sm);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.15rem;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .tech-icon-box:hover {
-  background: var(--bg-tertiary);
-  transform: translateY(-2px);
-  box-shadow: var(--skeuo-extruded);
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: translateY(-3px);
 }
 
 .tech-tile-icon {
-  width: 25px;
-  height: 25px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
-  transition: transform 0.2s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .tech-icon-box:hover .tech-tile-icon {
-  transform: scale(1.12);
+  transform: scale(1.18);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
 }
 
 /* Career Timeline Content */
@@ -413,7 +414,34 @@
     max-width: 100%;
   }
 
+  /* 1. Picture First on Mobile */
+  .hero-col-center {
+    order: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0.25rem auto 0.5rem auto;
+  }
+
+  .portrait-atmosphere-stage {
+    max-width: 230px;
+  }
+
+  .portrait-mask-wrapper {
+    max-width: 230px;
+    height: 260px;
+    -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
+    mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
+  }
+
+  .portrait-img {
+    object-position: bottom center;
+    transform: scale(1.02);
+  }
+
+  /* 2. Text Content Second on Mobile */
   .hero-col-left {
+    order: 2;
     width: 100%;
     align-items: flex-start;
     max-width: 100%;
@@ -446,7 +474,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
   }
 
   .hero-primary-btn {
@@ -459,30 +487,9 @@
     padding: 0.35rem 0.2rem;
   }
 
-  /* Mobile Portrait - Compact & Proportional, Does NOT push cards into bottom nav */
-  .hero-col-center {
-    width: 100%;
-    margin: 0.25rem 0 0.5rem 0;
-  }
-
-  .portrait-atmosphere-stage {
-    max-width: 210px;
-  }
-
-  .portrait-mask-wrapper {
-    max-width: 210px;
-    height: 240px;
-    -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
-    mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
-  }
-
-  .portrait-img {
-    object-position: bottom center;
-    transform: scale(1.02);
-  }
-
-  /* Mobile Unboxed Blocks */
+  /* 3. Core Stack & Career Third on Mobile */
   .hero-col-right {
+    order: 3;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -496,18 +503,22 @@
   }
 
   .tech-icons-cluster {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.55rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.15rem;
   }
 
   .tech-icon-box {
-    height: 44px;
-    border-radius: 0.75rem;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: auto;
+    padding: 0.1rem;
   }
 
   .tech-tile-icon {
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
   }
 
   .career-item-row {
@@ -522,26 +533,21 @@
   }
 
   .portrait-atmosphere-stage {
-    max-width: 190px;
+    max-width: 210px;
   }
 
   .portrait-mask-wrapper {
-    max-width: 190px;
-    height: 220px;
+    max-width: 210px;
+    height: 240px;
   }
 
   .tech-icons-cluster {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.45rem;
-  }
-
-  .tech-icon-box {
-    height: 42px;
+    gap: 1rem;
   }
 
   .tech-tile-icon {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
   }
 
   .career-item-row {

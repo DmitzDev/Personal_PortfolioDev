@@ -434,15 +434,19 @@ export function Experience() {
                     >
                       <div className="cert-swiper-grid">
                         <div
-                          className="cert-image-preview cert-swiper-preview"
+                          className="cert-display-stage"
                           onClick={() => setSelectedCert(currentCert)}
                           title="Click to view full credential"
                         >
-                          <img src={currentCert.image} alt={currentCert.title} />
-                          <div className="cert-preview-overlay">
+                          <img
+                            src={currentCert.image}
+                            alt={currentCert.title}
+                            className="cert-stage-img"
+                          />
+                          <div className="cert-stage-overlay">
                             <span className="cert-expand-pill">
                               <Maximize2 size={14} />
-                              <span>View Full Credential</span>
+                              <span>Click to Enlarge</span>
                             </span>
                           </div>
                         </div>

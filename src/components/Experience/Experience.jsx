@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Briefcase, GraduationCap, Award, FileText, Calendar, MapPin, ChevronLeft, ChevronRight, Server, Database, Code2 } from 'lucide-react';
+import { Briefcase, GraduationCap, Award, FileText, Calendar, MapPin, ChevronLeft, ChevronRight, Server, Database, Code2, Maximize2 } from 'lucide-react';
 import { experience } from '../../data/experience';
 import { education } from '../../data/education';
 import { certificates, achievements } from '../../data/certificates';
@@ -436,11 +436,14 @@ export function Experience() {
                         <div
                           className="cert-image-preview cert-swiper-preview"
                           onClick={() => setSelectedCert(currentCert)}
-                          title="Click to expand credential"
+                          title="Click to view full credential"
                         >
                           <img src={currentCert.image} alt={currentCert.title} />
                           <div className="cert-preview-overlay">
-                            <span>Click to view credential</span>
+                            <span className="cert-expand-pill">
+                              <Maximize2 size={14} />
+                              <span>View Full Credential</span>
+                            </span>
                           </div>
                         </div>
 

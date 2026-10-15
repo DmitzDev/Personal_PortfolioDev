@@ -347,32 +347,63 @@
 
 .cert-swiper-grid {
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 360px 1fr;
+  gap: 1.75rem;
   align-items: center;
   padding: 1.5rem;
 }
 
 .cert-swiper-preview {
-  height: 220px;
-  border-radius: 0.75rem;
+  width: 100%;
+  height: 290px;
+  border-radius: 0.85rem;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  background: var(--bg-tertiary);
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded-sm);
+  box-shadow: var(--skeuo-recessed-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem;
+  box-sizing: border-box;
+}
+
+[data-theme="light"] .cert-swiper-preview {
+  background: rgba(15, 23, 42, 0.08);
 }
 
 .cert-swiper-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 0.45rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease;
 }
 
 .cert-swiper-preview:hover img {
-  transform: scale(1.04);
+  transform: scale(1.02);
+}
+
+.cert-expand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 /* Education Card Grid */
@@ -1002,7 +1033,15 @@
   }
 
   .cert-swiper-preview {
-    height: 190px;
+    width: 100%;
+    height: 240px;
+    padding: 0.5rem;
+  }
+
+  .cert-swiper-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
   }
 
   /* 2-column mobile grid for education and credentials */

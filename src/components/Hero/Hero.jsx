@@ -1,8 +1,6 @@
 import React from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.png';
-import archLinuxLight from '../../assets/ArchLinux.png';
-import archLinuxDark from '../../assets/ArchLinux-Dark.png';
 import './Hero.css';
 
 const coreTechIcons = [
@@ -35,20 +33,7 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-section modern-hero">
-      {/* Arch Linux Themed Background Layer */}
-      <div className="hero-arch-bg" aria-hidden="true">
-        <img
-          src={archLinuxDark}
-          alt="Arch Linux Background"
-          className="hero-arch-img hero-arch-dark"
-        />
-        <img
-          src={archLinuxLight}
-          alt="Arch Linux Background"
-          className="hero-arch-img hero-arch-light"
-        />
-        <div className="hero-arch-vignette"></div>
-      </div>
+      <div className="hero-ambient-fog" aria-hidden="true"></div>
 
       <div className="container hero-container-modern">
         {/* Left Column: Direct Introduction, Role & CTAs */}
@@ -90,7 +75,7 @@ export function Hero() {
           </div>
         </AnimateOnScroll>
 
-        {/* Center Column: Portrait positioned neatly so Arch Linux logo sits above it without obstruction */}
+        {/* Center Column: Portrait with clean natural studio lighting */}
         <AnimateOnScroll animation="fade-up" delay={120} className="hero-col-center">
           <div className="portrait-atmosphere-stage">
             <div className="portrait-backlight"></div>

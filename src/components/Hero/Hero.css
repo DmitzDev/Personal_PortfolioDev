@@ -1,73 +1,32 @@
-/* Modern Atmospheric Hero Section with Arch Linux Background */
+/* Modern Atmospheric Hero Section */
 .hero-section.modern-hero {
   position: relative;
   min-height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 4.75rem 0 3.5rem 0;
+  padding: 5rem 0 3.5rem 0;
   background-color: var(--bg-primary);
   overflow: hidden;
 }
 
-/* ----------------------------------------------------
-   ARCH LINUX BACKGROUND LAYER
-   ---------------------------------------------------- */
-.hero-arch-bg {
+.hero-ambient-fog {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 15%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-.hero-arch-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Positions the Arch Linux logo & text in the upper center, comfortably above the portrait */
-  object-position: center 12%;
-  transition: opacity 0.3s ease;
+[data-theme="light"] .hero-section.modern-hero {
+  background: radial-gradient(ellipse at 50% 20%, #ffffff 0%, #edf1f7 60%, #e2e8f0 100%);
 }
 
-/* Default / Dark Theme: Show dark-tailored Arch Linux graphic */
-.hero-arch-dark {
-  display: block;
-  opacity: 0.52;
-}
-
-.hero-arch-light {
-  display: none;
-  opacity: 0.4;
-}
-
-[data-theme="light"] .hero-arch-dark {
-  display: none;
-}
-
-[data-theme="light"] .hero-arch-light {
-  display: block;
-}
-
-/* Atmospheric Vignette: Keeps center branding clear while softly feathering the edges */
-.hero-arch-vignette {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse 95% 85% at 50% 30%, rgba(18, 20, 26, 0.25) 0%, rgba(18, 20, 26, 0.82) 80%, rgba(18, 20, 26, 0.96) 100%);
-  pointer-events: none;
-}
-
-[data-theme="light"] .hero-arch-vignette {
-  background: radial-gradient(ellipse 95% 85% at 50% 30%, rgba(238, 242, 246, 0.3) 0%, rgba(238, 242, 246, 0.8) 80%, rgba(238, 242, 246, 0.96) 100%);
+[data-theme="dark"] .hero-section.modern-hero {
+  background: radial-gradient(ellipse at 50% 20%, #171a22 0%, #111319 60%, #0b0c10 100%);
 }
 
 /* Wide, Spacious 3-Column Layout */
@@ -77,8 +36,8 @@
   display: grid;
   grid-template-columns: 1.2fr 0.95fr 1fr;
   align-items: center;
-  gap: 4.5rem;
-  max-width: 1480px;
+  gap: 4.25rem;
+  max-width: 1440px;
   width: 100%;
   padding: 0 3.5rem;
   margin-top: 1.5rem;
@@ -88,8 +47,8 @@
 
 @media (min-width: 1536px) {
   .container.hero-container-modern {
-    max-width: 1600px;
-    gap: 5.5rem;
+    max-width: 1560px;
+    gap: 5rem;
     padding: 0 4.5rem;
     margin-top: 2rem;
   }
@@ -108,7 +67,7 @@
 
 .hero-editorial-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(2.4rem, 4vw, 3.65rem);
+  font-size: clamp(2.35rem, 3.8vw, 3.6rem);
   font-weight: 700;
   line-height: 1.12;
   letter-spacing: -0.035em;
@@ -192,16 +151,14 @@
 }
 
 /* ----------------------------------------------------
-   CENTER COLUMN: Portrait positioned below Arch Linux text
+   CENTER COLUMN: Clean Natural Studio Portrait
    ---------------------------------------------------- */
 .hero-col-center {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   position: relative;
-  z-index: 2;
-  /* Top margin ensures Mitch does NOT cover the Arch Linux logo & text */
-  margin-top: 3.25rem;
+  z-index: 1;
 }
 
 .portrait-atmosphere-stage {
@@ -222,24 +179,24 @@
   width: 320px;
   height: 320px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(23, 147, 209, 0.22) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
 [data-theme="light"] .portrait-backlight {
-  background: radial-gradient(circle, rgba(23, 147, 209, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(15, 23, 42, 0.06) 0%, transparent 70%);
 }
 
 .portrait-mask-wrapper {
   position: relative;
   width: 100%;
   max-width: 360px;
-  height: 480px;
+  height: 490px;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  /* Soft elliptic dissolve so the image blends smoothly without harsh cut edges */
+  /* Soft elliptic dissolve: solid center, dissolves smoothly outward and downward */
   -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 56%, rgba(0, 0, 0, 0) 100%);
   mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 56%, rgba(0, 0, 0, 0) 100%);
 }
@@ -423,7 +380,6 @@
   .hero-col-center {
     grid-column: 2;
     grid-row: 1;
-    margin-top: 1.5rem;
   }
 
   .hero-col-right {
@@ -446,19 +402,14 @@
     padding: 4.5rem 0 5.5rem 0;
   }
 
-  .hero-arch-img {
-    object-position: center 8%;
-    opacity: 0.38;
-  }
-
   .container.hero-container-modern {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.75rem;
+    gap: 1.5rem;
     text-align: left;
     padding: 0 1.25rem;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
     max-width: 100%;
   }
 
@@ -469,21 +420,21 @@
   }
 
   .hero-editorial-title {
-    font-size: clamp(2rem, 7.5vw, 2.45rem);
+    font-size: clamp(1.85rem, 7vw, 2.35rem);
     line-height: 1.12;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.45rem;
   }
 
   .hero-role-title {
-    font-size: 0.95rem;
-    margin-bottom: 0.75rem;
+    font-size: 0.925rem;
+    margin-bottom: 0.65rem;
     line-height: 1.4;
   }
 
   .hero-editorial-description {
-    font-size: 0.925rem;
-    line-height: 1.6;
-    margin-bottom: 1.35rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 1.15rem;
     text-align: left;
     text-wrap: pretty;
   }
@@ -494,32 +445,35 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.75rem;
+    margin-bottom: 0.25rem;
   }
 
   .hero-primary-btn {
-    padding: 0.75rem 1.4rem;
-    font-size: 0.88rem;
+    padding: 0.7rem 1.35rem;
+    font-size: 0.85rem;
   }
 
   .link-selected-work {
-    font-size: 0.88rem;
-    padding: 0.4rem 0.2rem;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.2rem;
   }
 
-  /* Mobile Portrait */
+  /* Mobile Portrait - Compact & Proportional, Does NOT push cards into bottom nav */
   .hero-col-center {
     width: 100%;
-    margin: 0.5rem 0;
+    margin: 0.25rem 0 0.5rem 0;
   }
 
   .portrait-atmosphere-stage {
-    max-width: 270px;
+    max-width: 210px;
   }
 
   .portrait-mask-wrapper {
-    max-width: 270px;
-    height: 340px;
+    max-width: 210px;
+    height: 240px;
+    -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
+    mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
   }
 
   .portrait-img {
@@ -533,7 +487,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 100%;
-    gap: 1.75rem;
+    gap: 1.5rem;
   }
 
   .hero-stack-block,
@@ -543,17 +497,17 @@
 
   .tech-icons-cluster {
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.65rem;
+    gap: 0.55rem;
   }
 
   .tech-icon-box {
-    height: 48px;
+    height: 44px;
     border-radius: 0.75rem;
   }
 
   .tech-tile-icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   .career-item-row {
@@ -564,30 +518,30 @@
 
 @media (max-width: 480px) {
   .hero-editorial-title {
-    font-size: 2.1rem;
+    font-size: 1.95rem;
   }
 
   .portrait-atmosphere-stage {
-    max-width: 250px;
+    max-width: 190px;
   }
 
   .portrait-mask-wrapper {
-    max-width: 250px;
-    height: 310px;
+    max-width: 190px;
+    height: 220px;
   }
 
   .tech-icons-cluster {
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
 
   .tech-icon-box {
-    height: 46px;
+    height: 42px;
   }
 
   .tech-tile-icon {
-    width: 23px;
-    height: 23px;
+    width: 20px;
+    height: 20px;
   }
 
   .career-item-row {

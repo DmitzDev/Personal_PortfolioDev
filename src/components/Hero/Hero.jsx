@@ -1,45 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
-import mitchNoBg from '../../assets/Mitch-NoBG.png';
-import mitchSmileNoBg from '../../assets/MitchSmile-NoBG.png';
-import shadeImg from '../../assets/Shade.png';
+import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.png';
 import './Hero.css';
 
-const metricsData = [
+const coreTechStack = [
   {
-    header: "Client-Side Optimization • Core Web Vitals",
-    stat: "-67%",
-    description: "Two-thirds lower initial bundle latency after modular architecture optimizations"
+    name: 'React',
+    category: 'Frontend Library',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
   },
   {
-    header: "Production Lighthouse Audit • Performance",
-    stat: "99%",
-    description: "Near-perfect Lighthouse audit scores on performance, accessibility, and SEO"
+    name: 'JavaScript',
+    category: 'ES6+ Architecture',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'
   },
   {
-    header: "First Contentful Paint • SPA Routing",
-    stat: "<1s",
-    description: "Sub-second time-to-interactive with Vite and efficient client-side hydration"
+    name: 'Vite',
+    category: 'Next-Gen Bundler',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg'
   },
   {
-    header: "Production Web Applications • Live",
-    stat: "5+",
-    description: "Production-ready platforms shipped with zero server persistence bloat"
+    name: 'Node.js',
+    category: 'Backend & Tooling',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
+  },
+  {
+    name: 'Tailwind CSS',
+    category: 'Utility Styling',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'
+  },
+  {
+    name: 'Firebase',
+    category: 'BaaS & Realtime DB',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg'
   }
 ];
 
 export function Hero() {
-  const [activeMetric, setActiveMetric] = useState(0);
-  const [isSmiling, setIsSmiling] = useState(false);
-
-  // Auto-cycle through metrics every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveMetric((prev) => (prev + 1) % metricsData.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   const scrollTo = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -61,23 +58,29 @@ export function Hero() {
       <div className="hero-ambient-fog"></div>
 
       <div className="container hero-container-modern">
-        {/* Left Column: Big Editorial Headline & Proposition */}
+        {/* Left Column: Direct Introduction, Role & CTAs */}
         <AnimateOnScroll animation="fade-up" delay={50} className="hero-col-left">
+          <div className="hero-status-pill">
+            <span className="hero-status-dot"></span>
+            <span>Available for Opportunities</span>
+          </div>
+
           <h1 className="hero-editorial-title">
-            I build products<br />
-            and the<br />
-            web interfaces<br />
-            behind them.
+            Hi, I'm <span className="hero-name-gradient">Mitchelle Salazar</span>
           </h1>
 
+          <p className="hero-role-title">
+            Front-End Web Developer &amp; Computer Engineering Student
+          </p>
+
           <p className="hero-editorial-description">
-            I engineer modern front-end platforms and bring computer engineering logic into tactile web design — from interactive prototypes to production-ready systems. Computer Engineering undergraduate based in the Philippines.
+            I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
           </p>
 
           <div className="hero-editorial-actions">
             <a
               href="#contact"
-              className="btn-coral-pill"
+              className="btn-primary hero-btn-main"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo('contact');
@@ -99,70 +102,60 @@ export function Hero() {
           </div>
         </AnimateOnScroll>
 
-        {/* Center Column: Atmospheric Portrait with smooth gradient mask */}
+        {/* Center Column: Atmospheric Portrait with CeoMitch */}
         <AnimateOnScroll animation="fade-up" delay={120} className="hero-col-center">
-          <div
-            className={`portrait-atmosphere-stage ${isSmiling ? 'active-smile' : ''}`}
-            onMouseEnter={() => setIsSmiling(true)}
-            onMouseLeave={() => setIsSmiling(false)}
-            onClick={() => setIsSmiling(prev => !prev)}
-            title="Tap or hover for shades toggle"
-          >
+          <div className="portrait-atmosphere-stage">
             <div className="portrait-backlight"></div>
 
             <div className="portrait-mask-wrapper">
-              {/* Default Focused Look */}
               <img
-                src={mitchNoBg}
+                src={ceoMitchNoBg}
                 alt="Mitchelle Salazar"
-                className={`portrait-img portrait-serious ${isSmiling ? 'faded' : 'active'}`}
-              />
-
-              {/* Smiling Look */}
-              <img
-                src={mitchSmileNoBg}
-                alt="Mitchelle Salazar smiling"
-                className={`portrait-img portrait-smile ${isSmiling ? 'active' : 'faded'}`}
-              />
-
-              {/* Dark Sunglasses (like Pavel in the reference photo) */}
-              <img
-                src={shadeImg}
-                alt="Sunglasses"
-                className={`portrait-shades ${isSmiling ? 'visible' : 'hidden'}`}
+                className="portrait-img"
+                loading="eager"
               />
             </div>
             <div className="portrait-ground-fade"></div>
           </div>
         </AnimateOnScroll>
 
-        {/* Right Column: Two Floating Frosted Glass Cards */}
+        {/* Right Column: Core Tech Stack Card & Career Timeline Card */}
         <AnimateOnScroll animation="fade-up" delay={180} className="hero-col-right">
-          {/* Top Metric Card */}
-          <div className="floating-metric-card">
-            <div className="metric-card-top">
-              <span className="metric-card-category">{metricsData[activeMetric].header}</span>
-            </div>
-            
-            <div className="metric-stat-display">
-              <span className="matrix-digits">{metricsData[activeMetric].stat}</span>
+          {/* Top Tech Stack Card */}
+          <div className="floating-tech-card">
+            <div className="tech-card-header">
+              <div className="tech-header-text">
+                <span className="tech-card-category">Core Stack</span>
+                <span className="tech-card-subtitle">Daily Web Architecture</span>
+              </div>
+              <div className="tech-live-badge">
+                <span className="tech-live-dot"></span>
+                <span>Active</span>
+              </div>
             </div>
 
-            <p className="metric-card-caption">
-              {metricsData[activeMetric].description}
-            </p>
-
-            {/* Carousel Dots */}
-            <div className="metric-dots-nav">
-              {metricsData.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  className={`metric-dot ${activeMetric === idx ? 'active' : ''}`}
-                  onClick={() => setActiveMetric(idx)}
-                  aria-label={`Show metric ${idx + 1}`}
-                />
+            <div className="tech-items-grid">
+              {coreTechStack.map((tech) => (
+                <div key={tech.name} className="tech-badge-pill" title={`${tech.name} — ${tech.category}`}>
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    className="tech-devicon"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  <div className="tech-badge-meta">
+                    <span className="tech-badge-title">{tech.name}</span>
+                    <span className="tech-badge-sub">{tech.category}</span>
+                  </div>
+                </div>
               ))}
+            </div>
+
+            <div className="tech-card-footer">
+              <span className="tech-footer-tag">✦ Component Architecture</span>
+              <span className="tech-footer-tag">✦ Sub-Second FCP</span>
             </div>
           </div>
 

@@ -74,7 +74,7 @@ export function Navbar() {
           {/* Desktop Nav */}
           <nav className="desktop-nav">
             <ul className="nav-links">
-              {navLinks.filter(l => l.id !== 'contact').map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.id}>
                   <a
                     href={`#${link.id}`}
@@ -92,14 +92,12 @@ export function Navbar() {
             <div className="nav-actions">
               <ThemeToggle />
               <a
-                href="#contact"
-                className="btn-coral-nav-contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo('contact');
-                }}
+                href={personalInfo.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-resume"
               >
-                Contact
+                Resume
               </a>
             </div>
           </nav>
@@ -108,14 +106,12 @@ export function Navbar() {
           <div className="mobile-nav-toggle">
             <ThemeToggle />
             <a
-              href="#contact"
-              className="btn-coral-nav-contact mobile-btn"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo('contact');
-              }}
+              href={personalInfo.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-resume mobile-btn"
             >
-              Contact
+              Resume
             </a>
           </div>
         </div>

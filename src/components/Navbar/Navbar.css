@@ -75,29 +75,8 @@
   color: #64748b;
 }
 
-.btn-coral-nav-contact {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #eb442c;
-  color: #ffffff !important;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.5rem 1.35rem;
-  border-radius: 9999px;
-  box-shadow: 0 4px 14px rgba(235, 68, 44, 0.45);
-  transition: transform 0.15s ease, background-color 0.15s ease;
-  text-decoration: none;
-}
-
-.btn-coral-nav-contact:hover {
-  background: #f05038;
-  transform: translateY(-1px);
-}
-
-.btn-coral-nav-contact.mobile-btn {
-  padding: 0.35rem 0.95rem;
+.btn-resume.mobile-btn {
+  padding: 0.4rem 0.85rem;
   font-size: 0.78rem;
 }
 

@@ -4,7 +4,6 @@ import { experience } from '../../data/experience';
 import { education } from '../../data/education';
 import { certificates, achievements } from '../../data/certificates';
 import { personalInfo } from '../../data/personalInfo';
-import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Experience.css';
 
 const getExpTechIcon = (techName) => {
@@ -51,27 +50,25 @@ const getExpTechIcon = (techName) => {
 export function Experience() {
   const [activeTab, setActiveTab] = useState('experience');
   const [selectedCert, setSelectedCert] = useState(null);
+
+  // 1. Work Experience Swiper State
   const [activeExpIndex, setActiveExpIndex] = useState(0);
-  const [slideDirection, setSlideDirection] = useState('next');
+  const [slideExpDir, setSlideExpDir] = useState('next');
   const [isExpAnimating, setIsExpAnimating] = useState(false);
+
+  // 2. Education Swiper State
+  const [activeEduIndex, setActiveEduIndex] = useState(0);
+  const [slideEduDir, setSlideEduDir] = useState('next');
+  const [isEduAnimating, setIsEduAnimating] = useState(false);
+
+  // 3. Certificates Swiper State
+  const [activeCertIndex, setActiveCertIndex] = useState(0);
+  const [slideCertDir, setSlideCertDir] = useState('next');
+  const [isCertAnimating, setIsCertAnimating] = useState(false);
+
+  // Shared Touch Coordinates
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
-
-  const handleNextExp = useCallback(() => {
-    if (isExpAnimating) return;
-    setSlideDirection('next');
-    setIsExpAnimating(true);
-    setActiveExpIndex((prev) => (prev + 1) % experience.length);
-    setTimeout(() => setIsExpAnimating(false), 320);
-  }, [isExpAnimating]);
-
-  const handlePrevExp = useCallback(() => {
-    if (isExpAnimating) return;
-    setSlideDirection('prev');
-    setIsExpAnimating(true);
-    setActiveExpIndex((prev) => (prev - 1 + experience.length) % experience.length);
-    setTimeout(() => setIsExpAnimating(false), 320);
-  }, [isExpAnimating]);
 
   const handleTouchStart = (e) => {
     setTouchEndX(null);
@@ -82,15 +79,66 @@ export function Experience() {
     setTouchEndX(e.targetTouches[0].clientX);
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (onSwipeLeft, onSwipeRight) => {
     if (!touchStartX || !touchEndX) return;
     const distance = touchStartX - touchEndX;
-    if (distance > 50) {
-      handleNextExp();
-    } else if (distance < -50) {
-      handlePrevExp();
+    if (distance > 45) {
+      onSwipeLeft();
+    } else if (distance < -45) {
+      onSwipeRight();
     }
   };
+
+  // Work Experience Nav
+  const handleNextExp = useCallback(() => {
+    if (isExpAnimating) return;
+    setSlideExpDir('next');
+    setIsExpAnimating(true);
+    setActiveExpIndex((prev) => (prev + 1) % experience.length);
+    setTimeout(() => setIsExpAnimating(false), 300);
+  }, [isExpAnimating]);
+
+  const handlePrevExp = useCallback(() => {
+    if (isExpAnimating) return;
+    setSlideExpDir('prev');
+    setIsExpAnimating(true);
+    setActiveExpIndex((prev) => (prev - 1 + experience.length) % experience.length);
+    setTimeout(() => setIsExpAnimating(false), 300);
+  }, [isExpAnimating]);
+
+  // Education Nav
+  const handleNextEdu = useCallback(() => {
+    if (isEduAnimating) return;
+    setSlideEduDir('next');
+    setIsEduAnimating(true);
+    setActiveEduIndex((prev) => (prev + 1) % education.length);
+    setTimeout(() => setIsEduAnimating(false), 300);
+  }, [isEduAnimating]);
+
+  const handlePrevEdu = useCallback(() => {
+    if (isEduAnimating) return;
+    setSlideEduDir('prev');
+    setIsEduAnimating(true);
+    setActiveEduIndex((prev) => (prev - 1 + education.length) % education.length);
+    setTimeout(() => setIsEduAnimating(false), 300);
+  }, [isEduAnimating]);
+
+  // Certificates Nav
+  const handleNextCert = useCallback(() => {
+    if (isCertAnimating) return;
+    setSlideCertDir('next');
+    setIsCertAnimating(true);
+    setActiveCertIndex((prev) => (prev + 1) % certificates.length);
+    setTimeout(() => setIsCertAnimating(false), 300);
+  }, [isCertAnimating]);
+
+  const handlePrevCert = useCallback(() => {
+    if (isCertAnimating) return;
+    setSlideCertDir('prev');
+    setIsCertAnimating(true);
+    setActiveCertIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
+    setTimeout(() => setIsCertAnimating(false), 300);
+  }, [isCertAnimating]);
 
   return (
     <section id="experience" className="section experience-section">
@@ -143,50 +191,19 @@ export function Experience() {
         {/* TAB 1: WORK EXPERIENCE (SWIPER VIEW) */}
         {activeTab === 'experience' && (
           <div className="exp-swiper-container">
-            {/* Top Swiper Meta & Arrow Controls */}
-            <div className="exp-swiper-top-bar">
-              <div className="exp-swiper-counter">
-                <span className="exp-counter-current">0{activeExpIndex + 1}</span>
-                <span className="exp-counter-separator">/</span>
-                <span className="exp-counter-total">0{experience.length}</span>
-                <span className="exp-counter-label">Role Focus</span>
-              </div>
-
-              <div className="exp-swiper-nav-buttons">
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn"
-                  onClick={handlePrevExp}
-                  aria-label="Previous experience"
-                  title="Previous experience"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn"
-                  onClick={handleNextExp}
-                  aria-label="Next experience"
-                  title="Next experience"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-            </div>
-
             {/* Main Swiper Stage */}
             <div
               className="exp-swiper-stage"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              onTouchEnd={() => handleTouchEnd(handleNextExp, handlePrevExp)}
             >
               {(() => {
                 const currentItem = experience[activeExpIndex];
                 return (
                   <div
                     key={currentItem.id}
-                    className={`exp-swiper-card glass-card slide-${slideDirection}`}
+                    className={`exp-swiper-card glass-card slide-${slideExpDir}`}
                   >
                     <div className="exp-card-body">
                       <div className="exp-card-header-meta">
@@ -254,8 +271,18 @@ export function Experience() {
               })()}
             </div>
 
-            {/* Bottom Dots & Mobile Swipe Hint */}
+            {/* Bottom Controls: Desktop arrows at bottom, dots, mobile swipe gesture */}
             <div className="exp-swiper-bottom-bar">
+              <button
+                type="button"
+                className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                onClick={handlePrevExp}
+                aria-label="Previous experience"
+                title="Previous experience"
+              >
+                <ChevronLeft size={18} />
+              </button>
+
               <div className="exp-swiper-dots">
                 {experience.map((item, idx) => (
                   <button
@@ -264,7 +291,7 @@ export function Experience() {
                     className={`exp-dot ${idx === activeExpIndex ? 'active' : ''}`}
                     onClick={() => {
                       if (idx === activeExpIndex) return;
-                      setSlideDirection(idx > activeExpIndex ? 'next' : 'prev');
+                      setSlideExpDir(idx > activeExpIndex ? 'next' : 'prev');
                       setActiveExpIndex(idx);
                     }}
                     aria-label={`Go to role ${idx + 1}: ${item.company}`}
@@ -272,101 +299,224 @@ export function Experience() {
                 ))}
               </div>
 
-              <div className="exp-swipe-hint">
-                <span>← Swipe to switch →</span>
-              </div>
+              <button
+                type="button"
+                className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                onClick={handleNextExp}
+                aria-label="Next experience"
+                title="Next experience"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+
+            <div className="exp-swipe-hint">
+              <span>← Swipe to switch role →</span>
             </div>
           </div>
         )}
 
-        {/* TAB 2: EDUCATION */}
+        {/* TAB 2: EDUCATION (SWIPER VIEW) */}
         {activeTab === 'education' && (
-          <div className="credentials-view">
-            <div className="credentials-grid edu-cards-grid">
-              {education.map((item, index) => (
-                <AnimateOnScroll
-                  key={item.id}
-                  animation="fade-up"
-                  delay={index * 80}
-                  className="cert-card edu-card glass-card"
-                >
-                  <div className="cert-body exp-card-body">
-                    <div className="exp-card-header-meta">
-                      <span className="cert-issuer">{item.school}</span>
-                      <span className="timeline-type-pill academic">{item.status}</span>
-                    </div>
-
-                    <h3 className="cert-title exp-card-title">{item.degree}</h3>
-
-                    <div className="exp-meta-bar">
-                      <span className="cert-date exp-date-meta">
-                        <Calendar size={13} />
-                        {item.year}
-                      </span>
-                    </div>
-
-                    <p className="academic-description exp-academic-desc">{item.description}</p>
-
-                    {item.awards && item.awards.length > 0 && (
-                      <div className="academic-awards exp-awards-wrap">
-                        <span className="awards-label">Recognitions:</span>
-                        <div className="awards-tags">
-                          {item.awards.map((award, idx) => (
-                            <span key={idx} className="award-pill">
-                              <Award size={12} />
-                              {award}
-                            </span>
-                          ))}
-                        </div>
+          <div className="exp-swiper-container">
+            {/* Main Education Swiper Stage */}
+            <div
+              className="exp-swiper-stage"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={() => handleTouchEnd(handleNextEdu, handlePrevEdu)}
+            >
+              {(() => {
+                const currentEdu = education[activeEduIndex];
+                return (
+                  <div
+                    key={currentEdu.id}
+                    className={`exp-swiper-card glass-card slide-${slideEduDir}`}
+                  >
+                    <div className="exp-card-body">
+                      <div className="exp-card-header-meta">
+                        <span className="cert-issuer exp-company-name">{currentEdu.school}</span>
+                        <span className="timeline-type-pill academic">{currentEdu.status}</span>
                       </div>
-                    )}
+
+                      <h3 className="cert-title exp-card-title">{currentEdu.degree}</h3>
+
+                      <div className="exp-meta-bar">
+                        <span className="cert-date exp-date-meta">
+                          <Calendar size={13} />
+                          {currentEdu.year}
+                        </span>
+                      </div>
+
+                      <p className="cert-desc exp-card-desc">{currentEdu.description}</p>
+
+                      {currentEdu.awards && currentEdu.awards.length > 0 && (
+                        <div className="exp-tech-icons-section">
+                          <span className="exp-tech-section-title">Recognitions &amp; Honors</span>
+                          <div className="awards-tags">
+                            {currentEdu.awards.map((award, idx) => (
+                              <span key={idx} className="award-pill">
+                                <Award size={13} />
+                                <span>{award}</span>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </AnimateOnScroll>
-              ))}
+                );
+              })()}
+            </div>
+
+            {/* Bottom Controls: Desktop arrows at bottom, dots, mobile swipe gesture */}
+            <div className="exp-swiper-bottom-bar">
+              <button
+                type="button"
+                className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                onClick={handlePrevEdu}
+                aria-label="Previous education milestone"
+                title="Previous education milestone"
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              <div className="exp-swiper-dots">
+                {education.map((item, idx) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={`exp-dot ${idx === activeEduIndex ? 'active' : ''}`}
+                    onClick={() => {
+                      if (idx === activeEduIndex) return;
+                      setSlideEduDir(idx > activeEduIndex ? 'next' : 'prev');
+                      setActiveEduIndex(idx);
+                    }}
+                    aria-label={`Go to education ${idx + 1}: ${item.school}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                onClick={handleNextEdu}
+                aria-label="Next education milestone"
+                title="Next education milestone"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+
+            <div className="exp-swipe-hint">
+              <span>← Swipe to switch milestone →</span>
             </div>
           </div>
         )}
 
-        {/* TAB 3: CERTIFICATES & HONORS */}
+        {/* TAB 3: CERTIFICATES & HONORS (SWIPER VIEW) */}
         {activeTab === 'credentials' && (
           <div className="credentials-view">
-            {/* Industry Certificates */}
-            <div className="credentials-grid">
-              {certificates.map((cert, index) => (
-                <AnimateOnScroll
-                  key={cert.id}
-                  animation="fade-up"
-                  delay={index * 80}
-                  className="cert-card glass-card"
-                >
-                  <div className="cert-image-preview" onClick={() => setSelectedCert(cert)}>
-                    <img src={cert.image} alt={cert.title} />
-                    <div className="cert-preview-overlay">
-                      <span>Click to view credential</span>
-                    </div>
-                  </div>
+            <div className="exp-swiper-container">
+              {/* Main Certificate Swiper Stage */}
+              <div
+                className="exp-swiper-stage"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={() => handleTouchEnd(handleNextCert, handlePrevCert)}
+              >
+                {(() => {
+                  const currentCert = certificates[activeCertIndex];
+                  return (
+                    <div
+                      key={currentCert.id}
+                      className={`exp-swiper-card cert-swiper-card glass-card slide-${slideCertDir}`}
+                    >
+                      <div className="cert-swiper-grid">
+                        <div
+                          className="cert-image-preview cert-swiper-preview"
+                          onClick={() => setSelectedCert(currentCert)}
+                          title="Click to expand credential"
+                        >
+                          <img src={currentCert.image} alt={currentCert.title} />
+                          <div className="cert-preview-overlay">
+                            <span>Click to view credential</span>
+                          </div>
+                        </div>
 
-                  <div className="cert-body">
-                    <span className="cert-issuer">{cert.organization}</span>
-                    <h3 className="cert-title">{cert.title}</h3>
-                    <span className="cert-date">{cert.date}</span>
-                    <p className="cert-desc">{cert.description}</p>
+                        <div className="cert-body exp-card-body">
+                          <div className="exp-card-header-meta">
+                            <span className="cert-issuer">{currentCert.organization}</span>
+                            <span className="cert-date exp-date-meta">
+                              <Calendar size={13} />
+                              {currentCert.date}
+                            </span>
+                          </div>
 
-                    {cert.skills && (
-                      <div className="cert-skills-wrap">
-                        {cert.skills.map(s => (
-                          <span key={s} className="tech-pill">{s}</span>
-                        ))}
+                          <h3 className="cert-title exp-card-title">{currentCert.title}</h3>
+                          <p className="cert-desc exp-card-desc">{currentCert.description}</p>
+
+                          {currentCert.skills && (
+                            <div className="cert-skills-wrap">
+                              {currentCert.skills.map((s) => (
+                                <span key={s} className="tech-pill">{s}</span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </AnimateOnScroll>
-              ))}
+                    </div>
+                  );
+                })()}
+              </div>
+
+              {/* Bottom Controls: Desktop arrows at bottom, dots, mobile swipe gesture */}
+              <div className="exp-swiper-bottom-bar">
+                <button
+                  type="button"
+                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                  onClick={handlePrevCert}
+                  aria-label="Previous credential"
+                  title="Previous credential"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+
+                <div className="exp-swiper-dots">
+                  {certificates.map((cert, idx) => (
+                    <button
+                      key={cert.id}
+                      type="button"
+                      className={`exp-dot ${idx === activeCertIndex ? 'active' : ''}`}
+                      onClick={() => {
+                        if (idx === activeCertIndex) return;
+                        setSlideCertDir(idx > activeCertIndex ? 'next' : 'prev');
+                        setActiveCertIndex(idx);
+                      }}
+                      aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                  onClick={handleNextCert}
+                  aria-label="Next credential"
+                  title="Next credential"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+
+              <div className="exp-swipe-hint">
+                <span>← Swipe to switch credential →</span>
+              </div>
             </div>
 
-            {/* Honors & Milestones */}
+            {/* Honors & Milestones Grid */}
             <div className="achievements-section-wrap">
-              <h4 className="sub-heading">Academic & Industry Honors</h4>
+              <h4 className="sub-heading">Academic &amp; Industry Honors</h4>
               <div className="achievements-grid">
                 {achievements.map((ach) => (
                   <div key={ach.id} className="achievement-card glass-card">

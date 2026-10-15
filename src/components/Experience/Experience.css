@@ -96,78 +96,6 @@
   gap: 1.25rem;
 }
 
-.exp-swiper-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 0.5rem;
-}
-
-.exp-swiper-counter {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.exp-counter-current {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--accent);
-}
-
-.exp-counter-separator {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-.exp-counter-total {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-.exp-counter-label {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  margin-left: 0.65rem;
-  font-weight: 600;
-}
-
-.exp-swiper-nav-buttons {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.exp-swiper-arrow-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  cursor: pointer;
-  box-shadow: var(--skeuo-extruded-sm);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.exp-swiper-arrow-btn:hover {
-  background: var(--accent);
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(255, 90, 31, 0.3);
-  border-color: var(--accent);
-}
-
-.exp-swiper-arrow-btn:active {
-  transform: translateY(0);
-}
-
 .exp-swiper-stage {
   position: relative;
   width: 100%;
@@ -337,18 +265,47 @@
   transform: translateX(-50%) translateY(0);
 }
 
-/* Bottom Controls */
+/* Bottom Controls: Desktop arrows flank the dots in the center */
 .exp-swiper-bottom-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.25rem 0.5rem;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+  margin-top: 0.25rem;
+}
+
+.exp-swiper-arrow-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: var(--skeuo-extruded-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.exp-swiper-arrow-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(255, 90, 31, 0.35);
+  border-color: var(--accent);
+}
+
+.exp-swiper-arrow-btn:active {
+  transform: translateY(0);
 }
 
 .exp-swiper-dots {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
 }
 
 .exp-dot {
@@ -373,11 +330,49 @@
 }
 
 .exp-swipe-hint {
+  display: none;
+  text-align: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   color: var(--text-muted);
   letter-spacing: 0.04em;
-  opacity: 0.8;
+  opacity: 0.75;
+  margin-top: 0.25rem;
+}
+
+/* Certificate Swiper Specifics */
+.cert-swiper-card {
+  overflow: hidden;
+}
+
+.cert-swiper-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.cert-swiper-preview {
+  height: 220px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded-sm);
+}
+
+.cert-swiper-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cert-swiper-preview:hover img {
+  transform: scale(1.04);
 }
 
 /* Education Card Grid */
@@ -947,15 +942,28 @@
     line-height: 1.45;
   }
 
-  /* Experience Swiper on Mobile */
+  /* Experience & Education & Certificate Swipers on Mobile */
   .exp-swiper-container {
     max-width: 100%;
     margin-bottom: 2.5rem;
-    gap: 1rem;
+    gap: 0.85rem;
   }
 
-  .exp-swiper-top-bar {
-    padding: 0 0.25rem;
+  /* Hide left/right arrow buttons completely on mobile browsers */
+  .exp-arrow-desktop-only {
+    display: none !important;
+  }
+
+  .exp-swiper-bottom-bar {
+    justify-content: center;
+    gap: 0;
+    padding: 0.25rem 0;
+    margin-top: 0.35rem;
+  }
+
+  .exp-swipe-hint {
+    display: block;
+    margin-top: 0.4rem;
   }
 
   .exp-swiper-card {
@@ -985,6 +993,16 @@
   .exp-tech-icon-img {
     width: 20px;
     height: 20px;
+  }
+
+  .cert-swiper-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.15rem 1rem;
+  }
+
+  .cert-swiper-preview {
+    height: 190px;
   }
 
   /* 2-column mobile grid for education and credentials */

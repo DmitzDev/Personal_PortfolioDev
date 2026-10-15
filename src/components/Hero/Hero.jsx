@@ -1,6 +1,8 @@
 import React from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.png';
+import archLinuxLight from '../../assets/ArchLinux.png';
+import archLinuxDark from '../../assets/ArchLinux-Dark.png';
 import './Hero.css';
 
 const coreTechIcons = [
@@ -33,7 +35,20 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-section modern-hero">
-      <div className="hero-ambient-fog"></div>
+      {/* Arch Linux Themed Background Layer */}
+      <div className="hero-arch-bg" aria-hidden="true">
+        <img
+          src={archLinuxDark}
+          alt="Arch Linux Background"
+          className="hero-arch-img hero-arch-dark"
+        />
+        <img
+          src={archLinuxLight}
+          alt="Arch Linux Background"
+          className="hero-arch-img hero-arch-light"
+        />
+        <div className="hero-arch-vignette"></div>
+      </div>
 
       <div className="container hero-container-modern">
         {/* Left Column: Direct Introduction, Role & CTAs */}
@@ -75,7 +90,7 @@ export function Hero() {
           </div>
         </AnimateOnScroll>
 
-        {/* Center Column: Prominent Portrait with CeoMitch */}
+        {/* Center Column: Portrait positioned neatly so Arch Linux logo sits above it without obstruction */}
         <AnimateOnScroll animation="fade-up" delay={120} className="hero-col-center">
           <div className="portrait-atmosphere-stage">
             <div className="portrait-backlight"></div>
@@ -94,7 +109,7 @@ export function Hero() {
 
         {/* Right Column: Unboxed Clean Core Tech Stack & Career Timeline */}
         <AnimateOnScroll animation="fade-up" delay={180} className="hero-col-right">
-          {/* Top Tech Stack Block (Unboxed, Icon Only, No Green Indicator) */}
+          {/* Top Tech Stack Block (Unboxed, Icon Only) */}
           <div className="hero-stack-block">
             <div className="hero-block-header">
               <span className="hero-block-title">Core Stack</span>

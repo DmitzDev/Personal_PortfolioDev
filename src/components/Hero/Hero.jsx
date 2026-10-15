@@ -3,37 +3,15 @@ import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.png';
 import './Hero.css';
 
-const coreTechStack = [
-  {
-    name: 'React',
-    category: 'Frontend Library',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
-  },
-  {
-    name: 'JavaScript',
-    category: 'ES6+ Architecture',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'
-  },
-  {
-    name: 'Vite',
-    category: 'Next-Gen Bundler',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg'
-  },
-  {
-    name: 'Node.js',
-    category: 'Backend & Tooling',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
-  },
-  {
-    name: 'Tailwind CSS',
-    category: 'Utility Styling',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'
-  },
-  {
-    name: 'Firebase',
-    category: 'BaaS & Realtime DB',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg'
-  }
+const coreTechIcons = [
+  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+  { name: 'Vite', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg' },
+  { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  { name: 'Firebase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' },
+  { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
 ];
 
 export function Hero() {
@@ -119,43 +97,31 @@ export function Hero() {
           </div>
         </AnimateOnScroll>
 
-        {/* Right Column: Core Tech Stack Card & Career Timeline Card */}
+        {/* Right Column: Clean Icon-Only Core Tech Stack Card & Career Timeline Card */}
         <AnimateOnScroll animation="fade-up" delay={180} className="hero-col-right">
-          {/* Top Tech Stack Card */}
+          {/* Top Tech Stack Card - Icon Only */}
           <div className="floating-tech-card">
             <div className="tech-card-header">
-              <div className="tech-header-text">
-                <span className="tech-card-category">Core Stack</span>
-                <span className="tech-card-subtitle">Daily Web Architecture</span>
-              </div>
+              <span className="tech-card-category">Core Stack</span>
               <div className="tech-live-badge">
                 <span className="tech-live-dot"></span>
                 <span>Active</span>
               </div>
             </div>
 
-            <div className="tech-items-grid">
-              {coreTechStack.map((tech) => (
-                <div key={tech.name} className="tech-badge-pill" title={`${tech.name} — ${tech.category}`}>
+            <div className="tech-icons-cluster">
+              {coreTechIcons.map((tech) => (
+                <div key={tech.name} className="tech-icon-box" title={tech.name} aria-label={tech.name}>
                   <img
                     src={tech.icon}
                     alt={tech.name}
-                    className="tech-devicon"
+                    className="tech-tile-icon"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
                   />
-                  <div className="tech-badge-meta">
-                    <span className="tech-badge-title">{tech.name}</span>
-                    <span className="tech-badge-sub">{tech.category}</span>
-                  </div>
                 </div>
               ))}
-            </div>
-
-            <div className="tech-card-footer">
-              <span className="tech-footer-tag">✦ Component Architecture</span>
-              <span className="tech-footer-tag">✦ Sub-Second FCP</span>
             </div>
           </div>
 

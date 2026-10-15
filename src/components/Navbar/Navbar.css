@@ -58,6 +58,7 @@
   font-size: 0.85rem;
   font-weight: 700;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 [data-theme="light"] .brand-pill-name {
@@ -168,7 +169,7 @@
   .mobile-nav-toggle {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.65rem;
     flex-shrink: 0;
   }
 
@@ -176,5 +177,41 @@
     padding: 0 1rem;
     width: 100%;
     box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 0;
+  }
+
+  .navbar-container {
+    padding: 0 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .capsule-brand-pill {
+    padding: 0.35rem 0.75rem;
+    gap: 0.4rem;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .brand-pill-name {
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .brand-pill-role {
+    display: none !important;
+  }
+
+  .mobile-nav-toggle {
+    gap: 0.45rem;
+  }
+
+  .btn-resume.mobile-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
   }
 }

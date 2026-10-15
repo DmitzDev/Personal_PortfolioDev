@@ -191,14 +191,13 @@
   position: relative;
   width: 100%;
   max-width: 360px;
-  height: 490px;
-  overflow: hidden;
+  height: 485px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  /* Soft elliptic dissolve: solid center, dissolves smoothly outward and downward */
-  -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 56%, rgba(0, 0, 0, 0) 100%);
-  mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 56%, rgba(0, 0, 0, 0) 100%);
+  /* Clean linear dissolve at bottom with completely unclipped headroom at top */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0, 0, 0, 0.6) 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0, 0, 0, 0.6) 90%, transparent 100%);
 }
 
 .portrait-img {
@@ -206,22 +205,17 @@
   height: 100%;
   object-fit: contain;
   object-position: bottom center;
-  transform: scale(1.02);
-  transition: transform 0.35s ease;
-  filter: contrast(1.04) brightness(1.01);
+  transform: none;
+  transition: transform 0.35s ease, filter 0.35s ease;
+  filter: contrast(1.03) brightness(1.01);
 }
 
 .portrait-atmosphere-stage:hover .portrait-img {
-  transform: scale(1.05);
+  transform: translateY(-4px);
 }
 
 .portrait-ground-fade {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  pointer-events: none;
+  display: none;
 }
 
 /* ----------------------------------------------------
@@ -424,19 +418,29 @@
   }
 
   .portrait-atmosphere-stage {
-    max-width: 230px;
+    max-width: 240px;
+  }
+
+  .portrait-backlight {
+    width: 220px;
+    height: 220px;
+    top: 10%;
   }
 
   .portrait-mask-wrapper {
-    max-width: 230px;
-    height: 260px;
-    -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
-    mask-image: radial-gradient(ellipse 85% 80% at 50% 38%, rgba(0, 0, 0, 1) 55%, rgba(0, 0, 0, 0) 100%);
+    max-width: 240px;
+    height: 310px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 76%, rgba(0, 0, 0, 0.6) 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 76%, rgba(0, 0, 0, 0.6) 88%, transparent 100%);
   }
 
   .portrait-img {
     object-position: bottom center;
-    transform: scale(1.02);
+    transform: none;
+  }
+
+  .portrait-atmosphere-stage:hover .portrait-img {
+    transform: none;
   }
 
   /* 2. Text Content Second on Mobile */
@@ -533,12 +537,12 @@
   }
 
   .portrait-atmosphere-stage {
-    max-width: 210px;
+    max-width: 215px;
   }
 
   .portrait-mask-wrapper {
-    max-width: 210px;
-    height: 240px;
+    max-width: 215px;
+    height: 280px;
   }
 
   .tech-icons-cluster {

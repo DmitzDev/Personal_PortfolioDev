@@ -9,13 +9,32 @@ import { Experience } from './components/Experience/Experience';
 import { Contact } from './components/Contact/Contact';
 import { Footer } from './components/Footer/Footer';
 import { ScrollToTop } from './components/shared/ScrollToTop';
+import { Toaster } from 'sonner';
+import { useLenis } from './hooks/useLenis';
+import { useTheme } from './hooks/useTheme';
 import './index.css';
 
 function App() {
   const [introFinished, setIntroFinished] = useState(false);
+  const { theme } = useTheme();
+
+  // Initialize smooth momentum scrolling
+  useLenis();
 
   return (
     <div className="app-container">
+      <Toaster 
+        theme={theme} 
+        position="top-right" 
+        richColors 
+        closeButton 
+        toastOptions={{
+          style: {
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+          },
+        }}
+      />
+
       {!introFinished && (
         <IntroLoader onFinish={() => setIntroFinished(true)} />
       )}

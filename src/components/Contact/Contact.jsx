@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Mail, MapPin, Send, Copy, Check, Clock, ShieldCheck } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { toast } from 'sonner';
+import confetti from 'canvas-confetti';
 import { personalInfo } from '../../data/personalInfo';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
@@ -22,6 +24,9 @@ export function Contact() {
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email);
     setCopiedEmail(true);
+    toast.success('Email copied to clipboard!', {
+      description: personalInfo.email,
+    });
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
@@ -44,11 +49,24 @@ export function Contact() {
         setIsSubmitting(false);
         setSubmitStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
+        confetti({
+          particleCount: 90,
+          spread: 75,
+          origin: { y: 0.6 },
+          colors: ['#ffffff', '#94a3b8', '#38bdf8', '#10b981'],
+        });
+        toast.success('Message sent successfully!', {
+          description: "Thanks for reaching out! I'll get back to you as soon as possible.",
+        });
         setTimeout(() => setSubmitStatus(null), 6000);
       }, (error) => {
         setIsSubmitting(false);
         setSubmitStatus('error');
-        setErrorMessage(error.text || error.message || 'Failed to dispatch email. Please email directly.');
+        const err = error.text || error.message || 'Failed to dispatch email. Please email directly.';
+        setErrorMessage(err);
+        toast.error('Failed to send message', {
+          description: err,
+        });
         console.error('EmailJS Error:', error);
         setTimeout(() => setSubmitStatus(null), 8000);
       });

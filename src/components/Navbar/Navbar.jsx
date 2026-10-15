@@ -31,15 +31,23 @@ export function Navbar() {
     const element = document.getElementById(id);
     if (element) {
       if (id === 'hero') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.lenis) {
+          window.lenis.scrollTo(0);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         return;
       }
       const navOffset = window.innerWidth <= 768 ? 72 : 95;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: Math.max(0, elementPosition - navOffset),
-        behavior: 'smooth'
-      });
+      if (window.lenis) {
+        window.lenis.scrollTo(element, { offset: -navOffset });
+      } else {
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: Math.max(0, elementPosition - navOffset),
+          behavior: 'smooth'
+        });
+      }
     }
   };
 

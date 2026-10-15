@@ -3,6 +3,7 @@ import mdLogo from '../assets/MDLogo.png';
 
 export const personalInfo = {
   name: "Mitchelle",
+  fullName: "Mitchelle Salazar",
   nickname: "Mitch",
   logoText: "MitchDev.",
   logoImage: mdLogo,

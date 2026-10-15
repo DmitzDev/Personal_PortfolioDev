@@ -21,7 +21,61 @@
   align-items: flex-start;
 }
 
+/* Hero Live Status Badge */
+.hero-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--bg-tertiary);
+  background-image: var(--gradient-surface);
+  border-radius: 9999px;
+  padding: 0.4rem 1rem;
+  margin-bottom: 1.25rem;
+  border-top: 1px solid var(--skeuo-bevel-top);
+  border-bottom: 1px solid var(--skeuo-bevel-bottom);
+  border-left: var(--skeuo-border);
+  border-right: var(--skeuo-border);
+  box-shadow: var(--skeuo-extruded-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
 
+.status-dot-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+}
+
+.status-indicator-ping {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  opacity: 0.75;
+  animation: statusPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.status-indicator-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+}
+
+@keyframes statusPing {
+  70%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
 
 /* Hero Title */
 .hero-title {

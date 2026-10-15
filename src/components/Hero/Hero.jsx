@@ -44,6 +44,19 @@ export function Hero() {
       <div className="container hero-container">
         {/* Left Column: Client Proposition & Actions */}
         <AnimateOnScroll animation="fade-up" delay={50} className="hero-content">
+          {/* Live Availability Status Badge */}
+          <div className="hero-status-badge">
+            <span className="status-dot-wrapper">
+              <span className="status-indicator-ping"></span>
+              <span className="status-indicator-dot"></span>
+            </span>
+            <span>Available for New Projects &amp; Contracts</span>
+          </div>
+
+          <h1 className="hero-title">
+            Hi, I'm <span className="title-accent">Mitchelle Salazar</span> 👋
+          </h1>
+
           {/* Desktop Role Console Badge */}
           <div className="hero-role-console desktop-hero-role">
             <span className="console-prompt">&gt;</span>
@@ -51,12 +64,8 @@ export function Hero() {
             <span className="console-cursor">_</span>
           </div>
 
-          <h1 className="hero-title">
-            Hi, I'm <span className="title-accent">MitchDev.</span> Front-End Web Developer.
-          </h1>
-
           <p className="hero-description">
-            Computer engineering undergraduate and front-end developer building fast, responsive web applications with modern React, clean state management, and tactile user interfaces. I turn functional ideas into dependable, production-ready software.
+            Front-End Developer &amp; Computer Engineering student from the Philippines. I build fast, interactive web applications with modern React, clean component architecture, and tactile interfaces.
           </p>
 
           {/* Authentic Engineering Gauges */}
@@ -155,7 +164,7 @@ export function Hero() {
             {/* Stamped Metal Specification Plaque */}
             <div className="hardware-spec-plate">
               <div className="spec-row-main">
-                <span className="spec-name">{personalInfo.name.toUpperCase()} • DEVELOPER</span>
+                <span className="spec-name">{personalInfo.fullName.toUpperCase()} • DEVELOPER</span>
                 <span className="spec-tag">FRONT-END &amp; CpE</span>
               </div>
               <div className="spec-divider"></div>

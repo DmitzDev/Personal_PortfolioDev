@@ -17,34 +17,38 @@ const navLinks = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const sectionIds = navLinks.map(link => link.id);
-  const activeSection = useScrollSpy(sectionIds, 200);
+  const [activeSection, setActiveSection] = useScrollSpy(sectionIds, 110);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 30);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollTo = (id) => {
+    if (id === 'hero') {
+      setActiveSection('hero');
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.1 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
     const element = document.getElementById(id);
     if (element) {
-      if (id === 'hero') {
-        if (window.lenis) {
-          window.lenis.scrollTo(0);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        return;
-      }
-      const navOffset = window.innerWidth <= 768 ? 72 : 95;
+      setActiveSection(id);
+      const navOffset = window.innerWidth <= 768 ? 64 : 76;
+      const targetTop = element.getBoundingClientRect().top + window.scrollY - navOffset;
+
       if (window.lenis) {
-        window.lenis.scrollTo(element, { offset: -navOffset });
+        window.lenis.scrollTo(targetTop, { duration: 1.1 });
       } else {
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({
-          top: Math.max(0, elementPosition - navOffset),
+          top: Math.max(0, targetTop),
           behavior: 'smooth'
         });
       }

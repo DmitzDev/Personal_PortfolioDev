@@ -1,36 +1,47 @@
 import { useState, useEffect } from 'react';
 
-export function useScrollSpy(sectionIds, offset = 100) {
+export function useScrollSpy(sectionIds, offset = 110) {
   const [activeSection, setActiveSection] = useState(sectionIds[0] || '');
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + offset;
+      // 1. Bottom of the page check (for Contact / last section)
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = window.innerHeight;
+      const scrollY = window.scrollY;
 
-      let currentActive = sectionIds[0];
+      if (scrollHeight - scrollY - clientHeight <= 90) {
+        setActiveSection(sectionIds[sectionIds.length - 1]);
+        return;
+      }
+
+      // 2. Top of the page check (Hero / first section)
+      if (scrollY < 80) {
+        setActiveSection(sectionIds[0]);
+        return;
+      }
+
+      // 3. Find current section by bounding client rect
+      let currentSection = sectionIds[0];
       for (const id of sectionIds) {
         const element = document.getElementById(id);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            currentActive = id;
+          const rect = element.getBoundingClientRect();
+          // If the element's top has reached or passed the offset line
+          if (rect.top <= offset) {
+            currentSection = id;
           }
         }
       }
 
-      // Special case for reaching the bottom of the page
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
-        currentActive = sectionIds[sectionIds.length - 1];
-      }
-
-      setActiveSection(currentActive);
+      setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sectionIds, offset]);
 
-  return activeSection;
+  return [activeSection, setActiveSection];
 }

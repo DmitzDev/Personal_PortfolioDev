@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Search, X, CheckCircle2, FileText, Layers, Code2 } from 'lucide-react';
+import { ExternalLink, Search, X, CheckCircle2, FileText, Layers, Code2, Server, Mail } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Projects.css';
@@ -9,6 +9,50 @@ const GithubIcon = ({ size = 16 }) => (
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 8 18v4"></path>
   </svg>
 );
+
+const getTechIconInfo = (tech) => {
+  const t = tech.toLowerCase();
+  if (t.includes('react')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' };
+  }
+  if (t.includes('node')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' };
+  }
+  if (t.includes('vite')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg' };
+  }
+  if (t.includes('javascript') || t.includes('js')) {
+    if (t.includes('email')) {
+      return { type: 'lucide', icon: 'mail' };
+    }
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' };
+  }
+  if (t.includes('css')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' };
+  }
+  if (t.includes('html')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' };
+  }
+  if (t.includes('firebase')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' };
+  }
+  if (t.includes('flutter')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' };
+  }
+  if (t.includes('dart')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg' };
+  }
+  if (t.includes('state') || t.includes('redux')) {
+    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg' };
+  }
+  if (t.includes('api') || t.includes('rest')) {
+    return { type: 'lucide', icon: 'server' };
+  }
+  if (t.includes('email')) {
+    return { type: 'lucide', icon: 'mail' };
+  }
+  return { type: 'lucide', icon: 'code' };
+};
 
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -103,23 +147,32 @@ export function Projects() {
                   <p className="project-subtitle-text">{project.subtitle}</p>
                   <p className="project-summary">{project.description}</p>
 
-                  {/* Tech stack pills */}
-                  <div className="project-tech-pills">
-                    {project.technologies.slice(0, 4).map((tech, idx) => (
-                      <span key={tech} className={`tech-pill ${idx >= 2 ? 'desktop-only-pill' : ''}`}>
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 2 && (
-                      <span className="tech-pill muted mobile-only-pill">
-                        +{project.technologies.length - 2}
-                      </span>
-                    )}
-                    {project.technologies.length > 4 && (
-                      <span className="tech-pill muted desktop-only-pill">
-                        +{project.technologies.length - 4} more
-                      </span>
-                    )}
+                  {/* Tech stack icons */}
+                  <div className="project-tech-icons">
+                    {project.technologies.map((tech) => {
+                      const info = getTechIconInfo(tech);
+                      return (
+                        <div key={tech} className="tech-icon-badge" title={tech} aria-label={tech}>
+                          {info.type === 'devicon' ? (
+                            <img
+                              src={info.src}
+                              alt={tech}
+                              className="tech-badge-img"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                          ) : info.icon === 'server' ? (
+                            <Server size={16} className="tech-badge-lucide" />
+                          ) : info.icon === 'mail' ? (
+                            <Mail size={16} className="tech-badge-lucide" />
+                          ) : (
+                            <Code2 size={16} className="tech-badge-lucide" />
+                          )}
+                          <span className="tech-badge-tooltip">{tech}</span>
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* Actions */}
@@ -235,9 +288,30 @@ export function Projects() {
               <div className="modal-tech-stack">
                 <h4>System Tech Stack</h4>
                 <div className="tech-tags-wrap">
-                  {selectedProject.technologies.map(tech => (
-                    <span key={tech} className="tech-pill">{tech}</span>
-                  ))}
+                  {selectedProject.technologies.map(tech => {
+                    const info = getTechIconInfo(tech);
+                    return (
+                      <span key={tech} className="tech-pill with-icon">
+                        {info.type === 'devicon' ? (
+                          <img
+                            src={info.src}
+                            alt={tech}
+                            className="tech-badge-img"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        ) : info.icon === 'server' ? (
+                          <Server size={14} className="tech-badge-lucide" />
+                        ) : info.icon === 'mail' ? (
+                          <Mail size={14} className="tech-badge-lucide" />
+                        ) : (
+                          <Code2 size={14} className="tech-badge-lucide" />
+                        )}
+                        <span>{tech}</span>
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </div>

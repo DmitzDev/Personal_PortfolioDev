@@ -1,7 +1,6 @@
 /* ==========================================================================
    MOBILE BOTTOM NAV — HARDWARE INSTRUMENT DOCK
-   Mirrors the desktop nav's skeuomorphic pill bar aesthetic.
-   Each nav item is a tactile keycap that depresses when active.
+   Flush, edge-to-edge instrument bar across the bottom without curved dock edges.
    ========================================================================== */
 
 .mobnav-dock-root {
@@ -17,25 +16,26 @@
     right: 0;
     z-index: 1000;
     pointer-events: none;
-    padding: 0 0.65rem max(0.55rem, env(safe-area-inset-bottom)) 0.65rem;
+    padding: 0;
   }
 
   /* ── Dock Chassis ──
-     Matches the desktop .nav-links pill bar: extruded body,
-     bevel highlights, same border-radius language. */
+     Flush edge-to-edge with no curved outer corners */
   .mobnav-dock {
     pointer-events: auto;
     width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     background: var(--bg-secondary);
-    border-radius: 0.85rem;
-    box-shadow: var(--skeuo-extruded);
-    border-top: 1px solid var(--skeuo-bevel-top);
-    border-bottom: 1px solid var(--skeuo-bevel-bottom);
-    border-left: var(--skeuo-border);
-    border-right: var(--skeuo-border);
-    padding: 0.3rem;
+    border-radius: 0;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.18);
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    padding: 0.35rem 0.5rem max(0.45rem, env(safe-area-inset-bottom)) 0.5rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
   .mobnav-list {
@@ -54,9 +54,7 @@
     min-width: 0;
   }
 
-  /* ── Key Button ──
-     Each nav item is a physical keycap. Default state is raised (extruded).
-     Active state is pressed in (recessed) with accent color. */
+  /* ── Key Button ── */
   .mobnav-key {
     display: flex;
     flex-direction: column;
@@ -65,7 +63,7 @@
     gap: 0.2rem;
     width: 100%;
     padding: 0.5rem 0.15rem;
-    border-radius: 0.6rem;
+    border-radius: 0.35rem;
     background: transparent;
     border: none;
     color: var(--text-muted);
@@ -94,9 +92,7 @@
     transition: color 0.15s ease;
   }
 
-  /* ── Pressed State ──
-     Mirrors .nav-link.active from the desktop nav:
-     recessed shadow, accent color, bg-tertiary fill. */
+  /* ── Pressed State ── */
   .mobnav-key.pressed {
     color: var(--accent);
     background: var(--bg-tertiary);

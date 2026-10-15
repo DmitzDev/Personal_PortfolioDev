@@ -38,11 +38,6 @@ export function Hero() {
       <div className="container hero-container-modern">
         {/* Left Column: Direct Introduction, Role & CTAs */}
         <AnimateOnScroll animation="fade-up" delay={50} className="hero-col-left">
-          <div className="hero-status-pill">
-            <span className="hero-status-dot"></span>
-            <span>Available for Opportunities</span>
-          </div>
-
           <h1 className="hero-editorial-title">
             Hi, I'm <span className="hero-name-gradient">Mitchelle Salazar</span>
           </h1>
@@ -80,7 +75,7 @@ export function Hero() {
           </div>
         </AnimateOnScroll>
 
-        {/* Center Column: Atmospheric Portrait with CeoMitch */}
+        {/* Center Column: Prominent Portrait with CeoMitch */}
         <AnimateOnScroll animation="fade-up" delay={120} className="hero-col-center">
           <div className="portrait-atmosphere-stage">
             <div className="portrait-backlight"></div>
@@ -97,16 +92,12 @@ export function Hero() {
           </div>
         </AnimateOnScroll>
 
-        {/* Right Column: Clean Icon-Only Core Tech Stack Card & Career Timeline Card */}
+        {/* Right Column: Unboxed Clean Core Tech Stack & Career Timeline */}
         <AnimateOnScroll animation="fade-up" delay={180} className="hero-col-right">
-          {/* Top Tech Stack Card - Icon Only */}
-          <div className="floating-tech-card">
-            <div className="tech-card-header">
-              <span className="tech-card-category">Core Stack</span>
-              <div className="tech-live-badge">
-                <span className="tech-live-dot"></span>
-                <span>Active</span>
-              </div>
+          {/* Top Tech Stack Block (Unboxed, Icon Only, No Green Indicator) */}
+          <div className="hero-stack-block">
+            <div className="hero-block-header">
+              <span className="hero-block-title">Core Stack</span>
             </div>
 
             <div className="tech-icons-cluster">
@@ -125,11 +116,10 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Bottom Career Timeline Card */}
-          <div className="floating-career-card">
-            <div className="career-card-header">
-              <span className="career-header-title">Career</span>
-              <span className="career-status-dot" title="Actively coding and building"></span>
+          {/* Bottom Career Timeline Block (Unboxed) */}
+          <div className="hero-career-block">
+            <div className="hero-block-header">
+              <span className="hero-block-title">Career</span>
             </div>
 
             <div className="career-items-list">

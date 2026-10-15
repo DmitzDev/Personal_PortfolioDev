@@ -7,6 +7,7 @@
   transition: all 0.2s ease;
   padding: 1.25rem 0;
   background: transparent;
+  border-radius: 0;
 }
 
 .navbar.scrolled {
@@ -16,6 +17,7 @@
   -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--skeuo-nav-shadow);
   border-bottom: 1px solid var(--border);
+  border-radius: 0;
 }
 
 .navbar-container {

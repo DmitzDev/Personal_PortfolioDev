@@ -53,7 +53,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className={`navbar ${isScrolled ? 'scrolled glass-card' : ''}`}>
+      <header className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="container navbar-container">
           <a
             href="#hero"

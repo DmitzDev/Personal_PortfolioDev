@@ -347,53 +347,58 @@
 
 .cert-swiper-grid {
   display: grid;
-  grid-template-columns: 440px 1fr;
+  grid-template-columns: minmax(320px, 440px) 1fr;
   gap: 2.25rem;
   align-items: center;
   padding: 1.75rem 2rem;
 }
 
-.cert-display-stage {
-  position: relative;
-  width: 100%;
-  height: 440px;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.55) 100%);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4), 0 4px 20px rgba(0, 0, 0, 0.2);
+.cert-stage-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  box-sizing: border-box;
+  width: 100%;
+}
+
+.cert-display-stage {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  height: fit-content;
+  max-height: 440px;
+  border-radius: 0.85rem;
   overflow: hidden;
   cursor: pointer;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  background: transparent;
+  padding: 0;
+  margin: 0 auto;
+  line-height: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 [data-theme="light"] .cert-display-stage {
-  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.02) 0%, rgba(15, 23, 42, 0.08) 100%);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .cert-display-stage:hover {
+  transform: translateY(-3px) scale(1.02);
   border-color: var(--accent);
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 24px rgba(255, 90, 31, 0.2);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 25px rgba(255, 90, 31, 0.25);
 }
 
 .cert-stage-img {
+  display: block;
   max-width: 100% !important;
-  max-height: 100% !important;
+  max-height: 440px !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
-  object-position: center !important;
-  border-radius: 0.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.cert-display-stage:hover .cert-stage-img {
-  transform: scale(1.025);
+  border-radius: calc(0.85rem - 1px);
 }
 
 .cert-stage-overlay {
@@ -406,7 +411,6 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 0.2s ease;
-  border-radius: 1rem;
   pointer-events: none;
 }
 
@@ -1056,21 +1060,30 @@
     padding: 1.15rem 1rem;
   }
 
-  .cert-display-stage {
+  .cert-stage-wrapper {
     width: 100%;
-    height: 380px;
-    max-height: 60vh;
-    padding: 0.75rem;
-    border-radius: 0.85rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cert-display-stage {
+    width: fit-content;
+    max-width: 100%;
+    height: fit-content;
+    max-height: 380px;
+    padding: 0;
+    border-radius: 0.75rem;
   }
 
   .cert-stage-img {
+    display: block;
     max-width: 100% !important;
-    max-height: 100% !important;
+    max-height: 380px !important;
     width: auto !important;
     height: auto !important;
     object-fit: contain !important;
-    object-position: center !important;
+    border-radius: calc(0.75rem - 1px);
   }
 
   /* 2-column mobile grid for education and credentials */

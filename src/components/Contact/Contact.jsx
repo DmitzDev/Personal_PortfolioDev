@@ -76,7 +76,6 @@ export function Contact() {
     <section id="contact" className="section contact-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">GET IN TOUCH</div>
           <h2 className="section-title">Let's Build Something Exceptional</h2>
           <p className="section-subtitle">
             Whether you have an upcoming web project, need a front-end MVP engineered, or want to discuss front-end contracting — my inbox is open.

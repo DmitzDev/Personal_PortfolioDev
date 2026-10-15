@@ -42,7 +42,6 @@ export function Testimonials() {
     <section id="testimonials" className="section testimonials-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">// 05. SOCIAL PROOF & FEEDBACK</div>
           <h2 className="section-title">What Clients & Collaborators Say</h2>
           <p className="section-subtitle">
             Feedback from real-world business owners, team leads, and mentors on communication, code delivery, and work ethic.

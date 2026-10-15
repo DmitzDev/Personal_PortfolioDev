@@ -15,7 +15,6 @@ export function Experience() {
     <section id="experience" className="section experience-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">CAREER & CREDENTIALS</div>
           <h2 className="section-title">Experience, Education & Credentials</h2>
           <p className="section-subtitle">
             A comprehensive record of client engagements, technical internships, computer engineering education, and industry certifications.

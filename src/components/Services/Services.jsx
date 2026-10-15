@@ -16,7 +16,6 @@ export function Services() {
     <section id="services" className="section services-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">CLIENT SOLUTIONS</div>
           <h2 className="section-title">What I Build For Clients & Teams</h2>
           <p className="section-subtitle">
             Reliable engineering services tailored for founders, businesses, and development teams seeking speed, quality, and measurable ROI.

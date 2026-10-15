@@ -18,7 +18,6 @@ export function Skills() {
     <section id="skills" className="section skills-section">
       <div className="container">
         <div className="section-header">
-          <div className="section-tag">TECHNICAL ARCHITECTURE</div>
           <h2 className="section-title">Core Engineering Capabilities</h2>
           <p className="section-subtitle">
             Focused on modern front-end development, responsive component architecture, and high-performance cloud databases.

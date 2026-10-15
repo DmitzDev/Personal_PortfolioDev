@@ -1,185 +1,208 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Mail, FileText } from 'lucide-react';
-import { personalInfo } from '../../data/personalInfo';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import mitchNoBg from '../../assets/Mitch-NoBG.png';
 import mitchSmileNoBg from '../../assets/MitchSmile-NoBG.png';
 import shadeImg from '../../assets/Shade.png';
 import './Hero.css';
 
+const metricsData = [
+  {
+    header: "Client-Side Optimization • Core Web Vitals",
+    stat: "-67%",
+    description: "Two-thirds lower initial bundle latency after modular architecture optimizations"
+  },
+  {
+    header: "Production Lighthouse Audit • Performance",
+    stat: "99%",
+    description: "Near-perfect Lighthouse audit scores on performance, accessibility, and SEO"
+  },
+  {
+    header: "First Contentful Paint • SPA Routing",
+    stat: "<1s",
+    description: "Sub-second time-to-interactive with Vite and efficient client-side hydration"
+  },
+  {
+    header: "Production Web Applications • Live",
+    stat: "5+",
+    description: "Production-ready platforms shipped with zero server persistence bloat"
+  }
+];
+
 export function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayText, setDisplayText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(80);
+  const [activeMetric, setActiveMetric] = useState(0);
   const [isSmiling, setIsSmiling] = useState(false);
 
-  // Typing effect logic
+  // Auto-cycle through metrics every 5 seconds
   useEffect(() => {
-    const handleTyping = () => {
-      const currentRole = personalInfo.roles[roleIndex];
+    const interval = setInterval(() => {
+      setActiveMetric((prev) => (prev + 1) % metricsData.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-      if (isDeleting) {
-        setDisplayText(currentRole.substring(0, displayText.length - 1));
-        setTypingSpeed(40);
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const navOffset = window.innerWidth <= 768 ? 64 : 76;
+      const targetTop = element.getBoundingClientRect().top + window.scrollY - navOffset;
+      if (window.lenis) {
+        window.lenis.scrollTo(targetTop, { duration: 1.1 });
       } else {
-        setDisplayText(currentRole.substring(0, displayText.length + 1));
-        setTypingSpeed(80);
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: 'smooth'
+        });
       }
-
-      if (!isDeleting && displayText === currentRole) {
-        setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && displayText === '') {
-        setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % personalInfo.roles.length);
-      }
-    };
-
-    const timer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [displayText, isDeleting, roleIndex, typingSpeed]);
+    }
+  };
 
   return (
-    <section id="hero" className="hero-section">
-      <div className="container hero-container">
-        {/* Left Column: Client Proposition & Actions */}
-        <AnimateOnScroll animation="fade-up" delay={50} className="hero-content">
-          {/* Live Availability Status Badge */}
-          <div className="hero-status-badge">
-            <span className="status-dot-wrapper">
-              <span className="status-indicator-ping"></span>
-              <span className="status-indicator-dot"></span>
-            </span>
-            <span>Available for New Projects &amp; Contracts</span>
-          </div>
+    <section id="hero" className="hero-section modern-hero">
+      <div className="hero-ambient-fog"></div>
 
-          <h1 className="hero-title">
-            Hi, I'm <span className="title-accent">Mitchelle Salazar</span> 👋
+      <div className="container hero-container-modern">
+        {/* Left Column: Big Editorial Headline & Proposition */}
+        <AnimateOnScroll animation="fade-up" delay={50} className="hero-col-left">
+          <h1 className="hero-editorial-title">
+            I build products<br />
+            and the<br />
+            web interfaces<br />
+            behind them.
           </h1>
 
-          {/* Desktop Role Console Badge */}
-          <div className="hero-role-console desktop-hero-role">
-            <span className="console-prompt">&gt;</span>
-            <span className="console-text">{displayText}</span>
-            <span className="console-cursor">_</span>
-          </div>
-
-          <p className="hero-description">
-            Front-End Developer &amp; Computer Engineering student from the Philippines. I build fast, interactive web applications with modern React, clean component architecture, and tactile interfaces.
+          <p className="hero-editorial-description">
+            I engineer modern front-end platforms and bring computer engineering logic into tactile web design — from interactive prototypes to production-ready systems. Computer Engineering undergraduate based in the Philippines.
           </p>
 
-          {/* Authentic Engineering Gauges */}
-          <div className="hero-gauges-grid">
-            <div className="gauge-card">
-              <span className="gauge-val">5</span>
-              <span className="gauge-label">Live Web Apps</span>
-            </div>
-            <div className="gauge-card">
-              <span className="gauge-val">CpE</span>
-              <span className="gauge-label">Computer Eng.</span>
-            </div>
-            <div className="gauge-card">
-              <span className="gauge-val">React</span>
-              <span className="gauge-label">Core Ecosystem</span>
-            </div>
-          </div>
-
-          {/* Physical Buttons */}
-          <div className="hero-actions">
-            <a href="#projects" className="btn-primary">
-              <span>Explore Projects</span>
-              <ArrowRight size={17} />
-            </a>
-            <a href="#contact" className="btn-secondary">
-              <Mail size={17} />
-              <span>Get in Touch</span>
+          <div className="hero-editorial-actions">
+            <a
+              href="#contact"
+              className="btn-coral-pill"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo('contact');
+              }}
+            >
+              <span>Get in touch</span>
             </a>
             <a
-              href={personalInfo.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-resume-tactile"
-              title="Download verified resume"
+              href="#projects"
+              className="link-selected-work"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo('projects');
+              }}
             >
-              <FileText size={16} />
-              <span>Resume PDF</span>
+              <span>View selected work</span>
+              <span className="arrow-sym">→</span>
             </a>
           </div>
         </AnimateOnScroll>
 
-        {/* Right Column: Tactile Hardware Instrument Plaque */}
-        <AnimateOnScroll animation="fade-up" delay={150} className="hero-visual-wrapper">
-          {/* Mobile-only Role Console (Placed above the portrait chassis on phone screens) */}
-          <div className="hero-role-console mobile-hero-role">
-            <span className="console-prompt">&gt;</span>
-            <span className="console-text">{displayText}</span>
-            <span className="console-cursor">_</span>
+        {/* Center Column: Atmospheric Portrait with smooth gradient mask */}
+        <AnimateOnScroll animation="fade-up" delay={120} className="hero-col-center">
+          <div
+            className={`portrait-atmosphere-stage ${isSmiling ? 'active-smile' : ''}`}
+            onMouseEnter={() => setIsSmiling(true)}
+            onMouseLeave={() => setIsSmiling(false)}
+            onClick={() => setIsSmiling(prev => !prev)}
+            title="Tap or hover for shades toggle"
+          >
+            <div className="portrait-backlight"></div>
+
+            <div className="portrait-mask-wrapper">
+              {/* Default Focused Look */}
+              <img
+                src={mitchNoBg}
+                alt="Mitchelle Salazar"
+                className={`portrait-img portrait-serious ${isSmiling ? 'faded' : 'active'}`}
+              />
+
+              {/* Smiling Look */}
+              <img
+                src={mitchSmileNoBg}
+                alt="Mitchelle Salazar smiling"
+                className={`portrait-img portrait-smile ${isSmiling ? 'active' : 'faded'}`}
+              />
+
+              {/* Dark Sunglasses (like Pavel in the reference photo) */}
+              <img
+                src={shadeImg}
+                alt="Sunglasses"
+                className={`portrait-shades ${isSmiling ? 'visible' : 'hidden'}`}
+              />
+            </div>
+            <div className="portrait-ground-fade"></div>
           </div>
+        </AnimateOnScroll>
 
-          <div className="hardware-chassis">
-            {/* Corner Mechanical Screws */}
-            <span className="screw screw-tl"></span>
-            <span className="screw screw-tr"></span>
-            <span className="screw screw-bl"></span>
-            <span className="screw screw-br"></span>
-
-            {/* Recessed Portrait Chamber (Interactive: Hover or Tap to swap to Smile + Shades) */}
-            <div
-              className={`portrait-chamber ${isSmiling ? 'active-smile' : ''}`}
-              onMouseEnter={() => setIsSmiling(true)}
-              onMouseLeave={() => setIsSmiling(false)}
-              onClick={() => setIsSmiling(prev => !prev)}
-              onTouchStart={() => setIsSmiling(prev => !prev)}
-              title="Click or tap to toggle smile & shades!"
-            >
-              <div className="chamber-spotlight"></div>
-
-              {/* Exact 1:1 Stage Wrapper so shades scale and align 100% with the face */}
-              <div className="portrait-stage">
-                {/* Default Focused Look */}
-                <img
-                  src={mitchNoBg}
-                  alt={personalInfo.name}
-                  className={`chassis-portrait portrait-serious ${isSmiling ? 'faded' : 'active'}`}
-                />
-
-                {/* Smiling Look */}
-                <img
-                  src={mitchSmileNoBg}
-                  alt={`${personalInfo.name} smiling`}
-                  className={`chassis-portrait portrait-smile ${isSmiling ? 'active' : 'faded'}`}
-                />
-
-                {/* Pixel Shades positioned exactly over eyes */}
-                <img
-                  src={shadeImg}
-                  alt="Shades"
-                  className={`chassis-shades ${isSmiling ? 'visible' : 'hidden'}`}
-                />
-              </div>
-
-              <div className="chamber-base-shadow"></div>
+        {/* Right Column: Two Floating Frosted Glass Cards */}
+        <AnimateOnScroll animation="fade-up" delay={180} className="hero-col-right">
+          {/* Top Metric Card */}
+          <div className="floating-metric-card">
+            <div className="metric-card-top">
+              <span className="metric-card-category">{metricsData[activeMetric].header}</span>
+            </div>
+            
+            <div className="metric-stat-display">
+              <span className="matrix-digits">{metricsData[activeMetric].stat}</span>
             </div>
 
-            {/* Stamped Metal Specification Plaque */}
-            <div className="hardware-spec-plate">
-              <div className="spec-row-main">
-                <span className="spec-name">{personalInfo.fullName.toUpperCase()} • DEVELOPER</span>
-                <span className="spec-tag">FRONT-END &amp; CpE</span>
+            <p className="metric-card-caption">
+              {metricsData[activeMetric].description}
+            </p>
+
+            {/* Carousel Dots */}
+            <div className="metric-dots-nav">
+              {metricsData.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`metric-dot ${activeMetric === idx ? 'active' : ''}`}
+                  onClick={() => setActiveMetric(idx)}
+                  aria-label={`Show metric ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Career Timeline Card */}
+          <div className="floating-career-card">
+            <div className="career-card-header">
+              <span className="career-header-title">Career</span>
+              <span className="career-status-dot" title="Actively coding and building"></span>
+            </div>
+
+            <div className="career-items-list">
+              <div className="career-item-row active-now">
+                <span className="career-year-tag">2024–NOW</span>
+                <div className="career-text-block">
+                  <span className="career-org">Independent Web Dev</span>
+                  <span className="career-role-desc">Freelance, React &amp; UI Architecture</span>
+                </div>
               </div>
-              <div className="spec-divider"></div>
-              <div className="spec-items-grid">
-                <div className="spec-item">
-                  <span className="spec-k">CORE STACK</span>
-                  <span className="spec-v">React • Node • Firebase • Vite</span>
+
+              <div className="career-item-row">
+                <span className="career-year-tag">2023–NOW</span>
+                <div className="career-text-block">
+                  <span className="career-org">Universidad de Dagupan</span>
+                  <span className="career-role-desc">Lead Frontend &amp; System Projects</span>
                 </div>
-                <div className="spec-item">
-                  <span className="spec-k">FOCUS</span>
-                  <span className="spec-v">Web Apps &amp; Production UX</span>
+              </div>
+
+              <div className="career-item-row">
+                <span className="career-year-tag">2023–NOW</span>
+                <div className="career-text-block">
+                  <span className="career-org">Personal Products</span>
+                  <span className="career-role-desc">CV Studio, MDev Blog, Web Apps</span>
                 </div>
-                <div className="spec-item">
-                  <span className="spec-k">LOCATION</span>
-                  <span className="spec-v">Philippines (UTC+8) • Remote</span>
+              </div>
+
+              <div className="career-item-row">
+                <span className="career-year-tag">2022–2026</span>
+                <div className="career-text-block">
+                  <span className="career-org">B.S. Computer Engineering</span>
+                  <span className="career-role-desc">Undergraduate Candidate</span>
                 </div>
               </div>
             </div>

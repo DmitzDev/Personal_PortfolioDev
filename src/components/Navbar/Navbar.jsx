@@ -61,20 +61,20 @@ export function Navbar() {
         <div className="container navbar-container">
           <a
             href="#hero"
-            className="logo-container"
+            className="capsule-brand-pill"
             onClick={(e) => {
               e.preventDefault();
               scrollTo('hero');
             }}
           >
-            <img src={personalInfo.logoImage} alt="Logo" className="nav-logo-img" />
-            <span className="logo">Mitch<span className="logo-accent">Dev.</span></span>
+            <span className="brand-pill-name">{personalInfo.fullName || personalInfo.name}</span>
+            <span className="brand-pill-role">Front-End Developer</span>
           </a>
 
           {/* Desktop Nav */}
           <nav className="desktop-nav">
             <ul className="nav-links">
-              {navLinks.map((link) => (
+              {navLinks.filter(l => l.id !== 'contact').map((link) => (
                 <li key={link.id}>
                   <a
                     href={`#${link.id}`}
@@ -92,19 +92,31 @@ export function Navbar() {
             <div className="nav-actions">
               <ThemeToggle />
               <a
-                href={personalInfo.resumeUrl}
-                className="btn-resume"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#contact"
+                className="btn-coral-nav-contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo('contact');
+                }}
               >
-                Resume
+                Contact
               </a>
             </div>
           </nav>
 
-          {/* Mobile Top Header (Theme Toggle) */}
+          {/* Mobile Top Header */}
           <div className="mobile-nav-toggle">
             <ThemeToggle />
+            <a
+              href="#contact"
+              className="btn-coral-nav-contact mobile-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo('contact');
+              }}
+            >
+              Contact
+            </a>
           </div>
         </div>
       </header>

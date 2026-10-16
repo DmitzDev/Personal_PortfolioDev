@@ -6,9 +6,9 @@ import { MobileBottomNav } from './MobileBottomNav';
 import './Navbar.css';
 
 const navLinks = [
-  { id: 'hero', label: 'Overview' },
+  { id: 'hero', label: 'Home' },
   { id: 'projects', label: 'Projects' },
-  { id: 'skills', label: 'Capabilities' },
+  { id: 'skills', label: 'Tech' },
   { id: 'services', label: 'Services' },
   { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' },

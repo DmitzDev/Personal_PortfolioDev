@@ -4,10 +4,10 @@ import './MobileBottomNav.css';
 
 const navItems = [
   { id: 'hero', label: 'Home', icon: Home },
-  { id: 'projects', label: 'Work', icon: FolderKanban },
-  { id: 'skills', label: 'Stack', icon: Cpu },
-  { id: 'experience', label: 'Career', icon: Briefcase },
-  { id: 'contact', label: 'Reach', icon: Send },
+  { id: 'projects', label: 'Projects', icon: FolderKanban },
+  { id: 'skills', label: 'Tech', icon: Cpu },
+  { id: 'experience', label: 'Experience', icon: Briefcase },
+  { id: 'contact', label: 'Contact', icon: Send },
 ];
 
 export function MobileBottomNav({ activeSection, scrollTo }) {

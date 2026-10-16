@@ -500,16 +500,8 @@ export function Experience() {
                       </div>
                     )}
 
-                    <div className="cert-unboxed-actions">
-                      <button
-                        type="button"
-                        className="btn-primary cert-action-btn"
-                        onClick={() => setSelectedCert(currentCert)}
-                      >
-                        <Maximize2 size={15} />
-                        <span>View Full Certificate</span>
-                      </button>
-                      {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
+                    {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
+                      <div className="cert-unboxed-actions">
                         <a
                           href={currentCert.credentialUrl}
                           target="_blank"
@@ -519,8 +511,8 @@ export function Experience() {
                           <ExternalLink size={15} />
                           <span>Verify Credential</span>
                         </a>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 );
               })()}

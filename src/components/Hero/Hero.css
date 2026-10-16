@@ -214,6 +214,34 @@
   text-align: left;
 }
 
+/* Mobile/Tablet Arch Linux Icon between MITCHELLE and SALAZAR (Hidden on Desktop) */
+.hero-name-arch-badge {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+  color: #ff2a51; /* Dark Mode Red by default */
+  filter: drop-shadow(0 0 10px rgba(255, 42, 81, 0.8)) drop-shadow(0 0 20px rgba(255, 42, 81, 0.45));
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease, transform 0.25s ease;
+}
+
+[data-theme="light"] .hero-name-arch-badge {
+  color: #1791cf; /* Original Arch Linux Blue in Light Mode */
+  filter: drop-shadow(0 2px 8px rgba(23, 145, 207, 0.5));
+}
+
+[data-theme="dark"] .hero-name-arch-badge {
+  color: #ff2a51; /* Radiant Red Arch Linux Icon in Dark Mode */
+  filter: drop-shadow(0 0 12px rgba(255, 42, 81, 0.85)) drop-shadow(0 0 24px rgba(255, 42, 81, 0.5));
+}
+
+.hero-name-arch-svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
 /* Portrait Stage in Front of the Monumental Name (Balanced optical centering) */
 .hero-portrait-stage {
   position: relative;
@@ -503,12 +531,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(0.75rem, 2vw, 1.4rem);
+    gap: clamp(0.5rem, 1.8vw, 1.1rem);
     width: auto;
     max-width: 100%;
-    font-size: clamp(2.2rem, 5.8vw, 3.8rem);
+    font-size: clamp(2rem, 5.2vw, 3.4rem);
     color: #ffffff !important;
     text-shadow: 0 4px 22px rgba(0, 0, 0, 0.9);
+  }
+
+  .hero-name-arch-badge {
+    display: inline-flex;
+    margin: 0 0.15rem;
+  }
+
+  .hero-name-arch-svg {
+    width: clamp(20px, 4.4vw, 28px);
+    height: clamp(20px, 4.4vw, 28px);
   }
 
   .name-first,
@@ -525,7 +563,7 @@
 
 /* Phone / Mobile Browser (iPhone 14 Pro, Pixel 7, iPhone 14 Pro Max):
    NAME is IN FRONT of picture (z-index: 10), layered on top across the bottom
-   of the portrait. Mitch's face/head is completely unobstructed above! */
+   of the portrait with the Arch Linux icon right in between! */
 @media (max-width: 768px) {
   .hero-section.editorial-hero {
     min-height: auto;
@@ -550,7 +588,7 @@
     transform: none;
   }
 
-  /* Layered IN FRONT of the picture at the bottom of the portrait (Single prominent line) */
+  /* Layered IN FRONT of the picture at the bottom of the portrait (Single prominent line with Arch Linux Icon) */
   .hero-monumental-name {
     z-index: 10;
     top: auto;
@@ -561,17 +599,27 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 0.45rem;
+    gap: clamp(0.25rem, 1.4vw, 0.45rem);
     line-height: 0.9;
     letter-spacing: -0.04em;
     width: 100%;
     max-width: 100%;
-    padding: 0 0.5rem;
-    font-size: clamp(1.6rem, 7.4vw, 2.35rem);
+    padding: 0 0.4rem;
+    font-size: clamp(1.35rem, 6.2vw, 2.2rem);
     white-space: nowrap;
     opacity: 1;
     color: #ffffff !important;
     text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95);
+  }
+
+  .hero-name-arch-badge {
+    display: inline-flex;
+    margin: 0 0.1rem;
+  }
+
+  .hero-name-arch-svg {
+    width: clamp(15px, 4.6vw, 21px);
+    height: clamp(15px, 4.6vw, 21px);
   }
 
   .name-first,
@@ -685,9 +733,14 @@
 
   .hero-monumental-name {
     bottom: 10px;
-    font-size: clamp(1.45rem, 7.2vw, 2.15rem);
+    font-size: clamp(1.22rem, 6.2vw, 1.95rem);
     letter-spacing: -0.04em;
-    gap: 0.38rem;
+    gap: 0.32rem;
+  }
+
+  .hero-name-arch-svg {
+    width: clamp(13px, 4.2vw, 18px);
+    height: clamp(13px, 4.2vw, 18px);
   }
 
   .hero-corner-actions {

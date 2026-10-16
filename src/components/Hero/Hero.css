@@ -1,6 +1,6 @@
 /* ==========================================================================
    EDITORIAL HERO SECTION (Inspired by Reference Design)
-   Monumental name layered behind portrait + left corner bio & CTAs
+   Mathematically centered monumental name layered behind portrait + left corner bio & CTAs
    ========================================================================== */
 
 .hero-section.editorial-hero {
@@ -58,18 +58,18 @@
 }
 
 /* Monumental Name Layer (Layered Underneath Picture)
-   Tightly framed beside Mitch's neck and head without empty gap */
+   3-Column Grid guarantees 100% mathematical center for Mitch's head and neck.
+   Lowered top position hugs the neck and ears directly instead of floating above the head. */
 .hero-monumental-name {
   position: absolute;
-  top: 6%;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
   max-width: 1560px;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr clamp(8.5rem, 11.5vw, 13.5rem) 1fr;
   align-items: center;
-  gap: clamp(8.5rem, 11.5vw, 13.5rem);
   margin: 0;
   padding: 0 1.5rem;
   box-sizing: border-box;
@@ -94,16 +94,19 @@
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-.name-word {
-  display: inline-block;
-}
-
 .name-word.name-first {
   text-align: right;
+  justify-self: end;
+}
+
+.name-spacer {
+  display: block;
+  width: 100%;
 }
 
 .name-word.name-last {
   text-align: left;
+  justify-self: start;
 }
 
 /* Portrait Stage in Front of the Monumental Name */
@@ -287,14 +290,14 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (Desktop Scales, Tablet & Mobile)
+   RESPONSIVE DESIGN (Desktop Scales, Tablet / iPad & Mobile)
    ========================================================================== */
 
 @media (max-width: 1280px) {
   .hero-monumental-name {
     font-size: clamp(2.6rem, 6.8vw, 6.2rem);
-    gap: clamp(7.5rem, 10.5vw, 11.5rem);
-    top: 6%;
+    grid-template-columns: 1fr clamp(7.5rem, 10.5vw, 11.5rem) 1fr;
+    top: 14%;
   }
 
   .hero-portrait-stage {
@@ -303,28 +306,48 @@
   }
 }
 
+/* Tablet / iPad (Eliminates deadspace, tight cohesive layout) */
 @media (max-width: 1024px) {
   .hero-section.editorial-hero {
-    padding: 6rem 2rem 2.25rem 2rem;
+    min-height: auto;
+    height: auto;
+    padding: 5.5rem 2rem 2.25rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .hero-center-stage {
+    min-height: auto;
+    flex: none;
+    margin-bottom: 0.5rem;
   }
 
   .hero-monumental-name {
-    font-size: clamp(2.2rem, 5.8vw, 4.8rem);
-    gap: clamp(6.5rem, 9.5vw, 10rem);
-    top: 6%;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    grid-template-columns: 1fr clamp(6.5rem, 9.5vw, 10rem) 1fr;
+    top: 12%;
   }
 
   .hero-portrait-stage {
     height: 440px;
-    max-height: 55vh;
+    max-height: 52vh;
+  }
+
+  .hero-bottom-bar {
+    margin-top: 0.5rem;
   }
 }
 
+/* Phone / Mobile Browser:
+   Explicitly stacked as:
+   MITCHELLE
+   SALAZAR
+   with zero deadspace and portrait emerging seamlessly below it */
 @media (max-width: 768px) {
   .hero-section.editorial-hero {
     min-height: auto;
-    padding: 5.25rem 1.25rem 3.5rem 1.25rem;
-    gap: 1.5rem;
+    height: auto;
+    padding: 4.8rem 1.25rem 2.5rem 1.25rem;
+    gap: 1rem;
   }
 
   .hero-center-stage {
@@ -334,41 +357,56 @@
     justify-content: flex-start;
     position: relative;
     width: 100%;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
   }
 
-  /* On mobile: MITCHELLE on top row, SALAZAR on second row.
-     MITCHELLE is 100% visible and unblocked above the portrait */
+  /* Mobile Stacked Name:
+     MITCHELLE
+     SALAZAR */
   .hero-monumental-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     position: relative;
     top: auto;
     left: auto;
     transform: none;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0;
-    font-size: clamp(2.75rem, 12.5vw, 4.2rem);
+    gap: 0.15rem;
+    font-size: clamp(2.6rem, 12vw, 3.8rem);
     letter-spacing: -0.04em;
     line-height: 0.92;
     width: 100%;
-    margin-bottom: -3.5rem;
+    margin: 0 auto;
     z-index: 1;
     padding: 0;
+  }
+
+  .name-spacer {
+    display: none;
+  }
+
+  .name-word.name-first,
+  .name-word.name-last {
+    display: block;
+    width: 100%;
+    text-align: center;
+    justify-self: auto;
   }
 
   .hero-portrait-stage {
     position: relative;
     z-index: 2;
-    height: 360px;
-    max-height: 48vh;
+    height: 330px;
+    max-height: 45vh;
     width: auto;
-    margin: 0 auto;
+    margin: -1.75rem auto 0 auto;
   }
 
   .portrait-backlight {
-    width: 240px;
-    height: 240px;
+    width: 220px;
+    height: 220px;
     top: 5%;
   }
 
@@ -386,9 +424,9 @@
     z-index: 3;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.5rem;
+    gap: 1.25rem;
     width: 100%;
-    margin-top: -1rem;
+    margin-top: 0;
     padding: 0;
   }
 
@@ -398,15 +436,15 @@
   }
 
   .hero-corner-role {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     line-height: 1.35;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.45rem;
   }
 
   .hero-corner-desc {
     font-size: 0.85rem;
     line-height: 1.6;
-    margin-bottom: 1.15rem;
+    margin-bottom: 1rem;
   }
 
   .hero-corner-actions {
@@ -418,7 +456,7 @@
   }
 
   .hero-btn-corner {
-    padding: 0.65rem 1.25rem;
+    padding: 0.62rem 1.25rem;
     font-size: 0.825rem;
   }
 
@@ -429,7 +467,7 @@
   .hero-bottom-right-corner {
     width: 100%;
     align-items: flex-start;
-    padding-top: 1rem;
+    padding-top: 0.85rem;
     border-top: 1px solid var(--border);
   }
 
@@ -446,29 +484,29 @@
 
 @media (max-width: 480px) {
   .hero-section.editorial-hero {
-    padding-top: 4.8rem;
+    padding-top: 4.5rem;
     padding-bottom: 2rem;
   }
 
   .hero-monumental-name {
-    font-size: clamp(2.35rem, 11.5vw, 3.2rem);
-    margin-bottom: -2.75rem;
+    font-size: clamp(2.35rem, 11vw, 3.2rem);
   }
 
   .hero-portrait-stage {
-    height: 320px;
-    max-height: 44vh;
+    height: 290px;
+    max-height: 40vh;
+    margin-top: -1.25rem;
   }
 
   .hero-corner-actions {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: 0.75rem;
     width: 100%;
   }
 
   .hero-btn-corner {
-    width: 100%;
+    flex: 1;
     text-align: center;
     justify-content: center;
   }

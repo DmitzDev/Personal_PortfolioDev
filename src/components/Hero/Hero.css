@@ -165,7 +165,7 @@
    falling right behind Mitch's neck at neck level (top: 38%) */
 .hero-monumental-name {
   position: absolute;
-  top: 38%;
+  bottom: clamp(190px, 24vh, 260px);
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -487,7 +487,7 @@
   .hero-monumental-name {
     font-size: clamp(2.8rem, 6.6vw, 6.2rem);
     gap: clamp(120px, 14vw, 180px);
-    top: 38%;
+    bottom: clamp(170px, 24vh, 230px);
   }
 
   .hero-portrait-stage {
@@ -497,10 +497,10 @@
   }
 }
 
-/* Tablet / iPad:
+/* Tablet / iPad (Includes iPad Air 1076x1180, iPad Pro 11", iPad 10.2"):
    NAME moves to the FRONT of the picture (z-index: 10),
-   layered on top at the bottom of the portrait. */
-@media (max-width: 1024px) {
+   layered on top at the bottom of the portrait with the Arch Linux icon. */
+@media (max-width: 1200px) {
   .hero-section.editorial-hero {
     min-height: auto;
     height: auto;
@@ -509,23 +509,23 @@
   }
 
   .hero-center-stage {
-    min-height: 440px;
+    min-height: 460px;
     flex: none;
     margin-bottom: 0.5rem;
   }
 
-  /* Reset desktop shift so portrait is centered on tablet */
+  /* Centered portrait stage on tablet */
   .hero-portrait-stage {
-    height: 440px;
-    max-height: 52vh;
+    height: clamp(440px, 52vh, 580px);
+    max-height: 56vh;
     transform: none;
   }
 
-  /* In front of picture, layered at the bottom of the portrait */
+  /* In front of picture, layered at the bottom of the portrait with Arch Linux icon */
   .hero-monumental-name {
     z-index: 10;
     top: auto;
-    bottom: 16px;
+    bottom: 18px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;

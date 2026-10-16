@@ -78,6 +78,7 @@
 .hero-name-gradient {
   background: var(--gradient-text);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
@@ -85,6 +86,7 @@
 [data-theme="dark"] .hero-name-gradient {
   background: linear-gradient(180deg, #ffffff 20%, #cbd5e1 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

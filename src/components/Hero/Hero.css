@@ -57,20 +57,24 @@
   min-height: 500px;
 }
 
-/* Monumental Name Layer (Layered Underneath Picture) */
+/* Monumental Name Layer (Layered Underneath Picture)
+   Wide gap frames Mitch's head perfectly in the center so "LE" in MITCHELLE is 100% visible */
 .hero-monumental-name {
   position: absolute;
-  top: 4%;
+  top: 5%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
+  max-width: 1560px;
   display: flex;
   justify-content: center;
-  gap: 0.28em;
+  align-items: center;
+  gap: clamp(14rem, 24vw, 30rem);
   margin: 0;
-  padding: 0;
+  padding: 0 2rem;
+  box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(3.2rem, 9.6vw, 9.8rem);
+  font-size: clamp(3rem, 7.2vw, 8.2rem);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.9;
@@ -92,6 +96,14 @@
 
 .name-word {
   display: inline-block;
+}
+
+.name-word.name-first {
+  text-align: right;
+}
+
+.name-word.name-last {
+  text-align: left;
 }
 
 /* Portrait Stage in Front of the Monumental Name */
@@ -275,76 +287,120 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE (Tablet & Mobile)
+   RESPONSIVE DESIGN (Desktop Scales, Tablet & Mobile)
    ========================================================================== */
+
+@media (max-width: 1280px) {
+  .hero-monumental-name {
+    font-size: clamp(2.6rem, 6.2vw, 5.8rem);
+    gap: clamp(11rem, 20vw, 22rem);
+    top: 6%;
+  }
+
+  .hero-portrait-stage {
+    height: 500px;
+    max-height: 60vh;
+  }
+}
 
 @media (max-width: 1024px) {
   .hero-section.editorial-hero {
     padding: 6rem 2rem 2.25rem 2rem;
   }
 
-  .hero-portrait-stage {
-    height: 480px;
-    max-height: 58vh;
+  .hero-monumental-name {
+    font-size: clamp(2.2rem, 5.5vw, 4.6rem);
+    gap: clamp(9rem, 18vw, 17rem);
+    top: 6%;
   }
 
-  .hero-monumental-name {
-    top: 5%;
-    font-size: clamp(2.8rem, 9.2vw, 6.5rem);
+  .hero-portrait-stage {
+    height: 440px;
+    max-height: 55vh;
   }
 }
 
 @media (max-width: 768px) {
   .hero-section.editorial-hero {
     min-height: auto;
-    padding: 5.5rem 1.25rem 3.5rem 1.25rem;
-    gap: 1.75rem;
+    padding: 5.25rem 1.25rem 3.5rem 1.25rem;
+    gap: 1.5rem;
   }
 
   .hero-center-stage {
     min-height: auto;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     position: relative;
     width: 100%;
+    margin-top: 0.5rem;
   }
 
+  /* On mobile: MITCHELLE on top row, SALAZAR on second row.
+     MITCHELLE is 100% visible and unblocked above the portrait */
   .hero-monumental-name {
-    top: 0;
-    font-size: clamp(2.4rem, 11vw, 3.8rem);
-    letter-spacing: -0.03em;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 0;
-    line-height: 0.95;
-    position: absolute;
+    font-size: clamp(2.75rem, 12.5vw, 4.2rem);
+    letter-spacing: -0.04em;
+    line-height: 0.92;
     width: 100%;
+    margin-bottom: -3.5rem;
+    z-index: 1;
+    padding: 0;
   }
 
   .hero-portrait-stage {
-    height: 380px;
-    max-height: 52vh;
-    margin-top: 2rem;
-    width: 100%;
+    position: relative;
+    z-index: 2;
+    height: 360px;
+    max-height: 48vh;
+    width: auto;
+    margin: 0 auto;
   }
 
   .portrait-backlight {
-    width: 250px;
-    height: 250px;
-    top: 10%;
+    width: 240px;
+    height: 240px;
+    top: 5%;
+  }
+
+  .portrait-img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0, 0, 0, 0.4) 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0, 0, 0, 0.4) 90%, transparent 100%);
   }
 
   .hero-bottom-bar {
+    position: relative;
+    z-index: 3;
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
+    width: 100%;
+    margin-top: -1rem;
+    padding: 0;
   }
 
   .hero-bottom-left-corner {
+    width: 100%;
     max-width: 100%;
   }
 
   .hero-corner-role {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    margin-bottom: 0.55rem;
   }
 
   .hero-corner-desc {
@@ -354,17 +410,25 @@
   }
 
   .hero-corner-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 0.85rem;
+    width: 100%;
   }
 
   .hero-btn-corner {
-    padding: 0.6rem 1.25rem;
-    font-size: 0.84rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.825rem;
+  }
+
+  .hero-link-work {
+    font-size: 0.85rem;
   }
 
   .hero-bottom-right-corner {
-    align-items: flex-start;
     width: 100%;
+    align-items: flex-start;
     padding-top: 1rem;
     border-top: 1px solid var(--border);
   }
@@ -377,5 +441,35 @@
   .hero-corner-tech-img {
     width: 24px;
     height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section.editorial-hero {
+    padding-top: 4.8rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-monumental-name {
+    font-size: clamp(2.35rem, 11.5vw, 3.2rem);
+    margin-bottom: -2.75rem;
+  }
+
+  .hero-portrait-stage {
+    height: 320px;
+    max-height: 44vh;
+  }
+
+  .hero-corner-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .hero-btn-corner {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 }

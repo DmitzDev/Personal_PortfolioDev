@@ -40,8 +40,8 @@ export function Hero() {
       <div className="hero-center-stage">
         {/* Giant Name Typography Layer (Layered Underneath Picture) */}
         <h1 className="hero-monumental-name" aria-label="Mitchelle Salazar">
-          <span className="name-word">MITCHELLE</span>
-          <span className="name-word">SALAZAR</span>
+          <span className="name-word name-first">MITCHELLE</span>
+          <span className="name-word name-last">SALAZAR</span>
         </h1>
 
         {/* Portrait in Foreground Layer Overlapping the Name */}

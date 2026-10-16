@@ -172,7 +172,7 @@
   max-width: 1560px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(65px, 8vw, 125px);
+  gap: clamp(110px, 12vw, 200px);
   margin: 0;
   padding: 0 1.5rem;
   box-sizing: border-box;
@@ -205,15 +205,13 @@
 .name-first {
   justify-self: end;
   text-align: right;
-  transform: translateX(12px);
-  transition: transform 0.3s ease;
+  transform: none;
 }
 
 .name-last {
   justify-self: start;
   text-align: left;
-  transform: translateX(-12px);
-  transition: transform 0.3s ease;
+  transform: none;
 }
 
 /* Mobile/Tablet Arch Linux Icon between MITCHELLE and SALAZAR (Hidden on Desktop) */
@@ -474,17 +472,17 @@
   }
 
   .hero-monumental-name {
-    gap: clamp(90px, 9vw, 150px);
+    gap: clamp(140px, 11vw, 240px);
     font-size: clamp(5rem, 6.2vw, 8.2rem);
     bottom: clamp(290px, 32vh, 360px);
   }
 
   .name-first {
-    transform: translateX(14px);
+    transform: none;
   }
 
   .name-last {
-    transform: translateX(-14px);
+    transform: none;
   }
 
   .hero-portrait-stage {
@@ -497,16 +495,16 @@
 @media (max-width: 1280px) {
   .hero-monumental-name {
     font-size: clamp(2.8rem, 6.6vw, 6.2rem);
-    gap: clamp(50px, 7vw, 95px);
+    gap: clamp(90px, 10vw, 160px);
     bottom: clamp(225px, 28vh, 275px);
   }
 
   .name-first {
-    transform: translateX(10px);
+    transform: none;
   }
 
   .name-last {
-    transform: translateX(-10px);
+    transform: none;
   }
 
   .hero-portrait-stage {
@@ -517,7 +515,7 @@
 }
 
 /* Tablet / iPad (Includes iPad Air 1076x1180, iPad Pro 11", iPad 10.2", Surface):
-   Flanking MITCHELLE and SALAZAR at neck level, snug and close to the picture. */
+   Flanking MITCHELLE and SALAZAR at neck level, snug and balanced against the picture. */
 @media (max-width: 1200px) and (min-width: 769px) {
   .hero-section.editorial-hero {
     min-height: auto;
@@ -539,7 +537,7 @@
     transform: none;
   }
 
-  /* Split layout flanking the picture at neck level, brought close to the portrait */
+  /* Split layout flanking the picture at neck level, comfortably balanced */
   .hero-monumental-name {
     z-index: 1;
     top: auto;
@@ -548,7 +546,7 @@
     transform: translateX(-50%);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(35px, 5.5vw, 75px);
+    gap: clamp(65px, 8vw, 120px);
     width: 100%;
     max-width: 100%;
     font-size: clamp(2.3rem, 5.2vw, 4.2rem);
@@ -566,13 +564,13 @@
   .name-first {
     justify-self: end;
     text-align: right;
-    transform: translateX(8px);
+    transform: none;
   }
 
   .name-last {
     justify-self: start;
     text-align: left;
-    transform: translateX(-8px);
+    transform: none;
   }
 
   .hero-name-arch-badge {

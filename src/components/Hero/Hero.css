@@ -102,6 +102,8 @@
 .name-first {
   justify-self: end;
   text-align: right;
+  transform: translateX(-35px);
+  transition: transform 0.3s ease;
 }
 
 .name-last {
@@ -355,6 +357,7 @@
   .name-last {
     justify-self: auto;
     text-align: center;
+    transform: none;
   }
 
   .hero-bottom-bar {
@@ -421,6 +424,7 @@
     justify-self: auto;
     line-height: 0.9;
     white-space: nowrap;
+    transform: none;
   }
 
   .portrait-backlight {

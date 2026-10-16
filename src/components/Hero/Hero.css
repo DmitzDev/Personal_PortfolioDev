@@ -106,7 +106,7 @@
 .hero-center-stage {
   position: relative;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1560px;
   margin: 0 auto;
   flex: 1;
   display: flex;
@@ -124,15 +124,15 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 1440px;
+  max-width: 1560px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(120px, 13vw, 170px);
+  gap: clamp(150px, 17vw, 290px);
   margin: 0;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(3.2rem, 7.8vw, 8.5rem);
+  font-size: clamp(3rem, 6.8vw, 7.8rem);
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.9;
@@ -160,7 +160,7 @@
 .name-first {
   justify-self: end;
   text-align: right;
-  transform: translateX(-35px);
+  transform: translateX(-12px);
   transition: transform 0.3s ease;
 }
 
@@ -169,7 +169,7 @@
   text-align: left;
 }
 
-/* Portrait Stage in Front of the Monumental Name (Shifted slightly right on desktop so 'E' in MITCHELLE is unobstructed) */
+/* Portrait Stage in Front of the Monumental Name (Balanced optical centering) */
 .hero-portrait-stage {
   position: relative;
   z-index: 2;
@@ -177,10 +177,10 @@
   justify-content: center;
   align-items: flex-end;
   height: 580px;
-  max-height: 66vh;
+  max-height: 64vh;
   width: auto;
   margin: 0 auto;
-  transform: translateX(60px);
+  transform: translateX(10px);
   transition: transform 0.3s ease;
 }
 
@@ -227,7 +227,7 @@
   align-items: flex-end;
   gap: 2.5rem;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1560px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -395,17 +395,37 @@
    RESPONSIVE DESIGN (Desktop Scales, Tablet / iPad & Mobile)
    ========================================================================== */
 
+/* Ultra-wide & Large Monitors (1800px, 2K, 4K) */
+@media (min-width: 1800px) {
+  .hero-center-stage,
+  .hero-monumental-name,
+  .hero-bottom-bar {
+    max-width: 1720px;
+  }
+
+  .hero-monumental-name {
+    gap: clamp(220px, 15vw, 320px);
+    font-size: clamp(5rem, 6.2vw, 8.2rem);
+  }
+
+  .hero-portrait-stage {
+    height: 640px;
+    max-height: 68vh;
+    transform: translateX(12px);
+  }
+}
+
 @media (max-width: 1280px) {
   .hero-monumental-name {
-    font-size: clamp(2.8rem, 7vw, 6.5rem);
-    gap: clamp(100px, 12vw, 140px);
+    font-size: clamp(2.8rem, 6.6vw, 6.2rem);
+    gap: clamp(120px, 14vw, 180px);
     top: 38%;
   }
 
   .hero-portrait-stage {
     height: 500px;
     max-height: 60vh;
-    transform: translateX(45px);
+    transform: translateX(8px);
   }
 }
 

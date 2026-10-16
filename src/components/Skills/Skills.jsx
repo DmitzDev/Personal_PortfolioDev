@@ -4,7 +4,15 @@ import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { GitHubCalendar } from 'react-github-calendar';
 import { useTheme } from '../../hooks/useTheme';
 import { Terminal } from 'lucide-react';
+import antigravitySvg from '../../assets/antigravity.svg';
 import './Skills.css';
+
+const getSkillIconUrl = (icon) => {
+  if (icon === 'antigravity') {
+    return antigravitySvg;
+  }
+  return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg`;
+};
 
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -49,11 +57,13 @@ export function Skills() {
               <div className="skill-card-top">
                 <div className="skill-icon-wrap">
                   <img
-                    src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${skill.icon}/${skill.icon}-original.svg`}
+                    src={getSkillIconUrl(skill.icon)}
                     alt={skill.name}
                     className="skill-devicon"
                     onError={(e) => {
-                      e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${skill.icon}/${skill.icon}-plain.svg`;
+                      if (skill.icon !== 'antigravity') {
+                        e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${skill.icon}/${skill.icon}-plain.svg`;
+                      }
                     }}
                   />
                 </div>
@@ -79,11 +89,13 @@ export function Skills() {
               {[...skills, ...skills].map((item, idx) => (
                 <div key={`${item.name}-${idx}`} className="ticker-item">
                   <img
-                    src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.icon}/${item.icon}-original.svg`}
+                    src={getSkillIconUrl(item.icon)}
                     alt={item.name}
                     className="ticker-icon"
                     onError={(e) => {
-                      e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.icon}/${item.icon}-plain.svg`;
+                      if (item.icon !== 'antigravity') {
+                        e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.icon}/${item.icon}-plain.svg`;
+                      }
                     }}
                   />
                   <span>{item.name}</span>

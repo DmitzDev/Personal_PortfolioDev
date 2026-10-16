@@ -127,12 +127,12 @@ export const skills = [
     description: "Version control, feature branching, pull request reviews, GitHub actions/workflows.",
   },
   {
-    name: "VS Code",
+    name: "Antigravity",
     category: "Tooling & Workflow",
-    badge: "Editor",
+    badge: "AI IDE",
     level: "Advanced",
-    icon: "vscode",
-    description: "Custom keybindings, debugging tools, extensions, workspace configs.",
+    icon: "antigravity",
+    description: "Agentic AI development, prompt architecture, full-stack pair programming, and automated workspace workflows.",
   },
   {
     name: "Figma",

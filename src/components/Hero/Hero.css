@@ -214,21 +214,14 @@
   transform: none;
 }
 
-/* Dark Mode: Vibrant 4-color portfolio combination (White, Arch Cyan, Status Green, Radiant Red) */
-[data-theme="dark"] .name-first {
-  background: linear-gradient(135deg, #ffffff 15%, #38bdf8 65%, #10b981 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 28px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 25px rgba(56, 189, 248, 0.25));
-}
-
+/* Dark Mode: Luxury Liquid Chrome, Brushed Platinum, Steel Gray & Deep Black */
+[data-theme="dark"] .name-first,
 [data-theme="dark"] .name-last {
-  background: linear-gradient(135deg, #38bdf8 0%, #ffffff 45%, #ff2a51 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 32%, #94a3b8 68%, #334155 88%, #0f172a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 28px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 25px rgba(255, 42, 81, 0.25));
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 1px rgba(255, 255, 255, 0.35));
 }
 
 [data-theme="light"] .name-first,

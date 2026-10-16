@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Mail, MapPin, Send, Copy, Check, Clock, ShieldCheck } from 'lucide-react';
+import { Send, Check } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
-import { personalInfo } from '../../data/personalInfo';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
 
@@ -17,18 +16,8 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const form = useRef();
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(personalInfo.email);
-    setCopiedEmail(true);
-    toast.success('Email copied to clipboard!', {
-      description: personalInfo.email,
-    });
-    setTimeout(() => setCopiedEmail(false), 2500);
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,71 +72,8 @@ export function Contact() {
         </div>
 
         <div className="contact-grid">
-          {/* Direct Communication Channels */}
-          <AnimateOnScroll animation="fade-up" delay={50} className="contact-info-col">
-            <div className="contact-info-card glass-card">
-              <h3 className="info-card-title">Get in Touch Directly</h3>
-              <p className="info-card-desc">
-                Prefer direct communication over filling out forms? Feel free to copy my direct email below or reach out via GitHub.
-              </p>
-
-              {/* Quick Copy Email Box */}
-              <div className="copy-email-box">
-                <div className="email-display">
-                  <Mail size={18} className="email-icon" />
-                  <span className="email-address">{personalInfo.email}</span>
-                </div>
-                <button
-                  type="button"
-                  className="copy-btn"
-                  onClick={handleCopyEmail}
-                  title="Copy email to clipboard"
-                >
-                  {copiedEmail ? (
-                    <>
-                      <Check size={15} className="copied-icon" />
-                      <span>Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={15} />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Guarantees & SLA List */}
-              <div className="contact-sla-list">
-                <div className="sla-item">
-                  <Clock size={18} className="sla-icon" />
-                  <div>
-                    <h4>Fast Turnaround</h4>
-                    <p>Responses guaranteed within 24 hours (UTC+8).</p>
-                  </div>
-                </div>
-
-                <div className="sla-item">
-                  <ShieldCheck size={18} className="sla-icon" />
-                  <div>
-                    <h4>Contract & NDA Ready</h4>
-                    <p>Open for scoped freelance contracts and milestone agreements.</p>
-                  </div>
-                </div>
-
-                <div className="sla-item">
-                  <MapPin size={18} className="sla-icon" />
-                  <div>
-                    <h4>Location & Availability</h4>
-                    <p>{personalInfo.location}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </AnimateOnScroll>
-
           {/* Inquiry Form */}
-          <AnimateOnScroll animation="fade-up" delay={150} className="contact-form-col">
+          <AnimateOnScroll animation="fade-up" delay={80} className="contact-form-col">
             <div className="contact-form-card glass-card">
               <h3 className="form-card-title">Send a Direct Message</h3>
               <p className="form-card-desc">Fill in the project details below and I'll review your scope.</p>
@@ -195,7 +121,7 @@ export function Contact() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="message">Project Requirements & Timeline</label>
+                  <label htmlFor="message">Project Requirements &amp; Timeline</label>
                   <textarea
                     id="message"
                     name="message"

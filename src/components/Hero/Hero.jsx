@@ -61,7 +61,7 @@ export function Hero() {
         {/* Left Corner: Role, Bio & CTAs */}
         <AnimateOnScroll animation="fade-up" delay={80} className="hero-bottom-left-corner">
           <p className="hero-corner-role">
-            Front-End Web Developer &amp; Computer Engineering Student
+            Front-End Web Developer &amp; Computer Engineering
           </p>
 
           <p className="hero-corner-desc">
@@ -87,8 +87,7 @@ export function Hero() {
                 scrollTo('projects');
               }}
             >
-              <span>View selected work</span>
-              <span className="arrow-sym">→</span>
+              <span>Projects</span>
             </a>
           </div>
         </AnimateOnScroll>

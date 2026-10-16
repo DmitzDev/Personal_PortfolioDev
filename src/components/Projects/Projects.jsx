@@ -76,9 +76,9 @@ export function Projects() {
     <section id="projects" className="section projects-section">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">Projects & Systems</h2>
+          <h2 className="section-title">Projects</h2>
           <p className="section-subtitle">
-            Engineered with modern frontend architecture, robust cloud backends, and responsive user experiences.
+            Here are some of my projects and systems that I have built.
           </p>
         </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Search, X, CheckCircle2, FileText, Layers, Code2, Server, Mail } from 'lucide-react';
+import { ExternalLink, Search, X, FileText, Code2, Server, Mail } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Projects.css';
@@ -263,53 +263,14 @@ export function Projects() {
                 />
               </div>
 
-              {/* Project Overview / Lead Description */}
+              {/* Project Overview / Short Description */}
               {selectedProject.description && (
                 <p className="modal-lead-desc">{selectedProject.description}</p>
               )}
 
-              {/* Challenge & Architecture (Unboxed, Elegant Typography) */}
-              {(selectedProject.challenge || selectedProject.solution) && (
-                <div className="modal-context-grid">
-                  {selectedProject.challenge && (
-                    <div className="modal-context-block">
-                      <div className="modal-context-label">
-                        <Layers size={14} />
-                        <span>Problem & Scope</span>
-                      </div>
-                      <p className="modal-context-text">{selectedProject.challenge}</p>
-                    </div>
-                  )}
-                  {selectedProject.solution && (
-                    <div className="modal-context-block">
-                      <div className="modal-context-label">
-                        <Code2 size={14} />
-                        <span>Architecture & Solution</span>
-                      </div>
-                      <p className="modal-context-text">{selectedProject.solution}</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Core Engineering Highlights */}
-              {selectedProject.features && (
-                <div className="modal-features-list">
-                  <h4 className="modal-section-title">Core Engineering Highlights</h4>
-                  <ul className="modal-features-items">
-                    {selectedProject.features.map((feature, idx) => (
-                      <li key={idx} className="modal-feature-row">
-                        <CheckCircle2 size={15} className="feature-check-icon" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
               {/* System Tech Stack */}
               <div className="modal-tech-stack">
-                <h4 className="modal-section-title">System Tech Stack</h4>
+                <h4 className="modal-section-title">Technologies Used</h4>
                 <div className="tech-tags-wrap">
                   {selectedProject.technologies.map(tech => {
                     const info = getTechIconInfo(tech);

@@ -601,85 +601,31 @@
   width: auto;
 }
 
-/* Project Overview / Lead Description */
+/* Project Overview / Short Description */
 .modal-lead-desc {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.65;
-  margin: 0;
-  font-weight: 450;
-  letter-spacing: -0.01em;
-}
-
-/* Unboxed Challenge & Architecture Context Grid */
-.modal-context-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  padding: 1.15rem 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.modal-context-block {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.modal-context-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
-}
-
-.modal-context-label svg {
-  color: var(--text-muted);
-}
-
-.modal-context-text {
-  font-size: 0.875rem;
+  font-size: 0.925rem;
   color: var(--text-secondary);
   line-height: 1.65;
   margin: 0;
 }
 
-/* Section Title */
-.modal-section-title {
-  font-size: 0.92rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: var(--text-primary);
-}
-
-/* Feature Check Rows */
-.modal-features-items {
+/* System Tech Stack Section */
+.modal-tech-stack {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.modal-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
   margin: 0;
-}
-
-.modal-feature-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-.modal-feature-row .feature-check-icon {
-  color: var(--led-green);
-  margin-top: 2px;
-  flex-shrink: 0;
 }
 
 /* Tech Tags */
@@ -936,7 +882,7 @@
   }
 
   .modal-preview-img {
-    max-height: 260px;
+    max-height: 240px;
   }
 
   .modal-lead-desc {
@@ -944,18 +890,9 @@
     line-height: 1.55;
   }
 
-  .modal-context-grid {
-    grid-template-columns: 1fr;
-    gap: 1.15rem;
-    padding: 0.85rem 0;
-  }
-
-  .modal-context-text {
-    font-size: 0.84rem;
-  }
-
-  .modal-feature-row {
-    font-size: 0.8rem;
+  .modal-tech-stack {
+    gap: 0.45rem;
+    padding-top: 0.45rem;
   }
 
   .modal-footer {

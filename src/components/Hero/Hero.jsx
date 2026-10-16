@@ -1,6 +1,7 @@
 import React from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.png';
+import archLinuxSvg from '../../assets/archlinux.svg';
 import './Hero.css';
 
 const coreTechIcons = [
@@ -92,27 +93,43 @@ export function Hero() {
           </div>
         </AnimateOnScroll>
 
-        {/* Right Corner: Clean Core Stack */}
+        {/* Right Corner: OS & Core Stack */}
         <AnimateOnScroll animation="fade-up" delay={120} className="hero-bottom-right-corner">
-          <span className="hero-corner-stack-label">Core Technologies</span>
-          <div className="hero-corner-tech-cluster">
-            {coreTechIcons.map((tech) => (
-              <div
-                key={tech.name}
-                className="hero-corner-tech-item"
-                title={tech.name}
-                aria-label={tech.name}
-              >
-                <img
-                  src={tech.icon}
-                  alt={tech.name}
-                  className="hero-corner-tech-img"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              </div>
-            ))}
+          {/* OS Section */}
+          <div className="hero-corner-group">
+            <span className="hero-corner-stack-label">OS</span>
+            <div className="hero-corner-os-item" title="Arch Linux" aria-label="Arch Linux">
+              <img
+                src={archLinuxSvg}
+                alt="Arch Linux"
+                className="hero-corner-tech-img hero-corner-os-img"
+              />
+              <span className="hero-corner-os-name">Arch Linux</span>
+            </div>
+          </div>
+
+          {/* Core Technologies Section */}
+          <div className="hero-corner-group">
+            <span className="hero-corner-stack-label">Core Technologies</span>
+            <div className="hero-corner-tech-cluster">
+              {coreTechIcons.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="hero-corner-tech-item"
+                  title={tech.name}
+                  aria-label={tech.name}
+                >
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    className="hero-corner-tech-img"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </AnimateOnScroll>
       </div>

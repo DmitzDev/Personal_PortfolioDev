@@ -256,11 +256,6 @@
   display: block;
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.5) 92%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.5) 92%, transparent 100%);
-  transition: transform 0.35s ease;
-}
-
-.hero-portrait-stage:hover .portrait-img {
-  transform: translateY(-4px) scale(1.01);
 }
 
 /* Bottom Bar: Left Corner and Right Corner Content */

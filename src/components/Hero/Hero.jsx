@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
+import { useTheme } from '../../hooks/useTheme';
 import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.png';
 import archLinuxSvg from '../../assets/archlinux.svg';
 import './Hero.css';
@@ -16,6 +17,26 @@ const coreTechIcons = [
 ];
 
 export function Hero() {
+  const { theme } = useTheme();
+  const videoRef = useRef(null);
+  const isDark = theme === 'dark';
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isDark) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay policy or interruption
+        });
+      }
+    } else {
+      video.pause();
+    }
+  }, [isDark]);
+
   const scrollTo = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -34,6 +55,21 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-section editorial-hero">
+      {/* Dark Mode Arch Linux Atmospheric Background Video */}
+      <div className="hero-video-bg-wrap" aria-hidden="true">
+        <video
+          ref={videoRef}
+          className="hero-video-bg-media"
+          src={`${import.meta.env.BASE_URL}video/ArchLinux.mp4`}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
+        <div className="hero-video-overlay" />
+      </div>
+
       {/* Cinematic Ambient Atmosphere (Studio Streaks + Center Fog Glow) */}
       <div className="hero-atmosphere-backdrop" aria-hidden="true"></div>
 

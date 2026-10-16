@@ -165,7 +165,7 @@
    falling right behind Mitch's neck at neck level (top: 38%) */
 .hero-monumental-name {
   position: absolute;
-  bottom: clamp(190px, 24vh, 260px);
+  bottom: clamp(260px, 31vh, 320px);
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -474,6 +474,7 @@
   .hero-monumental-name {
     gap: clamp(220px, 15vw, 320px);
     font-size: clamp(5rem, 6.2vw, 8.2rem);
+    bottom: clamp(290px, 32vh, 360px);
   }
 
   .hero-portrait-stage {
@@ -487,7 +488,7 @@
   .hero-monumental-name {
     font-size: clamp(2.8rem, 6.6vw, 6.2rem);
     gap: clamp(120px, 14vw, 180px);
-    bottom: clamp(170px, 24vh, 230px);
+    bottom: clamp(225px, 28vh, 275px);
   }
 
   .hero-portrait-stage {

@@ -388,23 +388,24 @@
     transform: none;
   }
 
-  /* Layered IN FRONT of the picture at the bottom of the portrait (Massive stacked 2-line title) */
+  /* Layered IN FRONT of the picture at the bottom of the portrait (Single prominent line) */
   .hero-monumental-name {
     z-index: 10;
     top: auto;
-    bottom: 8px;
+    bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 0;
-    line-height: 0.88;
+    gap: 0.45rem;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
     width: 100%;
     max-width: 100%;
     padding: 0 0.5rem;
-    font-size: clamp(2.35rem, 8.8vw, 3.4rem);
+    font-size: clamp(1.6rem, 7.4vw, 2.35rem);
     white-space: nowrap;
     opacity: 1;
     color: #ffffff !important;
@@ -413,11 +414,12 @@
 
   .name-first,
   .name-last {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    width: auto;
     text-align: center;
     justify-self: auto;
-    line-height: 0.88;
+    line-height: 0.9;
+    white-space: nowrap;
   }
 
   .portrait-backlight {
@@ -515,9 +517,10 @@
   }
 
   .hero-monumental-name {
-    bottom: 6px;
-    font-size: clamp(2.1rem, 8.4vw, 3rem);
-    line-height: 0.86;
+    bottom: 10px;
+    font-size: clamp(1.45rem, 7.2vw, 2.15rem);
+    letter-spacing: -0.04em;
+    gap: 0.38rem;
   }
 
   .hero-corner-actions {

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Briefcase, GraduationCap, Award, FileText, Calendar, MapPin, ChevronLeft, ChevronRight, Server, Database, Code2, Maximize2 } from 'lucide-react';
+import { Briefcase, GraduationCap, Award, FileText, Calendar, MapPin, ChevronLeft, ChevronRight, Server, Database, Code2, Maximize2, ExternalLink } from 'lucide-react';
 import { experience } from '../../data/experience';
 import { education } from '../../data/education';
 import { certificates, achievements } from '../../data/certificates';
@@ -63,7 +63,6 @@ export function Experience() {
 
   // 3. Certificates Swiper State
   const [activeCertIndex, setActiveCertIndex] = useState(0);
-  const [slideCertDir, setSlideCertDir] = useState('next');
   const [isCertAnimating, setIsCertAnimating] = useState(false);
 
   // Shared Touch Coordinates
@@ -126,7 +125,6 @@ export function Experience() {
   // Certificates Nav
   const handleNextCert = useCallback(() => {
     if (isCertAnimating) return;
-    setSlideCertDir('next');
     setIsCertAnimating(true);
     setActiveCertIndex((prev) => (prev + 1) % certificates.length);
     setTimeout(() => setIsCertAnimating(false), 300);
@@ -134,7 +132,6 @@ export function Experience() {
 
   const handlePrevCert = useCallback(() => {
     if (isCertAnimating) return;
-    setSlideCertDir('prev');
     setIsCertAnimating(true);
     setActiveCertIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
     setTimeout(() => setIsCertAnimating(false), 300);
@@ -414,113 +411,161 @@ export function Experience() {
           </div>
         )}
 
-        {/* TAB 3: CERTIFICATES & HONORS (SWIPER VIEW) */}
+        {/* TAB 3: CERTIFICATES & HONORS (3D PLAYING CARDS DECK + UNBOXED CONTEXT) */}
         {activeTab === 'credentials' && (
           <div className="credentials-view">
-            <div className="exp-swiper-container">
-              {/* Main Certificate Swiper Stage */}
+            <div className="cert-deck-showcase">
+              {/* Left Side: 3D Playing Cards ("Baraha") Deck */}
               <div
-                className="exp-swiper-stage"
+                className="cert-deck-stage"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={() => handleTouchEnd(handleNextCert, handlePrevCert)}
               >
-                {(() => {
-                  const currentCert = certificates[activeCertIndex];
-                  return (
-                    <div
-                      key={currentCert.id}
-                      className={`exp-swiper-card cert-swiper-card glass-card slide-${slideCertDir}`}
-                    >
-                      <div className="cert-swiper-grid">
-                        <div className="cert-stage-wrapper">
-                          <div
-                            className="cert-display-stage"
-                            onClick={() => setSelectedCert(currentCert)}
-                            title="Click to view full credential"
-                          >
-                            <img
-                              src={currentCert.image}
-                              alt={currentCert.title}
-                              className="cert-stage-img"
-                            />
-                            <div className="cert-stage-overlay">
+                <div className="cert-deck-stack">
+                  {certificates.map((cert, idx) => {
+                    let cardState = 'hidden';
+                    const total = certificates.length;
+                    if (idx === activeCertIndex) {
+                      cardState = 'active';
+                    } else if (idx === (activeCertIndex - 1 + total) % total) {
+                      cardState = 'prev';
+                    } else if (idx === (activeCertIndex + 1) % total) {
+                      cardState = 'next';
+                    }
+
+                    return (
+                      <div
+                        key={cert.id}
+                        className={`cert-deck-card cert-card-${cardState}`}
+                        onClick={() => {
+                          if (cardState === 'prev') handlePrevCert();
+                          else if (cardState === 'next') handleNextCert();
+                          else if (cardState === 'active') setSelectedCert(cert);
+                        }}
+                        title={
+                          cardState === 'active'
+                            ? 'Click to enlarge certificate'
+                            : cardState === 'prev'
+                            ? `Previous: ${cert.title}`
+                            : `Next: ${cert.title}`
+                        }
+                        aria-label={cert.title}
+                      >
+                        <div className="cert-deck-card-inner">
+                          <img
+                            src={cert.image}
+                            alt={cert.title}
+                            className="cert-deck-img"
+                          />
+                          {cardState === 'active' && (
+                            <div className="cert-deck-hover-overlay">
                               <span className="cert-expand-pill">
-                                <Maximize2 size={14} />
-                                <span>Click to Enlarge</span>
+                                <Maximize2 size={13} />
+                                <span>Enlarge</span>
                               </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="cert-body exp-card-body">
-                          <div className="exp-card-header-meta">
-                            <span className="cert-issuer">{currentCert.organization}</span>
-                            <span className="cert-date exp-date-meta">
-                              <Calendar size={13} />
-                              {currentCert.date}
-                            </span>
-                          </div>
-
-                          <h3 className="cert-title exp-card-title">{currentCert.title}</h3>
-                          <p className="cert-desc exp-card-desc">{currentCert.description}</p>
-
-                          {currentCert.skills && (
-                            <div className="cert-skills-wrap">
-                              {currentCert.skills.map((s) => (
-                                <span key={s} className="tech-pill">{s}</span>
-                              ))}
                             </div>
                           )}
                         </div>
                       </div>
-                    </div>
-                  );
-                })()}
-              </div>
-
-              {/* Bottom Controls: Desktop arrows at bottom, dots, mobile swipe gesture */}
-              <div className="exp-swiper-bottom-bar">
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
-                  onClick={handlePrevCert}
-                  aria-label="Previous credential"
-                  title="Previous credential"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-
-                <div className="exp-swiper-dots">
-                  {certificates.map((cert, idx) => (
-                    <button
-                      key={cert.id}
-                      type="button"
-                      className={`exp-dot ${idx === activeCertIndex ? 'active' : ''}`}
-                      onClick={() => {
-                        if (idx === activeCertIndex) return;
-                        setSlideCertDir(idx > activeCertIndex ? 'next' : 'prev');
-                        setActiveCertIndex(idx);
-                      }}
-                      aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
-                    />
-                  ))}
+                    );
+                  })}
                 </div>
-
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
-                  onClick={handleNextCert}
-                  aria-label="Next credential"
-                  title="Next credential"
-                >
-                  <ChevronRight size={18} />
-                </button>
               </div>
 
-              <div className="exp-swipe-hint">
-                <span>← Swipe to switch credential →</span>
+              {/* Right Side: Clean Unboxed Context Details */}
+              {(() => {
+                const currentCert = certificates[activeCertIndex];
+                return (
+                  <div key={currentCert.id} className="cert-details-unboxed">
+                    <div className="cert-unboxed-meta-bar">
+                      <span className="cert-unboxed-issuer">{currentCert.organization}</span>
+                      <span className="cert-unboxed-date">
+                        <Calendar size={13} />
+                        <span>{currentCert.date}</span>
+                      </span>
+                    </div>
+
+                    <h3 className="cert-unboxed-title">{currentCert.title}</h3>
+                    <p className="cert-unboxed-desc">{currentCert.description}</p>
+
+                    {currentCert.skills && currentCert.skills.length > 0 && (
+                      <div className="cert-unboxed-skills-section">
+                        <span className="cert-unboxed-skills-title">Key Competencies</span>
+                        <div className="cert-skills-wrap">
+                          {currentCert.skills.map((s) => (
+                            <span key={s} className="tech-pill">{s}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="cert-unboxed-actions">
+                      <button
+                        type="button"
+                        className="btn-primary cert-action-btn"
+                        onClick={() => setSelectedCert(currentCert)}
+                      >
+                        <Maximize2 size={15} />
+                        <span>View Full Certificate</span>
+                      </button>
+                      {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
+                        <a
+                          href={currentCert.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-secondary cert-action-btn"
+                        >
+                          <ExternalLink size={15} />
+                          <span>Verify Credential</span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Bottom Controls: Desktop arrows at bottom, dots, mobile swipe gesture */}
+            <div className="exp-swiper-bottom-bar cert-deck-bottom-bar">
+              <button
+                type="button"
+                className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                onClick={handlePrevCert}
+                aria-label="Previous credential"
+                title="Previous credential"
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              <div className="exp-swiper-dots">
+                {certificates.map((cert, idx) => (
+                  <button
+                    key={cert.id}
+                    type="button"
+                    className={`exp-dot ${idx === activeCertIndex ? 'active' : ''}`}
+                    onClick={() => {
+                      if (idx === activeCertIndex) return;
+                      setActiveCertIndex(idx);
+                    }}
+                    aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
+                  />
+                ))}
               </div>
+
+              <button
+                type="button"
+                className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                onClick={handleNextCert}
+                aria-label="Next credential"
+                title="Next credential"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+
+            <div className="exp-swipe-hint">
+              <span>← Swipe cards left &amp; right to switch →</span>
             </div>
 
             {/* Honors & Milestones Grid */}

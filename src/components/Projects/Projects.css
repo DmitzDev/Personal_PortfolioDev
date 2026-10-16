@@ -573,75 +573,80 @@
   border-radius: 3px;
 }
 
-/* Hardware Media Viewport (Uncropped natural view) */
+/* Project Thumbnail Stage - 100% Uncropped Natural Viewport */
 .modal-image-stage {
+  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 360px;
   border-radius: 0.75rem;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-tertiary);
-  box-shadow: var(--skeuo-recessed);
-  border-top: 1px solid var(--skeuo-bevel-bottom);
-  border-bottom: 1px solid var(--skeuo-bevel-top);
-  border-left: var(--skeuo-border);
-  border-right: var(--skeuo-border);
+  background: #080a0f;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border);
 }
 
 .modal-preview-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform 0.3s ease;
+  height: auto;
+  max-height: 440px;
+  object-fit: contain !important;
+  display: block;
 }
 
 .modal-preview-img.contain-mode {
-  object-fit: contain;
-  padding: 2rem;
+  padding: 2.5rem 1rem;
+  max-height: 260px;
+  width: auto;
 }
 
-/* Challenge & Solution Cards */
-.modal-section-grid {
+/* Project Overview / Lead Description */
+.modal-lead-desc {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.65;
+  margin: 0;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+}
+
+/* Unboxed Challenge & Architecture Context Grid */
+.modal-context-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.15rem;
+  gap: 2rem;
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
-.modal-box {
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  background: var(--bg-tertiary);
-  box-shadow: var(--skeuo-recessed-sm);
-  border-top: 1px solid var(--skeuo-bevel-bottom);
-  border-bottom: 1px solid var(--skeuo-bevel-top);
-  border-left: var(--skeuo-border);
-  border-right: var(--skeuo-border);
+.modal-context-block {
   display: flex;
   flex-direction: column;
+  gap: 0.45rem;
 }
 
-.modal-box-heading {
-  display: flex;
+.modal-context-label {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.92rem;
+  gap: 0.45rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
   font-weight: 700;
-  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-primary);
 }
 
-.modal-box-heading svg {
-  color: var(--text-secondary);
+.modal-context-label svg {
+  color: var(--text-muted);
 }
 
-.modal-box p {
-  font-size: 0.85rem;
+.modal-context-text {
+  font-size: 0.875rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0;
 }
 
@@ -927,17 +932,26 @@
   }
 
   .modal-image-stage {
-    aspect-ratio: 16 / 9;
-    max-height: 210px;
+    border-radius: 0.6rem;
   }
 
-  .modal-section-grid {
+  .modal-preview-img {
+    max-height: 260px;
+  }
+
+  .modal-lead-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .modal-context-grid {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 1.15rem;
+    padding: 0.85rem 0;
   }
 
-  .modal-box {
-    padding: 0.95rem;
+  .modal-context-text {
+    font-size: 0.84rem;
   }
 
   .modal-feature-row {

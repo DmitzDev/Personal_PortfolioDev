@@ -254,8 +254,8 @@ export function Projects() {
 
             {/* Scrollable Content Body */}
             <div className="modal-content-scroll">
-              {/* Project Preview Image Stage (Uncropped 16:9 Hardware Viewport) */}
-              <div className="modal-image-stage skeuo-well">
+              {/* Project Preview Image Stage (100% Uncropped Viewport) */}
+              <div className="modal-image-stage">
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
@@ -263,27 +263,34 @@ export function Projects() {
                 />
               </div>
 
-              {/* Challenge & Architecture Grid */}
-              <div className="modal-section-grid">
-                {selectedProject.challenge && (
-                  <div className="modal-box">
-                    <h4 className="modal-box-heading">
-                      <Layers size={15} />
-                      <span>Problem & Scope</span>
-                    </h4>
-                    <p>{selectedProject.challenge}</p>
-                  </div>
-                )}
-                {selectedProject.solution && (
-                  <div className="modal-box">
-                    <h4 className="modal-box-heading">
-                      <Code2 size={15} />
-                      <span>Architecture & Solution</span>
-                    </h4>
-                    <p>{selectedProject.solution}</p>
-                  </div>
-                )}
-              </div>
+              {/* Project Overview / Lead Description */}
+              {selectedProject.description && (
+                <p className="modal-lead-desc">{selectedProject.description}</p>
+              )}
+
+              {/* Challenge & Architecture (Unboxed, Elegant Typography) */}
+              {(selectedProject.challenge || selectedProject.solution) && (
+                <div className="modal-context-grid">
+                  {selectedProject.challenge && (
+                    <div className="modal-context-block">
+                      <div className="modal-context-label">
+                        <Layers size={14} />
+                        <span>Problem & Scope</span>
+                      </div>
+                      <p className="modal-context-text">{selectedProject.challenge}</p>
+                    </div>
+                  )}
+                  {selectedProject.solution && (
+                    <div className="modal-context-block">
+                      <div className="modal-context-label">
+                        <Code2 size={14} />
+                        <span>Architecture & Solution</span>
+                      </div>
+                      <p className="modal-context-text">{selectedProject.solution}</p>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Core Engineering Highlights */}
               {selectedProject.features && (

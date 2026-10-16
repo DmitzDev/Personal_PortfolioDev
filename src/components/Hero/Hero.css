@@ -214,14 +214,14 @@
   transform: none;
 }
 
-/* Dark Mode: Luxury Liquid Chrome, Brushed Platinum, Steel Gray & Deep Black */
+/* Dark Mode: Ultra-High Contrast Polished Platinum & Titanium (Crystal clear readability) */
 [data-theme="dark"] .name-first,
 [data-theme="dark"] .name-last {
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 32%, #94a3b8 68%, #334155 88%, #0f172a 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 38%, #e2e8f0 68%, #cbd5e1 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 1px rgba(255, 255, 255, 0.35));
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.98)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
 }
 
 [data-theme="light"] .name-first,

@@ -41,7 +41,6 @@ export function Hero() {
         {/* Giant Name Typography Layer (Layered Underneath Picture) */}
         <h1 className="hero-monumental-name" aria-label="Mitchelle Salazar">
           <span className="name-word name-first">MITCHELLE</span>
-          <span className="name-spacer" aria-hidden="true"></span>
           <span className="name-word name-last">SALAZAR</span>
         </h1>
 

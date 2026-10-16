@@ -120,7 +120,7 @@
   max-height: 66vh;
   width: auto;
   margin: 0 auto;
-  transform: translateX(24px);
+  transform: translateX(60px);
   transition: transform 0.3s ease;
 }
 
@@ -305,6 +305,7 @@
   .hero-portrait-stage {
     height: 500px;
     max-height: 60vh;
+    transform: translateX(45px);
   }
 }
 

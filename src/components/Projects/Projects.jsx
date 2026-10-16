@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Search, X, CheckCircle2, FileText, Layers, Code2, Server, Mail } from 'lucide-react';
+import { ExternalLink, Search, X, CheckCircle2, FileText, Layers, Code2, Server, Mail, Lock, Activity } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Projects.css';
@@ -224,6 +224,7 @@ export function Projects() {
       {selectedProject && (
         <div className="modal-backdrop" onClick={() => setSelectedProject(null)}>
           <div className="modal-dialog glass-card" onClick={(e) => e.stopPropagation()}>
+            {/* Modal Header */}
             <div className="modal-header">
               <div className="modal-title-wrap">
                 <div className="modal-meta-row">
@@ -232,28 +233,75 @@ export function Projects() {
                     <span className="status-led"></span>
                     <span className="status-label">{selectedProject.status}</span>
                   </span>
+                  {selectedProject.timeline && (
+                    <span className="modal-timeline-pill">{selectedProject.timeline}</span>
+                  )}
                 </div>
                 <h3 className="modal-title">{selectedProject.title}</h3>
+                {selectedProject.subtitle && (
+                  <p className="modal-subtitle">{selectedProject.subtitle}</p>
+                )}
               </div>
               <button
                 className="modal-close-btn"
                 onClick={() => setSelectedProject(null)}
                 aria-label="Close modal"
+                title="Close modal"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
+            {/* Scrollable Content Body */}
             <div className="modal-content-scroll">
-              <div className="modal-hero-image">
-                <img src={selectedProject.image} alt={selectedProject.title} />
+              {/* Project Showcase Browser Window (16:9 Uncropped Viewport) */}
+              <div className="modal-browser-frame">
+                <div className="modal-browser-bar">
+                  <div className="browser-traffic-lights">
+                    <span className="dot dot-red"></span>
+                    <span className="dot dot-yellow"></span>
+                    <span className="dot dot-green"></span>
+                  </div>
+                  <div className="browser-url-pill">
+                    <Lock size={11} className="browser-lock-icon" />
+                    <span>
+                      {selectedProject.liveDemo && selectedProject.liveDemo !== '#'
+                        ? selectedProject.liveDemo.replace(/^https?:\/\//, '').replace(/\/$/, '')
+                        : `${selectedProject.title.toLowerCase().replace(/[^a-z0-9]/g, '')}.app`}
+                    </span>
+                  </div>
+                  <div className="browser-bar-spacer"></div>
+                </div>
+                <div className="modal-browser-viewport">
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className={`modal-project-img ${selectedProject.title === 'Tambayan App' ? 'img-contain' : ''}`}
+                  />
+                </div>
               </div>
 
+              {/* Architecture & Engineering Metrics Banner */}
+              {selectedProject.metrics && (
+                <div className="modal-metrics-banner">
+                  <div className="metrics-icon-badge">
+                    <Activity size={14} />
+                  </div>
+                  <div className="metrics-text-group">
+                    <span className="metrics-label">Architecture Telemetry</span>
+                    <p className="metrics-value">{selectedProject.metrics}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Problem & Solution Cards */}
               <div className="modal-section-grid">
                 {selectedProject.challenge && (
                   <div className="modal-box">
                     <h4 className="modal-box-heading">
-                      <Layers size={16} className="modal-heading-icon" />
+                      <span className="modal-heading-icon-badge">
+                        <Layers size={14} />
+                      </span>
                       <span>Problem & Scope</span>
                     </h4>
                     <p>{selectedProject.challenge}</p>
@@ -262,7 +310,9 @@ export function Projects() {
                 {selectedProject.solution && (
                   <div className="modal-box">
                     <h4 className="modal-box-heading">
-                      <Code2 size={16} className="modal-heading-icon" />
+                      <span className="modal-heading-icon-badge">
+                        <Code2 size={14} />
+                      </span>
                       <span>Architecture & Solution</span>
                     </h4>
                     <p>{selectedProject.solution}</p>
@@ -270,22 +320,32 @@ export function Projects() {
                 )}
               </div>
 
+              {/* Core Engineering Highlights */}
               {selectedProject.features && (
                 <div className="modal-features-list">
-                  <h4>Core Engineering Highlights</h4>
-                  <ul>
+                  <h4 className="modal-section-title">
+                    <CheckCircle2 size={16} className="title-icon" />
+                    <span>Core Engineering Highlights</span>
+                  </h4>
+                  <div className="modal-features-grid">
                     {selectedProject.features.map((feature, idx) => (
-                      <li key={idx}>
-                        <CheckCircle2 size={16} className="feature-check-icon" />
-                        <span>{feature}</span>
-                      </li>
+                      <div key={idx} className="feature-item-card">
+                        <div className="feature-check-dot">
+                          <CheckCircle2 size={14} />
+                        </div>
+                        <span className="feature-text">{feature}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
 
+              {/* System Tech Stack */}
               <div className="modal-tech-stack">
-                <h4>System Tech Stack</h4>
+                <h4 className="modal-section-title">
+                  <Code2 size={16} className="title-icon" />
+                  <span>System Tech Stack</span>
+                </h4>
                 <div className="tech-tags-wrap">
                   {selectedProject.technologies.map(tech => {
                     const info = getTechIconInfo(tech);
@@ -315,6 +375,7 @@ export function Projects() {
               </div>
             </div>
 
+            {/* Modal Footer Actions */}
             <div className="modal-footer">
               <div className="modal-footer-links">
                 {selectedProject.liveDemo && selectedProject.liveDemo !== '#' && (
@@ -322,10 +383,10 @@ export function Projects() {
                     href={selectedProject.liveDemo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className="modal-btn-primary"
                   >
                     <span>Launch Live Application</span>
-                    <ExternalLink size={16} />
+                    <ExternalLink size={15} />
                   </a>
                 )}
                 {selectedProject.github && selectedProject.github !== '#' && (
@@ -333,7 +394,7 @@ export function Projects() {
                     href={selectedProject.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-secondary"
+                    className="modal-btn-secondary"
                   >
                     <GithubIcon size={16} />
                     <span>View Repository</span>

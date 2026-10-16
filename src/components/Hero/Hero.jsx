@@ -25,6 +25,8 @@ export function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
+    let timer = null;
+
     if (isDark) {
       const playPromise = video.play();
       if (playPromise !== undefined) {
@@ -33,8 +35,19 @@ export function Hero() {
         });
       }
     } else {
-      video.pause();
+      // Keep playing smoothly during the close animation (850ms), then pause to save resources
+      timer = setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.pause();
+        }
+      }, 850);
     }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [isDark]);
 
   const scrollTo = (id) => {

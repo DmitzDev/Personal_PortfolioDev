@@ -17,7 +17,7 @@
 
 /* ==========================================================================
    Dark Mode Arch Linux Background Video
-   Appears ONLY in dark mode with smooth cinematic blending
+   Smooth cinematic open in dark mode, and smooth close animation into light mode
    ========================================================================== */
 .hero-video-bg-wrap {
   position: absolute;
@@ -27,18 +27,20 @@
   z-index: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.85s ease;
+  will-change: opacity;
 }
 
 [data-theme="dark"] .hero-video-bg-wrap {
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear;
 }
 
 [data-theme="light"] .hero-video-bg-wrap {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.85s ease;
 }
 
 .hero-video-bg-media {
@@ -47,11 +49,29 @@
   left: 50%;
   width: 100%;
   height: 100%;
-  transform: translate(-50%, -50%);
   object-fit: cover;
   object-position: center;
-  opacity: 0.6;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0.62;
   filter: contrast(1.1) saturate(1.15) brightness(0.95);
+  transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), filter 0.85s ease, opacity 0.85s ease;
+  will-change: transform, filter, opacity;
+}
+
+/* Close Video Animation state when switched to light mode:
+   Smooth zoom-out drift, gentle ambient blur, and soft dissolve */
+[data-theme="light"] .hero-video-bg-media {
+  transform: translate(-50%, -50%) scale(1.08);
+  filter: blur(12px) brightness(0.4) contrast(1.2);
+  opacity: 0;
+}
+
+/* Open / Active state when in dark mode */
+[data-theme="dark"] .hero-video-bg-media {
+  transform: translate(-50%, -50%) scale(1);
+  filter: blur(0px) brightness(0.95) contrast(1.1);
+  opacity: 0.62;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), filter 0.75s ease, opacity 0.75s ease;
 }
 
 .hero-video-overlay {
@@ -61,15 +81,40 @@
     radial-gradient(ellipse at 50% 50%, rgba(9, 13, 22, 0.25) 0%, rgba(9, 13, 22, 0.78) 100%),
     linear-gradient(to bottom, var(--bg-primary) 0%, transparent 18%, transparent 80%, var(--bg-primary) 100%);
   pointer-events: none;
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] .hero-video-overlay {
+  opacity: 0;
+}
+
+[data-theme="dark"] .hero-video-overlay {
+  opacity: 1;
 }
 
 [data-theme="dark"] .hero-atmosphere-backdrop {
   opacity: 0.2;
+  transition: opacity 0.8s ease;
+}
+
+[data-theme="light"] .hero-atmosphere-backdrop {
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+@media (max-width: 768px) {
+  [data-theme="light"] .hero-video-bg-media {
+    filter: blur(6px) brightness(0.4);
+    transform: translate(-50%, -50%) scale(1.05);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-video-bg-wrap,
   .hero-video-bg-media {
-    display: none;
+    transition: opacity 0.2s ease !important;
+    transform: translate(-50%, -50%) !important;
+    filter: none !important;
   }
 }
 

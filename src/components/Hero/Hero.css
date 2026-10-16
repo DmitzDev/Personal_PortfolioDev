@@ -214,14 +214,18 @@
   transform: none;
 }
 
-/* Dark Mode: Ultra-High Contrast Polished Platinum & Titanium (Crystal clear readability) */
+/* Dark Mode: Clean, Polished Platinum & Titanium */
+[data-theme="dark"] .hero-monumental-name {
+  text-shadow: none;
+}
+
 [data-theme="dark"] .name-first,
 [data-theme="dark"] .name-last {
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 38%, #e2e8f0 68%, #cbd5e1 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.98)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
 }
 
 [data-theme="light"] .name-first,
@@ -570,7 +574,7 @@
     line-height: 0.9;
     letter-spacing: -0.04em;
     color: #ffffff;
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.45);
+    text-shadow: none;
   }
 
   [data-theme="light"] .hero-monumental-name {
@@ -646,7 +650,7 @@
     font-size: clamp(1.35rem, 6.2vw, 2.2rem);
     white-space: nowrap;
     opacity: 1;
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   }
 
   .hero-name-arch-badge {

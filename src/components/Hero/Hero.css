@@ -192,14 +192,18 @@
   white-space: nowrap;
   perspective: 1200px;
   transform-style: preserve-3d;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.1s ease;
+}
+
+.hero-monumental-name:hover,
+.hero-monumental-name:has(.char-3d:hover) {
+  z-index: 3;
 }
 
 .name-word {
   display: inline-flex;
   white-space: nowrap;
   transform-style: preserve-3d;
-  will-change: transform;
   pointer-events: auto;
 }
 
@@ -207,22 +211,12 @@
   justify-self: end;
   text-align: right;
   transform: perspective(1200px) rotateY(6deg);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .name-last {
   justify-self: start;
   text-align: left;
   transform: perspective(1200px) rotateY(-6deg);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.name-first:hover {
-  transform: perspective(1200px) rotateY(9deg) translateZ(10px);
-}
-
-.name-last:hover {
-  transform: perspective(1200px) rotateY(-9deg) translateZ(10px);
 }
 
 /* Individual Interactive 3D Letters */
@@ -230,12 +224,15 @@
   display: inline-block;
   position: relative;
   transform-style: preserve-3d;
+  transform-origin: center bottom;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
   will-change: transform, text-shadow;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-              text-shadow 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition: transform 0.24s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+              text-shadow 0.24s cubic-bezier(0.2, 0.9, 0.3, 1),
               color 0.2s ease;
   pointer-events: auto;
-  cursor: pointer;
+  cursor: default;
 }
 
 /* Light Mode 3D Font Text — Resting */
@@ -247,9 +244,8 @@
     3px 3px 0 #64748b,
     4px 4px 0 #475569,
     5px 5px 0 #334155,
-    6px 6px 1px rgba(15, 23, 42, 0.2),
-    4px 10px 14px rgba(15, 23, 42, 0.16),
-    8px 18px 26px rgba(15, 23, 42, 0.2);
+    6px 6px 1px rgba(15, 23, 42, 0.16),
+    0 8px 16px rgba(15, 23, 42, 0.12);
 }
 
 [data-theme="light"] .name-last .char-3d {
@@ -260,14 +256,13 @@
     -3px 3px 0 #64748b,
     -4px 4px 0 #475569,
     -5px 5px 0 #334155,
-    -6px 6px 1px rgba(15, 23, 42, 0.2),
-    -4px 10px 14px rgba(15, 23, 42, 0.16),
-    -8px 18px 26px rgba(15, 23, 42, 0.2);
+    -6px 6px 1px rgba(15, 23, 42, 0.16),
+    0 8px 16px rgba(15, 23, 42, 0.12);
 }
 
 /* Light Mode — Active Cursor Hover Reaction */
 [data-theme="light"] .name-first .char-3d:hover {
-  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  transform: translateY(-8px) translateZ(30px) scale(1.09);
   color: #0f172a;
   text-shadow:
     1px 2px 0 #cbd5e1,
@@ -275,14 +270,14 @@
     3px 6px 0 #64748b,
     4px 8px 0 #475569,
     5px 10px 0 #334155,
-    6px 12px 1px rgba(15, 23, 42, 0.25),
-    4px 20px 24px rgba(15, 23, 42, 0.28),
-    8px 32px 45px rgba(15, 23, 42, 0.24);
-  z-index: 5;
+    6px 12px 1px rgba(15, 23, 42, 0.22),
+    0 16px 26px rgba(15, 23, 42, 0.24),
+    0 26px 40px rgba(15, 23, 42, 0.16);
+  z-index: 20 !important;
 }
 
 [data-theme="light"] .name-last .char-3d:hover {
-  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  transform: translateY(-8px) translateZ(30px) scale(1.09);
   color: #0f172a;
   text-shadow:
     -1px 2px 0 #cbd5e1,
@@ -290,44 +285,42 @@
     -3px 6px 0 #64748b,
     -4px 8px 0 #475569,
     -5px 10px 0 #334155,
-    -6px 12px 1px rgba(15, 23, 42, 0.25),
-    -4px 20px 24px rgba(15, 23, 42, 0.28),
-    -8px 32px 45px rgba(15, 23, 42, 0.24);
-  z-index: 5;
+    -6px 12px 1px rgba(15, 23, 42, 0.22),
+    0 16px 26px rgba(15, 23, 42, 0.24),
+    0 26px 40px rgba(15, 23, 42, 0.16);
+  z-index: 20 !important;
 }
 
 /* Dark Mode 3D Font Text — Resting */
 [data-theme="dark"] .name-first .char-3d {
   color: #ffffff;
   text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.45),
     1px 1px 0 #475569,
     2px 2px 0 #334155,
     3px 3px 0 #1e293b,
     4px 4px 0 #0f172a,
     5px 5px 0 #070b14,
-    6px 6px 1px rgba(0, 0, 0, 0.65),
-    4px 12px 20px rgba(0, 0, 0, 0.75),
-    8px 24px 40px rgba(0, 0, 0, 0.85);
+    6px 6px 1px rgba(0, 0, 0, 0.6),
+    0 10px 22px rgba(0, 0, 0, 0.7);
 }
 
 [data-theme="dark"] .name-last .char-3d {
   color: #ffffff;
   text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.45),
     -1px 1px 0 #475569,
     -2px 2px 0 #334155,
     -3px 3px 0 #1e293b,
     -4px 4px 0 #0f172a,
     -5px 5px 0 #070b14,
-    -6px 6px 1px rgba(0, 0, 0, 0.65),
-    -4px 12px 20px rgba(0, 0, 0, 0.75),
-    -8px 24px 40px rgba(0, 0, 0, 0.85);
+    -6px 6px 1px rgba(0, 0, 0, 0.6),
+    0 10px 22px rgba(0, 0, 0, 0.7);
 }
 
 /* Dark Mode — Active Cursor Hover Reaction */
 [data-theme="dark"] .name-first .char-3d:hover {
-  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  transform: translateY(-8px) translateZ(30px) scale(1.09);
   color: #ffffff;
   text-shadow:
     0 1px 0 #ffffff,
@@ -336,14 +329,14 @@
     3px 6px 0 #334155,
     4px 8px 0 #1e293b,
     5px 10px 0 #0f172a,
-    6px 12px 2px rgba(0, 0, 0, 0.7),
-    4px 20px 28px rgba(0, 0, 0, 0.85),
-    8px 34px 50px rgba(0, 0, 0, 0.95);
-  z-index: 5;
+    6px 12px 2px rgba(0, 0, 0, 0.72),
+    0 18px 30px rgba(0, 0, 0, 0.85),
+    0 28px 46px rgba(0, 0, 0, 0.95);
+  z-index: 20 !important;
 }
 
 [data-theme="dark"] .name-last .char-3d:hover {
-  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  transform: translateY(-8px) translateZ(30px) scale(1.09);
   color: #ffffff;
   text-shadow:
     0 1px 0 #ffffff,
@@ -352,10 +345,10 @@
     -3px 6px 0 #334155,
     -4px 8px 0 #1e293b,
     -5px 10px 0 #0f172a,
-    -6px 12px 2px rgba(0, 0, 0, 0.7),
-    -4px 20px 28px rgba(0, 0, 0, 0.85),
-    -8px 34px 50px rgba(0, 0, 0, 0.95);
-  z-index: 5;
+    -6px 12px 2px rgba(0, 0, 0, 0.72),
+    0 18px 30px rgba(0, 0, 0, 0.85),
+    0 28px 46px rgba(0, 0, 0, 0.95);
+  z-index: 20 !important;
 }
 
 /* Mobile/Tablet Arch Linux Icon between MITCHELLE and SALAZAR (Hidden on Desktop) */
@@ -399,6 +392,7 @@
   margin: 0 auto;
   transform: translateX(10px);
   transition: transform 0.3s ease;
+  pointer-events: none; /* Passes pointer events to the name letters underneath! */
 }
 
 .portrait-backlight {
@@ -428,6 +422,7 @@
   display: block;
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
+  pointer-events: none; /* Prevents portrait image from blocking hover on letters like LE and SA! */
 }
 
 /* Bottom Bar: Left Corner and Right Corner Content */
@@ -719,6 +714,13 @@
     white-space: nowrap;
     transform: none !important;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .char-3d {
+    transform: none !important;
+    text-shadow: none !important;
+    pointer-events: none !important;
+    transition: none !important;
   }
 
   .portrait-backlight {

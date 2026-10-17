@@ -20,14 +20,14 @@ export function TechStack() {
           {loopItems.map((item, idx) => (
             <div key={`${item.name}-${idx}`} className="marquee-item glass-card">
               <img 
-                src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.icon}/${item.icon}-original.svg`} 
+                src={`/icons/${item.icon}.svg`} 
                 alt={item.name}
                 className="marquee-icon"
                 width="24"
                 height="24"
                 loading="lazy"
                 onError={(e) => {
-                  e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.icon}/${item.icon}-plain.svg`;
+                  e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.icon}/${item.icon}-original.svg`;
                 }}
               />
               <span className="marquee-name">{item.name}</span>

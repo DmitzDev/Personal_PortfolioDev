@@ -14,7 +14,7 @@ const getSkillIconUrl = (icon) => {
   if (icon === 'antigravity') {
     return antigravitySvg;
   }
-  return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg`;
+  return `/icons/${icon}.svg`;
 };
 
 const ITEMS_PER_PAGE = 6;

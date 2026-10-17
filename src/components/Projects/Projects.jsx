@@ -13,37 +13,37 @@ const GithubIcon = ({ size = 16 }) => (
 const getTechIconInfo = (tech) => {
   const t = tech.toLowerCase();
   if (t.includes('react')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' };
+    return { type: 'devicon', src: '/icons/react.svg' };
   }
   if (t.includes('node')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' };
+    return { type: 'devicon', src: '/icons/nodejs.svg' };
   }
   if (t.includes('vite')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg' };
+    return { type: 'devicon', src: '/icons/vitejs.svg' };
   }
   if (t.includes('javascript') || t.includes('js')) {
     if (t.includes('email')) {
       return { type: 'lucide', icon: 'mail' };
     }
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' };
+    return { type: 'devicon', src: '/icons/javascript.svg' };
   }
   if (t.includes('css')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' };
+    return { type: 'devicon', src: '/icons/css3.svg' };
   }
   if (t.includes('html')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' };
+    return { type: 'devicon', src: '/icons/html5.svg' };
   }
   if (t.includes('firebase')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' };
+    return { type: 'devicon', src: '/icons/firebase.svg' };
   }
   if (t.includes('flutter')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' };
+    return { type: 'devicon', src: '/icons/flutter.svg' };
   }
   if (t.includes('dart')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg' };
+    return { type: 'devicon', src: '/icons/dart.svg' };
   }
   if (t.includes('state') || t.includes('redux')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg' };
+    return { type: 'devicon', src: '/icons/redux.svg' };
   }
   if (t.includes('api') || t.includes('rest')) {
     return { type: 'lucide', icon: 'server' };

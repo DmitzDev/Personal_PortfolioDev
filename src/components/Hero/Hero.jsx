@@ -7,14 +7,14 @@ import './Hero.css';
 const ceoMitchNoBg = '/CeoMitch-NoBG.webp';
 
 const coreTechIcons = [
-  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-  { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-  { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-  { name: 'Vite', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg' },
-  { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
-  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-  { name: 'Firebase', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' },
-  { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+  { name: 'React', icon: '/icons/react.svg' },
+  { name: 'JavaScript', icon: '/icons/javascript.svg' },
+  { name: 'TypeScript', icon: '/icons/typescript.svg' },
+  { name: 'Vite', icon: '/icons/vitejs.svg' },
+  { name: 'Tailwind CSS', icon: '/icons/tailwindcss.svg' },
+  { name: 'Node.js', icon: '/icons/nodejs.svg' },
+  { name: 'Firebase', icon: '/icons/firebase.svg' },
+  { name: 'Git', icon: '/icons/git.svg' },
 ];
 
 export function Hero() {
@@ -118,8 +118,8 @@ export function Hero() {
             className="portrait-img"
             loading="eager"
             fetchPriority="high"
-            width="600"
-            height="750"
+            width="480"
+            height="592"
           />
         </div>
       </div>

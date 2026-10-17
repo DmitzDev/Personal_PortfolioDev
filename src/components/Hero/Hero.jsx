@@ -165,30 +165,6 @@ export function Hero() {
         <div className="hero-place-bg-overlay" />
       </div>
 
-      {/* Floating Travel Destination Pill / Badge (Light Mode) */}
-      {activePlace && !isDark && (
-        <div
-          className="hero-place-badge"
-          onClick={() => setActivePlaceId(null)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              setActivePlaceId(null);
-            }
-          }}
-          title="Click to reset background"
-          aria-label={`Background: ${activePlace.place}. Click to reset.`}
-        >
-          <span className="hero-place-badge-pin" aria-hidden="true">📍</span>
-          <span className="hero-place-badge-char">{activePlace.char}</span>
-          <span className="hero-place-badge-sep">for</span>
-          <span className="hero-place-badge-name">{activePlace.place}</span>
-          <span className="hero-place-badge-close" aria-hidden="true" title="Reset background">×</span>
-        </div>
-      )}
-
       {/* Main Center Stage: Monumental Name Layered Underneath Portrait */}
       <div
         className="hero-center-stage"
@@ -201,7 +177,7 @@ export function Hero() {
             {FIRST_NAME_LETTERS.map((item, i) => (
               <span
                 key={item.id}
-                className={`char-3d ${activePlace?.id === item.id ? 'is-active-letter' : ''}`}
+                className="char-3d"
                 style={{ '--char-i': i }}
                 onClick={() => handleLetterClick(item)}
                 role={!isDark ? 'button' : undefined}
@@ -236,7 +212,7 @@ export function Hero() {
             {LAST_NAME_LETTERS.map((item, i) => (
               <span
                 key={item.id}
-                className={`char-3d ${activePlace?.id === item.id ? 'is-active-letter' : ''}`}
+                className="char-3d"
                 style={{ '--char-i': i }}
                 onClick={() => handleLetterClick(item)}
                 role={!isDark ? 'button' : undefined}

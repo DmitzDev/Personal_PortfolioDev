@@ -182,10 +182,11 @@
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 0.75s cubic-bezier(0.2, 0.9, 0.3, 1),
-              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.02);
+  transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .hero-place-bg-slide.is-visible {
@@ -193,111 +194,18 @@
   transform: scale(1);
 }
 
+/* Crystal-Clear Subtle Overlay — No blur, No milky haze */
 .hero-place-bg-overlay {
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(ellipse at 50% 45%, rgba(248, 250, 252, 0.3) 0%, rgba(248, 250, 252, 0.65) 100%),
-    linear-gradient(to bottom, rgba(248, 250, 252, 0.55) 0%, transparent 22%, transparent 72%, rgba(248, 250, 252, 0.92) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 20%,
+    transparent 78%,
+    rgba(255, 255, 255, 0.35) 100%
+  );
   pointer-events: none;
-}
-
-/* Floating Travel Destination Pill / Badge */
-.hero-place-badge {
-  position: absolute;
-  top: clamp(84px, 11vh, 106px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 25;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.42rem 0.95rem 0.42rem 0.75rem;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(203, 213, 225, 0.85);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.14), 0 2px 6px rgba(15, 23, 42, 0.06);
-  border-radius: 9999px;
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: #0f172a;
-  pointer-events: auto;
-  cursor: pointer;
-  user-select: none;
-  animation: badgeSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
-  max-width: calc(100vw - 2rem);
-}
-
-.hero-place-badge:hover {
-  transform: translateX(-50%) translateY(-2px) scale(1.02);
-  background: #ffffff;
-  box-shadow: 0 14px 30px -4px rgba(15, 23, 42, 0.2), 0 4px 8px rgba(15, 23, 42, 0.08);
-}
-
-.hero-place-badge-pin {
-  font-size: 0.95rem;
-  line-height: 1;
-}
-
-.hero-place-badge-char {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  background: #0284c7;
-  color: #ffffff;
-  font-size: 0.76rem;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.hero-place-badge-sep {
-  font-size: 0.78rem;
-  color: #64748b;
-  font-weight: 500;
-  text-transform: lowercase;
-}
-
-.hero-place-badge-name {
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.01em;
-}
-
-.hero-place-badge-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  margin-left: 0.25rem;
-  border-radius: 50%;
-  background: rgba(148, 163, 184, 0.2);
-  color: #475569;
-  font-size: 0.85rem;
-  line-height: 1;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.hero-place-badge:hover .hero-place-badge-close {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-}
-
-@keyframes badgeSlideDown {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-10px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
-  }
 }
 
 /* Center Stage: Monumental Name + Foreground Portrait */
@@ -444,65 +352,9 @@
   z-index: 20 !important;
 }
 
-/* Light Mode — Active Selected Destination Letter */
+/* Light Mode — Active Destination Letter (clean cursor pointer only) */
 [data-theme="light"] .char-3d {
   cursor: pointer;
-}
-
-[data-theme="light"] .char-3d.is-active-letter {
-  color: #0284c7 !important;
-  transform: translateY(-8px) translateZ(32px) scale(1.1);
-  z-index: 22 !important;
-}
-
-[data-theme="light"] .name-first .char-3d.is-active-letter {
-  text-shadow:
-    1px 2px 0 #bae6fd,
-    2px 4px 0 #7dd3fc,
-    3px 6px 0 #38bdf8,
-    4px 8px 0 #0284c7,
-    5px 10px 0 #0369a1,
-    6px 12px 1px rgba(2, 132, 199, 0.35),
-    0 16px 26px rgba(2, 132, 199, 0.28),
-    0 26px 40px rgba(15, 23, 42, 0.2);
-}
-
-[data-theme="light"] .name-last .char-3d.is-active-letter {
-  text-shadow:
-    -1px 2px 0 #bae6fd,
-    -2px 4px 0 #7dd3fc,
-    -3px 6px 0 #38bdf8,
-    -4px 8px 0 #0284c7,
-    -5px 10px 0 #0369a1,
-    -6px 12px 1px rgba(2, 132, 199, 0.35),
-    0 16px 26px rgba(2, 132, 199, 0.28),
-    0 26px 40px rgba(15, 23, 42, 0.2);
-}
-
-[data-theme="light"] .char-3d.is-active-letter::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #0284c7;
-  box-shadow: 0 0 10px rgba(2, 132, 199, 0.9);
-  pointer-events: none;
-  animation: pulsePlaceDot 1.4s ease-in-out infinite;
-}
-
-@keyframes pulsePlaceDot {
-  0%, 100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0.85;
-  }
-  50% {
-    transform: translateX(-50%) scale(1.4);
-    opacity: 1;
-  }
 }
 
 /* Dark Mode 3D Font Text — Resting */
@@ -943,12 +795,6 @@
 
   [data-theme="dark"] .char-3d {
     pointer-events: none !important;
-  }
-
-  .hero-place-badge {
-    top: clamp(68px, 9vh, 82px);
-    font-size: 0.78rem;
-    padding: 0.35rem 0.75rem 0.35rem 0.65rem;
   }
 
   .portrait-backlight {

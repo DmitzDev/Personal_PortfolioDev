@@ -9,7 +9,6 @@ import { Experience } from './components/Experience/Experience';
 import { Contact } from './components/Contact/Contact';
 import { Footer } from './components/Footer/Footer';
 import { ScrollToTop } from './components/shared/ScrollToTop';
-import { Jumpscare } from './components/Prank/Jumpscare';
 import { Toaster } from 'sonner';
 import { useLenis } from './hooks/useLenis';
 import { useTheme } from './hooks/useTheme';
@@ -24,7 +23,6 @@ function App() {
 
   return (
     <div className="app-container">
-      <Jumpscare theme={theme} />
       <Toaster 
         theme={theme} 
         position="top-right" 

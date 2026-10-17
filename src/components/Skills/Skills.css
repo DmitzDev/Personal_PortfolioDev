@@ -53,6 +53,11 @@
   margin-bottom: 2rem;
 }
 
+/* Mobile Pagination (hidden on desktop) */
+.skills-pagination {
+  display: none;
+}
+
 .skill-card {
   padding: 1.35rem;
   border-radius: 0.85rem;
@@ -330,7 +335,77 @@
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .skills-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .skills-page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .skills-page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 0.55rem;
+    border-radius: 9999px;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    box-shadow: var(--skeuo-extruded-sm);
+    border-top: 1px solid var(--skeuo-bevel-top);
+    border-bottom: 1px solid var(--skeuo-bevel-bottom);
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .skills-page-btn:hover:not(:disabled) {
+    color: var(--text-primary);
+    box-shadow: var(--skeuo-extruded);
+    transform: translateY(-1px);
+  }
+
+  .skills-page-btn:active:not(:disabled) {
+    box-shadow: var(--skeuo-recessed);
+    transform: translateY(0);
+  }
+
+  .skills-page-btn.active {
+    background: var(--gradient-accent);
+    color: var(--accent-text) !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+    border-top-color: rgba(255, 255, 255, 0.4);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+  }
+
+  [data-theme="dark"] .skills-page-btn.active {
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
+  }
+
+  .skills-page-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
   }
 
   .skill-card {

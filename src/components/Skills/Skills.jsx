@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { skills, skillCategories } from '../../data/skills';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { GitHubCalendar } from 'react-github-calendar';
 import { useTheme } from '../../hooks/useTheme';
-import { Terminal } from 'lucide-react';
+import { Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
 import antigravitySvg from '../../assets/antigravity.svg';
 import './Skills.css';
 
@@ -14,13 +14,59 @@ const getSkillIconUrl = (icon) => {
   return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg`;
 };
 
+const ITEMS_PER_PAGE_MOBILE = 6;
+
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
+  );
   const { theme } = useTheme();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mediaQuery.matches);
+
+    const handler = (e) => {
+      setIsMobile(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    setCurrentPage(1);
+  };
 
   const filteredSkills = activeCategory === 'All'
     ? skills
     : skills.filter(skill => skill.category === activeCategory);
+
+  const totalPages = Math.ceil(filteredSkills.length / ITEMS_PER_PAGE_MOBILE);
+
+  const displayedSkills = isMobile
+    ? filteredSkills.slice((currentPage - 1) * ITEMS_PER_PAGE_MOBILE, currentPage * ITEMS_PER_PAGE_MOBILE)
+    : filteredSkills;
+
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setCurrentPage(newPage);
+
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+      const topOffset = skillsSection.getBoundingClientRect().top + window.scrollY - 70;
+      if (window.scrollY > topOffset) {
+        if (window.lenis) {
+          window.lenis.scrollTo(topOffset, { duration: 0.8 });
+        } else {
+          window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+        }
+      }
+    }
+  };
 
   return (
     <section id="skills" className="section skills-section">
@@ -38,7 +84,7 @@ export function Skills() {
             <button
               key={category}
               className={`skill-tab-btn ${activeCategory === category ? 'active' : ''}`}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleCategoryChange(category)}
             >
               {category}
             </button>
@@ -47,7 +93,7 @@ export function Skills() {
 
         {/* Skills Cards Grid */}
         <div className="skills-grid">
-          {filteredSkills.map((skill, index) => (
+          {displayedSkills.map((skill, index) => (
             <AnimateOnScroll
               key={skill.name}
               animation="fade-up"
@@ -77,6 +123,44 @@ export function Skills() {
             </AnimateOnScroll>
           ))}
         </div>
+
+        {/* Mobile Pagination Controls */}
+        {isMobile && totalPages > 1 && (
+          <div className="skills-pagination">
+            <button
+              type="button"
+              className="skills-page-btn nav-btn"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              aria-label="Previous skills page"
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            <div className="skills-page-numbers">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  key={pageNum}
+                  type="button"
+                  className={`skills-page-btn num-btn ${currentPage === pageNum ? 'active' : ''}`}
+                  onClick={() => handlePageChange(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="skills-page-btn nav-btn"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              aria-label="Next skills page"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        )}
 
         {/* Continuous Tech Stack Marquee */}
         <div className="skills-ticker-wrapper glass-card">

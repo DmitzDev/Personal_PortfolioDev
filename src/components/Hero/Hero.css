@@ -163,6 +163,10 @@
 /* Monumental Name Layer (Layered Underneath Picture)
    Using a 2-column grid so the gap is mathematically centered at 50%,
    falling right behind Mitch's neck at neck level (top: 38%) */
+/* ==========================================================================
+   DESKTOP 3D MONUMENTAL FONT TEXT
+   Chiseled perspective bevels, converging isometric side-extrusions.
+   ========================================================================== */
 .hero-monumental-name {
   position: absolute;
   bottom: clamp(260px, 31vh, 320px);
@@ -182,57 +186,97 @@
   letter-spacing: -0.04em;
   line-height: 0.9;
   text-transform: uppercase;
-  color: #ffffff;
   user-select: none;
   pointer-events: none;
   z-index: 1;
   white-space: nowrap;
-  opacity: 0.96;
-  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.45);
-}
-
-[data-theme="light"] .hero-monumental-name {
-  color: #0f172a;
-  opacity: 0.92;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  perspective: 1200px;
+  transform-style: preserve-3d;
 }
 
 .name-word {
   display: inline-block;
   white-space: nowrap;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .name-first {
   justify-self: end;
   text-align: right;
-  transform: none;
+  transform: perspective(1200px) rotateY(6deg);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease;
 }
 
 .name-last {
   justify-self: start;
   text-align: left;
-  transform: none;
+  transform: perspective(1200px) rotateY(-6deg);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease;
 }
 
-/* Dark Mode: Clean, Polished Platinum & Titanium */
-[data-theme="dark"] .hero-monumental-name {
-  text-shadow: none;
+.hero-center-stage:hover .name-first {
+  transform: perspective(1200px) rotateY(8deg) translateZ(8px);
 }
 
-[data-theme="dark"] .name-first,
-[data-theme="dark"] .name-last {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 38%, #e2e8f0 68%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+.hero-center-stage:hover .name-last {
+  transform: perspective(1200px) rotateY(-8deg) translateZ(8px);
 }
 
-[data-theme="light"] .name-first,
+/* Light Mode 3D Font Text */
+[data-theme="light"] .name-first {
+  color: #1e293b;
+  text-shadow:
+    1px 1px 0 #cbd5e1,
+    2px 2px 0 #94a3b8,
+    3px 3px 0 #64748b,
+    4px 4px 0 #475569,
+    5px 5px 0 #334155,
+    6px 6px 1px rgba(15, 23, 42, 0.22),
+    4px 10px 16px rgba(15, 23, 42, 0.18),
+    8px 20px 30px rgba(15, 23, 42, 0.24);
+}
+
 [data-theme="light"] .name-last {
-  background: none;
-  -webkit-text-fill-color: initial;
-  color: #0f172a;
+  color: #1e293b;
+  text-shadow:
+    -1px 1px 0 #cbd5e1,
+    -2px 2px 0 #94a3b8,
+    -3px 3px 0 #64748b,
+    -4px 4px 0 #475569,
+    -5px 5px 0 #334155,
+    -6px 6px 1px rgba(15, 23, 42, 0.22),
+    -4px 10px 16px rgba(15, 23, 42, 0.18),
+    -8px 20px 30px rgba(15, 23, 42, 0.24);
+}
+
+/* Dark Mode 3D Font Text */
+[data-theme="dark"] .name-first {
+  color: #ffffff;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.4),
+    1px 1px 0 #475569,
+    2px 2px 0 #334155,
+    3px 3px 0 #1e293b,
+    4px 4px 0 #0f172a,
+    5px 5px 0 #070b14,
+    6px 6px 1px rgba(0, 0, 0, 0.65),
+    4px 12px 20px rgba(0, 0, 0, 0.75),
+    8px 24px 40px rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="dark"] .name-last {
+  color: #ffffff;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.4),
+    -1px 1px 0 #475569,
+    -2px 2px 0 #334155,
+    -3px 3px 0 #1e293b,
+    -4px 4px 0 #0f172a,
+    -5px 5px 0 #070b14,
+    -6px 6px 1px rgba(0, 0, 0, 0.65),
+    -4px 12px 20px rgba(0, 0, 0, 0.75),
+    -8px 24px 40px rgba(0, 0, 0, 0.85);
 }
 
 /* Mobile/Tablet Arch Linux Icon between MITCHELLE and SALAZAR (Hidden on Desktop) */
@@ -583,14 +627,19 @@
   }
 
   .name-first,
-  .name-last {
+  .name-last,
+  [data-theme="light"] .name-first,
+  [data-theme="light"] .name-last,
+  [data-theme="dark"] .name-first,
+  [data-theme="dark"] .name-last {
     display: inline-block;
     width: auto;
     text-align: center;
     justify-self: auto;
     line-height: 0.9;
     white-space: nowrap;
-    transform: none;
+    transform: none !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45) !important;
   }
 
   .portrait-backlight {

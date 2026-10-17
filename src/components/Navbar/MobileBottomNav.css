@@ -66,7 +66,7 @@
     border-radius: 0.35rem;
     background: transparent;
     border: none;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     transition:
@@ -89,6 +89,7 @@
     letter-spacing: 0.03em;
     text-transform: uppercase;
     line-height: 1;
+    color: var(--text-secondary);
     transition: color 0.15s ease;
   }
 

@@ -191,7 +191,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .exp-tech-icons-cluster {
@@ -317,6 +317,18 @@
   cursor: pointer;
   padding: 0;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.exp-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  pointer-events: auto;
 }
 
 .exp-dot:hover {
@@ -334,9 +346,9 @@
   text-align: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   letter-spacing: 0.04em;
-  opacity: 0.75;
+  opacity: 0.95;
   margin-top: 0.25rem;
 }
 

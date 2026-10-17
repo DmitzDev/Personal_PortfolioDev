@@ -1,0 +1,18 @@
+# MitchDev - Personal Portfolio
+
+> Portfolio of Mitchelle (MitchDev) Salazar — Full-Stack Web Developer & UI Engineer building high-performance web applications, modern React platforms, and client-centric digital products.
+
+## Core Capabilities
+- Modern React, Vite, Node.js, and TypeScript application development
+- High-performance UI architecture and responsive design systems
+- REST APIs, Cloud integration, and client-side compilation engines
+
+## Featured Projects
+- [CV Studio](https://cvbuildermd.vercel.app/): Real-Time Curriculum Vitae Builder & Vector PDF Engine
+- [MDev Blog](https://github.com/DmitzDev): Full-Stack Content Management & Publishing Platform
+- [Naruto Monopoly](https://github.com/DmitzDev): Interactive Browser Board Engine & State Machine
+
+## Contact & Links
+- [Website](https://mitchdevportfolio.vercel.app/): Main portfolio site
+- [GitHub](https://github.com/DmitzDev): Open-source repositories and contributions
+- [Email](mailto:mitchelle.dev@gmail.com): Direct inquiry and professional contact

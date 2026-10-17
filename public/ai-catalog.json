@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/agent-catalog/spec/main/schema.json",
+  "name": "MitchDev Portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio of Mitchelle Salazar — Full-Stack Web Developer & UI Engineer",
+  "url": "https://mitchdevportfolio.vercel.app",
+  "author": {
+    "name": "Mitchelle Salazar",
+    "url": "https://github.com/DmitzDev",
+    "email": "mitchelle.dev@gmail.com"
+  },
+  "capabilities": [
+    "Web Application Development",
+    "Frontend Engineering",
+    "React UI Architecture"
+  ]
+}

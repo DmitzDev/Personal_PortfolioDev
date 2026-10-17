@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { skills, skillCategories } from '../../data/skills';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
-import { GitHubCalendar } from 'react-github-calendar';
 import { useTheme } from '../../hooks/useTheme';
 import { Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
 import antigravitySvg from '../../assets/antigravity.svg';
 import './Skills.css';
+
+const GitHubCalendar = lazy(() =>
+  import('react-github-calendar').then((mod) => ({ default: mod.GitHubCalendar || mod.default }))
+);
 
 const getSkillIconUrl = (icon) => {
   if (icon === 'antigravity') {
@@ -222,13 +225,15 @@ export function Skills() {
 
             {/* Contribution Heatmap */}
             <div className="gh-calendar-viewport">
-              <GitHubCalendar
-                username="DmitzDev"
-                colorScheme={theme === 'dark' ? 'dark' : 'light'}
-                fontSize={12}
-                blockSize={13}
-                blockMargin={4}
-              />
+              <Suspense fallback={<div className="gh-calendar-loading" style={{ minHeight: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>Loading activity...</div>}>
+                <GitHubCalendar
+                  username="DmitzDev"
+                  colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                  fontSize={12}
+                  blockSize={13}
+                  blockMargin={4}
+                />
+              </Suspense>
             </div>
           </div>
         </AnimateOnScroll>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { skills, skillCategories } from '../../data/skills';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { GitHubCalendar } from 'react-github-calendar';
@@ -14,27 +14,12 @@ const getSkillIconUrl = (icon) => {
   return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg`;
 };
 
-const ITEMS_PER_PAGE_MOBILE = 6;
+const ITEMS_PER_PAGE = 6;
 
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-  const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== 'undefined' ? window.innerWidth <= 768 : false
-  );
   const { theme } = useTheme();
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    setIsMobile(mediaQuery.matches);
-
-    const handler = (e) => {
-      setIsMobile(e.matches);
-    };
-
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -45,10 +30,10 @@ export function Skills() {
     ? skills
     : skills.filter(skill => skill.category === activeCategory);
 
-  const totalPages = Math.ceil(filteredSkills.length / ITEMS_PER_PAGE_MOBILE);
+  const totalPages = Math.ceil(filteredSkills.length / ITEMS_PER_PAGE);
 
-  const displayedSkills = isMobile
-    ? filteredSkills.slice((currentPage - 1) * ITEMS_PER_PAGE_MOBILE, currentPage * ITEMS_PER_PAGE_MOBILE)
+  const displayedSkills = totalPages > 1
+    ? filteredSkills.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
     : filteredSkills;
 
   const [touchStartX, setTouchStartX] = useState(null);
@@ -103,10 +88,10 @@ export function Skills() {
 
         {/* Skills Cards Grid */}
         <div
-          className={`skills-grid ${isMobile ? 'mobile-paginated' : ''}`}
-          onTouchStart={isMobile ? handleTouchStart : undefined}
-          onTouchMove={isMobile ? handleTouchMove : undefined}
-          onTouchEnd={isMobile ? handleTouchEnd : undefined}
+          className={`skills-grid ${totalPages > 1 ? 'is-paginated' : ''}`}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {displayedSkills.map((skill, index) => (
             <AnimateOnScroll
@@ -139,8 +124,8 @@ export function Skills() {
           ))}
         </div>
 
-        {/* Mobile Pagination Controls */}
-        {isMobile && totalPages > 1 && (
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
           <div className="skills-pagination">
             <button
               type="button"

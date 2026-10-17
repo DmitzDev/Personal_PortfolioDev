@@ -200,40 +200,27 @@ export function Hero() {
       >
         {/* Giant Name Typography Layer */}
         <h1 className="hero-monumental-name" aria-label="Mitchelle Salazar">
-          {/* Column 1: MITCHELLE + Bio underneath */}
-          <div className="name-col-first">
-            <span className="name-word name-first">
-              {FIRST_NAME_LETTERS.map((item, i) => (
-                <span
-                  key={item.id}
-                  className="char-3d"
-                  style={{ '--char-i': i }}
-                  onClick={() => handleLetterClick(item)}
-                  role={!isDark ? 'button' : undefined}
-                  tabIndex={!isDark ? 0 : undefined}
-                  onKeyDown={(e) => {
-                    if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
-                      e.preventDefault();
-                      handleLetterClick(item);
-                    }
-                  }}
-                  title={!isDark ? `${item.char} for ${item.place} — Click to preview background (5s)` : undefined}
-                >
-                  {item.char}
-                </span>
-              ))}
-            </span>
-
-            {/* Desktop Only: Role & Bio situated directly underneath MITCHELLE */}
-            <div className="hero-name-bio desktop-only-bio">
-              <p className="hero-corner-role">
-                Front-End Web Developer &amp; Computer Engineering
-              </p>
-              <p className="hero-corner-desc">
-                I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
-              </p>
-            </div>
-          </div>
+          <span className="name-word name-first">
+            {FIRST_NAME_LETTERS.map((item, i) => (
+              <span
+                key={item.id}
+                className="char-3d"
+                style={{ '--char-i': i }}
+                onClick={() => handleLetterClick(item)}
+                role={!isDark ? 'button' : undefined}
+                tabIndex={!isDark ? 0 : undefined}
+                onKeyDown={(e) => {
+                  if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    handleLetterClick(item);
+                  }
+                }}
+                title={!isDark ? `${item.char} for ${item.place} — Click to preview background (5s)` : undefined}
+              >
+                {item.char}
+              </span>
+            ))}
+          </span>
 
           <span className="hero-name-arch-badge" aria-hidden="true" title="Arch Linux">
             <svg
@@ -291,17 +278,15 @@ export function Hero() {
 
       {/* Bottom Bar: User Specified Content in Left Corner */}
       <div className="hero-bottom-bar">
-        {/* Left Corner: Actions only (Get in touch & Projects buttons) on desktop, with bio on mobile */}
+        {/* Left Corner: Role, Bio & CTAs */}
         <AnimateOnScroll animation="fade-up" delay={80} className="hero-bottom-left-corner">
-          {/* Mobile Only: Role & Bio situated cleanly above buttons */}
-          <div className="hero-name-bio mobile-only-bio">
-            <p className="hero-corner-role">
-              Front-End Web Developer &amp; Computer Engineering
-            </p>
-            <p className="hero-corner-desc">
-              I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
-            </p>
-          </div>
+          <p className="hero-corner-role">
+            Front-End Web Developer &amp; Computer Engineering
+          </p>
+
+          <p className="hero-corner-desc">
+            I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
+          </p>
 
           <div className="hero-corner-actions">
             <a

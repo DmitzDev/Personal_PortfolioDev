@@ -237,7 +237,6 @@
   max-width: 1560px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: start;
   gap: clamp(110px, 12vw, 200px);
   margin: 0;
   padding: 0 1.5rem;
@@ -260,107 +259,6 @@
 .hero-monumental-name:hover,
 .hero-monumental-name:has(.char-3d:hover) {
   z-index: 3;
-}
-
-.name-col-first {
-  justify-self: end;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  pointer-events: auto;
-}
-
-/* Bio situated directly under MITCHELLE */
-.hero-name-bio {
-  margin-top: 1.25rem;
-  max-width: 440px;
-  text-align: left;
-  white-space: normal;
-  text-transform: none;
-  letter-spacing: normal;
-  user-select: text;
-  pointer-events: auto;
-  padding: 1.15rem 1.35rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
-  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-  z-index: 4;
-  position: relative;
-}
-
-[data-theme="light"] .hero-section:has(.hero-place-bg-stage.is-active) .hero-name-bio {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid #ffffff;
-  box-shadow: 0 14px 38px -4px rgba(15, 23, 42, 0.2), 0 4px 14px rgba(15, 23, 42, 0.08);
-}
-
-[data-theme="dark"] .hero-name-bio {
-  background: rgba(15, 23, 42, 0.68);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.45);
-}
-
-.hero-name-bio .hero-corner-role {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  line-height: 1.35;
-  margin: 0 0 0.5rem 0;
-  letter-spacing: -0.015em;
-  text-transform: none;
-}
-
-[data-theme="light"] .hero-section:has(.hero-place-bg-stage.is-active) .hero-name-bio .hero-corner-role {
-  color: #0f172a;
-}
-
-.hero-name-bio .hero-corner-desc {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.88rem;
-  font-weight: 500;
-  line-height: 1.62;
-  color: var(--text-secondary);
-  margin: 0;
-  text-wrap: pretty;
-  text-transform: none;
-}
-
-[data-theme="light"] .hero-section:has(.hero-place-bg-stage.is-active) .hero-name-bio .hero-corner-desc {
-  color: #334155;
-}
-
-/* Visibility controls between Desktop and Mobile */
-@media (min-width: 1025px) {
-  .desktop-only-bio {
-    display: block;
-  }
-  .mobile-only-bio {
-    display: none !important;
-  }
-}
-
-@media (max-width: 1024px) {
-  .desktop-only-bio {
-    display: none !important;
-  }
-  .mobile-only-bio {
-    display: block !important;
-    margin-bottom: 1.25rem;
-    width: 100%;
-    max-width: 100%;
-  }
-  .name-col-first {
-    display: contents;
-  }
 }
 
 .name-word {
@@ -614,6 +512,27 @@
   align-items: flex-start;
   max-width: 440px;
   text-align: left;
+  padding: 1rem 1.25rem;
+  margin: -1rem -1.25rem 0;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+[data-theme="light"] .hero-section:has(.hero-place-bg-stage.is-active) .hero-bottom-left-corner {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme="light"] .hero-section:has(.hero-place-bg-stage.is-active) .hero-bottom-left-corner .hero-corner-role {
+  color: #0f172a;
+}
+
+[data-theme="light"] .hero-section:has(.hero-place-bg-stage.is-active) .hero-bottom-left-corner .hero-corner-desc {
+  color: #334155;
 }
 
 .hero-corner-role {
@@ -926,6 +845,8 @@
   .hero-bottom-left-corner {
     width: 100%;
     max-width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .hero-corner-role {

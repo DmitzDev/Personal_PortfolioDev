@@ -513,11 +513,12 @@
   }
 }
 
-@media (max-width: 1280px) {
+/* Desktop Monitors (1025px to 1280px) in Landscape */
+@media (min-width: 1025px) and (max-width: 1280px) and (orientation: landscape) {
   .hero-monumental-name {
-    font-size: clamp(2.8rem, 6.6vw, 6.2rem);
-    gap: clamp(90px, 10vw, 160px);
-    bottom: clamp(225px, 28vh, 275px);
+    font-size: clamp(2.8rem, 5.6vw, 5.2rem);
+    gap: clamp(180px, 18vw, 240px);
+    bottom: clamp(220px, 26vh, 275px);
   }
 
   .name-first {
@@ -535,87 +536,22 @@
   }
 }
 
-/* Tablet / iPad (Includes iPad Air 1076x1180, iPad Pro 11", iPad 10.2", Surface):
-   Flanking MITCHELLE and SALAZAR at neck level, snug and balanced against the picture. */
-@media (max-width: 1200px) and (min-width: 769px) {
+/* ==========================================================================
+   MOBILE DEVICES (including "Desktop Site" Mode), TABLETS IN PORTRAIT & <= 1024px:
+   NAME is placed IN FRONT of the picture (z-index: 10), centered at the base
+   of the portrait with the Arch Linux badge between MITCHELLE and SALAZAR.
+   Guarantees the picture NEVER covers the name, and the name never shrinks!
+   ========================================================================== */
+@media (max-width: 1024px), (max-width: 1200px) and (orientation: portrait), (max-width: 1200px) and (hover: none) and (pointer: coarse) {
   .hero-section.editorial-hero {
     min-height: auto;
     height: auto;
-    padding: 5.5rem 1.75rem 2.5rem 1.75rem;
+    padding: 5.2rem 1.25rem max(5.5rem, calc(4.5rem + env(safe-area-inset-bottom))) 1.25rem;
     gap: 1.5rem;
   }
 
   .hero-center-stage {
-    min-height: 480px;
-    flex: none;
-    margin-bottom: 0.5rem;
-  }
-
-  /* Centered portrait stage on tablet */
-  .hero-portrait-stage {
-    height: clamp(440px, 52vh, 560px);
-    max-height: 58vh;
-    transform: none;
-  }
-
-  /* Split layout flanking the picture at neck level, comfortably balanced */
-  .hero-monumental-name {
-    z-index: 1;
-    top: auto;
-    bottom: clamp(210px, 26vh, 265px);
-    left: 50%;
-    transform: translateX(-50%);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(65px, 8vw, 120px);
-    width: 100%;
-    max-width: 100%;
-    font-size: clamp(2.3rem, 5.2vw, 4.2rem);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    color: #ffffff;
-    text-shadow: none;
-  }
-
-  [data-theme="light"] .hero-monumental-name {
-    color: #0f172a;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  }
-
-  .name-first {
-    justify-self: end;
-    text-align: right;
-    transform: none;
-  }
-
-  .name-last {
-    justify-self: start;
-    text-align: left;
-    transform: none;
-  }
-
-  .hero-name-arch-badge {
-    display: none;
-  }
-
-  .hero-bottom-bar {
-    margin-top: 0.75rem;
-  }
-}
-
-/* Phone / Mobile Browser (iPhone 14 Pro, Pixel 7, iPhone 14 Pro Max):
-   NAME is IN FRONT of picture (z-index: 10), layered on top across the bottom
-   of the portrait with the Arch Linux icon right in between! */
-@media (max-width: 768px) {
-  .hero-section.editorial-hero {
-    min-height: auto;
-    height: auto;
-    padding: 4.8rem 1.25rem 2rem 1.25rem;
-    gap: 1.25rem;
-  }
-
-  .hero-center-stage {
-    min-height: 340px;
+    min-height: 380px;
     flex: none;
     position: relative;
     width: 100%;
@@ -623,44 +559,46 @@
   }
 
   .hero-portrait-stage {
-    height: 330px;
-    max-height: 44vh;
+    height: clamp(340px, 46vh, 500px);
+    max-height: 52vh;
     width: auto;
     margin: 0 auto;
     transform: none;
   }
 
-  /* Layered IN FRONT of the picture at the bottom of the portrait (Single prominent line with Arch Linux Icon) */
+  /* Layered IN FRONT of the picture at the bottom of the portrait */
   .hero-monumental-name {
     z-index: 10;
     top: auto;
-    bottom: 12px;
+    bottom: clamp(10px, 2vh, 20px);
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: clamp(0.25rem, 1.4vw, 0.45rem);
+    gap: clamp(0.35rem, 1.6vw, 0.75rem);
     line-height: 0.9;
     letter-spacing: -0.04em;
     width: 100%;
     max-width: 100%;
-    padding: 0 0.4rem;
-    font-size: clamp(1.35rem, 6.2vw, 2.2rem);
+    padding: 0 0.5rem;
+    font-size: clamp(1.6rem, 5.8vw, 3.2rem);
     white-space: nowrap;
     opacity: 1;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
   }
 
   .hero-name-arch-badge {
     display: inline-flex;
-    margin: 0 0.1rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.15rem;
   }
 
   .hero-name-arch-svg {
-    width: clamp(15px, 4.6vw, 21px);
-    height: clamp(15px, 4.6vw, 21px);
+    width: clamp(18px, 4vw, 28px);
+    height: clamp(18px, 4vw, 28px);
   }
 
   .name-first,
@@ -675,8 +613,8 @@
   }
 
   .portrait-backlight {
-    width: 240px;
-    height: 240px;
+    width: 280px;
+    height: 280px;
     top: 10%;
   }
 
@@ -706,13 +644,13 @@
   }
 
   .hero-corner-role {
-    font-size: 0.9rem;
+    font-size: clamp(0.85rem, 2.2vw, 1.05rem);
     line-height: 1.35;
     margin-bottom: 0.45rem;
   }
 
   .hero-corner-desc {
-    font-size: 0.825rem;
+    font-size: clamp(0.8rem, 1.9vw, 0.92rem);
     line-height: 1.55;
     margin-bottom: 1rem;
   }
@@ -758,10 +696,44 @@
   }
 }
 
+/* Phone Viewports (<= 768px) */
+@media (max-width: 768px) {
+  .hero-section.editorial-hero {
+    padding: 4.8rem 1.25rem max(5rem, calc(4.25rem + env(safe-area-inset-bottom))) 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .hero-center-stage {
+    min-height: 330px;
+  }
+
+  .hero-portrait-stage {
+    height: 320px;
+    max-height: 42vh;
+  }
+
+  .hero-monumental-name {
+    bottom: 12px;
+    gap: clamp(0.25rem, 1.4vw, 0.45rem);
+    font-size: clamp(1.35rem, 6.2vw, 2.2rem);
+  }
+
+  .hero-name-arch-svg {
+    width: clamp(15px, 4.6vw, 21px);
+    height: clamp(15px, 4.6vw, 21px);
+  }
+
+  .portrait-backlight {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+/* Extra Small Mobile Screens (<= 480px) */
 @media (max-width: 480px) {
   .hero-section.editorial-hero {
     padding-top: 4.4rem;
-    padding-bottom: 1.75rem;
+    padding-bottom: max(4.8rem, calc(4rem + env(safe-area-inset-bottom)));
   }
 
   .hero-center-stage {
@@ -771,13 +743,11 @@
   .hero-portrait-stage {
     height: 300px;
     max-height: 40vh;
-    transform: none;
   }
 
   .hero-monumental-name {
     bottom: 10px;
     font-size: clamp(1.22rem, 6.2vw, 1.95rem);
-    letter-spacing: -0.04em;
     gap: 0.32rem;
   }
 
@@ -785,16 +755,27 @@
     width: clamp(13px, 4.2vw, 18px);
     height: clamp(13px, 4.2vw, 18px);
   }
+}
 
-  .hero-corner-actions {
-    flex-direction: row;
-    align-items: center;
-    gap: 1.15rem;
-    width: auto;
+/* Short Landscape Phones (e.g. rotated mobile device) */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero-section.editorial-hero {
+    min-height: auto;
+    padding-top: 4.2rem;
+    padding-bottom: 2rem;
   }
 
-  .hero-btn-corner {
-    flex: initial;
-    width: auto;
+  .hero-center-stage {
+    min-height: 240px;
+  }
+
+  .hero-portrait-stage {
+    height: 220px;
+    max-height: 60vh;
+  }
+
+  .hero-monumental-name {
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+    bottom: 8px;
   }
 }

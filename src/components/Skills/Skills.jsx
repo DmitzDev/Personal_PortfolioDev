@@ -2,20 +2,14 @@ import React, { useState, lazy, Suspense } from 'react';
 import { skills, skillCategories } from '../../data/skills';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { useTheme } from '../../hooks/useTheme';
+import { Tech3DIcon } from '../shared/Tech3DIcon';
+import { Tilt3DCard } from '../shared/Tilt3DCard';
 import { Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
-import antigravitySvg from '../../assets/antigravity.svg';
 import './Skills.css';
 
 const GitHubCalendar = lazy(() =>
   import('react-github-calendar').then((mod) => ({ default: mod.GitHubCalendar || mod.default }))
 );
-
-const getSkillIconUrl = (icon) => {
-  if (icon === 'antigravity') {
-    return antigravitySvg;
-  }
-  return `/icons/${icon}.svg`;
-};
 
 const ITEMS_PER_PAGE = 6;
 
@@ -101,31 +95,21 @@ export function Skills() {
               key={skill.name}
               animation="fade-up"
               delay={(index % 6) * 60}
-              className="skill-card glass-card"
+              className="skill-card-wrapper"
             >
-              <div className="skill-card-top">
-                <div className="skill-icon-wrap">
-                  <img
-                    src={getSkillIconUrl(skill.icon)}
-                    alt={skill.name}
-                    className="skill-devicon"
-                    width="42"
-                    height="42"
-                    loading="lazy"
-                    onError={(e) => {
-                      if (skill.icon !== 'antigravity') {
-                        e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${skill.icon}/${skill.icon}-plain.svg`;
-                      }
-                    }}
-                  />
+              <Tilt3DCard className="skill-card glass-card">
+                <div className="skill-card-top">
+                  <div className="skill-icon-wrap">
+                    <Tech3DIcon iconKey={skill.icon} size={48} />
+                  </div>
+                  <div className="skill-meta-wrap">
+                    <h3 className="skill-name">{skill.name}</h3>
+                    <span className="skill-level-badge">{skill.badge || skill.level}</span>
+                  </div>
                 </div>
-                <div className="skill-meta-wrap">
-                  <h3 className="skill-name">{skill.name}</h3>
-                  <span className="skill-level-badge">{skill.badge || skill.level}</span>
-                </div>
-              </div>
 
-              <p className="skill-description">{skill.description}</p>
+                <p className="skill-description">{skill.description}</p>
+              </Tilt3DCard>
             </AnimateOnScroll>
           ))}
         </div>

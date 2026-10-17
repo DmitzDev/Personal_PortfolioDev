@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { useTheme } from '../../hooks/useTheme';
-import archLinuxSvg from '../../assets/archlinux.svg';
+import { Tech3DIcon } from '../shared/Tech3DIcon';
 import './Hero.css';
 
 const ceoMitchNoBg = '/CeoMitch-NoBG.webp';
@@ -166,14 +166,7 @@ export function Hero() {
           <div className="hero-corner-group">
             <span className="hero-corner-stack-label">OS</span>
             <div className="hero-corner-os-item" title="Arch Linux" aria-label="Arch Linux">
-              <img
-                src={archLinuxSvg}
-                alt="Arch Linux"
-                className="hero-corner-tech-img hero-corner-os-img"
-                width="20"
-                height="20"
-                loading="lazy"
-              />
+              <Tech3DIcon iconKey="archlinux" size={20} showGlow={false} />
               <span className="hero-corner-os-name">Arch Linux</span>
             </div>
           </div>
@@ -189,17 +182,7 @@ export function Hero() {
                   title={tech.name}
                   aria-label={tech.name}
                 >
-                  <img
-                    src={tech.icon}
-                    alt={tech.name}
-                    className="hero-corner-tech-img"
-                    width="24"
-                    height="24"
-                    loading="lazy"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
+                  <Tech3DIcon iconKey={tech.name} size={30} />
                 </div>
               ))}
             </div>

@@ -1,0 +1,58 @@
+/* ==========================================================================
+   INTERACTIVE 3D TILT CARD STYLES
+   Smooth physics-driven tilt, specular glare reflection & parallax layers.
+   ========================================================================== */
+
+.tilt-3d-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  overflow: visible;
+}
+
+/* Dynamic Glare Reflection Overlay */
+.tilt-3d-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.08) 25%,
+    transparent 65%
+  );
+  opacity: var(--glare-opacity, 0);
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  mix-blend-mode: overlay;
+}
+
+[data-theme="light"] .tilt-3d-glare {
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.2) 35%,
+    transparent 70%
+  );
+  mix-blend-mode: soft-light;
+}
+
+.tilt-3d-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Elevate card top and content in 3D space */
+.tilt-3d-card:hover .skill-card-top {
+  transform: translateZ(10px);
+}
+
+.tilt-3d-card:hover .skill-description {
+  transform: translateZ(6px);
+}

@@ -511,7 +511,7 @@
   flex-direction: column;
   align-items: flex-start;
   max-width: 440px;
-  text-align: left;
+  text-align: justify;
   padding: 1rem 1.25rem;
   margin: -1rem -1.25rem 0;
   border-radius: 18px;
@@ -543,6 +543,8 @@
   line-height: 1.4;
   margin: 0 0 0.65rem 0;
   letter-spacing: -0.015em;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .hero-corner-desc {
@@ -550,13 +552,14 @@
   line-height: 1.65;
   color: var(--text-secondary);
   margin: 0 0 1.35rem 0;
-  text-wrap: pretty;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .hero-corner-actions {
   display: flex;
   align-items: center;
-  gap: 1.15rem;
+  gap: 1.6rem;
   flex-wrap: wrap;
 }
 
@@ -572,6 +575,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  margin-left: 0.35rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
@@ -579,7 +583,7 @@
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1.5px;
-  transition: opacity 0.15s ease, gap 0.15s ease;
+  transition: opacity 0.15s ease, gap 0.15s ease, transform 0.15s ease;
   cursor: pointer;
 }
 

@@ -48,6 +48,8 @@ export function Hero() {
   const isDark = theme === 'dark';
   const [activePlaceId, setActivePlaceId] = useState(null);
 
+  const placeTimerRef = useRef(null);
+
   // Preload all 16 travel pictures in light mode (desktop browser only)
   useEffect(() => {
     if (theme === 'light' && typeof window !== 'undefined' && window.innerWidth > 1024) {
@@ -66,8 +68,32 @@ export function Hero() {
   const handleLetterClick = (item) => {
     // Strictly for desktop browser only (> 1024px) in light mode
     if (isDark || (typeof window !== 'undefined' && window.innerWidth <= 1024)) return;
-    setActivePlaceId((prev) => (prev === item.id ? null : item.id));
+
+    if (placeTimerRef.current) {
+      clearTimeout(placeTimerRef.current);
+      placeTimerRef.current = null;
+    }
+
+    setActivePlaceId((prev) => {
+      if (prev === item.id) {
+        return null;
+      }
+      // Show for exactly 5 seconds, then smoothly fade out back to original background
+      placeTimerRef.current = setTimeout(() => {
+        setActivePlaceId(null);
+        placeTimerRef.current = null;
+      }, 5000);
+      return item.id;
+    });
   };
+
+  useEffect(() => {
+    return () => {
+      if (placeTimerRef.current) {
+        clearTimeout(placeTimerRef.current);
+      }
+    };
+  }, [isDark]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -172,29 +198,43 @@ export function Hero() {
         onMouseMove={handleStageMouseMove}
         onMouseLeave={handleStageMouseLeave}
       >
-        {/* Giant Name Typography Layer (Layered Underneath Picture on Desktop, In Front on Mobile) */}
+        {/* Giant Name Typography Layer */}
         <h1 className="hero-monumental-name" aria-label="Mitchelle Salazar">
-          <span className="name-word name-first">
-            {FIRST_NAME_LETTERS.map((item, i) => (
-              <span
-                key={item.id}
-                className="char-3d"
-                style={{ '--char-i': i }}
-                onClick={() => handleLetterClick(item)}
-                role={!isDark ? 'button' : undefined}
-                tabIndex={!isDark ? 0 : undefined}
-                onKeyDown={(e) => {
-                  if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
-                    e.preventDefault();
-                    handleLetterClick(item);
-                  }
-                }}
-                title={!isDark ? `${item.char} for ${item.place} — Click to preview background` : undefined}
-              >
-                {item.char}
-              </span>
-            ))}
-          </span>
+          {/* Column 1: MITCHELLE + Bio underneath */}
+          <div className="name-col-first">
+            <span className="name-word name-first">
+              {FIRST_NAME_LETTERS.map((item, i) => (
+                <span
+                  key={item.id}
+                  className="char-3d"
+                  style={{ '--char-i': i }}
+                  onClick={() => handleLetterClick(item)}
+                  role={!isDark ? 'button' : undefined}
+                  tabIndex={!isDark ? 0 : undefined}
+                  onKeyDown={(e) => {
+                    if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
+                      e.preventDefault();
+                      handleLetterClick(item);
+                    }
+                  }}
+                  title={!isDark ? `${item.char} for ${item.place} — Click to preview background (5s)` : undefined}
+                >
+                  {item.char}
+                </span>
+              ))}
+            </span>
+
+            {/* Desktop Only: Role & Bio situated directly underneath MITCHELLE */}
+            <div className="hero-name-bio desktop-only-bio">
+              <p className="hero-corner-role">
+                Front-End Web Developer &amp; Computer Engineering
+              </p>
+              <p className="hero-corner-desc">
+                I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
+              </p>
+            </div>
+          </div>
+
           <span className="hero-name-arch-badge" aria-hidden="true" title="Arch Linux">
             <svg
               viewBox="0 0 128 128"
@@ -209,6 +249,8 @@ export function Hero() {
               <path d="M121.14 112.57v-3.243h-1.215v-.433h2.93v.433h-1.223v3.243h-.492M123.363 112.57v-3.676h.734l.875 2.601c.082.243.14.426.176.543.043-.132.11-.328.2-.586l.882-2.558h.66v3.676h-.472v-3.079l-1.075 3.079h-.441l-1.066-3.13v3.13h-.473" />
             </svg>
           </span>
+
+          {/* Column 2: SALAZAR */}
           <span className="name-word name-last">
             {LAST_NAME_LETTERS.map((item, i) => (
               <span
@@ -224,7 +266,7 @@ export function Hero() {
                     handleLetterClick(item);
                   }
                 }}
-                title={!isDark ? `${item.char} for ${item.place} — Click to preview background` : undefined}
+                title={!isDark ? `${item.char} for ${item.place} — Click to preview background (5s)` : undefined}
               >
                 {item.char}
               </span>
@@ -249,15 +291,17 @@ export function Hero() {
 
       {/* Bottom Bar: User Specified Content in Left Corner */}
       <div className="hero-bottom-bar">
-        {/* Left Corner: Role, Bio & CTAs */}
+        {/* Left Corner: Actions only (Get in touch & Projects buttons) on desktop, with bio on mobile */}
         <AnimateOnScroll animation="fade-up" delay={80} className="hero-bottom-left-corner">
-          <p className="hero-corner-role">
-            Front-End Web Developer &amp; Computer Engineering
-          </p>
-
-          <p className="hero-corner-desc">
-            I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
-          </p>
+          {/* Mobile Only: Role & Bio situated cleanly above buttons */}
+          <div className="hero-name-bio mobile-only-bio">
+            <p className="hero-corner-role">
+              Front-End Web Developer &amp; Computer Engineering
+            </p>
+            <p className="hero-corner-desc">
+              I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
+            </p>
+          </div>
 
           <div className="hero-corner-actions">
             <a

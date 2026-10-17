@@ -51,21 +51,31 @@ export function Skills() {
     ? filteredSkills.slice((currentPage - 1) * ITEMS_PER_PAGE_MOBILE, currentPage * ITEMS_PER_PAGE_MOBILE)
     : filteredSkills;
 
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > 45 && currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    } else if (distance < -45 && currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages) return;
     setCurrentPage(newPage);
-
-    const skillsSection = document.getElementById('skills');
-    if (skillsSection) {
-      const topOffset = skillsSection.getBoundingClientRect().top + window.scrollY - 70;
-      if (window.scrollY > topOffset) {
-        if (window.lenis) {
-          window.lenis.scrollTo(topOffset, { duration: 0.8 });
-        } else {
-          window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
-        }
-      }
-    }
   };
 
   return (
@@ -92,7 +102,12 @@ export function Skills() {
         </div>
 
         {/* Skills Cards Grid */}
-        <div className="skills-grid">
+        <div
+          className={`skills-grid ${isMobile ? 'mobile-paginated' : ''}`}
+          onTouchStart={isMobile ? handleTouchStart : undefined}
+          onTouchMove={isMobile ? handleTouchMove : undefined}
+          onTouchEnd={isMobile ? handleTouchEnd : undefined}
+        >
           {displayedSkills.map((skill, index) => (
             <AnimateOnScroll
               key={skill.name}
@@ -126,39 +141,44 @@ export function Skills() {
 
         {/* Mobile Pagination Controls */}
         {isMobile && totalPages > 1 && (
-          <div className="skills-pagination">
-            <button
-              type="button"
-              className="skills-page-btn nav-btn"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              aria-label="Previous skills page"
-            >
-              <ChevronLeft size={16} />
-            </button>
+          <div className="skills-pagination-wrapper">
+            <div className="skills-pagination">
+              <button
+                type="button"
+                className="skills-page-btn nav-btn"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                aria-label="Previous skills page"
+              >
+                <ChevronLeft size={16} />
+              </button>
 
-            <div className="skills-page-numbers">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                <button
-                  key={pageNum}
-                  type="button"
-                  className={`skills-page-btn num-btn ${currentPage === pageNum ? 'active' : ''}`}
-                  onClick={() => handlePageChange(pageNum)}
-                >
-                  {pageNum}
-                </button>
-              ))}
+              <div className="skills-page-numbers">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                  <button
+                    key={pageNum}
+                    type="button"
+                    className={`skills-page-btn num-btn ${currentPage === pageNum ? 'active' : ''}`}
+                    onClick={() => handlePageChange(pageNum)}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="skills-page-btn nav-btn"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                aria-label="Next skills page"
+              >
+                <ChevronRight size={16} />
+              </button>
             </div>
-
-            <button
-              type="button"
-              className="skills-page-btn nav-btn"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              aria-label="Next skills page"
-            >
-              <ChevronRight size={16} />
-            </button>
+            <span className="skills-swipe-hint">
+              ‹ swipe cards or tap to switch ›
+            </span>
           </div>
         )}
 

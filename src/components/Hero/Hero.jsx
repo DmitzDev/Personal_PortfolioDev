@@ -1,10 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { useTheme } from '../../hooks/useTheme';
 import { Tech3DIcon } from '../shared/Tech3DIcon';
 import './Hero.css';
 
 const ceoMitchNoBg = '/CeoMitch-NoBG.webp';
+
+/* Light Theme Philippine Destination Mapping for each letter in MITCHELLE SALAZAR */
+const FIRST_NAME_LETTERS = [
+  { char: 'M', id: 'm-0', place: 'Makati', img: 'Name-Picture/makati.webp' },
+  { char: 'I', id: 'i-1', place: 'Iloilo', img: 'Name-Picture/iloilo.webp' },
+  { char: 'T', id: 't-2', place: 'Tagaytay', img: 'Name-Picture/tagaytay.webp' },
+  { char: 'C', id: 'c-3', place: 'Cebu', img: 'Name-Picture/cebu.webp' },
+  { char: 'H', id: 'h-4', place: 'Hinatuan, Surigao del Sur', img: 'Name-Picture/Hinatuan (Surigao del Sur).webp' },
+  { char: 'E', id: 'e-5', place: 'El Nido, Palawan', img: 'Name-Picture/El Nido (Palawan).webp' },
+  { char: 'L', id: 'l-6', place: 'Laguna', img: 'Name-Picture/Laguna.webp' },
+  { char: 'L', id: 'l-7', place: 'Legazpi, Albay', img: 'Name-Picture/Legazpi (Albay).webp' },
+  { char: 'E', id: 'e-8', place: 'Ermita, Manila', img: 'Name-Picture/Ermita (Manila).webp' },
+];
+
+const LAST_NAME_LETTERS = [
+  { char: 'S', id: 's-9', place: 'Siargao', img: 'Name-Picture/Siargao.webp' },
+  { char: 'A', id: 'a-10', place: 'Aklan', img: 'Name-Picture/Aklan.webp' },
+  { char: 'L', id: 'l-11', place: 'Laoag, Ilocos Norte', img: 'Name-Picture/Laoag (Ilocos Norte).webp' },
+  { char: 'A', id: 'a-12', place: 'Antipolo', img: 'Name-Picture/Antipolo.webp' },
+  { char: 'Z', id: 'z-13', place: 'Zamboanga', img: 'Name-Picture/Zamboanga.webp' },
+  { char: 'A', id: 'a-14', place: 'Aurora', img: 'Name-Picture/Aurora.webp' },
+  { char: 'R', id: 'r-15', place: 'Rizal', img: 'Name-Picture/Rizal.webp' },
+];
+
+const ALL_NAME_LETTERS = [...FIRST_NAME_LETTERS, ...LAST_NAME_LETTERS];
 
 const coreTechIcons = [
   { name: 'React', icon: '/icons/react.svg' },
@@ -21,6 +46,27 @@ export function Hero() {
   const { theme } = useTheme();
   const videoRef = useRef(null);
   const isDark = theme === 'dark';
+  const [activePlaceId, setActivePlaceId] = useState(null);
+
+  // Preload all 16 travel pictures in light mode for instant, zero-lag crossfading
+  useEffect(() => {
+    if (theme === 'light') {
+      ALL_NAME_LETTERS.forEach((item) => {
+        const img = new Image();
+        img.src = `${import.meta.env.BASE_URL}${item.img}`;
+      });
+    }
+  }, [theme]);
+
+  // Active place object (only active in light mode)
+  const activePlace = !isDark
+    ? ALL_NAME_LETTERS.find((item) => item.id === activePlaceId) || null
+    : null;
+
+  const handleLetterClick = (item) => {
+    if (isDark) return;
+    setActivePlaceId((prev) => (prev === item.id ? null : item.id));
+  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -102,6 +148,47 @@ export function Hero() {
       {/* Cinematic Ambient Atmosphere (Studio Streaks + Center Fog Glow) */}
       <div className="hero-atmosphere-backdrop" aria-hidden="true"></div>
 
+      {/* Light Mode Interactive Travel Destination Background Stage */}
+      <div
+        className={`hero-place-bg-stage ${activePlace && !isDark ? 'is-active' : ''}`}
+        aria-hidden="true"
+      >
+        {ALL_NAME_LETTERS.map((item) => (
+          <div
+            key={item.id}
+            className={`hero-place-bg-slide ${activePlace?.id === item.id ? 'is-visible' : ''}`}
+            style={{
+              backgroundImage: `url("${import.meta.env.BASE_URL}${item.img}")`,
+            }}
+          />
+        ))}
+        <div className="hero-place-bg-overlay" />
+      </div>
+
+      {/* Floating Travel Destination Pill / Badge (Light Mode) */}
+      {activePlace && !isDark && (
+        <div
+          className="hero-place-badge"
+          onClick={() => setActivePlaceId(null)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setActivePlaceId(null);
+            }
+          }}
+          title="Click to reset background"
+          aria-label={`Background: ${activePlace.place}. Click to reset.`}
+        >
+          <span className="hero-place-badge-pin" aria-hidden="true">📍</span>
+          <span className="hero-place-badge-char">{activePlace.char}</span>
+          <span className="hero-place-badge-sep">for</span>
+          <span className="hero-place-badge-name">{activePlace.place}</span>
+          <span className="hero-place-badge-close" aria-hidden="true" title="Reset background">×</span>
+        </div>
+      )}
+
       {/* Main Center Stage: Monumental Name Layered Underneath Portrait */}
       <div
         className="hero-center-stage"
@@ -111,9 +198,23 @@ export function Hero() {
         {/* Giant Name Typography Layer (Layered Underneath Picture on Desktop, In Front on Mobile) */}
         <h1 className="hero-monumental-name" aria-label="Mitchelle Salazar">
           <span className="name-word name-first">
-            {'MITCHELLE'.split('').map((char, i) => (
-              <span key={i} className="char-3d" style={{ '--char-i': i }}>
-                {char}
+            {FIRST_NAME_LETTERS.map((item, i) => (
+              <span
+                key={item.id}
+                className={`char-3d ${activePlace?.id === item.id ? 'is-active-letter' : ''}`}
+                style={{ '--char-i': i }}
+                onClick={() => handleLetterClick(item)}
+                role={!isDark ? 'button' : undefined}
+                tabIndex={!isDark ? 0 : undefined}
+                onKeyDown={(e) => {
+                  if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    handleLetterClick(item);
+                  }
+                }}
+                title={!isDark ? `${item.char} for ${item.place} — Click to preview background` : undefined}
+              >
+                {item.char}
               </span>
             ))}
           </span>
@@ -132,9 +233,23 @@ export function Hero() {
             </svg>
           </span>
           <span className="name-word name-last">
-            {'SALAZAR'.split('').map((char, i) => (
-              <span key={i} className="char-3d" style={{ '--char-i': i }}>
-                {char}
+            {LAST_NAME_LETTERS.map((item, i) => (
+              <span
+                key={item.id}
+                className={`char-3d ${activePlace?.id === item.id ? 'is-active-letter' : ''}`}
+                style={{ '--char-i': i }}
+                onClick={() => handleLetterClick(item)}
+                role={!isDark ? 'button' : undefined}
+                tabIndex={!isDark ? 0 : undefined}
+                onKeyDown={(e) => {
+                  if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    handleLetterClick(item);
+                  }
+                }}
+                title={!isDark ? `${item.char} for ${item.place} — Click to preview background` : undefined}
+              >
+                {item.char}
               </span>
             ))}
           </span>

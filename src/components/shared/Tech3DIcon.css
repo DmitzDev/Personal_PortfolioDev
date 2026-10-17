@@ -68,8 +68,7 @@
   box-shadow: 
     0 3.5px 0 var(--t-sidewall-dark),
     0 5px 2px rgba(0, 0, 0, 0.4),
-    0 9px 18px -3px rgba(0, 0, 0, 0.55),
-    0 0 16px var(--t-glow);
+    0 9px 18px -3px rgba(0, 0, 0, 0.55);
   border-top: 1.5px solid var(--t-rim-dark);
   border-left: 1px solid rgba(255, 255, 255, 0.16);
   border-right: 1px solid rgba(0, 0, 0, 0.35);
@@ -90,8 +89,7 @@
   box-shadow: 
     0 3.5px 0 var(--t-sidewall-light),
     0 5px 2px rgba(15, 23, 42, 0.12),
-    0 8px 16px -2px rgba(15, 23, 42, 0.18),
-    0 0 14px var(--t-glow);
+    0 8px 16px -2px rgba(15, 23, 42, 0.18);
   border-top: 1.5px solid var(--t-rim-light);
   border-left: 1px solid rgba(255, 255, 255, 0.9);
   border-right: 1px solid rgba(15, 23, 42, 0.12);
@@ -152,8 +150,7 @@
   /* Dual-tier physical 3D drop-shadow extrusion */
   filter: 
     drop-shadow(0 2px 0 var(--t-sidewall-dark))
-    drop-shadow(0 4px 2px rgba(0, 0, 0, 0.5))
-    drop-shadow(0 0 10px var(--t-glow));
+    drop-shadow(0 4px 2px rgba(0, 0, 0, 0.5));
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
   pointer-events: none;
 }
@@ -161,8 +158,7 @@
 [data-theme="light"] .tech-3d-img {
   filter: 
     drop-shadow(0 2px 0 var(--t-sidewall-light))
-    drop-shadow(0 4px 2px rgba(15, 23, 42, 0.25))
-    drop-shadow(0 0 8px var(--t-glow));
+    drop-shadow(0 4px 2px rgba(15, 23, 42, 0.22));
 }
 
 /* ==========================================================================
@@ -174,8 +170,7 @@
   box-shadow: 
     0 5px 0 var(--t-sidewall-dark),
     0 8px 4px rgba(0, 0, 0, 0.45),
-    0 14px 24px -4px rgba(0, 0, 0, 0.65),
-    0 0 24px var(--t-glow);
+    0 14px 24px -4px rgba(0, 0, 0, 0.65);
   border-top-color: #ffffff;
 }
 
@@ -184,8 +179,7 @@
   box-shadow: 
     0 5px 0 var(--t-sidewall-light),
     0 8px 4px rgba(15, 23, 42, 0.18),
-    0 14px 24px -4px rgba(15, 23, 42, 0.25),
-    0 0 20px var(--t-glow);
+    0 14px 24px -4px rgba(15, 23, 42, 0.25);
   border-top-color: #ffffff;
 }
 
@@ -198,16 +192,14 @@
 .skill-card:hover .tech-3d-img {
   filter: 
     drop-shadow(0 3px 0 var(--t-sidewall-dark))
-    drop-shadow(0 7px 4px rgba(0, 0, 0, 0.6))
-    drop-shadow(0 0 16px var(--t-glow));
+    drop-shadow(0 7px 4px rgba(0, 0, 0, 0.6));
 }
 
 [data-theme="light"] .tech-3d-token:hover .tech-3d-img,
 [data-theme="light"] .skill-card:hover .tech-3d-img {
   filter: 
     drop-shadow(0 3px 0 var(--t-sidewall-light))
-    drop-shadow(0 6px 3px rgba(15, 23, 42, 0.3))
-    drop-shadow(0 0 14px var(--t-glow));
+    drop-shadow(0 6px 3px rgba(15, 23, 42, 0.28));
 }
 
 .tech-3d-token:hover .tech-3d-shadow,

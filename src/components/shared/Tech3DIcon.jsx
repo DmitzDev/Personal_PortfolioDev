@@ -4,7 +4,7 @@ import antigravitySvg from '../../assets/antigravity.svg';
 import archLinuxSvg from '../../assets/archlinux.svg';
 import './Tech3DIcon.css';
 
-export function Tech3DIcon({ iconKey = '', size = 44, className = '', showGlow = true }) {
+export function Tech3DIcon({ iconKey = '', size = 44, className = '', showGlow = false }) {
   const safeKey = String(iconKey || '');
   const cleanKey = safeKey
     .toLowerCase()

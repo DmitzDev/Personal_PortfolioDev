@@ -16,10 +16,19 @@ import './index.css';
 
 function App() {
   const [introFinished, setIntroFinished] = useState(false);
-  const { theme } = useTheme();
+  const { theme, changeTheme } = useTheme();
 
   // Initialize smooth momentum scrolling
   useLenis();
+
+  const handleReveal = () => {
+    changeTheme('light');
+  };
+
+  const handleFinish = () => {
+    setIntroFinished(true);
+    changeTheme('light');
+  };
 
   return (
     <div className="app-container">
@@ -36,7 +45,7 @@ function App() {
       />
 
       {!introFinished && (
-        <IntroLoader onFinish={() => setIntroFinished(true)} />
+        <IntroLoader onReveal={handleReveal} onFinish={handleFinish} />
       )}
       <Navbar />
       <main>

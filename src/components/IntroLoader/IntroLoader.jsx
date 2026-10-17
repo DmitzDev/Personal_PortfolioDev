@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { personalInfo } from '../../data/personalInfo';
 import './IntroLoader.css';
 
-export function IntroLoader({ onFinish }) {
+export function IntroLoader({ onFinish, onReveal }) {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState('loading'); // 'loading' | 'revealing'
   const [isDone, setIsDone] = useState(false);
@@ -12,12 +12,13 @@ export function IntroLoader({ onFinish }) {
     if (hasFinishedRef.current) return;
     hasFinishedRef.current = true;
     setPhase('revealing');
+    if (onReveal) onReveal();
 
     setTimeout(() => {
       setIsDone(true);
       if (onFinish) onFinish();
     }, 450);
-  }, [onFinish]);
+  }, [onFinish, onReveal]);
 
   // Measured progress timer
   useEffect(() => {

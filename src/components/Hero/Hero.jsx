@@ -48,9 +48,9 @@ export function Hero() {
   const isDark = theme === 'dark';
   const [activePlaceId, setActivePlaceId] = useState(null);
 
-  // Preload all 16 travel pictures in light mode for instant, zero-lag crossfading
+  // Preload all 16 travel pictures in light mode (desktop browser only)
   useEffect(() => {
-    if (theme === 'light') {
+    if (theme === 'light' && typeof window !== 'undefined' && window.innerWidth > 1024) {
       ALL_NAME_LETTERS.forEach((item) => {
         const img = new Image();
         img.src = `${import.meta.env.BASE_URL}${item.img}`;
@@ -58,13 +58,14 @@ export function Hero() {
     }
   }, [theme]);
 
-  // Active place object (only active in light mode)
+  // Active place object (only active on desktop in light mode)
   const activePlace = !isDark
     ? ALL_NAME_LETTERS.find((item) => item.id === activePlaceId) || null
     : null;
 
   const handleLetterClick = (item) => {
-    if (isDark) return;
+    // Strictly for desktop browser only (> 1024px) in light mode
+    if (isDark || (typeof window !== 'undefined' && window.innerWidth <= 1024)) return;
     setActivePlaceId((prev) => (prev === item.id ? null : item.id));
   };
 

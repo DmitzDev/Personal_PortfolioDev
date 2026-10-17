@@ -786,15 +786,13 @@
     transform: none !important;
     text-shadow: none !important;
     transition: none !important;
-  }
-
-  [data-theme="light"] .char-3d {
-    pointer-events: auto !important;
-    cursor: pointer;
-  }
-
-  [data-theme="dark"] .char-3d {
     pointer-events: none !important;
+    cursor: default !important;
+  }
+
+  /* Completely disable interactive travel background stage on mobile & tablet browsers */
+  .hero-place-bg-stage {
+    display: none !important;
   }
 
   .portrait-backlight {

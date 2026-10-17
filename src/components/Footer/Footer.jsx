@@ -26,7 +26,7 @@ export function Footer() {
         <div className="footer-top">
           <div className="footer-brand">
             <a href="#hero" className="logo-container">
-              <img src={personalInfo.logoImage} alt="Logo" className="footer-logo-img" />
+              <img src={personalInfo.logoImage} alt="Logo" className="footer-logo-img" width="28" height="28" loading="lazy" />
               <span className="logo">Mitch<span className="logo-accent">Dev.</span></span>
             </a>
             <p className="footer-bio">{personalInfo.title} • {personalInfo.valueProposition}</p>

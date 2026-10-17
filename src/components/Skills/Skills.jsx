@@ -106,6 +106,9 @@ export function Skills() {
                     src={getSkillIconUrl(skill.icon)}
                     alt={skill.name}
                     className="skill-devicon"
+                    width="42"
+                    height="42"
+                    loading="lazy"
                     onError={(e) => {
                       if (skill.icon !== 'antigravity') {
                         e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${skill.icon}/${skill.icon}-plain.svg`;
@@ -176,6 +179,9 @@ export function Skills() {
                     src={getSkillIconUrl(item.icon)}
                     alt={item.name}
                     className="ticker-icon"
+                    width="20"
+                    height="20"
+                    loading="lazy"
                     onError={(e) => {
                       if (item.icon !== 'antigravity') {
                         e.target.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${item.icon}/${item.icon}-plain.svg`;

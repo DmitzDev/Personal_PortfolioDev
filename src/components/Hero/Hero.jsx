@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { useTheme } from '../../hooks/useTheme';
-import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.png';
+import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.webp';
 import archLinuxSvg from '../../assets/archlinux.svg';
 import './Hero.css';
 
@@ -78,7 +78,7 @@ export function Hero() {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="none"
         />
         <div className="hero-video-overlay" />
       </div>
@@ -116,6 +116,9 @@ export function Hero() {
             alt="Mitchelle Salazar"
             className="portrait-img"
             loading="eager"
+            fetchPriority="high"
+            width="600"
+            height="750"
           />
         </div>
       </div>
@@ -166,6 +169,9 @@ export function Hero() {
                 src={archLinuxSvg}
                 alt="Arch Linux"
                 className="hero-corner-tech-img hero-corner-os-img"
+                width="20"
+                height="20"
+                loading="lazy"
               />
               <span className="hero-corner-os-name">Arch Linux</span>
             </div>
@@ -186,6 +192,9 @@ export function Hero() {
                     src={tech.icon}
                     alt={tech.name}
                     className="hero-corner-tech-img"
+                    width="24"
+                    height="24"
+                    loading="lazy"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}

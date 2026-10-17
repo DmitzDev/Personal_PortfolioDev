@@ -123,7 +123,14 @@ export function Projects() {
                   className="project-image-wrapper"
                   onClick={() => setSelectedProject(project)}
                 >
-                  <img src={project.image} alt={project.title} className="project-preview-img" />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="project-preview-img"
+                    width="600"
+                    height="340"
+                    loading="lazy"
+                  />
                   <div className="project-hover-overlay">
                     <span className="view-case-study-btn">
                       <FileText size={15} />
@@ -157,6 +164,9 @@ export function Projects() {
                               src={info.src}
                               alt={tech}
                               className="tech-badge-img"
+                              width="16"
+                              height="16"
+                              loading="lazy"
                               onError={(e) => {
                                 e.target.style.display = 'none';
                               }}
@@ -260,6 +270,9 @@ export function Projects() {
                   src={selectedProject.image}
                   alt={selectedProject.title}
                   className={`modal-preview-img ${selectedProject.title === 'Tambayan App' ? 'contain-mode' : ''}`}
+                  width="800"
+                  height="450"
+                  loading="lazy"
                 />
               </div>
 
@@ -281,6 +294,9 @@ export function Projects() {
                             src={info.src}
                             alt={tech}
                             className="tech-badge-img"
+                            width="14"
+                            height="14"
+                            loading="lazy"
                             onError={(e) => {
                               e.target.style.display = 'none';
                             }}

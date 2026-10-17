@@ -1,5 +1,5 @@
-import pocketTracerImg from '../assets/PocketTracer.png';
-import COSHSeminarImg from '../assets/COSHSeminar.jpg';
+import pocketTracerImg from '../assets/PocketTracer.webp';
+import COSHSeminarImg from '../assets/COSHSeminar.webp';
 import RSTWDost from "../assets/RSTWDost.jpeg";
 
 export const certificates = [

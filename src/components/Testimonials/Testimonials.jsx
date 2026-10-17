@@ -68,7 +68,7 @@ export function Testimonials() {
               <div className="testimonial-author">
                 <div className="author-photo">
                   {currentTestimonial.photo ? (
-                    <img src={currentTestimonial.photo} alt={currentTestimonial.name} />
+                    <img src={currentTestimonial.photo} alt={currentTestimonial.name} width="48" height="48" loading="lazy" />
                   ) : (
                     <span>{currentTestimonial.name.charAt(0)}</span>
                   )}

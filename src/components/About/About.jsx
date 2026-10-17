@@ -7,7 +7,7 @@ import { SectionHeader } from '../shared/SectionHeader';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './About.css';
 import { useMouseTilt } from '../../hooks/useMouseTilt';
-import ceoMitchImage from '../../assets/CeoMitch.png';
+import ceoMitchImage from '../../assets/CeoMitch.webp';
 
 export function About() {
   const [activeTab, setActiveTab] = useState('education');
@@ -64,7 +64,7 @@ export function About() {
               ref={tilt.ref}
               style={tilt.style}
             >
-              <img src={ceoMitchImage} alt="About Me" className="about-image" />
+              <img src={ceoMitchImage} alt="About Me" className="about-image" width="400" height="400" loading="lazy" />
               <div className="image-frame"></div>
             </div>
             

@@ -244,6 +244,9 @@ export function Experience() {
                                       src={iconInfo.src}
                                       alt={tech}
                                       className="exp-tech-icon-img"
+                                      width="24"
+                                      height="24"
+                                      loading="lazy"
                                       onError={(e) => {
                                         e.currentTarget.style.display = 'none';
                                       }}
@@ -457,6 +460,9 @@ export function Experience() {
                             src={cert.image}
                             alt={cert.title}
                             className="cert-deck-img"
+                            width="600"
+                            height="400"
+                            loading="lazy"
                           />
                           {cardState === 'active' && (
                             <div className="cert-deck-hover-overlay">
@@ -590,7 +596,7 @@ export function Experience() {
               <button className="cert-close-btn" onClick={() => setSelectedCert(null)}>✕</button>
             </div>
             <div className="cert-modal-img-wrap">
-              <img src={selectedCert.image} alt={selectedCert.title} />
+              <img src={selectedCert.image} alt={selectedCert.title} width="800" height="500" loading="lazy" />
             </div>
           </div>
         </div>

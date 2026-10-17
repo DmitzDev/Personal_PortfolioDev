@@ -1,8 +1,8 @@
-import cvStudioImg from '../assets/CVStudio.png';
-import mitchBlogImg from '../assets/MitchBlog.png';
-import NarutoMonopolyImg from '../assets/Monopoly.png';
-import PortfolioImg from '../assets/Portfolio.png';
-import tambayanLogoImg from '../assets/tambayan_t_logo.png';
+import cvStudioImg from '../assets/CVStudio.webp';
+import mitchBlogImg from '../assets/MitchBlog.webp';
+import NarutoMonopolyImg from '../assets/Monopoly.webp';
+import PortfolioImg from '../assets/Portfolio.webp';
+import tambayanLogoImg from '../assets/tambayan_t_logo.webp';
 
 export const projects = [
   {

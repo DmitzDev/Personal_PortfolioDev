@@ -23,7 +23,7 @@ export function Certificates() {
             >
               <div className="cert-image-container">
                 {cert.image ? (
-                  <img src={cert.image} alt={cert.title} className="cert-image" />
+                  <img src={cert.image} alt={cert.title} className="cert-image" width="400" height="280" loading="lazy" />
                 ) : (
                   <div className="cert-image-placeholder">
                     <span className="text-gradient">Certificate</span>
@@ -72,6 +72,9 @@ export function Certificates() {
                   <img 
                     src={selectedCertificate.image} 
                     alt={selectedCertificate.title} 
+                    width="800"
+                    height="560"
+                    loading="lazy"
                     style={{ width: '100%', height: 'auto', display: 'block' }} 
                   />
                 ) : (
@@ -104,7 +107,7 @@ export function Certificates() {
               
               <div className="modal-hero">
                 {selectedCertificate.image ? (
-                  <img src={selectedCertificate.image} alt={selectedCertificate.title} className="modal-hero-image" />
+                  <img src={selectedCertificate.image} alt={selectedCertificate.title} className="modal-hero-image" width="800" height="560" loading="lazy" />
                 ) : (
                   <div className="modal-hero-placeholder">
                     <span>{selectedCertificate.title.charAt(0)}</span>

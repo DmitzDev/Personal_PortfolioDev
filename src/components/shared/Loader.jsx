@@ -21,7 +21,7 @@ export function Loader({ onComplete }) {
     <div className={`loader-container ${isFadingOut ? 'fade-out' : ''}`}>
       <div className="loader-content">
         <div className="loader-logo-container">
-          <img src={personalInfo.logoImage} alt="Logo" className="loader-logo-img" />
+          <img src={personalInfo.logoImage} alt="Logo" className="loader-logo-img" width="48" height="48" />
           <h1 className="loader-logo-text">Mitch<span className="logo-accent">Dev.</span></h1>
         </div>
         <div className="loader-progress"></div>

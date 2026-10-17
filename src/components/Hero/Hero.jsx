@@ -67,6 +67,21 @@ export function Hero() {
     }
   };
 
+  const handleStageMouseMove = (e) => {
+    if (window.innerWidth <= 1024) return;
+    const stage = e.currentTarget;
+    const rect = stage.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    stage.style.setProperty('--hero-tilt-x', `${(x * 10).toFixed(2)}deg`);
+    stage.style.setProperty('--hero-tilt-y', `${(-y * 8).toFixed(2)}deg`);
+  };
+
+  const handleStageMouseLeave = (e) => {
+    e.currentTarget.style.setProperty('--hero-tilt-x', '0deg');
+    e.currentTarget.style.setProperty('--hero-tilt-y', '0deg');
+  };
+
   return (
     <section id="hero" className="hero-section editorial-hero">
       {/* Dark Mode Arch Linux Atmospheric Background Video */}
@@ -88,10 +103,20 @@ export function Hero() {
       <div className="hero-atmosphere-backdrop" aria-hidden="true"></div>
 
       {/* Main Center Stage: Monumental Name Layered Underneath Portrait */}
-      <div className="hero-center-stage">
+      <div
+        className="hero-center-stage"
+        onMouseMove={handleStageMouseMove}
+        onMouseLeave={handleStageMouseLeave}
+      >
         {/* Giant Name Typography Layer (Layered Underneath Picture on Desktop, In Front on Mobile) */}
         <h1 className="hero-monumental-name" aria-label="Mitchelle Salazar">
-          <span className="name-word name-first">MITCHELLE</span>
+          <span className="name-word name-first">
+            {'MITCHELLE'.split('').map((char, i) => (
+              <span key={i} className="char-3d" style={{ '--char-i': i }}>
+                {char}
+              </span>
+            ))}
+          </span>
           <span className="hero-name-arch-badge" aria-hidden="true" title="Arch Linux">
             <svg
               viewBox="0 0 128 128"
@@ -106,7 +131,13 @@ export function Hero() {
               <path d="M121.14 112.57v-3.243h-1.215v-.433h2.93v.433h-1.223v3.243h-.492M123.363 112.57v-3.676h.734l.875 2.601c.082.243.14.426.176.543.043-.132.11-.328.2-.586l.882-2.558h.66v3.676h-.472v-3.079l-1.075 3.079h-.441l-1.066-3.13v3.13h-.473" />
             </svg>
           </span>
-          <span className="name-word name-last">SALAZAR</span>
+          <span className="name-word name-last">
+            {'SALAZAR'.split('').map((char, i) => (
+              <span key={i} className="char-3d" style={{ '--char-i': i }}>
+                {char}
+              </span>
+            ))}
+          </span>
         </h1>
 
         {/* Portrait in Foreground Layer Overlapping the Name */}

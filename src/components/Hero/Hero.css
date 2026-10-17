@@ -171,7 +171,7 @@
   position: absolute;
   bottom: clamp(260px, 31vh, 320px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotateX(var(--hero-tilt-y, 0deg)) rotateY(var(--hero-tilt-x, 0deg));
   width: 100%;
   max-width: 1560px;
   display: grid;
@@ -192,39 +192,54 @@
   white-space: nowrap;
   perspective: 1200px;
   transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .name-word {
-  display: inline-block;
+  display: inline-flex;
   white-space: nowrap;
   transform-style: preserve-3d;
   will-change: transform;
+  pointer-events: auto;
 }
 
 .name-first {
   justify-self: end;
   text-align: right;
   transform: perspective(1200px) rotateY(6deg);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .name-last {
   justify-self: start;
   text-align: left;
   transform: perspective(1200px) rotateY(-6deg);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hero-center-stage:hover .name-first {
-  transform: perspective(1200px) rotateY(8deg) translateZ(8px);
+.name-first:hover {
+  transform: perspective(1200px) rotateY(9deg) translateZ(10px);
 }
 
-.hero-center-stage:hover .name-last {
-  transform: perspective(1200px) rotateY(-8deg) translateZ(8px);
+.name-last:hover {
+  transform: perspective(1200px) rotateY(-9deg) translateZ(10px);
 }
 
-/* Light Mode 3D Font Text */
-[data-theme="light"] .name-first {
+/* Individual Interactive 3D Letters */
+.char-3d {
+  display: inline-block;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform, text-shadow;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              text-shadow 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.2s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Light Mode 3D Font Text — Resting */
+[data-theme="light"] .name-first .char-3d {
   color: #1e293b;
   text-shadow:
     1px 1px 0 #cbd5e1,
@@ -232,12 +247,12 @@
     3px 3px 0 #64748b,
     4px 4px 0 #475569,
     5px 5px 0 #334155,
-    6px 6px 1px rgba(15, 23, 42, 0.22),
-    4px 10px 16px rgba(15, 23, 42, 0.18),
-    8px 20px 30px rgba(15, 23, 42, 0.24);
+    6px 6px 1px rgba(15, 23, 42, 0.2),
+    4px 10px 14px rgba(15, 23, 42, 0.16),
+    8px 18px 26px rgba(15, 23, 42, 0.2);
 }
 
-[data-theme="light"] .name-last {
+[data-theme="light"] .name-last .char-3d {
   color: #1e293b;
   text-shadow:
     -1px 1px 0 #cbd5e1,
@@ -245,13 +260,44 @@
     -3px 3px 0 #64748b,
     -4px 4px 0 #475569,
     -5px 5px 0 #334155,
-    -6px 6px 1px rgba(15, 23, 42, 0.22),
-    -4px 10px 16px rgba(15, 23, 42, 0.18),
-    -8px 20px 30px rgba(15, 23, 42, 0.24);
+    -6px 6px 1px rgba(15, 23, 42, 0.2),
+    -4px 10px 14px rgba(15, 23, 42, 0.16),
+    -8px 18px 26px rgba(15, 23, 42, 0.2);
 }
 
-/* Dark Mode 3D Font Text */
-[data-theme="dark"] .name-first {
+/* Light Mode — Active Cursor Hover Reaction */
+[data-theme="light"] .name-first .char-3d:hover {
+  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  color: #0f172a;
+  text-shadow:
+    1px 2px 0 #cbd5e1,
+    2px 4px 0 #94a3b8,
+    3px 6px 0 #64748b,
+    4px 8px 0 #475569,
+    5px 10px 0 #334155,
+    6px 12px 1px rgba(15, 23, 42, 0.25),
+    4px 20px 24px rgba(15, 23, 42, 0.28),
+    8px 32px 45px rgba(15, 23, 42, 0.24);
+  z-index: 5;
+}
+
+[data-theme="light"] .name-last .char-3d:hover {
+  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  color: #0f172a;
+  text-shadow:
+    -1px 2px 0 #cbd5e1,
+    -2px 4px 0 #94a3b8,
+    -3px 6px 0 #64748b,
+    -4px 8px 0 #475569,
+    -5px 10px 0 #334155,
+    -6px 12px 1px rgba(15, 23, 42, 0.25),
+    -4px 20px 24px rgba(15, 23, 42, 0.28),
+    -8px 32px 45px rgba(15, 23, 42, 0.24);
+  z-index: 5;
+}
+
+/* Dark Mode 3D Font Text — Resting */
+[data-theme="dark"] .name-first .char-3d {
   color: #ffffff;
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.4),
@@ -265,7 +311,7 @@
     8px 24px 40px rgba(0, 0, 0, 0.85);
 }
 
-[data-theme="dark"] .name-last {
+[data-theme="dark"] .name-last .char-3d {
   color: #ffffff;
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.4),
@@ -277,6 +323,39 @@
     -6px 6px 1px rgba(0, 0, 0, 0.65),
     -4px 12px 20px rgba(0, 0, 0, 0.75),
     -8px 24px 40px rgba(0, 0, 0, 0.85);
+}
+
+/* Dark Mode — Active Cursor Hover Reaction */
+[data-theme="dark"] .name-first .char-3d:hover {
+  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  color: #ffffff;
+  text-shadow:
+    0 1px 0 #ffffff,
+    1px 2px 0 #64748b,
+    2px 4px 0 #475569,
+    3px 6px 0 #334155,
+    4px 8px 0 #1e293b,
+    5px 10px 0 #0f172a,
+    6px 12px 2px rgba(0, 0, 0, 0.7),
+    4px 20px 28px rgba(0, 0, 0, 0.85),
+    8px 34px 50px rgba(0, 0, 0, 0.95);
+  z-index: 5;
+}
+
+[data-theme="dark"] .name-last .char-3d:hover {
+  transform: translateY(-10px) translateZ(36px) scale(1.14);
+  color: #ffffff;
+  text-shadow:
+    0 1px 0 #ffffff,
+    -1px 2px 0 #64748b,
+    -2px 4px 0 #475569,
+    -3px 6px 0 #334155,
+    -4px 8px 0 #1e293b,
+    -5px 10px 0 #0f172a,
+    -6px 12px 2px rgba(0, 0, 0, 0.7),
+    -4px 20px 28px rgba(0, 0, 0, 0.85),
+    -8px 34px 50px rgba(0, 0, 0, 0.95);
+  z-index: 5;
 }
 
 /* Mobile/Tablet Arch Linux Icon between MITCHELLE and SALAZAR (Hidden on Desktop) */

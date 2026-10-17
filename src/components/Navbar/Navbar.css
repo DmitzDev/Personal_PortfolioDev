@@ -89,34 +89,52 @@
 
 .nav-links {
   display: flex;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.25rem;
   background: var(--bg-secondary);
   background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-extruded-sm);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
-  padding: 0.35rem 0.5rem;
+  padding: 0.28rem 0.32rem;
   border-radius: 9999px;
 }
 
+.nav-links li {
+  display: flex;
+  align-items: center;
+}
+
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
   font-weight: 600;
+  line-height: 1;
   color: var(--text-secondary);
-  padding: 0.4rem 0.85rem;
+  padding: 0.45rem 0.8rem;
   border-radius: 9999px;
+  text-decoration: none;
+  white-space: nowrap;
   transition: all 0.15s ease;
 }
 
 .nav-link:hover {
   color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-link.active {
   background: var(--bg-tertiary);
   box-shadow: var(--skeuo-recessed-sm);
   color: var(--accent);
+  font-weight: 700;
 }
 
 .nav-actions {

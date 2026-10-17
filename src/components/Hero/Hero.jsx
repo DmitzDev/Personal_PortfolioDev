@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { useTheme } from '../../hooks/useTheme';
-import ceoMitchNoBg from '../../assets/CeoMitch-NoBG.webp';
 import archLinuxSvg from '../../assets/archlinux.svg';
 import './Hero.css';
+
+const ceoMitchNoBg = '/CeoMitch-NoBG.webp';
 
 const coreTechIcons = [
   { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },

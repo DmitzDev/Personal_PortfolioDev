@@ -5,11 +5,19 @@ import { useTheme } from '../../hooks/useTheme';
 import { Tech3DIcon } from '../shared/Tech3DIcon';
 import { Tilt3DCard } from '../shared/Tilt3DCard';
 import { Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
+import antigravitySvg from '../../assets/antigravity.svg';
 import './Skills.css';
 
 const GitHubCalendar = lazy(() =>
   import('react-github-calendar').then((mod) => ({ default: mod.GitHubCalendar || mod.default }))
 );
+
+const getSkillIconUrl = (icon) => {
+  if (icon === 'antigravity') {
+    return antigravitySvg;
+  }
+  return `/icons/${icon}.svg`;
+};
 
 const ITEMS_PER_PAGE = 6;
 

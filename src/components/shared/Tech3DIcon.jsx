@@ -5,7 +5,8 @@ import archLinuxSvg from '../../assets/archlinux.svg';
 import './Tech3DIcon.css';
 
 export function Tech3DIcon({ iconKey = '', size = 44, className = '', showGlow = true }) {
-  const cleanKey = (iconKey || '')
+  const safeKey = String(iconKey || '');
+  const cleanKey = safeKey
     .toLowerCase()
     .replace('/icons/', '')
     .replace('.svg', '')
@@ -14,7 +15,7 @@ export function Tech3DIcon({ iconKey = '', size = 44, className = '', showGlow =
   const config =
     tech3DConfig[cleanKey] ||
     tech3DConfig[iconKey] || {
-      name: iconKey,
+      name: safeKey || 'Technology',
       color: '#94a3b8',
       glow: 'rgba(148, 163, 184, 0.4)',
       gradient: 'linear-gradient(135deg, #94a3b8 0%, #475569 100%)',
@@ -29,7 +30,20 @@ export function Tech3DIcon({ iconKey = '', size = 44, className = '', showGlow =
   const getIconSrc = () => {
     if (cleanKey === 'antigravity') return antigravitySvg;
     if (cleanKey === 'archlinux') return archLinuxSvg;
-    return `/icons/${iconKey.replace('/icons/', '').replace('.svg', '')}.svg`;
+    const fileKey = cleanKey === 'vite' ? 'vitejs' : cleanKey;
+    return `/icons/${fileKey}.svg`;
+  };
+
+  const handleImgError = (e) => {
+    if (cleanKey !== 'antigravity' && cleanKey !== 'archlinux') {
+      const fileKey = cleanKey === 'vite' ? 'vitejs' : cleanKey;
+      if (!e.currentTarget.dataset.retried) {
+        e.currentTarget.dataset.retried = 'true';
+        e.currentTarget.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${fileKey}/${fileKey}-plain.svg`;
+      } else {
+        e.currentTarget.style.display = 'none';
+      }
+    }
   };
 
   return (
@@ -69,11 +83,7 @@ export function Tech3DIcon({ iconKey = '', size = 44, className = '', showGlow =
                 width={Math.round(size * 0.58)}
                 height={Math.round(size * 0.58)}
                 loading="lazy"
-                onError={(e) => {
-                  if (cleanKey !== 'antigravity' && cleanKey !== 'archlinux') {
-                    e.currentTarget.src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${cleanKey}/${cleanKey}-plain.svg`;
-                  }
-                }}
+                onError={handleImgError}
               />
             </div>
           </div>

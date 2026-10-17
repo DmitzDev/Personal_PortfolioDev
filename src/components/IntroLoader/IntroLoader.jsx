@@ -12,10 +12,12 @@ export function IntroLoader({ onFinish, onReveal }) {
     if (hasFinishedRef.current) return;
     hasFinishedRef.current = true;
     setPhase('revealing');
+    document.body.style.overflow = '';
     if (onReveal) onReveal();
 
     setTimeout(() => {
       setIsDone(true);
+      document.body.style.overflow = '';
       if (onFinish) onFinish();
     }, 450);
   }, [onFinish, onReveal]);

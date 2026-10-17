@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { IntroLoader } from './components/IntroLoader/IntroLoader';
 import { Navbar } from './components/Navbar/Navbar';
 import { Hero } from './components/Hero/Hero';
@@ -21,14 +21,14 @@ function App() {
   // Initialize smooth momentum scrolling
   useLenis();
 
-  const handleReveal = () => {
+  const handleReveal = useCallback(() => {
     changeTheme('light');
-  };
+  }, [changeTheme]);
 
-  const handleFinish = () => {
+  const handleFinish = useCallback(() => {
     setIntroFinished(true);
     changeTheme('light');
-  };
+  }, [changeTheme]);
 
   return (
     <div className="app-container">

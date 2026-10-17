@@ -93,6 +93,64 @@
   min-height: 110px;
 }
 
+.required-star {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+[data-theme="dark"] .required-star {
+  color: #f87171;
+}
+
+/* Validation and Error States */
+.form-group input.input-error,
+.form-group textarea.input-error {
+  box-shadow: var(--skeuo-recessed), 0 0 0 1px rgba(239, 68, 68, 0.7);
+  border-top-color: rgba(239, 68, 68, 0.5);
+}
+
+.form-group input.input-error:focus,
+.form-group textarea.input-error:focus {
+  box-shadow: var(--skeuo-recessed), 0 0 0 1.5px #ef4444;
+}
+
+[data-theme="dark"] .form-group input.input-error,
+[data-theme="dark"] .form-group textarea.input-error {
+  box-shadow: var(--skeuo-recessed), 0 0 0 1px rgba(248, 113, 113, 0.7);
+  border-top-color: rgba(248, 113, 113, 0.4);
+}
+
+[data-theme="dark"] .form-group input.input-error:focus,
+[data-theme="dark"] .form-group textarea.input-error:focus {
+  box-shadow: var(--skeuo-recessed), 0 0 0 1.5px #f87171;
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #ef4444;
+  margin-top: 0.15rem;
+  animation: fieldErrorFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-theme="dark"] .field-error {
+  color: #f87171;
+}
+
+@keyframes fieldErrorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .submit-btn {
   margin-top: 0.5rem;
   width: 100%;

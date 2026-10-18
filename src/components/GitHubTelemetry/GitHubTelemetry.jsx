@@ -53,6 +53,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const [error, setError] = useState(null);
   const [hoveredCell, setHoveredCell] = useState(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const scrollContainerRef = useRef(null);
 
   // Initial rising animation on mount
   useEffect(() => {
@@ -61,6 +62,18 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
     }, 60);
     return () => clearTimeout(timer);
   }, []);
+
+  // On mobile screens, auto-scroll to latest contributions on the right
+  useEffect(() => {
+    if (scrollContainerRef.current && typeof window !== 'undefined' && window.innerWidth < 768) {
+      const timer = setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, activeView]);
 
   // Smooth sinking (3D -> 2D) and rising (2D -> 3D) view switcher
   const handleSwitchView = useCallback((targetView) => {
@@ -337,34 +350,41 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
           {!isLoading && !error && (
             <div className="gh-unified-telemetry-container">
-              <ProfileTelemetrySvg
-                contributions={data?.contributions || []}
-                stats={stats}
-                dateRangeStr={dateRangeStr}
-                monthLabels={monthLabels}
-                themePalette={currentThemePalette}
-                activeView={activeView}
-                isSunk={isSunk}
-                onHoverCell={(cell, e) => {
-                  if (!cell || (activeView === '3d' && isSunk)) {
-                    setHoveredCell(null);
-                    return;
-                  }
-                  const rect = e?.currentTarget?.getBoundingClientRect();
-                  if (rect) {
-                    setTooltipPos({
-                      x: rect.left + rect.width / 2,
-                      y: rect.top
-                    });
-                  }
-                  setHoveredCell(cell);
-                }}
-              />
+              {/* Mobile Swipe Guidance Hint */}
+              <div className="gh-mobile-scroll-hint" aria-hidden="true">
+                <span>← Swipe horizontally to explore full activity →</span>
+              </div>
+
+              <div className="gh-3d-profile-container" ref={scrollContainerRef}>
+                <ProfileTelemetrySvg
+                  contributions={data?.contributions || []}
+                  stats={stats}
+                  dateRangeStr={dateRangeStr}
+                  monthLabels={monthLabels}
+                  themePalette={currentThemePalette}
+                  activeView={activeView}
+                  isSunk={isSunk}
+                  onHoverCell={(cell, e) => {
+                    if (!cell || (activeView === '3d' && isSunk)) {
+                      setHoveredCell(null);
+                      return;
+                    }
+                    const rect = e?.currentTarget?.getBoundingClientRect();
+                    if (rect) {
+                      setTooltipPos({
+                        x: rect.left + rect.width / 2,
+                        y: rect.top
+                      });
+                    }
+                    setHoveredCell(cell);
+                  }}
+                />
+              </div>
 
               {/* Legend and Summary Footer */}
               <div className="gh-heatmap-footer">
                 <span className="gh-footer-hint">
-                  Hover on any cell for detailed timestamp and commit breakdown.
+                  Hover or tap on any cell for detailed timestamp and commit breakdown.
                 </span>
                 <div className="gh-legend-group">
                   <span className="gh-legend-label">Less</span>
@@ -408,7 +428,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
 /* ==========================================================================
    UNIFIED TELEMETRY SHOWCASE (3D ISOMETRIC + 2D GRID IN SAME CANVAS)
-   Shares identical 1080x210 coordinate plane, zero layout shift, zero lag
+   Large, prominent desktop display + smooth responsive mobile scroll
    ========================================================================== */
 function ProfileTelemetrySvg({
   contributions,
@@ -420,19 +440,19 @@ function ProfileTelemetrySvg({
   activeView,
   isSunk
 }) {
-  const svgWidth = 1080;
-  const svgHeight = 210;
+  const svgWidth = 1160;
+  const svgHeight = 255;
 
-  // Geometry (shared between 2D and 3D)
-  const stepX = 18; // horizontal step between week columns
-  const stepY = 12.5; // depth step between 3D rows
-  const skewX = 3.5; // 3D slant
-  const wCell = 13.5; // cell width
-  const dDepth = 3.5; // 3D depth in X
-  const hDepth = 6.5; // 3D depth in Y
+  // Geometry (expanded & prominent for desktop + mobile)
+  const stepX = 19.5; // horizontal step between week columns
+  const stepY = 15; // depth step between 3D rows
+  const skewX = 4; // 3D slant
+  const wCell = 15.5; // cell width
+  const dDepth = 4; // 3D depth in X
+  const hDepth = 7.5; // 3D depth in Y
 
   const offsetX = 58;
-  const offsetY = 78;
+  const offsetY = 96;
 
   // Shading for 3D faces (top, front, right, stroke)
   const paletteShades = useMemo(() => {
@@ -486,12 +506,12 @@ function ProfileTelemetrySvg({
 
       // 2D coordinates (aligned to the EXACT same week and vertical positioning)
       const x2d = offsetX + week * stepX;
-      const y2d = offsetY + dayOfWeek * 16;
+      const y2d = offsetY + dayOfWeek * 18;
 
       // 3D pillar height (0 commits = 0 / flat floor; >0 commits = rising pillar)
       const h = cal.count === 0
         ? 0
-        : Math.min(48, Math.log10(cal.count / 8 + 1) * 36 + 10);
+        : Math.min(54, Math.log10(cal.count / 8 + 1) * 38 + 12);
 
       const shades = paletteShades[cal.level] || paletteShades[0];
 
@@ -533,20 +553,20 @@ function ProfileTelemetrySvg({
         <g className="gh-svg-top-bar">
           <text
             x="45"
-            y="30"
-            fontSize="20px"
+            y="32"
+            fontSize="22px"
             fontWeight="bold"
             fill={themePalette.strongColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
           >
             {stats ? stats.total : 0}
-            <tspan dx="8" fontSize="14px" fontWeight="normal" fill={themePalette.foregroundColor}>
+            <tspan dx="8" fontSize="15px" fontWeight="normal" fill={themePalette.foregroundColor}>
               contributions
             </tspan>
           </text>
 
           {/* Star Icon & Count */}
-          <g transform="translate(280, 15), scale(1.35)">
+          <g transform="translate(290, 16), scale(1.4)">
             <path
               fillRule="evenodd"
               d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"
@@ -554,9 +574,9 @@ function ProfileTelemetrySvg({
             />
           </g>
           <text
-            x="310"
-            y="30"
-            fontSize="17px"
+            x="322"
+            y="32"
+            fontSize="18px"
             fontWeight="bold"
             fill={themePalette.foregroundColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
@@ -565,7 +585,7 @@ function ProfileTelemetrySvg({
           </text>
 
           {/* Fork Icon & Count */}
-          <g transform="translate(375, 15), scale(1.35)">
+          <g transform="translate(390, 16), scale(1.4)">
             <path
               fillRule="evenodd"
               d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"
@@ -573,9 +593,9 @@ function ProfileTelemetrySvg({
             />
           </g>
           <text
-            x="405"
-            y="30"
-            fontSize="17px"
+            x="422"
+            y="32"
+            fontSize="18px"
             fontWeight="bold"
             fill={themePalette.foregroundColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
@@ -585,8 +605,8 @@ function ProfileTelemetrySvg({
 
           {/* Date Range Top Right */}
           <text
-            x="1035"
-            y="30"
+            x="1115"
+            y="32"
             textAnchor="end"
             fontSize="13px"
             fill={themePalette.weakColor}
@@ -602,8 +622,8 @@ function ProfileTelemetrySvg({
             <text
               key={`m-${m.label}-${i}`}
               x={offsetX + m.colIndex * stepX}
-              y={offsetY - 16}
-              fontSize="11px"
+              y={offsetY - 20}
+              fontSize="12px"
               fontWeight="600"
               fill={themePalette.weakColor}
               fontFamily="'JetBrains Mono', monospace"
@@ -622,10 +642,10 @@ function ProfileTelemetrySvg({
           ].map((w) => (
             <text
               key={`3d-${w.label}`}
-              x={offsetX - w.day * skewX - 8}
-              y={offsetY + w.day * stepY + 3}
+              x={offsetX - w.day * skewX - 10}
+              y={offsetY + w.day * stepY + 4}
               textAnchor="end"
-              fontSize="10px"
+              fontSize="11px"
               fontWeight="500"
               fill={themePalette.weakColor}
               fontFamily="'JetBrains Mono', monospace"
@@ -644,10 +664,10 @@ function ProfileTelemetrySvg({
           ].map((w) => (
             <text
               key={`2d-${w.label}`}
-              x={offsetX - 10}
-              y={offsetY + w.day * 16 + 10}
+              x={offsetX - 12}
+              y={offsetY + w.day * 18 + 12}
               textAnchor="end"
-              fontSize="10px"
+              fontSize="11px"
               fontWeight="500"
               fill={themePalette.weakColor}
               fontFamily="'JetBrains Mono', monospace"
@@ -749,10 +769,10 @@ function ProfileTelemetrySvg({
                 key={`cell-2d-${cal.date}-${idx}`}
                 x={x2d}
                 y={y2d}
-                width={13.5}
-                height={13.5}
-                rx={3}
-                ry={3}
+                width={15.5}
+                height={15.5}
+                rx={3.5}
+                ry={3.5}
                 fill={shades.top}
                 stroke={isZero ? shades.stroke : 'none'}
                 strokeWidth={isZero ? '0.8' : '0'}

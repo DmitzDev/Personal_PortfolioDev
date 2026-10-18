@@ -200,7 +200,7 @@
    ========================================================================== */
 .gh-viewport-wrapper {
   position: relative;
-  min-height: 210px;
+  min-height: 255px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -208,6 +208,28 @@
   background: transparent;
   border: none;
   box-shadow: none;
+}
+
+/* Mobile swipe hint */
+.gh-mobile-scroll-hint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .gh-mobile-scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.72rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    margin-bottom: 0.65rem;
+    letter-spacing: -0.01em;
+  }
 }
 
 /* ==========================================================================
@@ -216,23 +238,25 @@
 .gh-3d-profile-container {
   position: relative;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1240px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 0;
+  padding: 0.5rem 0;
   background: transparent;
   border: none;
   box-shadow: none;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
 .gh-3d-svg-wrapper {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1240px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -245,8 +269,8 @@
 .gh-profile-3d-svg {
   width: 100%;
   height: auto;
-  min-width: 680px;
-  max-width: 1080px;
+  min-width: 860px;
+  max-width: 1240px;
   display: block;
   background: transparent;
   border: none !important;
@@ -495,8 +519,8 @@
 /* Heatmap Footer & Legend */
 .gh-heatmap-footer {
   width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
+  max-width: 1240px;
+  margin: 0.5rem auto 0 auto;
   box-sizing: border-box;
   display: flex;
   align-items: center;

@@ -5,7 +5,9 @@ import {
   Box,
   RefreshCw,
   AlertCircle,
-  ChevronDown
+  ChevronDown,
+  Star,
+  GitFork
 } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import './GitHubTelemetry.css';
@@ -46,7 +48,23 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const [selectedYear, setSelectedYear] = useState('last');
+  // Dynamic Year computation starting from START_YEAR (2026) up to current year
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
+  const availableYears = useMemo(() => {
+    const years = [];
+    const maxYear = Math.max(START_YEAR, currentYear);
+    for (let y = maxYear; y >= START_YEAR; y--) {
+      years.push(y.toString());
+    }
+    return years;
+  }, [currentYear]);
+
+  // Primary active/latest year (e.g. '2026', or '2027' when year flips)
+  const latestYear = availableYears[0];
+  // Past years for dropdown (e.g. ['2026'] when in 2027+)
+  const pastYears = useMemo(() => availableYears.slice(1), [availableYears]);
+
+  const [selectedYear, setSelectedYear] = useState(latestYear);
   const [activeView, setActiveView] = useState('3d'); // '3d' | '2d'
   const [isSwitching, setIsSwitching] = useState(false);
   const [isSunk, setIsSunk] = useState(true); // Starts sunk, rises smoothly on mount
@@ -60,21 +78,6 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const scrollContainerRef = useRef(null);
 
-  // Dynamic Year computation starting from START_YEAR (2026) up to current year
-  const currentYear = useMemo(() => new Date().getFullYear(), []);
-  const availableYears = useMemo(() => {
-    const years = [];
-    const maxYear = Math.max(START_YEAR, currentYear);
-    for (let y = maxYear; y >= START_YEAR; y--) {
-      years.push(y.toString());
-    }
-    return years;
-  }, [currentYear]);
-
-  // Primary active/latest year (e.g. 2026, or 2027 when year flips)
-  const latestYear = availableYears[0];
-  // Past years for dropdown (e.g. ['2026'] when in 2027+)
-  const pastYears = useMemo(() => availableYears.slice(1), [availableYears]);
   const isPastYearSelected = pastYears.includes(selectedYear);
 
   // Close year dropdown on outside click or Escape key
@@ -301,23 +304,12 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
       <div className="gh-telemetry-ambient-glow" aria-hidden="true" />
 
       <div className="gh-telemetry-container">
-        {/* Main Header */}
+        {/* Main Header (Clean, unscattered Year + View Toggle) */}
         <div className="gh-main-header">
-          {/* Left: Period & Year Controls (Replaces old title and live indicator) */}
+          {/* Left: Dynamic Year Controls (2026+, No Last 12 Mos) */}
           <div className="gh-header-left">
-            <div className="gh-period-controls" role="group" aria-label="Contribution Period">
-              <button
-                type="button"
-                className={`gh-year-btn ${selectedYear === 'last' ? 'active' : ''}`}
-                onClick={() => {
-                  setSelectedYear('last');
-                  setIsYearDropdownOpen(false);
-                }}
-              >
-                Last 12 Mos
-              </button>
-
-              {/* Primary Latest Year (e.g. 2026) */}
+            <div className="gh-period-controls" role="group" aria-label="Contribution Year">
+              {/* Primary Year Button (e.g. 2026, or 2027 in 2027) */}
               <button
                 type="button"
                 className={`gh-year-btn ${selectedYear === latestYear ? 'active' : ''}`}
@@ -368,20 +360,8 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
             </div>
           </div>
 
-          {/* Right: Username Profile Link + View Switcher */}
+          {/* Right: Segmented View Switcher (3D Isometric and 2D Grid) */}
           <div className="gh-header-controls">
-            <a
-              href={GITHUB_PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gh-username-link"
-              title="Open GitHub Profile"
-            >
-              <span>@{username}</span>
-              <ExternalLink size={12} className="gh-external-icon" />
-            </a>
-
-            {/* Segmented View Switcher (3D Isometric and 2D Grid) */}
             <div className="gh-segmented-control" role="tablist" aria-label="Telemetry View Mode">
               <button
                 type="button"
@@ -432,16 +412,35 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
           {!isLoading && !error && (
             <div className="gh-unified-telemetry-container">
-              {/* Mobile Swipe Guidance Hint */}
-              <div className="gh-mobile-scroll-hint" aria-hidden="true">
-                <span>← Swipe horizontally to explore full activity →</span>
+              {/* Fixed Stats Summary Bar (STATIONARY while grid is swiped horizontally) */}
+              <div className="gh-stats-bar">
+                <div className="gh-stats-left">
+                  <div className="gh-stats-count-wrap">
+                    <span className="gh-stats-count">{stats ? stats.total : 0}</span>
+                    <span className="gh-stats-label">contributions</span>
+                  </div>
+
+                  <div className="gh-stats-badges">
+                    <span className="gh-stats-badge" title="Stars">
+                      <Star size={13} className="gh-badge-icon star-icon" />
+                      <span>{stats?.stars ?? 135}</span>
+                    </span>
+                    <span className="gh-stats-badge" title="Forks">
+                      <GitFork size={13} className="gh-badge-icon fork-icon" />
+                      <span>{stats?.forks ?? 14}</span>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="gh-stats-daterange">
+                  <span>{dateRangeStr || `${selectedYear}-01-01 / ${selectedYear}-12-31`}</span>
+                </div>
               </div>
 
+              {/* Horizontally Scrollable Grid Container */}
               <div className="gh-3d-profile-container" ref={scrollContainerRef}>
                 <ProfileTelemetrySvg
                   contributions={data?.contributions || []}
-                  stats={stats}
-                  dateRangeStr={dateRangeStr}
                   monthLabels={monthLabels}
                   themePalette={currentThemePalette}
                   activeView={activeView}
@@ -463,8 +462,19 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 />
               </div>
 
-              {/* Legend Footer */}
+              {/* Footer: @DmitzDev link on the Left, Legend on the Right */}
               <div className="gh-heatmap-footer">
+                <a
+                  href={GITHUB_PROFILE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gh-username-link"
+                  title="Open GitHub Profile"
+                >
+                  <span>@{username}</span>
+                  <ExternalLink size={12} className="gh-external-icon" />
+                </a>
+
                 <div className="gh-legend-group">
                   <span className="gh-legend-label">Less</span>
                   <div className="gh-legend-cells">
@@ -506,13 +516,11 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 }
 
 /* ==========================================================================
-   UNIFIED TELEMETRY SHOWCASE (3D ISOMETRIC + 2D GRID IN SAME CANVAS)
-   Large, prominent desktop display + smooth responsive mobile scroll
+   UNIFIED TELEMETRY SHOWCASE (REALISTIC 3D ISOMETRIC PRISMS + 2D GRID)
+   Solid, complete 3D boxes with mathematically aligned front, right & top faces
    ========================================================================== */
 function ProfileTelemetrySvg({
   contributions,
-  stats,
-  dateRangeStr,
   monthLabels,
   themePalette,
   onHoverCell,
@@ -520,20 +528,20 @@ function ProfileTelemetrySvg({
   isSunk
 }) {
   const svgWidth = 1160;
-  const svgHeight = 255;
+  const svgHeight = 180;
 
-  // Geometry (expanded & prominent for desktop + mobile)
+  // Geometry: realistic, mathematically solid isometric prisms
   const stepX = 19.5; // horizontal step between week columns
   const stepY = 15; // depth step between 3D rows
   const skewX = 4; // 3D slant
   const wCell = 15.5; // cell width
-  const dDepth = 4; // 3D depth in X
+  const dDepth = 4.0; // 3D depth in X (wCell + dDepth = 19.5 exact match to stepX)
   const hDepth = 7.5; // 3D depth in Y
 
   const offsetX = 58;
-  const offsetY = 96;
+  const offsetY = 56;
 
-  // Shading for 3D faces (top, front, right, stroke)
+  // Shading for realistic solid 3D faces (top illuminated, front medium, right shadow)
   const paletteShades = useMemo(() => {
     const getShades = (hex, idx) => {
       if (idx === 0) {
@@ -559,7 +567,7 @@ function ProfileTelemetrySvg({
         top: hex,
         front: shade(0.85),
         right: shade(0.68),
-        stroke: shade(0.60)
+        stroke: shade(0.55)
       };
     };
 
@@ -583,14 +591,14 @@ function ProfileTelemetrySvg({
       const x3d = offsetX + week * stepX - dayOfWeek * skewX;
       const y3d = offsetY + dayOfWeek * stepY;
 
-      // 2D coordinates (aligned to the EXACT same week and vertical positioning)
+      // 2D coordinates (aligned horizontally to weeks)
       const x2d = offsetX + week * stepX;
-      const y2d = offsetY + dayOfWeek * 18;
+      const y2d = 36 + dayOfWeek * 17.5;
 
-      // 3D pillar height (0 commits = 0 / flat floor; >0 commits = rising pillar)
+      // 3D pillar height (0 commits = flat floor; >0 commits = rising solid pillar)
       const h = cal.count === 0
         ? 0
-        : Math.min(54, Math.log10(cal.count / 8 + 1) * 38 + 12);
+        : Math.min(48, Math.log10(cal.count / 8 + 1) * 34 + 10);
 
       const shades = paletteShades[cal.level] || paletteShades[0];
 
@@ -628,80 +636,13 @@ function ProfileTelemetrySvg({
         role="img"
         aria-label="GitHub Profile Contribution Telemetry Showcase"
       >
-        {/* TOP TELEMETRY INFO BAR (Shared across 2D & 3D) */}
-        <g className="gh-svg-top-bar">
-          <text
-            x="45"
-            y="32"
-            fontSize="22px"
-            fontWeight="bold"
-            fill={themePalette.strongColor}
-            fontFamily="'Plus Jakarta Sans', sans-serif"
-          >
-            {stats ? stats.total : 0}
-            <tspan dx="8" fontSize="15px" fontWeight="normal" fill={themePalette.foregroundColor}>
-              contributions
-            </tspan>
-          </text>
-
-          {/* Star Icon & Count */}
-          <g transform="translate(290, 16), scale(1.4)">
-            <path
-              fillRule="evenodd"
-              d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"
-              fill={themePalette.foregroundColor}
-            />
-          </g>
-          <text
-            x="322"
-            y="32"
-            fontSize="18px"
-            fontWeight="bold"
-            fill={themePalette.foregroundColor}
-            fontFamily="'Plus Jakarta Sans', sans-serif"
-          >
-            {stats?.stars ?? 135}
-          </text>
-
-          {/* Fork Icon & Count */}
-          <g transform="translate(390, 16), scale(1.4)">
-            <path
-              fillRule="evenodd"
-              d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"
-              fill={themePalette.foregroundColor}
-            />
-          </g>
-          <text
-            x="422"
-            y="32"
-            fontSize="18px"
-            fontWeight="bold"
-            fill={themePalette.foregroundColor}
-            fontFamily="'Plus Jakarta Sans', sans-serif"
-          >
-            {stats?.forks ?? 14}
-          </text>
-
-          {/* Date Range Top Right */}
-          <text
-            x="1115"
-            y="32"
-            textAnchor="end"
-            fontSize="13px"
-            fill={themePalette.weakColor}
-            fontFamily="'JetBrains Mono', monospace"
-          >
-            {dateRangeStr || '2026-01-01 / 2026-12-31'}
-          </text>
-        </g>
-
         {/* Month Labels along top (Shared across 2D & 3D) */}
         <g className="gh-months-layer">
           {monthLabels.map((m, i) => (
             <text
               key={`m-${m.label}-${i}`}
               x={offsetX + m.colIndex * stepX}
-              y={offsetY - 20}
+              y={20}
               fontSize="12px"
               fontWeight="600"
               fill={themePalette.weakColor}
@@ -744,7 +685,7 @@ function ProfileTelemetrySvg({
             <text
               key={`2d-${w.label}`}
               x={offsetX - 12}
-              y={offsetY + w.day * 18 + 12}
+              y={36 + w.day * 17.5 + 12}
               textAnchor="end"
               fontSize="11px"
               fontWeight="500"
@@ -756,15 +697,20 @@ function ProfileTelemetrySvg({
           ))}
         </g>
 
-        {/* LAYER 1: 3D ISOMETRIC TILES & PILLARS */}
+        {/* LAYER 1: 3D ISOMETRIC TILES & SOLID REALISTIC PILLARS */}
         <g className={`gh-3d-pillars-layer ${activeView === '3d' ? 'gh-layer-active' : 'gh-layer-inactive'}`}>
           {bars.map((b, idx) => {
             const { x, y, h, shades, isZero } = b;
 
-            // Ground floor isometric tile path
-            const groundTileD = `M ${x} ${y} L ${x + wCell} ${y} L ${x + wCell - dDepth} ${y - hDepth} L ${x - dDepth} ${y - hDepth} Z`;
+            const xRight = +(x + wCell).toFixed(1);
+            const xBackLeft = +(x + dDepth).toFixed(1);
+            const xBackRight = +(x + wCell + dDepth).toFixed(1);
+            const yBack = +(y - hDepth).toFixed(1);
 
-            // Zero-commit day: render a static ground tile (ZERO ANIMATION OVERHEAD, ZERO LAG!)
+            // Ground floor isometric tile path (seamlessly aligned)
+            const groundTileD = `M ${x} ${y} L ${xRight} ${y} L ${xBackRight} ${yBack} L ${xBackLeft} ${yBack} Z`;
+
+            // Zero-commit day: render a static ground tile
             if (isZero) {
               return (
                 <g
@@ -779,14 +725,20 @@ function ProfileTelemetrySvg({
               );
             }
 
-            // Stagger delay across columns for active pillars (0ms to 80ms)
+            // Active commit day: smoothly animated realistic 3D prism
             const delay = Math.round((b.week / 52) * 80);
-            const topPathAtGround = groundTileD;
             const yTop = +(y - h).toFixed(1);
-            const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
-            const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
+            const yBackTop = +(yTop - hDepth).toFixed(1);
 
-            // Active commit day: smoothly animated pillar (only ~35 elements, 120 FPS!)
+            // Front Face: vertical wall directly facing the camera
+            const frontD = `M ${x} ${yTop} L ${xRight} ${yTop} L ${xRight} ${y} L ${x} ${y} Z`;
+
+            // Right Face: side wall receding into depth to the right
+            const rightD = `M ${xRight} ${yTop} L ${xBackRight} ${yBackTop} L ${xBackRight} ${yBack} L ${xRight} ${y} Z`;
+
+            // Top Face at ground level (rises seamlessly via translateY)
+            const topPathAtGround = groundTileD;
+
             return (
               <g
                 key={`bar-${b.cal.date}-${idx}`}
@@ -797,9 +749,9 @@ function ProfileTelemetrySvg({
                 cursor="pointer"
               >
                 {/* Ground shadow */}
-                <path d={groundTileD} fill="rgba(0, 0, 0, 0.14)" stroke="none" />
+                <path d={groundTileD} fill="rgba(0, 0, 0, 0.22)" stroke="none" />
 
-                {/* Front Face */}
+                {/* Front Face (85% tone) */}
                 <path
                   d={frontD}
                   fill={shades.front}
@@ -811,7 +763,8 @@ function ProfileTelemetrySvg({
                     transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
                   }}
                 />
-                {/* Right Face */}
+
+                {/* Right Face (68% shadow tone) */}
                 <path
                   d={rightD}
                   fill={shades.right}
@@ -819,11 +772,12 @@ function ProfileTelemetrySvg({
                   strokeWidth="0.8"
                   className="gh-pillar-wall"
                   style={{
-                    transformOrigin: `${x + wCell}px ${y}px`,
+                    transformOrigin: `${xRight}px ${y}px`,
                     transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
                   }}
                 />
-                {/* Top Face */}
+
+                {/* Top Face (100% vibrant illuminated tone) */}
                 <path
                   d={topPathAtGround}
                   fill={shades.top}

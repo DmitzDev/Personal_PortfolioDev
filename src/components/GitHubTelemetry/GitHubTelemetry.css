@@ -456,46 +456,46 @@
 }
 
 /* ==========================================================================
-   VIEW 2: 3D ISOMETRIC VIEW
+   VIEW 1: OFFICIAL 3D ISOMETRIC PROFILE SHOWCASE
+   Matches https://raw.githubusercontent.com/yoshi389111/github-profile-3d-contrib/main/docs/demo/profile-green-animate.svg
    ========================================================================== */
-.gh-3d-viewport {
+.gh-3d-profile-container {
   position: relative;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 0.5rem 0;
-  overflow: hidden;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+  border-radius: 14px;
+  -webkit-overflow-scrolling: touch;
 }
 
-.gh-3d-stage {
+.gh-3d-svg-wrapper {
   width: 100%;
-  max-width: 860px;
-  transition: transform 0.15s ease-out;
-  transform-style: preserve-3d;
   display: flex;
   justify-content: center;
-}
-
-.gh-3d-canvas {
-  width: 100%;
-  height: 300px;
-  display: block;
-}
-
-.gh-3d-caption {
-  display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
 }
 
-.gh-caption-icon {
-  color: #10b981;
+.gh-profile-3d-svg {
+  width: 100%;
+  height: auto;
+  min-width: 680px;
+  max-height: 540px;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+}
+
+.gh-3d-bar-node {
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.gh-3d-bar-node:hover {
+  filter: brightness(1.25) drop-shadow(0 0 6px rgba(71, 160, 66, 0.9));
 }
 
 /* ==========================================================================

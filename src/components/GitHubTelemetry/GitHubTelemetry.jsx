@@ -46,11 +46,49 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
   const [selectedYear, setSelectedYear] = useState('last');
   const [activeView, setActiveView] = useState('3d'); // '3d' | '2d'
+  const [isSwitching, setIsSwitching] = useState(false);
+  const [isSunk, setIsSunk] = useState(true); // Starts sunk, rises smoothly on mount
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hoveredCell, setHoveredCell] = useState(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+
+  // Initial rising animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSunk(false);
+    }, 60);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Smooth sinking (3D -> 2D) and rising (2D -> 3D) view switcher
+  const handleSwitchView = useCallback((targetView) => {
+    if (targetView === activeView || isSwitching) return;
+
+    if (activeView === '3d' && targetView === '2d') {
+      // 3D -> 2D: SINK the 3D boxes first
+      setIsSwitching(true);
+      setIsSunk(true);
+
+      setTimeout(() => {
+        setActiveView('2d');
+        setIsSwitching(false);
+      }, 420);
+    } else if (activeView === '2d' && targetView === '3d') {
+      // 2D -> 3D: Mount in sunk state, then smoothly RISE UP
+      setIsSwitching(true);
+      setIsSunk(true);
+      setActiveView('3d');
+
+      setTimeout(() => {
+        setIsSunk(false);
+        setTimeout(() => {
+          setIsSwitching(false);
+        }, 550);
+      }, 40);
+    }
+  }, [activeView, isSwitching]);
 
   // Cache data across years
   const cacheRef = useRef({});
@@ -237,7 +275,8 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 role="tab"
                 aria-selected={activeView === '3d'}
                 className={`gh-segment-btn ${activeView === '3d' ? 'active' : ''}`}
-                onClick={() => setActiveView('3d')}
+                onClick={() => handleSwitchView('3d')}
+                disabled={isSwitching}
                 title="3D Isometric Contribution Graph"
               >
                 <Box size={14} />
@@ -248,7 +287,8 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 role="tab"
                 aria-selected={activeView === '2d'}
                 className={`gh-segment-btn ${activeView === '2d' ? 'active' : ''}`}
-                onClick={() => setActiveView('2d')}
+                onClick={() => handleSwitchView('2d')}
+                disabled={isSwitching}
                 title="2D Standard Heatmap"
               >
                 <Layers size={14} />
@@ -306,8 +346,9 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                     dateRangeStr={dateRangeStr}
                     monthLabels={monthLabels}
                     themePalette={currentThemePalette}
+                    isSunk={isSunk}
                     onHoverCell={(cell, e) => {
-                      if (!cell) {
+                      if (!cell || isSunk) {
                         setHoveredCell(null);
                         return;
                       }
@@ -326,7 +367,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
               {/* VIEW 2: 2D Grid Heatmap */}
               {activeView === '2d' && (
-                <div className="gh-heatmap-view">
+                <div className="gh-heatmap-view gh-view-enter">
                   <div className="gh-heatmap-scroll">
                     <div className="gh-heatmap-inner">
                       {/* Month Labels Bar */}
@@ -446,7 +487,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
    HORIZONTAL 3D ISOMETRIC SHOWCASE (NAKA-PAHABA / WIDE 3D BANNER)
    Clean isometric ground plane with crisp 3D extruded pillars
    ========================================================================== */
-function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, themePalette, onHoverCell }) {
+function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, themePalette, onHoverCell, isSunk }) {
   const svgWidth = 1080;
   const svgHeight = 210;
 
@@ -545,7 +586,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-        className="gh-profile-3d-svg"
+        className={`gh-profile-3d-svg ${isSunk ? 'gh-3d-svg-sunk' : ''}`}
         role="img"
         aria-label="GitHub Profile Horizontal 3D Contribution Showcase"
       >
@@ -661,29 +702,64 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
           {bars.map((b, idx) => {
             const { x, y, h, shades, isZero } = b;
 
-            // Ground floor isometric tile path
+            // Stagger wave delay across columns and rows (0ms to ~190ms)
+            const delay = Math.round((b.week / 52) * 160 + (b.dayOfWeek / 7) * 30);
+
+            // Ground floor isometric tile path (also the base of the top diamond at rest)
             const groundTileD = `M ${x} ${y} L ${x + wCell} ${y} L ${x + wCell - dDepth} ${y - hDepth} L ${x - dDepth} ${y - hDepth} Z`;
+            const topPathAtGround = groundTileD;
+
+            // Extruded side walls (anchored at ground y)
             const yTop = +(y - h).toFixed(1);
             const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
             const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
-            const topD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x - dDepth} ${yTop - hDepth} Z`;
 
             // Zero-commit day: render a clean, distinct elevated white 3D box
             if (isZero) {
               return (
                 <g
                   key={`tile-${b.cal.date}-${idx}`}
-                  className="gh-3d-tile-node"
+                  className="gh-3d-tile-node gh-stagger-pillar"
+                  style={{ '--pillar-delay': `${delay}ms` }}
                   onMouseEnter={(e) => onHoverCell(b.cal, e)}
                   onMouseLeave={() => onHoverCell(null)}
                   cursor="pointer"
                 >
                   {/* Front Face of white 3D box */}
-                  <path d={frontD} fill={shades.front} stroke={shades.stroke} strokeWidth="0.8" />
+                  <path
+                    d={frontD}
+                    fill={shades.front}
+                    stroke={shades.stroke}
+                    strokeWidth="0.8"
+                    className="gh-pillar-wall"
+                    style={{
+                      transformOrigin: `${x}px ${y}px`,
+                      transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
+                    }}
+                  />
                   {/* Right Face of white 3D box */}
-                  <path d={rightD} fill={shades.right} stroke={shades.stroke} strokeWidth="0.8" />
+                  <path
+                    d={rightD}
+                    fill={shades.right}
+                    stroke={shades.stroke}
+                    strokeWidth="0.8"
+                    className="gh-pillar-wall"
+                    style={{
+                      transformOrigin: `${x + wCell}px ${y}px`,
+                      transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
+                    }}
+                  />
                   {/* Top Face of white 3D box */}
-                  <path d={topD} fill={shades.top} stroke={shades.stroke} strokeWidth="0.8" />
+                  <path
+                    d={topPathAtGround}
+                    fill={shades.top}
+                    stroke={shades.stroke}
+                    strokeWidth="0.8"
+                    className="gh-pillar-top"
+                    style={{
+                      transform: isSunk ? 'translateY(0px)' : `translateY(-${h}px)`
+                    }}
+                  />
                 </g>
               );
             }
@@ -692,7 +768,8 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
             return (
               <g
                 key={`bar-${b.cal.date}-${idx}`}
-                className="gh-3d-bar-node"
+                className="gh-3d-bar-node gh-stagger-pillar"
+                style={{ '--pillar-delay': `${delay}ms` }}
                 onMouseEnter={(e) => onHoverCell(b.cal, e)}
                 onMouseLeave={() => onHoverCell(null)}
                 cursor="pointer"
@@ -701,11 +778,40 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
                 <path d={groundTileD} fill="rgba(0, 0, 0, 0.14)" stroke="none" />
 
                 {/* Front Face */}
-                <path d={frontD} fill={shades.front} stroke={shades.stroke} strokeWidth="0.8" />
+                <path
+                  d={frontD}
+                  fill={shades.front}
+                  stroke={shades.stroke}
+                  strokeWidth="0.8"
+                  className="gh-pillar-wall"
+                  style={{
+                    transformOrigin: `${x}px ${y}px`,
+                    transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
+                  }}
+                />
                 {/* Right Face (Depth Shadow) */}
-                <path d={rightD} fill={shades.right} stroke={shades.stroke} strokeWidth="0.8" />
+                <path
+                  d={rightD}
+                  fill={shades.right}
+                  stroke={shades.stroke}
+                  strokeWidth="0.8"
+                  className="gh-pillar-wall"
+                  style={{
+                    transformOrigin: `${x + wCell}px ${y}px`,
+                    transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
+                  }}
+                />
                 {/* Top Face */}
-                <path d={topD} fill={shades.top} stroke={shades.stroke} strokeWidth="0.8" />
+                <path
+                  d={topPathAtGround}
+                  fill={shades.top}
+                  stroke={shades.stroke}
+                  strokeWidth="0.8"
+                  className="gh-pillar-top"
+                  style={{
+                    transform: isSunk ? 'translateY(0px)' : `translateY(-${h}px)`
+                  }}
+                />
               </g>
             );
           })}

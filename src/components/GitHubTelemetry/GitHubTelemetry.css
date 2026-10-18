@@ -265,6 +265,51 @@
 }
 
 /* ==========================================================================
+   SINKING & RISING 3D SWITCHING ANIMATIONS
+   ========================================================================== */
+.gh-pillar-top {
+  transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  will-change: transform;
+}
+
+.gh-pillar-wall {
+  transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.gh-3d-svg-sunk .gh-pillar-top {
+  transform: translateY(0px) !important;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gh-3d-svg-sunk .gh-pillar-wall {
+  transform: scaleY(0) !important;
+  opacity: 0 !important;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+}
+
+/* Wave stagger across columns */
+.gh-stagger-pillar .gh-pillar-top,
+.gh-stagger-pillar .gh-pillar-wall {
+  transition-delay: var(--pillar-delay, 0ms);
+}
+
+.gh-view-enter {
+  animation: ghViewEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ghViewEnter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
    VIEW 2: 2D GRID HEATMAP VIEW
    ========================================================================== */
 .gh-heatmap-view {

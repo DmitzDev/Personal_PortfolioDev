@@ -16,18 +16,24 @@ const GITHUB_PROFILE_URL = `https://github.com/${DEFAULT_USERNAME}`;
 const PROFILE_3D_PALETTES = {
   light: {
     backgroundColor: '#ffffff',
-    foregroundColor: '#00000f',
-    strongColor: '#111133',
-    weakColor: '#888888',
-    // 0: empty tile, 1: lime, 2: medium, 3: forest, 4: deep emerald
-    contribColors: ['#efefef', '#d8e887', '#8cc569', '#47a042', '#1d6a23']
+    foregroundColor: '#0f172a',
+    strongColor: '#0f172a',
+    weakColor: '#64748b',
+    // 0: pure white box, 1: lime, 2: medium green, 3: forest, 4: deep emerald
+    contribColors: ['#ffffff', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+    level0Front: '#e2e8f0',
+    level0Right: '#cbd5e1',
+    level0Stroke: '#cbd5e1'
   },
   dark: {
     backgroundColor: '#0c0f16',
     foregroundColor: '#f1f5f9',
     strongColor: '#ffffff',
-    weakColor: '#64748b',
-    contribColors: ['#1e222d', '#134e26', '#1e7b39', '#10b981', '#34d399']
+    weakColor: '#94a3b8',
+    contribColors: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+    level0Front: '#0f141c',
+    level0Right: '#0a0e14',
+    level0Stroke: '#30363d'
   }
 };
 
@@ -457,7 +463,16 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
 
   // Shading for 3D faces (top, front, right, stroke)
   const paletteShades = useMemo(() => {
-    const getShades = (hex, isLevel0) => {
+    const getShades = (hex, idx) => {
+      if (idx === 0) {
+        return {
+          top: themePalette.contribColors[0],
+          front: themePalette.level0Front,
+          right: themePalette.level0Right,
+          stroke: themePalette.level0Stroke
+        };
+      }
+
       let num = parseInt(hex.replace('#', ''), 16);
       let r = (num >> 16) & 255;
       let g = (num >> 8) & 255;
@@ -472,13 +487,11 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
         top: hex,
         front: shade(0.85),
         right: shade(0.68),
-        stroke: isLevel0
-          ? (themePalette.weakColor === '#888888' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)')
-          : shade(0.62)
+        stroke: shade(0.60)
       };
     };
 
-    return themePalette.contribColors.map((c, idx) => getShades(c, idx === 0));
+    return themePalette.contribColors.map((c, idx) => getShades(c, idx));
   }, [themePalette]);
 
   // Compute 3D bars and sort back-to-front (by dayOfWeek, then week)
@@ -497,10 +510,10 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
       const x = offsetX + week * stepX - dayOfWeek * skewX;
       const y = offsetY + dayOfWeek * stepY;
 
-      // 3D pillar height (0 commits = flat ground tile; >0 commits = rising pillar)
+      // 3D pillar height (0 commits = 2.5px elevated white 3D box; >0 commits = rising pillar)
       const h = cal.count === 0
-        ? 0
-        : Math.min(46, Math.log10(cal.count / 8 + 1) * 36 + 8);
+        ? 2.5
+        : Math.min(48, Math.log10(cal.count / 8 + 1) * 36 + 8);
 
       const shades = paletteShades[cal.level] || paletteShades[0];
 
@@ -536,6 +549,17 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
         role="img"
         aria-label="GitHub Profile Horizontal 3D Contribution Showcase"
       >
+        {/* Subtle ground platform / mat under the grid for contrast */}
+        <path
+          d={`M ${offsetX - 14} ${offsetY - hDepth - 6}
+              L ${offsetX + 52 * stepX + wCell + 12} ${offsetY - hDepth - 6}
+              L ${offsetX + 52 * stepX + wCell - 6 * skewX + 12} ${offsetY + 6 * stepY + 8}
+              L ${offsetX - 6 * skewX - 14} ${offsetY + 6 * stepY + 8} Z`}
+          fill={themePalette.contribColors[0] === '#ffffff' ? 'rgba(255, 255, 255, 0.55)' : 'rgba(255, 255, 255, 0.02)'}
+          stroke={themePalette.contribColors[0] === '#ffffff' ? 'rgba(203, 213, 225, 0.65)' : 'rgba(255, 255, 255, 0.05)'}
+          strokeWidth="1"
+        />
+
         {/* TOP TELEMETRY INFO BAR */}
         <g className="gh-svg-top-bar">
           <text
@@ -649,8 +673,12 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
 
             // Ground floor isometric tile path
             const groundTileD = `M ${x} ${y} L ${x + wCell} ${y} L ${x + wCell - dDepth} ${y - hDepth} L ${x - dDepth} ${y - hDepth} Z`;
+            const yTop = +(y - h).toFixed(1);
+            const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
+            const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
+            const topD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x - dDepth} ${yTop - hDepth} Z`;
 
-            // Zero-commit day: render a clean, orderly flat isometric tile
+            // Zero-commit day: render a clean, distinct elevated white 3D box
             if (isZero) {
               return (
                 <g
@@ -660,22 +688,17 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
                   onMouseLeave={() => onHoverCell(null)}
                   cursor="pointer"
                 >
-                  <path
-                    d={groundTileD}
-                    fill={shades.top}
-                    stroke={shades.stroke}
-                    strokeWidth="0.8"
-                  />
+                  {/* Front Face of white 3D box */}
+                  <path d={frontD} fill={shades.front} stroke={shades.stroke} strokeWidth="0.8" />
+                  {/* Right Face of white 3D box */}
+                  <path d={rightD} fill={shades.right} stroke={shades.stroke} strokeWidth="0.8" />
+                  {/* Top Face of white 3D box */}
+                  <path d={topD} fill={shades.top} stroke={shades.stroke} strokeWidth="0.8" />
                 </g>
               );
             }
 
-            // Active commit day: render a distinct 3D extruded pillar
-            const yTop = +(y - h).toFixed(1);
-            const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
-            const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
-            const topD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x - dDepth} ${yTop - hDepth} Z`;
-
+            // Active commit day: render a distinct 3D extruded pillar rising from the grid
             return (
               <g
                 key={`bar-${b.cal.date}-${idx}`}

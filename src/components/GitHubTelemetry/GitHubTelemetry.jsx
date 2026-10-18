@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import {
-  GitCommit,
   ExternalLink,
-  Flame,
-  Zap,
-  TrendingUp,
   Layers,
   Box,
   Gamepad2,
@@ -13,8 +9,7 @@ import {
   Play,
   Pause,
   RotateCcw,
-  Sparkles,
-  Award
+  Sparkles
 } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import './GitHubTelemetry.css';
@@ -228,12 +223,8 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
       <div className="gh-telemetry-ambient-glow" aria-hidden="true" />
 
       <div className="gh-telemetry-container">
-        {/* Bento Grid Layout (12 Columns) */}
-        <div className="gh-bento-grid">
-          {/* Main Bento Card: Interactive Heatmap / 3D / Snake */}
-          <div className="gh-bento-card gh-bento-main">
-            {/* Card Header */}
-            <div className="gh-main-header">
+        {/* Main Header */}
+        <div className="gh-main-header">
               <div className="gh-header-left">
                 <div className="gh-live-badge">
                   <span className="gh-pulse-dot" />
@@ -464,109 +455,6 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 </>
               )}
             </div>
-          </div>
-
-          {/* Side Bento Card: Live Commit Telemetry Stats */}
-          <div className="gh-bento-card gh-bento-side">
-            <div className="gh-side-header">
-              <div className="gh-side-badge">
-                <Sparkles size={13} className="gh-sparkle-icon" />
-                <span>Live Metrics</span>
-              </div>
-              <span className="gh-period-tag">
-                {selectedYear === 'last' ? 'Past 365 Days' : selectedYear}
-              </span>
-            </div>
-
-            {/* Stat Item 1: Total Contributions */}
-            <div className="gh-stat-block gh-stat-primary">
-              <div className="gh-stat-icon-wrap primary">
-                <GitCommit size={20} />
-              </div>
-              <div className="gh-stat-info">
-                <span className="gh-stat-label">Total Contributions</span>
-                <div className="gh-stat-value-group">
-                  <span className="gh-stat-number">
-                    {stats ? stats.total.toLocaleString() : '—'}
-                  </span>
-                  <span className="gh-stat-unit">commits</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Sub-grid: Streaks */}
-            <div className="gh-side-subgrid">
-              <div className="gh-stat-card">
-                <div className="gh-stat-card-header">
-                  <Flame size={16} className="gh-flame-icon" />
-                  <span className="gh-stat-sublabel">Current Streak</span>
-                </div>
-                <div className="gh-stat-card-value">
-                  <span className="gh-card-num">{stats ? stats.currentStreak : 0}</span>
-                  <span className="gh-card-unit">days</span>
-                </div>
-              </div>
-
-              <div className="gh-stat-card">
-                <div className="gh-stat-card-header">
-                  <Zap size={16} className="gh-zap-icon" />
-                  <span className="gh-stat-sublabel">Best Streak</span>
-                </div>
-                <div className="gh-stat-card-value">
-                  <span className="gh-card-num">{stats ? stats.longestStreak : 0}</span>
-                  <span className="gh-card-unit">days</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Item 3: Velocity & Peak Velocity */}
-            <div className="gh-stat-block">
-              <div className="gh-stat-icon-wrap velocity">
-                <TrendingUp size={18} />
-              </div>
-              <div className="gh-stat-info">
-                <span className="gh-stat-label">Busiest Day & Velocity</span>
-                <div className="gh-stat-velocity-details">
-                  <span className="gh-velocity-day">{stats ? stats.busiestDay : '—'}</span>
-                  <span className="gh-velocity-divider">•</span>
-                  <span className="gh-velocity-avg">{stats ? stats.avgWeekly : 0} commits/wk</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Item 4: Peak Single Day */}
-            <div className="gh-stat-block">
-              <div className="gh-stat-icon-wrap peak">
-                <Award size={18} />
-              </div>
-              <div className="gh-stat-info">
-                <span className="gh-stat-label">Single Day Record</span>
-                <div className="gh-stat-velocity-details">
-                  <span className="gh-velocity-day">
-                    {stats?.peakDay?.count ? `${stats.peakDay.count} commits` : '—'}
-                  </span>
-                  {stats?.peakDay?.date && (
-                    <>
-                      <span className="gh-velocity-divider">•</span>
-                      <span className="gh-velocity-avg">{formatTooltipDate(stats.peakDay.date)}</span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Profile CTA */}
-            <a
-              href={GITHUB_PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gh-profile-cta"
-            >
-              <span>View Full GitHub Profile</span>
-              <ExternalLink size={14} />
-            </a>
-          </div>
-        </div>
       </div>
 
       {/* Floating Interactive Tooltip */}
@@ -770,9 +658,6 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
         role="img"
         aria-label="GitHub Profile 3D Contribution Showcase"
       >
-        {/* Background plate */}
-        <rect x="0" y="0" width={svgWidth} height={svgHeight} fill={themePalette.backgroundColor} />
-
         {/* 1. 3D ISOMETRIC CONTRIBUTION PILLARS */}
         <g className="gh-3d-pillars-layer">
           {bars.map((b, idx) => (

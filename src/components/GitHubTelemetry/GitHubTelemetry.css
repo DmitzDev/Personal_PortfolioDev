@@ -1,12 +1,12 @@
 /* ==========================================================================
-   GITHUB TELEMETRY BENTO GRID COMPONENT
-   Architectural Bento-Grid Developer Activity Showcase
+   GITHUB TELEMETRY SHOWCASE COMPONENT
+   Clean, Seamless 3D Developer Activity Showcase (No Box / No Border Cards)
    ========================================================================== */
 
 .gh-telemetry-section {
   position: relative;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   box-sizing: border-box;
 }
 
@@ -16,95 +16,33 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 900px;
-  height: 380px;
+  width: 85%;
+  max-width: 1000px;
+  height: 400px;
   background: radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.04) 45%, transparent 75%);
   pointer-events: none;
   z-index: 0;
-  filter: blur(40px);
+  filter: blur(45px);
 }
 
 [data-theme="light"] .gh-telemetry-ambient-glow {
-  background: radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.06) 0%, rgba(15, 23, 42, 0.03) 50%, transparent 75%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.06) 0%, rgba(15, 23, 42, 0.02) 50%, transparent 75%);
 }
 
 .gh-telemetry-container {
   position: relative;
   z-index: 1;
   width: 100%;
-}
-
-/* 12-Column Responsive Bento Grid */
-.gh-bento-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  width: 100%;
-}
-
-@media (min-width: 1024px) {
-  .gh-bento-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .gh-bento-main {
-    grid-column: span 8 / span 8;
-  }
-
-  .gh-bento-side {
-    grid-column: span 4 / span 4;
-  }
-}
-
-@media (min-width: 1280px) {
-  .gh-bento-main {
-    grid-column: span 8 / span 8;
-  }
-
-  .gh-bento-side {
-    grid-column: span 4 / span 4;
-  }
-}
-
-/* Bento Surface Base Card */
-.gh-bento-card {
-  position: relative;
-  border-radius: 1.25rem;
-  padding: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
   box-sizing: border-box;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-}
-
-[data-theme="dark"] .gh-bento-card {
-  background: rgba(24, 24, 27, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-}
-
-[data-theme="dark"] .gh-bento-card:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 24px 54px -10px rgba(0, 0, 0, 0.65), 0 0 24px rgba(16, 185, 129, 0.08);
-}
-
-[data-theme="light"] .gh-bento-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(15, 23, 42, 0.09);
-  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
-}
-
-[data-theme="light"] .gh-bento-card:hover {
-  border-color: rgba(15, 23, 42, 0.18);
-  box-shadow: 0 20px 42px -6px rgba(15, 23, 42, 0.12);
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 /* ==========================================================================
-   MAIN BENTO CARD: HEADER & CONTROLS
+   HEADER & TELEMETRY CONTROLS
    ========================================================================== */
 .gh-main-header {
   display: flex;
@@ -112,8 +50,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1.35rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -172,7 +110,7 @@
 
 .gh-card-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.22rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-primary);
   margin: 0;
@@ -216,10 +154,9 @@
   display: inline-flex;
   align-items: center;
   padding: 0.25rem;
-  border-radius: 10px;
+  border-radius: 9999px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .gh-segment-btn,
@@ -227,8 +164,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.38rem 0.7rem;
-  border-radius: 7px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.78rem;
   font-weight: 600;
@@ -249,7 +186,7 @@
 .gh-year-btn.active {
   color: var(--text-primary);
   background: var(--bg-secondary);
-  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="light"] .gh-segment-btn.active,
@@ -259,18 +196,75 @@
 }
 
 /* ==========================================================================
-   VIEWPORT WRAPPER & 2D HEATMAP VIEW
+   VIEWPORT WRAPPER (Borderless & Seamless)
    ========================================================================== */
 .gh-viewport-wrapper {
   position: relative;
-  min-height: 220px;
+  min-height: 240px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
+/* ==========================================================================
+   VIEW 1: 3D ISOMETRIC PROFILE SHOWCASE (profile-green-animate replica)
+   Matches https://raw.githubusercontent.com/yoshi389111/github-profile-3d-contrib/main/docs/demo/profile-green-animate.svg
+   ========================================================================== */
+.gh-3d-profile-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gh-3d-svg-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.gh-profile-3d-svg {
+  width: 100%;
+  height: auto;
+  min-width: 680px;
+  max-width: 1240px;
+  display: block;
+  background: transparent;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+}
+
+.gh-3d-bar-node {
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.gh-3d-bar-node:hover {
+  filter: brightness(1.25) drop-shadow(0 0 6px rgba(71, 160, 66, 0.9));
+}
+
+/* ==========================================================================
+   VIEW 2: 2D GRID HEATMAP VIEW
+   ========================================================================== */
 .gh-heatmap-view {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+  padding: 0.5rem 0;
 }
 
 .gh-heatmap-scroll {
@@ -456,49 +450,6 @@
 }
 
 /* ==========================================================================
-   VIEW 1: OFFICIAL 3D ISOMETRIC PROFILE SHOWCASE
-   Matches https://raw.githubusercontent.com/yoshi389111/github-profile-3d-contrib/main/docs/demo/profile-green-animate.svg
-   ========================================================================== */
-.gh-3d-profile-container {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.25rem 0;
-  border-radius: 14px;
-  -webkit-overflow-scrolling: touch;
-}
-
-.gh-3d-svg-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.gh-profile-3d-svg {
-  width: 100%;
-  height: auto;
-  min-width: 680px;
-  max-height: 540px;
-  border-radius: 12px;
-  display: block;
-  box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.35);
-  border: 1px solid var(--border);
-}
-
-.gh-3d-bar-node {
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
-
-.gh-3d-bar-node:hover {
-  filter: brightness(1.25) drop-shadow(0 0 6px rgba(71, 160, 66, 0.9));
-}
-
-/* ==========================================================================
    VIEW 3: CYBER SNAKE VIEW
    ========================================================================== */
 .gh-snake-wrapper {
@@ -506,6 +457,7 @@
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
+  padding: 0.5rem 0;
 }
 
 .gh-snake-controls-bar {
@@ -597,246 +549,6 @@
 
 [data-theme="light"] .gh-snake-canvas {
   background: rgba(15, 23, 42, 0.03);
-}
-
-/* ==========================================================================
-   SIDE BENTO CARD: TELEMETRY METRICS
-   ========================================================================== */
-.gh-bento-side {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.gh-side-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.35rem;
-}
-
-.gh-side-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #10b981;
-}
-
-.gh-sparkle-icon {
-  animation: ghSpin 6s linear infinite;
-}
-
-@keyframes ghSpin {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.gh-period-tag {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* Primary Stat Block (Total Contributions) */
-.gh-stat-block {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1rem;
-  border-radius: 14px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
-  transition: all 0.2s ease;
-}
-
-.gh-stat-block:hover {
-  border-color: rgba(16, 185, 129, 0.35);
-  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.2);
-}
-
-.gh-stat-icon-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 11px;
-  flex-shrink: 0;
-}
-
-.gh-stat-icon-wrap.primary {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.gh-stat-icon-wrap.velocity {
-  background: rgba(56, 189, 248, 0.14);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-}
-
-.gh-stat-icon-wrap.peak {
-  background: rgba(250, 204, 21, 0.14);
-  color: #facc15;
-  border: 1px solid rgba(250, 204, 21, 0.3);
-}
-
-.gh-stat-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-}
-
-.gh-stat-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.gh-stat-value-group {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-}
-
-.gh-stat-number {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.65rem;
-  font-weight: 900;
-  color: var(--text-primary);
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.gh-stat-unit {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.gh-stat-velocity-details {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.gh-velocity-day {
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-primary);
-}
-
-.gh-velocity-divider {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-}
-
-.gh-velocity-avg {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  color: #10b981;
-  font-weight: 600;
-}
-
-/* Subgrid for Streaks */
-.gh-side-subgrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-
-.gh-stat-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  padding: 0.85rem;
-  border-radius: 12px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
-  transition: all 0.2s ease;
-}
-
-.gh-stat-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.gh-stat-card-header {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.gh-flame-icon {
-  color: #f97316;
-}
-
-.gh-zap-icon {
-  color: #eab308;
-}
-
-.gh-stat-sublabel {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.gh-stat-card-value {
-  display: flex;
-  align-items: baseline;
-  gap: 0.3rem;
-}
-
-.gh-card-num {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  line-height: 1;
-}
-
-.gh-card-unit {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
-/* Profile Full CTA Button */
-.gh-profile-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  margin-top: auto;
-  padding: 0.78rem 1rem;
-  border-radius: 12px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--accent-text);
-  background: var(--gradient-accent);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.3);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.gh-profile-cta:hover {
-  background: var(--gradient-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px -4px rgba(16, 185, 129, 0.25);
 }
 
 /* ==========================================================================
@@ -994,10 +706,6 @@
    MOBILE & TABLET RESPONSIVENESS
    ========================================================================== */
 @media (max-width: 768px) {
-  .gh-bento-card {
-    padding: 1.15rem 0.95rem;
-  }
-
   .gh-main-header {
     flex-direction: column;
     align-items: flex-start;
@@ -1031,9 +739,5 @@
     justify-content: center;
     padding: 0.32rem 0.4rem;
     font-size: 0.72rem;
-  }
-
-  .gh-side-subgrid {
-    grid-template-columns: 1fr 1fr;
   }
 }

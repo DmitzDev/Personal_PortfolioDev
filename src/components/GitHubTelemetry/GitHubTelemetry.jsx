@@ -23,7 +23,7 @@ const PROFILE_3D_PALETTES = {
     contribColors: ['#ffffff', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
     level0Front: '#e2e8f0',
     level0Right: '#cbd5e1',
-    level0Stroke: '#cbd5e1'
+    level0Stroke: '#94a3b8'
   },
   dark: {
     backgroundColor: '#0c0f16',
@@ -549,16 +549,6 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
         role="img"
         aria-label="GitHub Profile Horizontal 3D Contribution Showcase"
       >
-        {/* Subtle ground platform / mat under the grid for contrast */}
-        <path
-          d={`M ${offsetX - 14} ${offsetY - hDepth - 6}
-              L ${offsetX + 52 * stepX + wCell + 12} ${offsetY - hDepth - 6}
-              L ${offsetX + 52 * stepX + wCell - 6 * skewX + 12} ${offsetY + 6 * stepY + 8}
-              L ${offsetX - 6 * skewX - 14} ${offsetY + 6 * stepY + 8} Z`}
-          fill={themePalette.contribColors[0] === '#ffffff' ? 'rgba(255, 255, 255, 0.55)' : 'rgba(255, 255, 255, 0.02)'}
-          stroke={themePalette.contribColors[0] === '#ffffff' ? 'rgba(203, 213, 225, 0.65)' : 'rgba(255, 255, 255, 0.05)'}
-          strokeWidth="1"
-        />
 
         {/* TOP TELEMETRY INFO BAR */}
         <g className="gh-svg-top-bar">

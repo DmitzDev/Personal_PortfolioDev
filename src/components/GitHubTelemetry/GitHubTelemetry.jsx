@@ -48,7 +48,6 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const [activeView, setActiveView] = useState('3d'); // '3d' | '2d'
   const [isSwitching, setIsSwitching] = useState(false);
   const [isSunk, setIsSunk] = useState(true); // Starts sunk, rises smoothly on mount
-  const [isLeaving2D, setIsLeaving2D] = useState(false);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -68,31 +67,26 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
     if (targetView === activeView || isSwitching) return;
 
     if (activeView === '3d' && targetView === '2d') {
-      // 3D -> 2D: SINK the 3D boxes first
+      // 3D -> 2D: SINK the active 3D pillars first
       setIsSwitching(true);
       setIsSunk(true);
 
       setTimeout(() => {
         setActiveView('2d');
         setIsSwitching(false);
-      }, 400);
+      }, 250);
     } else if (activeView === '2d' && targetView === '3d') {
-      // 2D -> 3D: Smoothly fade out 2D in its spot, mount 3D sunk, then RISE UP
+      // 2D -> 3D: Switch to 3D with pillars at floor level, then smoothly RISE UP
       setIsSwitching(true);
-      setIsLeaving2D(true);
+      setIsSunk(true);
+      setActiveView('3d');
 
       setTimeout(() => {
-        setIsLeaving2D(false);
-        setIsSunk(true);
-        setActiveView('3d');
-
+        setIsSunk(false);
         setTimeout(() => {
-          setIsSunk(false);
-          setTimeout(() => {
-            setIsSwitching(false);
-          }, 550);
-        }, 50);
-      }, 160);
+          setIsSwitching(false);
+        }, 360);
+      }, 100);
     }
   }, [activeView, isSwitching]);
 
@@ -131,7 +125,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   }, [selectedYear, fetchData]);
 
   // Compute 52/53-week matrix and stats
-  const { weeks, stats, monthLabels, dateRangeStr } = useMemo(() => {
+  const { stats, monthLabels, dateRangeStr } = useMemo(() => {
     if (!data || !data.contributions || data.contributions.length === 0) {
       return { weeks: [], stats: null, monthLabels: [], dateRangeStr: '' };
     }
@@ -342,128 +336,51 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
           )}
 
           {!isLoading && !error && (
-            <>
-              {/* VIEW 1: HORIZONTAL 3D ISOMETRIC SHOWCASE */}
-              {activeView === '3d' && (
-                <div className="gh-3d-profile-container">
-                  <Profile3DGreenSvg
-                    contributions={data?.contributions || []}
-                    stats={stats}
-                    dateRangeStr={dateRangeStr}
-                    monthLabels={monthLabels}
-                    themePalette={currentThemePalette}
-                    isSunk={isSunk}
-                    onHoverCell={(cell, e) => {
-                      if (!cell || isSunk) {
-                        setHoveredCell(null);
-                        return;
-                      }
-                      const rect = e?.currentTarget?.getBoundingClientRect();
-                      if (rect) {
-                        setTooltipPos({
-                          x: rect.left + rect.width / 2,
-                          y: rect.top
-                        });
-                      }
-                      setHoveredCell(cell);
-                    }}
-                  />
-                </div>
-              )}
+            <div className="gh-unified-telemetry-container">
+              <ProfileTelemetrySvg
+                contributions={data?.contributions || []}
+                stats={stats}
+                dateRangeStr={dateRangeStr}
+                monthLabels={monthLabels}
+                themePalette={currentThemePalette}
+                activeView={activeView}
+                isSunk={isSunk}
+                onHoverCell={(cell, e) => {
+                  if (!cell || (activeView === '3d' && isSunk)) {
+                    setHoveredCell(null);
+                    return;
+                  }
+                  const rect = e?.currentTarget?.getBoundingClientRect();
+                  if (rect) {
+                    setTooltipPos({
+                      x: rect.left + rect.width / 2,
+                      y: rect.top
+                    });
+                  }
+                  setHoveredCell(cell);
+                }}
+              />
 
-              {/* VIEW 2: 2D Grid Heatmap */}
-              {activeView === '2d' && (
-                <div className={`gh-heatmap-view ${isLeaving2D ? 'gh-view-exit' : 'gh-view-enter'}`}>
-                  <div className="gh-heatmap-scroll">
-                    <div className="gh-heatmap-inner">
-                      {/* Month Labels Bar */}
-                      <div className="gh-month-labels">
-                        <span className="gh-weekday-spacer" />
-                        <div className="gh-months-track">
-                          {monthLabels.map((m, i) => (
-                            <span
-                              key={`${m.label}-${i}`}
-                              className="gh-month-label"
-                              style={{ left: `${m.colIndex * 17}px` }}
-                            >
-                              {m.label}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Days + Grid Matrix */}
-                      <div className="gh-grid-body">
-                        {/* Weekday indicators */}
-                        <div className="gh-weekday-labels">
-                          <span></span>
-                          <span>Mon</span>
-                          <span></span>
-                          <span>Wed</span>
-                          <span></span>
-                          <span>Fri</span>
-                          <span></span>
-                        </div>
-
-                        {/* 52-Week Columns */}
-                        <div className="gh-weeks-container">
-                          {weeks.map((week, wIdx) => (
-                            <div key={`week-${wIdx}`} className="gh-week-column">
-                              {week.map((day, dIdx) => {
-                                if (!day) {
-                                  return <div key={`empty-${dIdx}`} className="gh-cell gh-cell-pad" />;
-                                }
-
-                                const cellColor = currentThemePalette.contribColors[day.level] || currentThemePalette.contribColors[0];
-                                const isPeak = stats?.peakDay?.date === day.date && day.count > 0;
-
-                                return (
-                                  <div
-                                    key={day.date}
-                                    className={`gh-cell ${day.level > 0 ? `level-${day.level}` : 'level-0'} ${isPeak ? 'is-peak-cell' : ''}`}
-                                    style={{ backgroundColor: cellColor }}
-                                    onMouseEnter={(e) => {
-                                      const rect = e.currentTarget.getBoundingClientRect();
-                                      setTooltipPos({
-                                        x: rect.left + rect.width / 2,
-                                        y: rect.top
-                                      });
-                                      setHoveredCell(day);
-                                    }}
-                                    onMouseLeave={() => setHoveredCell(null)}
-                                    aria-label={`${day.count} contributions on ${day.date}`}
-                                  />
-                                );
-                              })}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+              {/* Legend and Summary Footer */}
+              <div className="gh-heatmap-footer">
+                <span className="gh-footer-hint">
+                  Hover on any cell for detailed timestamp and commit breakdown.
+                </span>
+                <div className="gh-legend-group">
+                  <span className="gh-legend-label">Less</span>
+                  <div className="gh-legend-cells">
+                    {currentThemePalette.contribColors.map((color, idx) => (
+                      <span
+                        key={`legend-${idx}`}
+                        className={`gh-legend-cell level-${idx}`}
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
                   </div>
-
-                  {/* Legend and Summary Footer */}
-                  <div className="gh-heatmap-footer">
-                    <span className="gh-footer-hint">
-                      Hover on any cell for detailed timestamp and commit breakdown.
-                    </span>
-                    <div className="gh-legend-group">
-                      <span className="gh-legend-label">Less</span>
-                      <div className="gh-legend-cells">
-                        {currentThemePalette.contribColors.map((color, idx) => (
-                          <span
-                            key={`legend-${idx}`}
-                            className={`gh-legend-cell level-${idx}`}
-                            style={{ backgroundColor: color }}
-                          />
-                        ))}
-                      </div>
-                      <span className="gh-legend-label">More</span>
-                    </div>
-                  </div>
+                  <span className="gh-legend-label">More</span>
                 </div>
-              )}
-            </>
+              </div>
+            </div>
           )}
         </div>
       </div>
@@ -490,17 +407,26 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 }
 
 /* ==========================================================================
-   HORIZONTAL 3D ISOMETRIC SHOWCASE (NAKA-PAHABA / WIDE 3D BANNER)
-   Clean isometric ground plane with crisp 3D extruded pillars
+   UNIFIED TELEMETRY SHOWCASE (3D ISOMETRIC + 2D GRID IN SAME CANVAS)
+   Shares identical 1080x210 coordinate plane, zero layout shift, zero lag
    ========================================================================== */
-function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, themePalette, onHoverCell, isSunk }) {
+function ProfileTelemetrySvg({
+  contributions,
+  stats,
+  dateRangeStr,
+  monthLabels,
+  themePalette,
+  onHoverCell,
+  activeView,
+  isSunk
+}) {
   const svgWidth = 1080;
   const svgHeight = 210;
 
-  // Horizontal 3D Projection geometry
+  // Geometry (shared between 2D and 3D)
   const stepX = 18; // horizontal step between week columns
-  const stepY = 12.5; // depth step between day rows
-  const skewX = 3.5; // subtle isometric slant for depth
+  const stepY = 12.5; // depth step between 3D rows
+  const skewX = 3.5; // 3D slant
   const wCell = 13.5; // cell width
   const dDepth = 3.5; // 3D depth in X
   const hDepth = 6.5; // 3D depth in Y
@@ -541,7 +467,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
     return themePalette.contribColors.map((c, idx) => getShades(c, idx));
   }, [themePalette]);
 
-  // Compute 3D bars and sort back-to-front (by dayOfWeek, then week)
+  // Compute 3D and 2D bars
   const bars = useMemo(() => {
     if (!contributions || contributions.length === 0) return [];
 
@@ -554,13 +480,18 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
       const week = Math.floor((toEpochDays(calDate) - sundayOfFirstWeek) / 7);
       const dayOfWeek = calDate.getUTCDay(); // 0 = sun, 1 = mon ...
 
-      const x = offsetX + week * stepX - dayOfWeek * skewX;
-      const y = offsetY + dayOfWeek * stepY;
+      // 3D coordinates
+      const x3d = offsetX + week * stepX - dayOfWeek * skewX;
+      const y3d = offsetY + dayOfWeek * stepY;
 
-      // 3D pillar height (0 commits = 2.5px elevated white 3D box; >0 commits = rising pillar)
+      // 2D coordinates (aligned to the EXACT same week and vertical positioning)
+      const x2d = offsetX + week * stepX;
+      const y2d = offsetY + dayOfWeek * 16;
+
+      // 3D pillar height (0 commits = 0 / flat floor; >0 commits = rising pillar)
       const h = cal.count === 0
-        ? 2.5
-        : Math.min(48, Math.log10(cal.count / 8 + 1) * 36 + 8);
+        ? 0
+        : Math.min(48, Math.log10(cal.count / 8 + 1) * 36 + 10);
 
       const shades = paletteShades[cal.level] || paletteShades[0];
 
@@ -568,15 +499,17 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
         cal,
         week,
         dayOfWeek,
-        x: +x.toFixed(1),
-        y: +y.toFixed(1),
+        x: +x3d.toFixed(1),
+        y: +y3d.toFixed(1),
+        x2d: +x2d.toFixed(1),
+        y2d: +y2d.toFixed(1),
         h: +h.toFixed(1),
         shades,
         isZero: cal.count === 0
       };
     });
 
-    // Sort by dayOfWeek ascending (Sunday/0 at back to Saturday/6 at front), then week
+    // Sort by dayOfWeek ascending (Sunday/0 at back to Saturday/6 at front), then week for 3D occlusion
     items.sort((a, b) => {
       if (a.dayOfWeek !== b.dayOfWeek) {
         return a.dayOfWeek - b.dayOfWeek;
@@ -594,10 +527,9 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
         viewBox={`0 0 ${svgWidth} ${svgHeight}`}
         className={`gh-profile-3d-svg ${isSunk ? 'gh-3d-svg-sunk' : ''}`}
         role="img"
-        aria-label="GitHub Profile Horizontal 3D Contribution Showcase"
+        aria-label="GitHub Profile Contribution Telemetry Showcase"
       >
-
-        {/* TOP TELEMETRY INFO BAR */}
+        {/* TOP TELEMETRY INFO BAR (Shared across 2D & 3D) */}
         <g className="gh-svg-top-bar">
           <text
             x="45"
@@ -660,12 +592,12 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
             fill={themePalette.weakColor}
             fontFamily="'JetBrains Mono', monospace"
           >
-            {dateRangeStr || '2025-10-19 / 2026-10-19'}
+            {dateRangeStr || '2025-10-19 / 2026-10-18'}
           </text>
         </g>
 
-        {/* Month Labels along top */}
-        <g className="gh-3d-months-layer">
+        {/* Month Labels along top (Shared across 2D & 3D) */}
+        <g className="gh-months-layer">
           {monthLabels.map((m, i) => (
             <text
               key={`m-${m.label}-${i}`}
@@ -681,15 +613,15 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
           ))}
         </g>
 
-        {/* Weekday indicators on the left */}
-        <g className="gh-3d-weekdays-layer">
+        {/* 3D WEEKDAY LABELS */}
+        <g className={`gh-3d-weekdays-layer ${activeView === '3d' ? 'gh-layer-active' : 'gh-layer-inactive'}`}>
           {[
             { label: 'Mon', day: 1 },
             { label: 'Wed', day: 3 },
             { label: 'Fri', day: 5 }
           ].map((w) => (
             <text
-              key={w.label}
+              key={`3d-${w.label}`}
               x={offsetX - w.day * skewX - 8}
               y={offsetY + w.day * stepY + 3}
               textAnchor="end"
@@ -703,74 +635,59 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
           ))}
         </g>
 
-        {/* HORIZONTAL 3D TILES & PILLARS (Rendered back-to-front) */}
-        <g className="gh-3d-pillars-layer">
+        {/* 2D WEEKDAY LABELS */}
+        <g className={`gh-2d-weekdays-layer ${activeView === '2d' ? 'gh-layer-active' : 'gh-layer-inactive'}`}>
+          {[
+            { label: 'Mon', day: 1 },
+            { label: 'Wed', day: 3 },
+            { label: 'Fri', day: 5 }
+          ].map((w) => (
+            <text
+              key={`2d-${w.label}`}
+              x={offsetX - 10}
+              y={offsetY + w.day * 16 + 10}
+              textAnchor="end"
+              fontSize="10px"
+              fontWeight="500"
+              fill={themePalette.weakColor}
+              fontFamily="'JetBrains Mono', monospace"
+            >
+              {w.label}
+            </text>
+          ))}
+        </g>
+
+        {/* LAYER 1: 3D ISOMETRIC TILES & PILLARS */}
+        <g className={`gh-3d-pillars-layer ${activeView === '3d' ? 'gh-layer-active' : 'gh-layer-inactive'}`}>
           {bars.map((b, idx) => {
             const { x, y, h, shades, isZero } = b;
 
-            // Stagger wave delay across columns and rows (0ms to ~190ms)
-            const delay = Math.round((b.week / 52) * 160 + (b.dayOfWeek / 7) * 30);
-
-            // Ground floor isometric tile path (also the base of the top diamond at rest)
+            // Ground floor isometric tile path
             const groundTileD = `M ${x} ${y} L ${x + wCell} ${y} L ${x + wCell - dDepth} ${y - hDepth} L ${x - dDepth} ${y - hDepth} Z`;
-            const topPathAtGround = groundTileD;
 
-            // Extruded side walls (anchored at ground y)
-            const yTop = +(y - h).toFixed(1);
-            const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
-            const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
-
-            // Zero-commit day: render a clean, distinct elevated white 3D box
+            // Zero-commit day: render a static ground tile (ZERO ANIMATION OVERHEAD, ZERO LAG!)
             if (isZero) {
               return (
                 <g
                   key={`tile-${b.cal.date}-${idx}`}
-                  className="gh-3d-tile-node gh-stagger-pillar"
-                  style={{ '--pillar-delay': `${delay}ms` }}
+                  className="gh-3d-tile-node"
                   onMouseEnter={(e) => onHoverCell(b.cal, e)}
                   onMouseLeave={() => onHoverCell(null)}
                   cursor="pointer"
                 >
-                  {/* Front Face of white 3D box */}
-                  <path
-                    d={frontD}
-                    fill={shades.front}
-                    stroke={shades.stroke}
-                    strokeWidth="0.8"
-                    className="gh-pillar-wall"
-                    style={{
-                      transformOrigin: `${x}px ${y}px`,
-                      transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
-                    }}
-                  />
-                  {/* Right Face of white 3D box */}
-                  <path
-                    d={rightD}
-                    fill={shades.right}
-                    stroke={shades.stroke}
-                    strokeWidth="0.8"
-                    className="gh-pillar-wall"
-                    style={{
-                      transformOrigin: `${x + wCell}px ${y}px`,
-                      transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
-                    }}
-                  />
-                  {/* Top Face of white 3D box */}
-                  <path
-                    d={topPathAtGround}
-                    fill={shades.top}
-                    stroke={shades.stroke}
-                    strokeWidth="0.8"
-                    className="gh-pillar-top"
-                    style={{
-                      transform: isSunk ? 'translateY(0px)' : `translateY(-${h}px)`
-                    }}
-                  />
+                  <path d={groundTileD} fill={shades.top} stroke={shades.stroke} strokeWidth="0.8" />
                 </g>
               );
             }
 
-            // Active commit day: render a distinct 3D extruded pillar rising from the grid
+            // Stagger delay across columns for active pillars (0ms to 80ms)
+            const delay = Math.round((b.week / 52) * 80);
+            const topPathAtGround = groundTileD;
+            const yTop = +(y - h).toFixed(1);
+            const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
+            const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
+
+            // Active commit day: smoothly animated pillar (only ~35 elements, 120 FPS!)
             return (
               <g
                 key={`bar-${b.cal.date}-${idx}`}
@@ -780,7 +697,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
                 onMouseLeave={() => onHoverCell(null)}
                 cursor="pointer"
               >
-                {/* Ground contact shadow */}
+                {/* Ground shadow */}
                 <path d={groundTileD} fill="rgba(0, 0, 0, 0.14)" stroke="none" />
 
                 {/* Front Face */}
@@ -795,7 +712,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
                     transform: isSunk ? 'scaleY(0)' : 'scaleY(1)'
                   }}
                 />
-                {/* Right Face (Depth Shadow) */}
+                {/* Right Face */}
                 <path
                   d={rightD}
                   fill={shades.right}
@@ -819,6 +736,31 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
                   }}
                 />
               </g>
+            );
+          })}
+        </g>
+
+        {/* LAYER 2: 2D FLAT GRID CELLS */}
+        <g className={`gh-2d-layer ${activeView === '2d' ? 'gh-layer-active' : 'gh-layer-inactive'}`}>
+          {bars.map((b, idx) => {
+            const { x2d, y2d, cal, shades, isZero } = b;
+            return (
+              <rect
+                key={`cell-2d-${cal.date}-${idx}`}
+                x={x2d}
+                y={y2d}
+                width={13.5}
+                height={13.5}
+                rx={3}
+                ry={3}
+                fill={shades.top}
+                stroke={isZero ? shades.stroke : 'none'}
+                strokeWidth={isZero ? '0.8' : '0'}
+                className={`gh-2d-cell ${cal.level > 0 ? `level-${cal.level}` : 'level-0'}`}
+                onMouseEnter={(e) => onHoverCell(cal, e)}
+                onMouseLeave={() => onHoverCell(null)}
+                cursor="pointer"
+              />
             );
           })}
         </g>

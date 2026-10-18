@@ -272,64 +272,69 @@
 }
 
 /* ==========================================================================
-   SINKING & RISING 3D SWITCHING ANIMATIONS
+   VIEW LAYER TRANSITIONS (3D vs 2D)
+   ========================================================================== */
+.gh-3d-pillars-layer,
+.gh-2d-layer,
+.gh-3d-weekdays-layer,
+.gh-2d-weekdays-layer {
+  transition: opacity 0.22s ease-in-out;
+}
+
+.gh-layer-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gh-layer-inactive {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 2D Flat SVG Cells */
+.gh-2d-cell {
+  transition: transform 0.15s ease, filter 0.15s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.gh-2d-cell:hover {
+  transform: scale(1.32);
+  filter: brightness(1.22);
+}
+
+[data-theme="light"] .gh-2d-cell.level-0:hover {
+  stroke: #0969da;
+}
+
+/* ==========================================================================
+   SINKING & RISING 3D SWITCHING ANIMATIONS (Active Commit Pillars Only)
    ========================================================================== */
 .gh-pillar-top {
-  transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
 .gh-pillar-wall {
-  transition: transform 0.44s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
   will-change: transform, opacity;
 }
 
 .gh-3d-svg-sunk .gh-pillar-top {
   transform: translateY(0px) !important;
-  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gh-3d-svg-sunk .gh-pillar-wall {
   transform: scaleY(0) !important;
   opacity: 0 !important;
-  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.18s ease;
 }
 
 /* Wave stagger across columns */
 .gh-stagger-pillar .gh-pillar-top,
 .gh-stagger-pillar .gh-pillar-wall {
   transition-delay: var(--pillar-delay, 0ms);
-}
-
-.gh-view-enter {
-  animation: ghViewEnter 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.gh-view-exit {
-  animation: ghViewExit 0.18s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  pointer-events: none;
-}
-
-@keyframes ghViewEnter {
-  from {
-    opacity: 0;
-    transform: scale(0.99);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes ghViewExit {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.99);
-  }
 }
 
 /* ==========================================================================

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ExternalLink,
   Layers,
@@ -7,7 +8,7 @@ import {
   AlertCircle,
   ChevronDown,
   Star,
-  GitFork
+  Flame
 } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import './GitHubTelemetry.css';
@@ -71,6 +72,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  const [totalStars, setTotalStars] = useState(1);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -79,6 +81,27 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const scrollContainerRef = useRef(null);
 
   const isPastYearSelected = pastYears.includes(selectedYear);
+
+  // Sync real total stars from GitHub API for user repos (fallback to 1)
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+      .then((res) => {
+        if (!res.ok) throw new Error('API error');
+        return res.json();
+      })
+      .then((repos) => {
+        if (!isMounted || !Array.isArray(repos)) return;
+        const count = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
+        setTotalStars(Math.max(1, count));
+      })
+      .catch(() => {
+        if (isMounted) setTotalStars(1);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [username]);
 
   // Close year dropdown on outside click or Escape key
   useEffect(() => {
@@ -421,13 +444,13 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                   </div>
 
                   <div className="gh-stats-badges">
-                    <span className="gh-stats-badge" title="Stars">
+                    <span className="gh-stats-badge" title="Total Repository Stars">
                       <Star size={13} className="gh-badge-icon star-icon" />
-                      <span>{stats?.stars ?? 135}</span>
+                      <span>{totalStars}</span>
                     </span>
-                    <span className="gh-stats-badge" title="Forks">
-                      <GitFork size={13} className="gh-badge-icon fork-icon" />
-                      <span>{stats?.forks ?? 14}</span>
+                    <span className="gh-stats-badge" title={`Longest Contribution Streak: ${stats?.maxStreak || 0} days`}>
+                      <Flame size={13} className="gh-badge-icon streak-icon" />
+                      <span>{stats?.maxStreak || 0}d streak</span>
                     </span>
                   </div>
                 </div>
@@ -450,14 +473,23 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                       setHoveredCell(null);
                       return;
                     }
-                    const rect = e?.currentTarget?.getBoundingClientRect();
-                    if (rect) {
-                      setTooltipPos({
-                        x: rect.left + rect.width / 2,
-                        y: rect.top
-                      });
+                    const target = e?.target || e?.currentTarget;
+                    let targetX = 0;
+                    let targetY = 0;
+
+                    if (target && typeof target.getBoundingClientRect === 'function') {
+                      const rect = target.getBoundingClientRect();
+                      targetX = rect.left + rect.width / 2;
+                      targetY = rect.top;
+                    } else if (e?.clientX && e?.clientY) {
+                      targetX = e.clientX;
+                      targetY = e.clientY - 12;
                     }
-                    setHoveredCell(cell);
+
+                    if (targetX && targetY) {
+                      setTooltipPos({ x: targetX, y: targetY });
+                      setHoveredCell(cell);
+                    }
                   }}
                 />
               </div>
@@ -494,13 +526,13 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
         </div>
       </div>
 
-      {/* Floating Interactive Tooltip */}
-      {hoveredCell && (
+      {/* Floating Interactive Tooltip via Portal directly in document.body (Free from parent transform bounds!) */}
+      {hoveredCell && typeof document !== 'undefined' && createPortal(
         <div
           className="gh-floating-tooltip"
           style={{
             left: `${tooltipPos.x}px`,
-            top: `${tooltipPos.y - 12}px`
+            top: `${tooltipPos.y - 10}px`
           }}
         >
           <div className="gh-tooltip-header">
@@ -509,7 +541,8 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
             </span>
           </div>
           <span className="gh-tooltip-date">{formatTooltipDate(hoveredCell.date)}</span>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
@@ -717,6 +750,8 @@ function ProfileTelemetrySvg({
                   key={`tile-${b.cal.date}-${idx}`}
                   className="gh-3d-tile-node"
                   onMouseEnter={(e) => onHoverCell(b.cal, e)}
+                  onMouseMove={(e) => onHoverCell(b.cal, e)}
+                  onClick={(e) => onHoverCell(b.cal, e)}
                   onMouseLeave={() => onHoverCell(null)}
                   cursor="pointer"
                 >
@@ -745,6 +780,8 @@ function ProfileTelemetrySvg({
                 className="gh-3d-bar-node gh-stagger-pillar"
                 style={{ '--pillar-delay': `${delay}ms` }}
                 onMouseEnter={(e) => onHoverCell(b.cal, e)}
+                onMouseMove={(e) => onHoverCell(b.cal, e)}
+                onClick={(e) => onHoverCell(b.cal, e)}
                 onMouseLeave={() => onHoverCell(null)}
                 cursor="pointer"
               >
@@ -811,6 +848,8 @@ function ProfileTelemetrySvg({
                 strokeWidth={isZero ? '0.8' : '0'}
                 className={`gh-2d-cell ${cal.level > 0 ? `level-${cal.level}` : 'level-0'}`}
                 onMouseEnter={(e) => onHoverCell(cal, e)}
+                onMouseMove={(e) => onHoverCell(cal, e)}
+                onClick={(e) => onHoverCell(cal, e)}
                 onMouseLeave={() => onHoverCell(null)}
                 cursor="pointer"
               />

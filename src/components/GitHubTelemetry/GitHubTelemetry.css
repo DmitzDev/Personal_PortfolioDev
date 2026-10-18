@@ -326,8 +326,9 @@
   fill: #eab308;
 }
 
-.gh-badge-icon.fork-icon {
-  color: var(--text-muted);
+.gh-badge-icon.streak-icon {
+  color: #f97316;
+  fill: #f97316;
 }
 
 .gh-stats-daterange {

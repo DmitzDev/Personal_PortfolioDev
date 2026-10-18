@@ -57,64 +57,101 @@
 
 .gh-header-left {
   display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  align-items: center;
+  gap: 0.65rem;
 }
 
-.gh-live-badge {
+/* Period & Year Selector */
+.gh-period-controls {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  width: fit-content;
-  padding: 0.2rem 0.6rem;
+  gap: 0.35rem;
+  padding: 0.25rem;
   border-radius: 9999px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  position: relative;
 }
 
-.gh-pulse-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 8px #10b981;
-  animation: ghPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.gh-year-dropdown-wrap {
+  position: relative;
+  display: inline-flex;
 }
 
-@keyframes ghPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(1.3);
-  }
-}
-
-.gh-badge-text {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #10b981;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.gh-title-group {
-  display: flex;
+.gh-dropdown-trigger {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  gap: 0.35rem;
+  cursor: pointer;
 }
 
-.gh-card-title {
+.gh-chevron {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gh-chevron.open {
+  transform: rotate(180deg);
+}
+
+.gh-year-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 100;
+  min-width: 140px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.35rem;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  animation: ghDropdownFadeIn 0.16s ease-out;
+}
+
+[data-theme="light"] .gh-year-dropdown-menu {
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+@keyframes ghDropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gh-year-dropdown-item {
+  width: 100%;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.gh-year-dropdown-item:hover {
   color: var(--text-primary);
-  margin: 0;
-  letter-spacing: -0.02em;
+  background: var(--bg-tertiary);
+}
+
+.gh-year-dropdown-item.active {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
 }
 
 .gh-username-link {
@@ -126,22 +163,24 @@
   font-weight: 600;
   color: var(--text-muted);
   text-decoration: none;
-  padding: 0.2rem 0.55rem;
-  border-radius: 6px;
+  padding: 0.28rem 0.65rem;
+  border-radius: 9999px;
   background: var(--bg-tertiary);
+  border: 1px solid var(--border);
   transition: all 0.15s ease;
 }
 
 .gh-username-link:hover {
   color: var(--accent);
   background: var(--accent-light);
+  border-color: var(--accent);
 }
 
 .gh-external-icon {
   opacity: 0.7;
 }
 
-/* Controls: Segmented View & Year Selectors */
+/* Controls: Segmented View */
 .gh-header-controls {
   display: flex;
   align-items: center;
@@ -149,8 +188,7 @@
   flex-wrap: wrap;
 }
 
-.gh-segmented-control,
-.gh-year-selector {
+.gh-segmented-control {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem;
@@ -202,12 +240,21 @@
   position: relative;
   min-height: 255px;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: transparent;
   border: none;
   box-shadow: none;
+}
+
+.gh-unified-telemetry-container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
 }
 
 /* Mobile swipe hint */
@@ -239,6 +286,7 @@
   position: relative;
   width: 100%;
   max-width: 1240px;
+  min-width: 0;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -250,6 +298,8 @@
   border: none;
   box-shadow: none;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
@@ -276,6 +326,7 @@
   border: none !important;
   box-shadow: none !important;
   border-radius: 0;
+  touch-action: pan-x pan-y;
 }
 
 .gh-3d-tile-node path {
@@ -524,18 +575,12 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 0.75rem;
   padding-top: 0.75rem;
   border-top: 1px solid var(--border);
   font-size: 0.76rem;
   color: var(--text-muted);
-}
-
-.gh-footer-hint {
-  font-style: italic;
-  font-size: 0.74rem;
 }
 
 .gh-legend-group {
@@ -716,9 +761,50 @@
 }
 
 /* ==========================================================================
+   RESPONSIVE OPTIMIZATIONS (TABLET & MOBILE)
+   ========================================================================== */
 @media (max-width: 980px) {
-  .gh-3d-profile-container,
-  .gh-3d-svg-wrapper,
+  .gh-viewport-wrapper {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .gh-unified-telemetry-container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .gh-3d-profile-container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
+  }
+
+  .gh-3d-svg-wrapper {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+    margin: 0;
+  }
+
+  .gh-profile-3d-svg {
+    display: block;
+    width: 1160px;
+    min-width: 1160px;
+    max-width: none;
+    touch-action: pan-x pan-y;
+  }
+
   .gh-heatmap-scroll {
     justify-content: flex-start;
   }
@@ -731,8 +817,32 @@
 @media (max-width: 768px) {
   .gh-main-header {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.85rem;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .gh-header-left {
+    width: 100%;
+  }
+
+  .gh-period-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .gh-period-controls .gh-year-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .gh-year-dropdown-wrap {
+    flex: 1;
+    display: flex;
+  }
+
+  .gh-year-dropdown-wrap .gh-dropdown-trigger {
+    width: 100%;
+    justify-content: center;
   }
 
   .gh-header-controls {
@@ -741,23 +851,11 @@
   }
 
   .gh-segmented-control {
-    width: 100%;
+    flex: 1;
     justify-content: space-between;
   }
 
   .gh-segment-btn {
-    flex: 1;
-    justify-content: center;
-    padding: 0.32rem 0.4rem;
-    font-size: 0.72rem;
-  }
-
-  .gh-year-selector {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .gh-year-btn {
     flex: 1;
     justify-content: center;
     padding: 0.32rem 0.4rem;

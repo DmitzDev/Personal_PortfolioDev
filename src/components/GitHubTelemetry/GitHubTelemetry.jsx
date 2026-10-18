@@ -4,13 +4,15 @@ import {
   Layers,
   Box,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  ChevronDown
 } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import './GitHubTelemetry.css';
 
 const DEFAULT_USERNAME = 'DmitzDev';
 const GITHUB_PROFILE_URL = `https://github.com/${DEFAULT_USERNAME}`;
+const START_YEAR = 2026; // User started using GitHub in 2026
 
 // Reference colors for 3D Isometric Contributions
 const PROFILE_3D_PALETTES = {
@@ -48,12 +50,54 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const [activeView, setActiveView] = useState('3d'); // '3d' | '2d'
   const [isSwitching, setIsSwitching] = useState(false);
   const [isSunk, setIsSunk] = useState(true); // Starts sunk, rises smoothly on mount
+  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hoveredCell, setHoveredCell] = useState(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const scrollContainerRef = useRef(null);
+
+  // Dynamic Year computation starting from START_YEAR (2026) up to current year
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
+  const availableYears = useMemo(() => {
+    const years = [];
+    const maxYear = Math.max(START_YEAR, currentYear);
+    for (let y = maxYear; y >= START_YEAR; y--) {
+      years.push(y.toString());
+    }
+    return years;
+  }, [currentYear]);
+
+  // Primary active/latest year (e.g. 2026, or 2027 when year flips)
+  const latestYear = availableYears[0];
+  // Past years for dropdown (e.g. ['2026'] when in 2027+)
+  const pastYears = useMemo(() => availableYears.slice(1), [availableYears]);
+  const isPastYearSelected = pastYears.includes(selectedYear);
+
+  // Close year dropdown on outside click or Escape key
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsYearDropdownOpen(false);
+      }
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsYearDropdownOpen(false);
+      }
+    };
+    if (isYearDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isYearDropdownOpen]);
 
   // Initial rising animation on mount
   useEffect(() => {
@@ -259,28 +303,84 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
       <div className="gh-telemetry-container">
         {/* Main Header */}
         <div className="gh-main-header">
+          {/* Left: Period & Year Controls (Replaces old title and live indicator) */}
           <div className="gh-header-left">
-            <div className="gh-live-badge">
-              <span className="gh-pulse-dot" />
-              <span className="gh-badge-text">Live GitHub Activity</span>
-            </div>
-            <div className="gh-title-group">
-              <h3 className="gh-card-title">GitHub 3D Profile Telemetry</h3>
-              <a
-                href={GITHUB_PROFILE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gh-username-link"
-                title="Open GitHub Profile"
+            <div className="gh-period-controls" role="group" aria-label="Contribution Period">
+              <button
+                type="button"
+                className={`gh-year-btn ${selectedYear === 'last' ? 'active' : ''}`}
+                onClick={() => {
+                  setSelectedYear('last');
+                  setIsYearDropdownOpen(false);
+                }}
               >
-                <span>@{username}</span>
-                <ExternalLink size={12} className="gh-external-icon" />
-              </a>
+                Last 12 Mos
+              </button>
+
+              {/* Primary Latest Year (e.g. 2026) */}
+              <button
+                type="button"
+                className={`gh-year-btn ${selectedYear === latestYear ? 'active' : ''}`}
+                onClick={() => {
+                  setSelectedYear(latestYear);
+                  setIsYearDropdownOpen(false);
+                }}
+              >
+                {latestYear}
+              </button>
+
+              {/* Dynamic Past Years Dropdown (Appears when past years like 2026 exist in 2027+) */}
+              {pastYears.length > 0 && (
+                <div className="gh-year-dropdown-wrap" ref={dropdownRef}>
+                  <button
+                    type="button"
+                    className={`gh-year-btn gh-dropdown-trigger ${isPastYearSelected ? 'active' : ''}`}
+                    onClick={() => setIsYearDropdownOpen((prev) => !prev)}
+                    aria-expanded={isYearDropdownOpen}
+                    aria-haspopup="true"
+                  >
+                    <span>
+                      {isPastYearSelected ? selectedYear : (pastYears.length === 1 ? pastYears[0] : 'Past Years')}
+                    </span>
+                    <ChevronDown size={13} className={`gh-chevron ${isYearDropdownOpen ? 'open' : ''}`} />
+                  </button>
+
+                  {isYearDropdownOpen && (
+                    <div className="gh-year-dropdown-menu" role="menu">
+                      {pastYears.map((y) => (
+                        <button
+                          key={y}
+                          type="button"
+                          role="menuitem"
+                          className={`gh-year-dropdown-item ${selectedYear === y ? 'active' : ''}`}
+                          onClick={() => {
+                            setSelectedYear(y);
+                            setIsYearDropdownOpen(false);
+                          }}
+                        >
+                          {y} Contributions
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* View & Year Switchers */}
+          {/* Right: Username Profile Link + View Switcher */}
           <div className="gh-header-controls">
+            <a
+              href={GITHUB_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gh-username-link"
+              title="Open GitHub Profile"
+            >
+              <span>@{username}</span>
+              <ExternalLink size={12} className="gh-external-icon" />
+            </a>
+
             {/* Segmented View Switcher (3D Isometric and 2D Grid) */}
             <div className="gh-segmented-control" role="tablist" aria-label="Telemetry View Mode">
               <button
@@ -307,24 +407,6 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 <Layers size={14} />
                 <span>2D Grid</span>
               </button>
-            </div>
-
-            {/* Year Selector */}
-            <div className="gh-year-selector" role="group" aria-label="Contribution Period">
-              {[
-                { id: 'last', label: 'Last 12 Mos' },
-                { id: '2026', label: '2026' },
-                { id: '2025', label: '2025' }
-              ].map((y) => (
-                <button
-                  key={y.id}
-                  type="button"
-                  className={`gh-year-btn ${selectedYear === y.id ? 'active' : ''}`}
-                  onClick={() => setSelectedYear(y.id)}
-                >
-                  {y.label}
-                </button>
-              ))}
             </div>
           </div>
         </div>
@@ -381,11 +463,8 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 />
               </div>
 
-              {/* Legend and Summary Footer */}
+              {/* Legend Footer */}
               <div className="gh-heatmap-footer">
-                <span className="gh-footer-hint">
-                  Hover or tap on any cell for detailed timestamp and commit breakdown.
-                </span>
                 <div className="gh-legend-group">
                   <span className="gh-legend-label">Less</span>
                   <div className="gh-legend-cells">
@@ -612,7 +691,7 @@ function ProfileTelemetrySvg({
             fill={themePalette.weakColor}
             fontFamily="'JetBrains Mono', monospace"
           >
-            {dateRangeStr || '2025-10-19 / 2026-10-18'}
+            {dateRangeStr || '2026-01-01 / 2026-12-31'}
           </text>
         </g>
 

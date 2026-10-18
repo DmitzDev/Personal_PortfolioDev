@@ -48,6 +48,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const [activeView, setActiveView] = useState('3d'); // '3d' | '2d'
   const [isSwitching, setIsSwitching] = useState(false);
   const [isSunk, setIsSunk] = useState(true); // Starts sunk, rises smoothly on mount
+  const [isLeaving2D, setIsLeaving2D] = useState(false);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -74,19 +75,24 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
       setTimeout(() => {
         setActiveView('2d');
         setIsSwitching(false);
-      }, 420);
+      }, 400);
     } else if (activeView === '2d' && targetView === '3d') {
-      // 2D -> 3D: Mount in sunk state, then smoothly RISE UP
+      // 2D -> 3D: Smoothly fade out 2D in its spot, mount 3D sunk, then RISE UP
       setIsSwitching(true);
-      setIsSunk(true);
-      setActiveView('3d');
+      setIsLeaving2D(true);
 
       setTimeout(() => {
-        setIsSunk(false);
+        setIsLeaving2D(false);
+        setIsSunk(true);
+        setActiveView('3d');
+
         setTimeout(() => {
-          setIsSwitching(false);
-        }, 550);
-      }, 40);
+          setIsSunk(false);
+          setTimeout(() => {
+            setIsSwitching(false);
+          }, 550);
+        }, 50);
+      }, 160);
     }
   }, [activeView, isSwitching]);
 
@@ -367,7 +373,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
               {/* VIEW 2: 2D Grid Heatmap */}
               {activeView === '2d' && (
-                <div className="gh-heatmap-view gh-view-enter">
+                <div className={`gh-heatmap-view ${isLeaving2D ? 'gh-view-exit' : 'gh-view-enter'}`}>
                   <div className="gh-heatmap-scroll">
                     <div className="gh-heatmap-inner">
                       {/* Month Labels Bar */}

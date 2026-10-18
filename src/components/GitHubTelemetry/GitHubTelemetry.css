@@ -200,8 +200,11 @@
    ========================================================================== */
 .gh-viewport-wrapper {
   position: relative;
-  min-height: 200px;
+  min-height: 210px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -213,6 +216,8 @@
 .gh-3d-profile-container {
   position: relative;
   width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -227,6 +232,8 @@
 
 .gh-3d-svg-wrapper {
   width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -295,17 +302,33 @@
 }
 
 .gh-view-enter {
-  animation: ghViewEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: ghViewEnter 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.gh-view-exit {
+  animation: ghViewExit 0.18s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
 }
 
 @keyframes ghViewEnter {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: scale(0.99);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes ghViewExit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.99);
   }
 }
 
@@ -315,8 +338,11 @@
 .gh-heatmap-view {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
   width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
   padding: 0.5rem 0;
 }
 
@@ -329,6 +355,8 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  display: flex;
+  justify-content: safe center;
 }
 
 .gh-heatmap-scroll::-webkit-scrollbar {
@@ -348,7 +376,7 @@
   display: flex;
   flex-direction: column;
   width: max-content;
-  min-width: 100%;
+  margin: 0 auto;
 }
 
 /* Month labels header */
@@ -361,7 +389,7 @@
 }
 
 .gh-weekday-spacer {
-  width: 28px;
+  width: 30px;
   flex-shrink: 0;
 }
 
@@ -461,6 +489,10 @@
 
 /* Heatmap Footer & Legend */
 .gh-heatmap-footer {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -655,8 +687,18 @@
 }
 
 /* ==========================================================================
-   MOBILE & TABLET RESPONSIVENESS
-   ========================================================================== */
+@media (max-width: 980px) {
+  .gh-3d-profile-container,
+  .gh-3d-svg-wrapper,
+  .gh-heatmap-scroll {
+    justify-content: flex-start;
+  }
+
+  .gh-heatmap-inner {
+    margin: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .gh-main-header {
     flex-direction: column;

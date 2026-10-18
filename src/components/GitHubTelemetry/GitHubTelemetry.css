@@ -200,7 +200,7 @@
    ========================================================================== */
 .gh-viewport-wrapper {
   position: relative;
-  min-height: 240px;
+  min-height: 200px;
   width: 100%;
   background: transparent;
   border: none;
@@ -208,8 +208,7 @@
 }
 
 /* ==========================================================================
-   VIEW 1: 3D ISOMETRIC PROFILE SHOWCASE (profile-green-animate replica)
-   Matches https://raw.githubusercontent.com/yoshi389111/github-profile-3d-contrib/main/docs/demo/profile-green-animate.svg
+   VIEW 1: HORIZONTAL 3D ISOMETRIC SHOWCASE (NAKA-PAHABA)
    ========================================================================== */
 .gh-3d-profile-container {
   position: relative;
@@ -240,7 +239,7 @@
   width: 100%;
   height: auto;
   min-width: 680px;
-  max-width: 1240px;
+  max-width: 1080px;
   display: block;
   background: transparent;
   border: none !important;

@@ -291,13 +291,14 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
           {!isLoading && !error && (
             <>
-              {/* VIEW 1: CLEAN & CENTERED 3D ISOMETRIC SHOWCASE */}
+              {/* VIEW 1: HORIZONTAL 3D ISOMETRIC SHOWCASE */}
               {activeView === '3d' && (
                 <div className="gh-3d-profile-container">
                   <Profile3DGreenSvg
                     contributions={data?.contributions || []}
                     stats={stats}
                     dateRangeStr={dateRangeStr}
+                    monthLabels={monthLabels}
                     themePalette={currentThemePalette}
                     onHoverCell={(cell, e) => {
                       if (!cell) {
@@ -436,41 +437,40 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 }
 
 /* ==========================================================================
-   CLEAN & PROPORTIONED 3D ISOMETRIC SHOWCASE
-   Centered, borderless, and focused purely on the 3D contribution terrain
+   HORIZONTAL 3D ISOMETRIC SHOWCASE (NAKA-PAHABA / WIDE 3D BANNER)
+   Horizontal 53-week timeline, 7 rows of depth, with 3D extruded pillars
    ========================================================================== */
-function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, onHoverCell }) {
-  const svgWidth = 1200;
-  const svgHeight = 770;
+function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, themePalette, onHoverCell }) {
+  const svgWidth = 1080;
+  const svgHeight = 210;
 
-  // Isometric projection constants
-  const dx = 19;
-  const dy = dx * Math.tan((30 * Math.PI) / 180); // 10.9696
-  const dxx = +(dx * 0.9).toFixed(2); // 17.1
-  const dyy = +(dy * 0.9).toFixed(2); // 9.87
-  const scaleFace = Math.sqrt(dxx ** 2 + dyy ** 2) / dxx; // 1.1547
+  // Horizontal 3D Projection geometry
+  const stepX = 18; // horizontal step between week columns
+  const stepY = 13; // depth step between day rows
+  const skewX = 4; // subtle isometric slant for depth
+  const wCell = 13; // cell width
+  const dDepth = 4; // 3D depth in X
+  const hDepth = 7; // 3D depth in Y
 
-  // Balanced centering offsets
-  const offsetX = 155;
-  const offsetY = 95;
+  const offsetX = 55;
+  const offsetY = 80;
 
-  // Shading function: factor 0.7^k
+  // Shading for 3D faces (top, front, right)
   const getShades = (hex) => {
     let num = parseInt(hex.replace('#', ''), 16);
     let r = (num >> 16) & 255;
     let g = (num >> 8) & 255;
     let b = num & 255;
 
-    const shade = (k) => {
-      const f = Math.pow(0.7, k);
+    const shade = (f) => {
       const toHex = (v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0');
       return '#' + toHex(r * f) + toHex(g * f) + toHex(b * f);
     };
 
     return {
       top: hex,
-      left: shade(0.5),
-      right: shade(1.0)
+      front: shade(0.85),
+      right: shade(0.68)
     };
   };
 
@@ -478,7 +478,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
     return themePalette.contribColors.map((c) => getShades(c));
   }, [themePalette]);
 
-  // Compute 3D bars
+  // Compute 3D bars and sort back-to-front (by dayOfWeek, then week)
   const bars = useMemo(() => {
     if (!contributions || contributions.length === 0) return [];
 
@@ -486,33 +486,43 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
     const toEpochDays = (d) => Math.floor(d.getTime() / (24 * 60 * 60 * 1000));
     const sundayOfFirstWeek = toEpochDays(firstDate) - firstDate.getUTCDay();
 
-    return contributions.map((cal) => {
+    const items = contributions.map((cal) => {
       const calDate = new Date(cal.date);
       const week = Math.floor((toEpochDays(calDate) - sundayOfFirstWeek) / 7);
       const dayOfWeek = calDate.getUTCDay(); // 0 = sun, 1 = mon ...
 
-      const baseX = offsetX + (week - dayOfWeek) * dx;
-      const baseY = offsetY + (week + dayOfWeek) * dy;
+      const x = offsetX + week * stepX - dayOfWeek * skewX;
+      const y = offsetY + dayOfWeek * stepY;
 
-      // calHeight: 2.6 for 0 commits, or Math.log10(count/20 + 1)*144 + 3
-      const calHeight = cal.count === 0
-        ? 2.6
-        : Math.log10(cal.count / 20 + 1) * 144 + 3;
+      // 3D pillar height (rising upwards)
+      const h = cal.count === 0
+        ? 3
+        : Math.min(54, Math.log10(cal.count / 15 + 1) * 62 + 6);
 
-      const heightFace = calHeight / scaleFace;
       const shades = paletteShades[cal.level] || paletteShades[0];
 
       return {
         cal,
-        baseX: +baseX.toFixed(2),
-        baseY: +baseY.toFixed(2),
-        calHeight: +calHeight.toFixed(2),
-        heightFace: +heightFace.toFixed(2),
+        week,
+        dayOfWeek,
+        x: +x.toFixed(1),
+        y: +y.toFixed(1),
+        h: +h.toFixed(1),
         shades,
         isZero: cal.count === 0
       };
     });
-  }, [contributions, paletteShades, offsetX, offsetY, dx, dy, scaleFace]);
+
+    // Sort by dayOfWeek ascending (Sunday/0 at back to Saturday/6 at front), then week
+    items.sort((a, b) => {
+      if (a.dayOfWeek !== b.dayOfWeek) {
+        return a.dayOfWeek - b.dayOfWeek;
+      }
+      return a.week - b.week;
+    });
+
+    return items;
+  }, [contributions, paletteShades, offsetX, offsetY, stepX, stepY, skewX]);
 
   return (
     <div className="gh-3d-svg-wrapper">
@@ -521,27 +531,26 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
         viewBox={`0 0 ${svgWidth} ${svgHeight}`}
         className="gh-profile-3d-svg"
         role="img"
-        aria-label="GitHub Profile 3D Contribution Showcase"
+        aria-label="GitHub Profile Horizontal 3D Contribution Showcase"
       >
         {/* TOP TELEMETRY INFO BAR */}
         <g className="gh-svg-top-bar">
-          {/* Total Contributions */}
           <text
             x="45"
-            y="42"
-            fontSize="26px"
+            y="32"
+            fontSize="22px"
             fontWeight="bold"
             fill={themePalette.strongColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
           >
             {stats ? stats.total : 0}
-            <tspan dx="8" fontSize="18px" fontWeight="normal" fill={themePalette.foregroundColor}>
+            <tspan dx="8" fontSize="15px" fontWeight="normal" fill={themePalette.foregroundColor}>
               contributions
             </tspan>
           </text>
 
           {/* Star Icon & Count */}
-          <g transform="translate(320, 22), scale(1.6)">
+          <g transform="translate(290, 16), scale(1.4)">
             <path
               fillRule="evenodd"
               d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"
@@ -549,9 +558,9 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
             />
           </g>
           <text
-            x="355"
-            y="42"
-            fontSize="22px"
+            x="320"
+            y="32"
+            fontSize="18px"
             fontWeight="bold"
             fill={themePalette.foregroundColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
@@ -560,7 +569,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
           </text>
 
           {/* Fork Icon & Count */}
-          <g transform="translate(435, 22), scale(1.6)">
+          <g transform="translate(390, 16), scale(1.4)">
             <path
               fillRule="evenodd"
               d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"
@@ -568,9 +577,9 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
             />
           </g>
           <text
-            x="470"
-            y="42"
-            fontSize="22px"
+            x="420"
+            y="32"
+            fontSize="18px"
             fontWeight="bold"
             fill={themePalette.foregroundColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
@@ -580,10 +589,10 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
 
           {/* Date Range Top Right */}
           <text
-            x="1155"
-            y="42"
+            x="1035"
+            y="32"
             textAnchor="end"
-            fontSize="15px"
+            fontSize="14px"
             fill={themePalette.weakColor}
             fontFamily="'JetBrains Mono', monospace"
           >
@@ -591,79 +600,73 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, themePalette, o
           </text>
         </g>
 
-        {/* 3D ISOMETRIC CONTRIBUTION PILLARS */}
-        <g className="gh-3d-pillars-layer">
-          {bars.map((b, idx) => (
-            <g
-              key={`bar-${b.cal.date}-${idx}`}
-              transform={`translate(${b.baseX} ${(b.baseY - b.calHeight).toFixed(2)})`}
-              className="gh-3d-bar-node"
-              onMouseEnter={(e) => onHoverCell(b.cal, e)}
-              onMouseLeave={() => onHoverCell(null)}
-              cursor="pointer"
+        {/* Month Labels along top */}
+        <g className="gh-3d-months-layer">
+          {monthLabels.map((m, i) => (
+            <text
+              key={`m-${m.label}-${i}`}
+              x={offsetX + m.colIndex * stepX}
+              y={offsetY - 18}
+              fontSize="11px"
+              fontWeight="600"
+              fill={themePalette.weakColor}
+              fontFamily="'JetBrains Mono', monospace"
             >
-              {!b.isZero && (
-                <animateTransform
-                  attributeName="transform"
-                  type="translate"
-                  values={`${b.baseX} ${(b.baseY - 3).toFixed(2)}; ${b.baseX} ${(b.baseY - b.calHeight).toFixed(2)}`}
-                  dur="2s"
-                  repeatCount="1"
-                />
-              )}
-
-              {/* Top Face */}
-              <rect
-                stroke="none"
-                x="0"
-                y="0"
-                width={dxx}
-                height={dxx}
-                transform="skewY(-30) skewX(40.89) scale(1 1.15)"
-                fill={b.shades.top}
-              />
-
-              {/* Left Face */}
-              <rect
-                stroke="none"
-                x="0"
-                y="0"
-                width={dxx}
-                height={b.heightFace}
-                transform="skewY(30) scale(1 1.15)"
-                fill={b.shades.left}
-              >
-                {!b.isZero && (
-                  <animate
-                    attributeName="height"
-                    values={`${(3 / scaleFace).toFixed(2)}; ${b.heightFace}`}
-                    dur="2s"
-                    repeatCount="1"
-                  />
-                )}
-              </rect>
-
-              {/* Right Face */}
-              <rect
-                stroke="none"
-                x="0"
-                y="0"
-                width={dxx}
-                height={b.heightFace}
-                transform={`translate(${dxx} ${dyy}) skewY(-30) scale(1 1.15)`}
-                fill={b.shades.right}
-              >
-                {!b.isZero && (
-                  <animate
-                    attributeName="height"
-                    values={`${(3 / scaleFace).toFixed(2)}; ${b.heightFace}`}
-                    dur="2s"
-                    repeatCount="1"
-                  />
-                )}
-              </rect>
-            </g>
+              {m.label}
+            </text>
           ))}
+        </g>
+
+        {/* Weekday indicators on the left */}
+        <g className="gh-3d-weekdays-layer">
+          {[
+            { label: 'Mon', day: 1 },
+            { label: 'Wed', day: 3 },
+            { label: 'Fri', day: 5 }
+          ].map((w) => (
+            <text
+              key={w.label}
+              x={offsetX - w.day * skewX - 8}
+              y={offsetY + w.day * stepY + 3}
+              textAnchor="end"
+              fontSize="10px"
+              fontWeight="500"
+              fill={themePalette.weakColor}
+              fontFamily="'JetBrains Mono', monospace"
+            >
+              {w.label}
+            </text>
+          ))}
+        </g>
+
+        {/* HORIZONTAL 3D PILLARS (Rendered back-to-front) */}
+        <g className="gh-3d-pillars-layer">
+          {bars.map((b, idx) => {
+            const { x, y, h, shades } = b;
+            const yTop = +(y - h).toFixed(1);
+
+            // 3D face geometries
+            const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
+            const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
+            const topD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x - dDepth} ${yTop - hDepth} Z`;
+
+            return (
+              <g
+                key={`bar-${b.cal.date}-${idx}`}
+                className="gh-3d-bar-node"
+                onMouseEnter={(e) => onHoverCell(b.cal, e)}
+                onMouseLeave={() => onHoverCell(null)}
+                cursor="pointer"
+              >
+                {/* Front Face */}
+                <path d={frontD} fill={shades.front} stroke="none" />
+                {/* Right Face (Depth Shadow) */}
+                <path d={rightD} fill={shades.right} stroke="none" />
+                {/* Top Face */}
+                <path d={topD} fill={shades.top} stroke="none" />
+              </g>
+            );
+          })}
         </g>
       </svg>
     </div>

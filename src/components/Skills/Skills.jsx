@@ -1,16 +1,12 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState } from 'react';
 import { skills, skillCategories } from '../../data/skills';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
-import { useTheme } from '../../hooks/useTheme';
 import { Tech3DIcon } from '../shared/Tech3DIcon';
 import { Tilt3DCard } from '../shared/Tilt3DCard';
 import { Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
 import antigravitySvg from '../../assets/antigravity.svg';
+import { GitHubTelemetry } from '../GitHubTelemetry/GitHubTelemetry';
 import './Skills.css';
-
-const GitHubCalendar = lazy(() =>
-  import('react-github-calendar').then((mod) => ({ default: mod.GitHubCalendar || mod.default }))
-);
 
 const getSkillIconUrl = (icon) => {
   if (icon === 'antigravity') {
@@ -24,7 +20,6 @@ const ITEMS_PER_PAGE = 6;
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-  const { theme } = useTheme();
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -190,44 +185,9 @@ export function Skills() {
           </div>
         </div>
 
-        {/* GitHub Engineering Dashboard */}
+        {/* GitHub Telemetry Bento Grid Showcase */}
         <AnimateOnScroll animation="fade-up" delay={100}>
-          <div className="gh-panel glass-card">
-            {/* Panel Header — Hardware titlebar */}
-            <div className="gh-panel-header">
-              <div className="gh-panel-titlebar">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="gh-git-icon">
-                  <circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" />
-                  <path d="M13 6h3a2 2 0 0 1 2 2v7" /><path d="M6 9v12" />
-                </svg>
-                <h4 className="gh-panel-title">Source Control Activity</h4>
-              </div>
-              <a
-                href="https://github.com/DmitzDev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gh-profile-badge"
-              >
-                <span className="gh-profile-handle">@DmitzDev</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M7 17l9.2-9.2M17 17V7H7" />
-                </svg>
-              </a>
-            </div>
-
-            {/* Contribution Heatmap */}
-            <div className="gh-calendar-viewport">
-              <Suspense fallback={<div className="gh-calendar-loading" style={{ minHeight: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>Loading activity...</div>}>
-                <GitHubCalendar
-                  username="DmitzDev"
-                  colorScheme={theme === 'dark' ? 'dark' : 'light'}
-                  fontSize={12}
-                  blockSize={13}
-                  blockMargin={4}
-                />
-              </Suspense>
-            </div>
-          </div>
+          <GitHubTelemetry username="DmitzDev" />
         </AnimateOnScroll>
       </div>
     </section>

@@ -815,6 +815,13 @@
     cursor: default !important;
   }
 
+  [data-theme="light"] .hero-monumental-name .char-3d,
+  [data-theme="light"] .name-first .char-3d,
+  [data-theme="light"] .name-last .char-3d {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.95) !important;
+  }
+
   /* Completely disable interactive travel background stage on mobile & tablet browsers */
   .hero-place-bg-stage {
     display: none !important;

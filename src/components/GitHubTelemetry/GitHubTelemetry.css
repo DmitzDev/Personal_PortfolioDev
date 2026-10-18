@@ -247,12 +247,21 @@
   border-radius: 0;
 }
 
+.gh-3d-tile-node path {
+  transition: opacity 0.15s ease, filter 0.15s ease;
+}
+
+.gh-3d-tile-node:hover path {
+  filter: brightness(1.15);
+  opacity: 1;
+}
+
 .gh-3d-bar-node {
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 
 .gh-3d-bar-node:hover {
-  filter: brightness(1.25) drop-shadow(0 0 6px rgba(71, 160, 66, 0.9));
+  filter: brightness(1.22) drop-shadow(0 0 6px rgba(16, 185, 129, 0.75));
 }
 
 /* ==========================================================================

@@ -438,7 +438,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
 
 /* ==========================================================================
    HORIZONTAL 3D ISOMETRIC SHOWCASE (NAKA-PAHABA / WIDE 3D BANNER)
-   Horizontal 53-week timeline, 7 rows of depth, with 3D extruded pillars
+   Clean isometric ground plane with crisp 3D extruded pillars
    ========================================================================== */
 function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, themePalette, onHoverCell }) {
   const svgWidth = 1080;
@@ -446,36 +446,39 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
 
   // Horizontal 3D Projection geometry
   const stepX = 18; // horizontal step between week columns
-  const stepY = 13; // depth step between day rows
-  const skewX = 4; // subtle isometric slant for depth
-  const wCell = 13; // cell width
-  const dDepth = 4; // 3D depth in X
-  const hDepth = 7; // 3D depth in Y
+  const stepY = 12.5; // depth step between day rows
+  const skewX = 3.5; // subtle isometric slant for depth
+  const wCell = 13.5; // cell width
+  const dDepth = 3.5; // 3D depth in X
+  const hDepth = 6.5; // 3D depth in Y
 
-  const offsetX = 55;
-  const offsetY = 80;
+  const offsetX = 58;
+  const offsetY = 78;
 
-  // Shading for 3D faces (top, front, right)
-  const getShades = (hex) => {
-    let num = parseInt(hex.replace('#', ''), 16);
-    let r = (num >> 16) & 255;
-    let g = (num >> 8) & 255;
-    let b = num & 255;
-
-    const shade = (f) => {
-      const toHex = (v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0');
-      return '#' + toHex(r * f) + toHex(g * f) + toHex(b * f);
-    };
-
-    return {
-      top: hex,
-      front: shade(0.85),
-      right: shade(0.68)
-    };
-  };
-
+  // Shading for 3D faces (top, front, right, stroke)
   const paletteShades = useMemo(() => {
-    return themePalette.contribColors.map((c) => getShades(c));
+    const getShades = (hex, isLevel0) => {
+      let num = parseInt(hex.replace('#', ''), 16);
+      let r = (num >> 16) & 255;
+      let g = (num >> 8) & 255;
+      let b = num & 255;
+
+      const shade = (f) => {
+        const toHex = (v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0');
+        return '#' + toHex(r * f) + toHex(g * f) + toHex(b * f);
+      };
+
+      return {
+        top: hex,
+        front: shade(0.85),
+        right: shade(0.68),
+        stroke: isLevel0
+          ? (themePalette.weakColor === '#888888' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)')
+          : shade(0.62)
+      };
+    };
+
+    return themePalette.contribColors.map((c, idx) => getShades(c, idx === 0));
   }, [themePalette]);
 
   // Compute 3D bars and sort back-to-front (by dayOfWeek, then week)
@@ -494,10 +497,10 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
       const x = offsetX + week * stepX - dayOfWeek * skewX;
       const y = offsetY + dayOfWeek * stepY;
 
-      // 3D pillar height (rising upwards)
+      // 3D pillar height (0 commits = flat ground tile; >0 commits = rising pillar)
       const h = cal.count === 0
-        ? 3
-        : Math.min(54, Math.log10(cal.count / 15 + 1) * 62 + 6);
+        ? 0
+        : Math.min(46, Math.log10(cal.count / 8 + 1) * 36 + 8);
 
       const shades = paletteShades[cal.level] || paletteShades[0];
 
@@ -537,20 +540,20 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
         <g className="gh-svg-top-bar">
           <text
             x="45"
-            y="32"
-            fontSize="22px"
+            y="30"
+            fontSize="20px"
             fontWeight="bold"
             fill={themePalette.strongColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
           >
             {stats ? stats.total : 0}
-            <tspan dx="8" fontSize="15px" fontWeight="normal" fill={themePalette.foregroundColor}>
+            <tspan dx="8" fontSize="14px" fontWeight="normal" fill={themePalette.foregroundColor}>
               contributions
             </tspan>
           </text>
 
           {/* Star Icon & Count */}
-          <g transform="translate(290, 16), scale(1.4)">
+          <g transform="translate(280, 15), scale(1.35)">
             <path
               fillRule="evenodd"
               d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"
@@ -558,9 +561,9 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
             />
           </g>
           <text
-            x="320"
-            y="32"
-            fontSize="18px"
+            x="310"
+            y="30"
+            fontSize="17px"
             fontWeight="bold"
             fill={themePalette.foregroundColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
@@ -569,7 +572,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
           </text>
 
           {/* Fork Icon & Count */}
-          <g transform="translate(390, 16), scale(1.4)">
+          <g transform="translate(375, 15), scale(1.35)">
             <path
               fillRule="evenodd"
               d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"
@@ -577,9 +580,9 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
             />
           </g>
           <text
-            x="420"
-            y="32"
-            fontSize="18px"
+            x="405"
+            y="30"
+            fontSize="17px"
             fontWeight="bold"
             fill={themePalette.foregroundColor}
             fontFamily="'Plus Jakarta Sans', sans-serif"
@@ -590,9 +593,9 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
           {/* Date Range Top Right */}
           <text
             x="1035"
-            y="32"
+            y="30"
             textAnchor="end"
-            fontSize="14px"
+            fontSize="13px"
             fill={themePalette.weakColor}
             fontFamily="'JetBrains Mono', monospace"
           >
@@ -606,7 +609,7 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
             <text
               key={`m-${m.label}-${i}`}
               x={offsetX + m.colIndex * stepX}
-              y={offsetY - 18}
+              y={offsetY - 16}
               fontSize="11px"
               fontWeight="600"
               fill={themePalette.weakColor}
@@ -639,13 +642,36 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
           ))}
         </g>
 
-        {/* HORIZONTAL 3D PILLARS (Rendered back-to-front) */}
+        {/* HORIZONTAL 3D TILES & PILLARS (Rendered back-to-front) */}
         <g className="gh-3d-pillars-layer">
           {bars.map((b, idx) => {
-            const { x, y, h, shades } = b;
-            const yTop = +(y - h).toFixed(1);
+            const { x, y, h, shades, isZero } = b;
 
-            // 3D face geometries
+            // Ground floor isometric tile path
+            const groundTileD = `M ${x} ${y} L ${x + wCell} ${y} L ${x + wCell - dDepth} ${y - hDepth} L ${x - dDepth} ${y - hDepth} Z`;
+
+            // Zero-commit day: render a clean, orderly flat isometric tile
+            if (isZero) {
+              return (
+                <g
+                  key={`tile-${b.cal.date}-${idx}`}
+                  className="gh-3d-tile-node"
+                  onMouseEnter={(e) => onHoverCell(b.cal, e)}
+                  onMouseLeave={() => onHoverCell(null)}
+                  cursor="pointer"
+                >
+                  <path
+                    d={groundTileD}
+                    fill={shades.top}
+                    stroke={shades.stroke}
+                    strokeWidth="0.8"
+                  />
+                </g>
+              );
+            }
+
+            // Active commit day: render a distinct 3D extruded pillar
+            const yTop = +(y - h).toFixed(1);
             const frontD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell} ${y} L ${x} ${y} Z`;
             const rightD = `M ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x + wCell - dDepth} ${y - hDepth} L ${x + wCell} ${y} Z`;
             const topD = `M ${x} ${yTop} L ${x + wCell} ${yTop} L ${x + wCell - dDepth} ${yTop - hDepth} L ${x - dDepth} ${yTop - hDepth} Z`;
@@ -658,12 +684,15 @@ function Profile3DGreenSvg({ contributions, stats, dateRangeStr, monthLabels, th
                 onMouseLeave={() => onHoverCell(null)}
                 cursor="pointer"
               >
+                {/* Ground contact shadow */}
+                <path d={groundTileD} fill="rgba(0, 0, 0, 0.14)" stroke="none" />
+
                 {/* Front Face */}
-                <path d={frontD} fill={shades.front} stroke="none" />
+                <path d={frontD} fill={shades.front} stroke={shades.stroke} strokeWidth="0.8" />
                 {/* Right Face (Depth Shadow) */}
-                <path d={rightD} fill={shades.right} stroke="none" />
+                <path d={rightD} fill={shades.right} stroke={shades.stroke} strokeWidth="0.8" />
                 {/* Top Face */}
-                <path d={topD} fill={shades.top} stroke="none" />
+                <path d={topD} fill={shades.top} stroke={shades.stroke} strokeWidth="0.8" />
               </g>
             );
           })}

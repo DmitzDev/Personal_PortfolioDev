@@ -172,17 +172,6 @@ export function Experience() {
               <span>Certificates & Honors</span>
             </button>
           </div>
-
-          <a
-            href={personalInfo.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-resume-download"
-            title="Download full resume PDF"
-          >
-            <FileText size={16} />
-            <span>Download Full CV</span>
-          </a>
         </div>
 
         {/* TAB 1: WORK EXPERIENCE (SWIPER VIEW) */}
@@ -225,44 +214,13 @@ export function Experience() {
 
                       <p className="cert-desc exp-card-desc">{currentItem.description}</p>
 
-                      {/* Tech Stack Icons (No plain text tags) */}
+                      {/* Core Technologies: Single Responsive Paragraph */}
                       {currentItem.tech && (
-                        <div className="exp-tech-icons-section">
-                          <span className="exp-tech-section-title">Core Technologies</span>
-                          <div className="exp-tech-icons-cluster">
-                            {currentItem.tech.map((tech) => {
-                              const iconInfo = getExpTechIcon(tech);
-                              return (
-                                <div
-                                  key={tech}
-                                  className="exp-tech-icon-box"
-                                  title={tech}
-                                  aria-label={tech}
-                                >
-                                  {iconInfo.type === 'devicon' ? (
-                                    <img
-                                      src={iconInfo.src}
-                                      alt={tech}
-                                      className="exp-tech-icon-img"
-                                      width="24"
-                                      height="24"
-                                      loading="lazy"
-                                      onError={(e) => {
-                                        e.currentTarget.style.display = 'none';
-                                      }}
-                                    />
-                                  ) : iconInfo.icon === 'database' ? (
-                                    <Database size={22} className="exp-tech-icon-svg" />
-                                  ) : iconInfo.icon === 'server' ? (
-                                    <Server size={22} className="exp-tech-icon-svg" />
-                                  ) : (
-                                    <Code2 size={22} className="exp-tech-icon-svg" />
-                                  )}
-                                  <span className="exp-tech-icon-tooltip">{tech}</span>
-                                </div>
-                              );
-                            })}
-                          </div>
+                        <div className="exp-tech-paragraph-wrap">
+                          <p className="exp-tech-paragraph">
+                            <strong className="exp-tech-label">Core Technologies: </strong>
+                            {currentItem.tech.join(' • ')}
+                          </p>
                         </div>
                       )}
                     </div>

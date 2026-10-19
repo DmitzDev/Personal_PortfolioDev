@@ -32,12 +32,19 @@
   box-shadow: var(--skeuo-extruded-sm);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
-  transition: all 0.15s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
 }
 
 .exp-tab-btn:hover {
   color: var(--text-primary);
   box-shadow: var(--skeuo-extruded);
+  transform: translateY(-2px);
+}
+
+.exp-tab-btn:active {
+  transform: scale(0.96) translateY(1px);
 }
 
 .exp-tab-btn.active {
@@ -47,6 +54,7 @@
   border-top-color: rgba(255, 255, 255, 0.4);
   border-bottom-color: rgba(0, 0, 0, 0.2);
   font-weight: 700;
+  transform: translateY(-1px);
 }
 
 [data-theme="dark"] .exp-tab-btn.active {
@@ -174,6 +182,37 @@
   line-height: 1.7;
   color: var(--text-secondary);
   margin-bottom: 1.75rem;
+}
+
+/* Core Technologies Paragraph (Single Fluid Responsive Paragraph) */
+.exp-tech-paragraph-wrap {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  width: 100%;
+}
+
+.exp-tech-paragraph {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.exp-tech-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: 0.4rem;
 }
 
 /* Pure Icon Tech Stack Section */

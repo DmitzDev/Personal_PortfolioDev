@@ -218,6 +218,12 @@
 .gh-segment-btn:hover,
 .gh-year-btn:hover {
   color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.gh-segment-btn:active,
+.gh-year-btn:active {
+  transform: scale(0.94);
 }
 
 .gh-segment-btn.active,

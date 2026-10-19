@@ -243,14 +243,15 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
   border-left: var(--skeuo-border);
   border-right: var(--skeuo-border);
   border-radius: 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   position: relative;
 }
 
 .glass-card:hover,
 .skeuo-card:hover {
   box-shadow: var(--skeuo-extruded-hover);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 /* Mechanical Screw Details (Corner Rivets) */
@@ -304,9 +305,11 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
   border-radius: 0.65rem;
   box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35);
   border: 1px solid rgba(0, 0, 0, 0.15);
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
   position: relative;
+  cursor: pointer;
+  user-select: none;
 }
 
 [data-theme="dark"] .btn-primary {
@@ -317,20 +320,21 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.02);
   background: var(--gradient-accent-hover);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.45);
 }
 
 [data-theme="dark"] .btn-primary:hover {
   background: linear-gradient(180deg, #ffffff 0%, #ffffff 40%, #e2e8f0 100%);
-  box-shadow: 0 8px 28px -4px rgba(255, 255, 255, 0.38), 0 0 20px rgba(255, 255, 255, 0.2), inset 0 1px 1px #ffffff;
+  box-shadow: 0 10px 32px -4px rgba(255, 255, 255, 0.45), 0 0 24px rgba(255, 255, 255, 0.25), inset 0 1px 1px #ffffff;
   color: #090c12 !important;
 }
 
 .btn-primary:active {
-  transform: translateY(1px);
+  transform: scale(0.97) translateY(1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition-duration: 0.1s;
 }
 
 .btn-secondary {
@@ -349,21 +353,24 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
   border-left: var(--skeuo-border);
   border-right: var(--skeuo-border);
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  cursor: pointer;
+  user-select: none;
 }
 
 .btn-secondary:hover {
   color: var(--text-primary);
-  box-shadow: var(--skeuo-extruded);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-1px);
+  box-shadow: var(--skeuo-extruded-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px) scale(1.015);
 }
 
 .btn-secondary:active {
   background: var(--skeuo-btn-active);
   box-shadow: var(--skeuo-recessed);
-  transform: translateY(1px);
+  transform: scale(0.97) translateY(1px);
+  transition-duration: 0.1s;
 }
 
 /* Tactile Tech Pills */
@@ -381,6 +388,14 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
   color: var(--text-secondary);
   border-top: 1px solid var(--skeuo-bevel-bottom);
   border-bottom: 1px solid var(--skeuo-bevel-top);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tech-pill:hover {
+  transform: translateY(-2px);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* Tactile Hardware LED Socket */

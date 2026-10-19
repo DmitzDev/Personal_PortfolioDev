@@ -293,16 +293,21 @@
   border-radius: 9999px;
   text-decoration: none;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link:hover {
   color: var(--text-primary);
   background: rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
 }
 
 [data-theme="dark"] .nav-link:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.nav-link:active {
+  transform: scale(0.95);
 }
 
 .nav-link.active {
@@ -330,17 +335,21 @@
   box-shadow: var(--skeuo-extruded-sm);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
-  transition: all 0.15s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-block;
+  cursor: pointer;
+  user-select: none;
 }
 
 .btn-resume:hover {
   color: var(--text-primary);
   box-shadow: var(--skeuo-extruded);
+  transform: translateY(-2px);
 }
 
 .btn-resume:active {
   box-shadow: var(--skeuo-recessed);
+  transform: scale(0.96) translateY(1px);
 }
 
 .mobile-nav-toggle {

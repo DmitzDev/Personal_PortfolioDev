@@ -37,12 +37,6 @@ export function Services() {
       <div className="container">
         {/* Section Header - Editorial Monograph Style */}
         <div className="services-editorial-header">
-          <div className="services-kicker-row">
-            <span className="services-kicker-text">ENGINEERING SERVICES</span>
-            <span className="services-kicker-sep">/</span>
-            <span className="services-kicker-meta">TECHNICAL DISCIPLINES</span>
-          </div>
-
           <h2 className="services-editorial-title">
             What I Build For Clients &amp; Teams
           </h2>
@@ -167,7 +161,6 @@ export function Services() {
         {/* 4-Step Sprint Workflow: Clean Milestone Flow (No boxes!) */}
         <div className="workflow-editorial-section">
           <div className="workflow-editorial-header">
-            <span className="workflow-kicker">DELIVERY PIPELINE</span>
             <h3 className="workflow-title">From Architecture Spec to Production in 4 Sprints</h3>
             <p className="workflow-desc">
               No black-box development. Transparent communication, weekly live preview builds, and predictable milestones.

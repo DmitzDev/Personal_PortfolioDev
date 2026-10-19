@@ -29,12 +29,19 @@
   box-shadow: var(--skeuo-extruded-sm);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
-  transition: all 0.15s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
 }
 
 .filter-btn:hover {
   color: var(--text-primary);
   box-shadow: var(--skeuo-extruded);
+  transform: translateY(-2px);
+}
+
+.filter-btn:active {
+  transform: scale(0.96) translateY(1px);
 }
 
 .filter-btn.active {
@@ -44,6 +51,7 @@
   border-top-color: rgba(255, 255, 255, 0.4);
   border-bottom-color: rgba(0, 0, 0, 0.2);
   font-weight: 700;
+  transform: translateY(-1px);
 }
 
 [data-theme="dark"] .filter-btn.active {
@@ -105,15 +113,16 @@
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
   border-left: var(--skeuo-border);
   border-right: var(--skeuo-border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
 .case-study-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
   box-shadow: var(--skeuo-extruded-hover);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .project-image-wrapper {

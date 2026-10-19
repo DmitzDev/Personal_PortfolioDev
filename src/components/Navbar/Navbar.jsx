@@ -16,12 +16,63 @@ const navLinks = [
   { id: 'contact', label: 'Contact' },
 ];
 
+const FULL_NAME = 'Mitchelle Salazar';
+const MORPHED_NAME = 'MitchDev';
+const COMMON_ROOT = 'Mitch';
+
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMorphed, setIsMorphed] = useState(false);
+  const [typedText, setTypedText] = useState(FULL_NAME);
+  const [isTyping, setIsTyping] = useState(false);
   const avatarRef = useRef(null);
   const sectionIds = navLinks.map(link => link.id);
   const [activeSection, setActiveSection] = useScrollSpy(sectionIds, 110);
+
+  // Smooth typewriter eraser & typing engine
+  // Erases character-by-character down to "Mitch", then types forward to target
+  useEffect(() => {
+    const target = isMorphed ? MORPHED_NAME : FULL_NAME;
+    let timer = null;
+
+    const step = () => {
+      setTypedText((current) => {
+        if (current === target) {
+          setIsTyping(false);
+          return current;
+        }
+
+        setIsTyping(true);
+
+        // Need to erase down to COMMON_ROOT:
+        // Erase 1 character if target doesn't start with current and current is longer than COMMON_ROOT
+        if (!target.startsWith(current) && current.length > COMMON_ROOT.length) {
+          return current.slice(0, -1);
+        }
+
+        // When at COMMON_ROOT or current matches start of target, type forward
+        if (target.startsWith(current) && current.length < target.length) {
+          return target.slice(0, current.length + 1);
+        }
+
+        // Fallback: delete if mismatched
+        if (!target.startsWith(current)) {
+          return current.slice(0, -1);
+        }
+
+        return current;
+      });
+
+      timer = setTimeout(step, 32);
+    };
+
+    // Initial micro-pause before starting typewriter
+    timer = setTimeout(step, 35);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [isMorphed]);
 
   useEffect(() => {
     let rafId = null;
@@ -104,7 +155,7 @@ export function Navbar() {
             aria-label={isMorphed ? 'MitchDev - Return to Top' : 'Mitchelle Salazar - Front-End Developer'}
           >
             {/* Scrolled Photo Avatar on Left Side */}
-            <div className="brand-pill-avatar-wrap" ref={avatarRef} aria-hidden={!isMorphed}>
+            <div className={`brand-pill-avatar-wrap ${isMorphed ? 'is-active' : ''}`} ref={avatarRef} aria-hidden={!isMorphed}>
               <div className="brand-pill-avatar-inner">
                 <img
                   src={ceoMitchNoBg}
@@ -114,22 +165,28 @@ export function Navbar() {
                   height="30"
                   loading="eager"
                 />
+                <span className="brand-pill-avatar-gleam" aria-hidden="true" />
               </div>
             </div>
 
-            {/* Seamless Cross-fade Text Container */}
+            {/* Dynamic Typewriter Name & Sliding Role */}
             <div className="brand-pill-text-wrap">
-              {/* Default Hero State: Mitchelle Salazar + Front-End Developer */}
-              <div className="brand-pill-text-default">
-                <span className="brand-pill-name">{personalInfo.fullName || personalInfo.name}</span>
-                <span className="brand-pill-role">Front-End Developer</span>
+              <div className="brand-pill-type-container">
+                {typedText.startsWith('Mitch') && (isMorphed || typedText.startsWith('MitchD')) ? (
+                  <>
+                    <span className="brand-pill-name-mitch">Mitch</span>
+                    <span className="brand-pill-name-dev">{typedText.slice(5)}</span>
+                  </>
+                ) : (
+                  <span className="brand-pill-name">{typedText}</span>
+                )}
+                <span className={`brand-pill-cursor ${isTyping ? 'typing' : ''}`} aria-hidden="true">|</span>
               </div>
 
-              {/* Scrolled Morphed State: Photo + MitchDev */}
-              <div className="brand-pill-text-morphed" aria-hidden={!isMorphed}>
-                <span className="brand-pill-mitch">Mitch</span>
-                <span className="brand-pill-dev">Dev</span>
-              </div>
+              {/* Front-End Developer tag that smoothly slides away on morph */}
+              <span className={`brand-pill-role ${isMorphed ? 'is-hidden' : ''}`}>
+                Front-End Developer
+              </span>
             </div>
           </a>
 

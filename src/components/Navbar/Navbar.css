@@ -68,7 +68,7 @@
   transform: translateY(-1px);
 }
 
-/* Photo Avatar inside Brand Pill */
+/* Photo Avatar inside Brand Pill - Enhanced entrance */
 .brand-pill-avatar-wrap {
   position: relative;
   display: flex;
@@ -77,15 +77,15 @@
   width: 0;
   height: 30px;
   opacity: 0;
-  transform: scale(0.35);
+  transform: scale(0.2) rotate(-16deg);
   margin-right: 0;
   overflow: hidden;
   pointer-events: none;
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.25s ease,
-              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              margin-right 0.3s ease;
+  transition: width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+              height 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.28s ease,
+              transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+              margin-right 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   flex-shrink: 0;
 }
 
@@ -93,19 +93,20 @@
   width: 30px;
   height: 30px;
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) rotate(0deg);
   margin-right: 0.55rem;
   pointer-events: auto;
 }
 
 .brand-pill-avatar-inner {
+  position: relative;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,7 +115,7 @@
 [data-theme="light"] .brand-pill-avatar-inner {
   background: rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 .brand-pill-avatar-img {
@@ -126,31 +127,39 @@
   display: block;
 }
 
-/* Brand Text Container & Cross-fade Transitions */
+/* Elegant light sheen gleam across the avatar on entrance */
+.brand-pill-avatar-gleam {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, transparent 25%, rgba(255, 255, 255, 0.5) 50%, transparent 75%);
+  transform: translateX(-120%) rotate(25deg);
+  pointer-events: none;
+}
+
+.capsule-brand-pill.is-morphed .brand-pill-avatar-gleam {
+  animation: avatarGleamSweep 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes avatarGleamSweep {
+  0% { transform: translateX(-120%) rotate(25deg); opacity: 0; }
+  35% { opacity: 0.85; }
+  100% { transform: translateX(130%) rotate(25deg); opacity: 0; }
+}
+
+/* Brand Text Container & Typewriter Transitions */
 .brand-pill-text-wrap {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   height: 22px;
   overflow: hidden;
 }
 
-.brand-pill-text-default {
+.brand-pill-type-container {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
   white-space: nowrap;
-  transform: translateY(0);
-  opacity: 1;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.22s ease;
-}
-
-.capsule-brand-pill.is-morphed .brand-pill-text-default {
-  transform: translateY(-24px);
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
 }
 
 .brand-pill-name {
@@ -165,39 +174,7 @@
   color: #0f172a;
 }
 
-.brand-pill-role {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: #94a3b8;
-}
-
-[data-theme="light"] .brand-pill-role {
-  color: #64748b;
-}
-
-/* Morphed MitchDev styling */
-.brand-pill-text-morphed {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.15rem;
-  white-space: nowrap;
-  transform: translateY(24px);
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.25s ease;
-}
-
-.capsule-brand-pill.is-morphed .brand-pill-text-morphed {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-  position: relative;
-}
-
-.brand-pill-mitch {
+.brand-pill-name-mitch {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
@@ -205,19 +182,73 @@
   letter-spacing: -0.01em;
 }
 
-[data-theme="light"] .brand-pill-mitch {
+[data-theme="light"] .brand-pill-name-mitch {
   color: #0f172a;
 }
 
-.brand-pill-dev {
+.brand-pill-name-dev {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.82rem;
   font-weight: 600;
   color: #94a3b8;
 }
 
-[data-theme="light"] .brand-pill-dev {
+[data-theme="light"] .brand-pill-name-dev {
   color: #64748b;
+}
+
+/* Typewriter Cursor */
+.brand-pill-cursor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 300;
+  margin-left: 1px;
+  color: #94a3b8;
+  opacity: 0;
+  display: inline-block;
+  transition: opacity 0.15s ease;
+  user-select: none;
+}
+
+.brand-pill-cursor.typing {
+  opacity: 1;
+  animation: cursorBlink 0.75s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Front-End Developer tag that smoothly slides away on morph */
+.brand-pill-role {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #94a3b8;
+  margin-left: 0.55rem;
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 160px;
+  opacity: 1;
+  transform: translateX(0);
+  transition: max-width 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.22s ease,
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              margin-left 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] .brand-pill-role {
+  color: #64748b;
+}
+
+.brand-pill-role.is-hidden {
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  transform: translateX(-8px);
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .btn-resume.mobile-btn {
@@ -375,12 +406,12 @@
     height: 26px;
   }
 
-  .brand-pill-mitch {
+  .brand-pill-name-mitch {
     font-size: 0.88rem;
   }
 
-  .brand-pill-dev {
-    font-size: 0.85rem;
+  .brand-pill-name-dev {
+    font-size: 0.82rem;
   }
 
   .brand-pill-name {

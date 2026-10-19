@@ -489,6 +489,49 @@
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
   pointer-events: none; /* Prevents portrait image from blocking hover on letters like LE and SA! */
+  transition: filter 0.4s ease;
+}
+
+/* Smooth re-entry animation when returning to Hero section without moving position */
+.hero-portrait-stage.is-reentered .portrait-img {
+  animation: heroPortraitReenter 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-portrait-stage.is-reentered .portrait-backlight {
+  animation: heroBacklightReenter 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroPortraitReenter {
+  0% {
+    opacity: 0.85;
+    filter: contrast(1.04) brightness(1.15);
+    transform: scale(0.975);
+  }
+  50% {
+    opacity: 1;
+    filter: contrast(1.04) brightness(1.05);
+    transform: scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    filter: contrast(1.04) brightness(1.02);
+    transform: scale(1);
+  }
+}
+
+@keyframes heroBacklightReenter {
+  0% {
+    opacity: 0.35;
+    transform: translateX(-50%) scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
 }
 
 /* Bottom Bar: Left Corner and Right Corner Content */

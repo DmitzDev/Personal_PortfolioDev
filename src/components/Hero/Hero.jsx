@@ -47,8 +47,39 @@ export function Hero() {
   const videoRef = useRef(null);
   const isDark = theme === 'dark';
   const [activePlaceId, setActivePlaceId] = useState(null);
+  const [isHeroReentered, setIsHeroReentered] = useState(false);
+  const wasScrolledPastRef = useRef(false);
 
   const placeTimerRef = useRef(null);
+
+  // Smooth re-entry transition detection when returning back up to Hero
+  useEffect(() => {
+    let reenterTimer = null;
+    const handleScroll = () => {
+      const portraitEl = document.getElementById('hero-portrait-stage');
+      if (!portraitEl) return;
+      const rect = portraitEl.getBoundingClientRect();
+      const isPast = rect.bottom <= 75;
+
+      if (isPast) {
+        wasScrolledPastRef.current = true;
+      } else if (wasScrolledPastRef.current && rect.bottom > 130 && rect.top < window.innerHeight) {
+        // User scrolled back up into hero section!
+        wasScrolledPastRef.current = false;
+        setIsHeroReentered(true);
+        if (reenterTimer) clearTimeout(reenterTimer);
+        reenterTimer = setTimeout(() => {
+          setIsHeroReentered(false);
+        }, 900);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (reenterTimer) clearTimeout(reenterTimer);
+    };
+  }, []);
 
   // Preload all 16 travel pictures in light mode (desktop browser only)
   useEffect(() => {
@@ -262,7 +293,7 @@ export function Hero() {
         </h1>
 
         {/* Portrait in Foreground Layer Overlapping the Name */}
-        <div id="hero-portrait-stage" className="hero-portrait-stage">
+        <div id="hero-portrait-stage" className={`hero-portrait-stage ${isHeroReentered ? 'is-reentered' : ''}`}>
           <div className="portrait-backlight" aria-hidden="true"></div>
           <img
             id="hero-portrait-img"

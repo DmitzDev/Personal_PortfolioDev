@@ -262,9 +262,10 @@ export function Hero() {
         </h1>
 
         {/* Portrait in Foreground Layer Overlapping the Name */}
-        <div className="hero-portrait-stage">
+        <div id="hero-portrait-stage" className="hero-portrait-stage">
           <div className="portrait-backlight" aria-hidden="true"></div>
           <img
+            id="hero-portrait-img"
             src={ceoMitchNoBg}
             alt="Mitchelle Salazar"
             className="portrait-img"

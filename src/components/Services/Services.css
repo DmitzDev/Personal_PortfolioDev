@@ -9,8 +9,11 @@
    ========================================================================== */
 .services-editorial-header {
   margin-bottom: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
-
 
 .services-editorial-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -22,11 +25,9 @@
   margin-bottom: 1rem;
   max-width: 820px;
   width: 100%;
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .services-editorial-desc {
@@ -36,21 +37,24 @@
   max-width: 720px;
   width: 100%;
   margin-bottom: 2.25rem;
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Minimalist Typographic Ticker (Pure Typography, Zero Boxes!) */
 .services-editorial-ticker {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 2rem;
   padding-top: 1.75rem;
   border-top: 1px solid var(--border);
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ticker-col {
@@ -351,6 +355,10 @@
 
 .workflow-editorial-header {
   margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .workflow-title {
@@ -362,11 +370,9 @@
   margin-bottom: 0.65rem;
   max-width: 720px;
   width: 100%;
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .workflow-desc {
@@ -375,12 +381,8 @@
   line-height: 1.6;
   max-width: 650px;
   width: 100%;
-  margin: 0;
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .workflow-milestone-flow {

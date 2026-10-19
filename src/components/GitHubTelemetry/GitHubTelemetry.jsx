@@ -393,10 +393,10 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 className={`gh-segment-btn ${activeView === '3d' ? 'active' : ''}`}
                 onClick={() => handleSwitchView('3d')}
                 disabled={isSwitching}
-                title="3D Isometric Contribution Graph"
+                title="3D Contribution Graph"
               >
                 <Box size={14} />
-                <span>3D Isometric</span>
+                <span>3D</span>
               </button>
               <button
                 type="button"
@@ -405,10 +405,10 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                 className={`gh-segment-btn ${activeView === '2d' ? 'active' : ''}`}
                 onClick={() => handleSwitchView('2d')}
                 disabled={isSwitching}
-                title="2D Standard Heatmap"
+                title="2D Contribution Graph"
               >
                 <Layers size={14} />
-                <span>2D Grid</span>
+                <span>2D</span>
               </button>
             </div>
           </div>

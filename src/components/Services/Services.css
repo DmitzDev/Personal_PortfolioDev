@@ -1,183 +1,508 @@
 .services-section {
   position: relative;
   background-color: var(--bg-primary);
+  padding: 6rem 0;
 }
 
+.services-section-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.section-kicker {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+}
+
+.kicker-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  box-shadow: var(--skeuo-extruded-sm);
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   CLIENT ENGINEERING ASSURANCES (TRUST PILLARS)
+   ========================================================================== */
+.services-assurances-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.assurance-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 0.85rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.assurance-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--skeuo-extruded);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .assurance-card:hover {
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+.assurance-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 0.6rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--skeuo-recessed-sm);
+}
+
+.assurance-icon {
+  color: var(--text-primary);
+}
+
+.assurance-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.assurance-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.assurance-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ==========================================================================
+   SERVICES GRID (BESPOKE HARDWARE PLAQUES)
+   ========================================================================== */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.75rem;
-  margin-bottom: 4rem;
+  margin-bottom: 4.5rem;
 }
 
 .service-card {
-  padding: 1.75rem;
-  border-radius: 1rem;
+  padding: 2rem;
+  border-radius: 1.15rem;
   background: var(--bg-secondary);
+  background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-extruded);
+  border: 1px solid var(--border);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
-  border-left: var(--skeuo-border);
-  border-right: var(--skeuo-border);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .service-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--skeuo-extruded-hover);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
+[data-theme="light"] .service-card:hover {
+  border-color: rgba(15, 23, 42, 0.25);
+}
+
+/* Card Top Bar */
 .service-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.service-card-top-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .service-icon-box {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 0.75rem;
   background: var(--bg-tertiary);
   box-shadow: var(--skeuo-recessed-sm);
-  border-top: 1px solid var(--skeuo-bevel-bottom);
-  border-bottom: 1px solid var(--skeuo-bevel-top);
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.service-card:hover .service-icon-box {
+  transform: scale(1.05);
 }
 
 .service-icon {
-  color: var(--accent);
+  color: var(--text-primary);
+}
+
+.service-code-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
 }
 
 .service-badge-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--text-primary);
   background: var(--bg-tertiary);
+  border: 1px solid var(--border);
   box-shadow: var(--skeuo-recessed-sm);
-  padding: 0.2rem 0.6rem;
-  border-radius: 0.35rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+/* Card Body */
+.service-card-body {
+  margin-bottom: 1.5rem;
 }
 
 .service-heading {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 0.35rem;
   color: var(--text-primary);
+  letter-spacing: -0.015em;
 }
 
 .service-tagline-text {
-  font-size: 0.8rem;
-  color: var(--accent);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
   font-weight: 600;
   margin-bottom: 0.85rem;
+  line-height: 1.45;
 }
 
 .service-summary {
   font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 0;
 }
 
-/* 4-Step Process Section */
+/* Deliverables Section */
+.service-deliverables-block {
+  margin-top: auto;
+  padding: 1.15rem 1.25rem;
+  border-radius: 0.85rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-recessed-sm);
+  margin-bottom: 1.25rem;
+}
+
+.deliverables-heading {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.deliverables-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.deliverable-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.deliverable-check-icon {
+  color: var(--text-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Tech Stack Cluster */
+.service-tech-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-tech-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.35rem;
+}
+
+/* Card Action Footer */
+.service-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.service-turnaround-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.turnaround-icon {
+  color: var(--text-muted);
+}
+
+.service-inquire-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.5rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded-sm);
+  transition: all 0.2s ease;
+}
+
+.service-inquire-btn:hover {
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--skeuo-extruded);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="light"] .service-inquire-btn:hover {
+  border-color: rgba(15, 23, 42, 0.25);
+}
+
+/* ==========================================================================
+   4-STEP SPRINT PROCESS SECTION
+   ========================================================================== */
 .process-wrapper {
-  padding: 2.5rem;
+  padding: 3rem 2.5rem;
   border-radius: 1.25rem;
   background: var(--bg-secondary);
+  background-image: var(--gradient-surface);
   box-shadow: var(--skeuo-extruded);
+  border: 1px solid var(--border);
   border-top: 1px solid var(--skeuo-bevel-top);
   border-bottom: 1px solid var(--skeuo-bevel-bottom);
-  border-left: var(--skeuo-border);
-  border-right: var(--skeuo-border);
 }
 
 .process-header {
   text-align: center;
-  max-width: 600px;
+  max-width: 680px;
   margin: 0 auto 3rem auto;
 }
 
 .process-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
 }
 
 .process-title {
-  font-size: 1.75rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.85rem;
   font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.65rem;
 }
 
 .process-desc {
   font-size: 0.95rem;
   color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
 }
 
 .process-steps-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin-bottom: 2.5rem;
+  position: relative;
 }
 
 .process-step-item {
   position: relative;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
+  padding: 1.6rem 1.4rem;
+  border-radius: 0.95rem;
   background: var(--bg-tertiary);
   box-shadow: var(--skeuo-recessed-sm);
+  border: 1px solid var(--border);
   border-top: 1px solid var(--skeuo-bevel-bottom);
   border-bottom: 1px solid var(--skeuo-bevel-top);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.process-step-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .process-step-item:hover {
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+.step-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
 }
 
 .step-number-tag {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  color: var(--accent);
-  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.step-phase-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.35rem;
 }
 
 .step-title {
-  font-size: 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.55rem;
+  line-height: 1.3;
 }
 
 .step-description {
   font-size: 0.825rem;
   color: var(--text-secondary);
   line-height: 1.55;
+  margin-bottom: 1.25rem;
+  flex: 1;
 }
 
+.step-output-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.4rem;
+  margin-top: auto;
+}
+
+.step-output-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Process CTA Banner */
 .process-cta-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1.5rem;
-  padding: 1.75rem 2rem;
-  border-radius: 0.85rem;
+  padding: 1.75rem 2.25rem;
+  border-radius: 1rem;
   background: var(--bg-tertiary);
   box-shadow: var(--skeuo-recessed-sm);
+  border: 1px solid var(--border);
   border-top: 1px solid var(--skeuo-bevel-bottom);
   border-bottom: 1px solid var(--skeuo-bevel-top);
 }
 
 .cta-banner-text h4 {
-  font-size: 1.1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
@@ -186,141 +511,118 @@
 .cta-banner-text p {
   font-size: 0.875rem;
   color: var(--text-secondary);
+  margin: 0;
 }
 
-@media (max-width: 992px) {
+/* ==========================================================================
+   RESPONSIVENESS (TABLET & MOBILE)
+   ========================================================================== */
+@media (max-width: 1024px) {
   .process-steps-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 }
 
-@media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 900px) {
+  .services-assurances-grid {
+    grid-template-columns: 1fr;
     gap: 0.85rem;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .services-section {
-    padding: 3rem 0;
+    padding: 4rem 0;
   }
 
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
+  .services-section-header {
     margin-bottom: 2.25rem;
   }
 
+  /* Single Column on Mobile for generous readability and breathing room */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
   .service-card {
-    padding: 0.85rem 0.65rem;
-    border-radius: 0.75rem;
-    min-width: 0;
-  }
-
-  .service-card-top {
-    margin-bottom: 0.5rem;
-    gap: 0.35rem;
-  }
-
-  .service-icon-box {
-    width: 34px;
-    height: 34px;
-    border-radius: 0.5rem;
-  }
-
-  .service-icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .service-badge-pill {
-    font-size: 0.58rem;
-    padding: 0.15rem 0.35rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
   }
 
   .service-heading {
-    font-size: 0.88rem;
-    line-height: 1.25;
-    margin-bottom: 0.2rem;
+    font-size: 1.15rem;
   }
 
   .service-tagline-text {
-    font-size: 0.68rem;
-    margin-bottom: 0.45rem;
-    line-height: 1.25;
+    font-size: 0.82rem;
   }
 
   .service-summary {
-    font-size: 0.72rem;
-    line-height: 1.4;
-    margin-bottom: 0;
+    font-size: 0.85rem;
   }
 
-  /* 4-Step Process Section */
+  .service-deliverables-block {
+    padding: 1rem 1.15rem;
+  }
+
   .process-wrapper {
-    padding: 1.25rem 0.85rem;
-    border-radius: 0.85rem;
+    padding: 2rem 1.25rem;
+    border-radius: 1rem;
   }
 
   .process-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .process-title {
-    font-size: 1.25rem;
-  }
-
-  .process-desc {
-    font-size: 0.8rem;
+    font-size: 1.45rem;
   }
 
   .process-steps-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .process-step-item {
-    padding: 0.85rem 0.65rem;
-    border-radius: 0.6rem;
-    min-width: 0;
-  }
-
-  .step-number-tag {
-    font-size: 0.95rem;
-    margin-bottom: 0.35rem;
-  }
-
-  .step-title {
-    font-size: 0.825rem;
-    line-height: 1.25;
-    margin-bottom: 0.3rem;
-  }
-
-  .step-description {
-    font-size: 0.68rem;
-    line-height: 1.35;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
 
   .process-cta-banner {
-    padding: 1.25rem 1rem;
+    padding: 1.5rem 1.25rem;
     flex-direction: column;
     align-items: stretch;
     text-align: center;
-    gap: 1rem;
-  }
-
-  .cta-banner-text h4 {
-    font-size: 0.95rem;
-  }
-
-  .cta-banner-text p {
-    font-size: 0.78rem;
+    gap: 1.25rem;
   }
 
   .process-cta-banner .btn-primary {
     width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card {
+    padding: 1.25rem 1.1rem;
+  }
+
+  .service-badge-pill {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .service-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .service-inquire-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .service-turnaround-badge {
     justify-content: center;
   }
 }

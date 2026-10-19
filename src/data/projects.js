@@ -110,7 +110,7 @@ export const projects = [
     category: ["Personal Projects", "Web Applications"],
     role: "Creator & Frontend Architect",
     timeline: "2026",
-    status: "Completed",
+    status: "Maintenance",
     featured: true,
     description: "A precision-crafted developer portfolio built with React and Vite. Features a tactile dark/light skeuomorphic token design system, interactive hardware plaques, and zero external UI library bloat.",
     challenge: "Standing out from generic modern minimalist templates by engineering a tactile, responsive hardware aesthetic without compromising performance or accessibility.",

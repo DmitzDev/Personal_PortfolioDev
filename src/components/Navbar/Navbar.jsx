@@ -30,12 +30,14 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useScrollSpy(sectionIds, 110);
 
   // Smooth typewriter eraser & typing engine
-  // Erases character-by-character down to "Mitch", then types forward to target
+  // Erases character-by-character down to "Mitch", pauses briefly, then types forward to target
   useEffect(() => {
     const target = isMorphed ? MORPHED_NAME : FULL_NAME;
     let timer = null;
 
     const step = () => {
+      let delay = 55;
+
       setTypedText((current) => {
         if (current === target) {
           setIsTyping(false);
@@ -47,27 +49,36 @@ export function Navbar() {
         // Need to erase down to COMMON_ROOT:
         // Erase 1 character if target doesn't start with current and current is longer than COMMON_ROOT
         if (!target.startsWith(current) && current.length > COMMON_ROOT.length) {
-          return current.slice(0, -1);
+          const next = current.slice(0, -1);
+          // When it reaches "Mitch", pause briefly before typing forward
+          if (next === COMMON_ROOT) {
+            delay = 140;
+          } else {
+            delay = 50; // smooth deliberate backspace
+          }
+          return next;
         }
 
         // When at COMMON_ROOT or current matches start of target, type forward
         if (target.startsWith(current) && current.length < target.length) {
+          delay = 72; // deliberate, readable typing keystroke
           return target.slice(0, current.length + 1);
         }
 
         // Fallback: delete if mismatched
         if (!target.startsWith(current)) {
+          delay = 50;
           return current.slice(0, -1);
         }
 
         return current;
       });
 
-      timer = setTimeout(step, 32);
+      timer = setTimeout(step, delay);
     };
 
     // Initial micro-pause before starting typewriter
-    timer = setTimeout(step, 35);
+    timer = setTimeout(step, 80);
 
     return () => {
       if (timer) clearTimeout(timer);

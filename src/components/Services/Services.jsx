@@ -45,28 +45,28 @@ export function Services() {
             End-to-end web engineering tailored for founders, startups, and product teams seeking speed, clean component architecture, and measurable ROI.
           </p>
 
-          {/* Minimalist Typographic Metrics (Zero Boxes!) */}
-          <div className="services-editorial-ticker">
-            <div className="ticker-col">
-              <span className="ticker-num">04</span>
+          {/* Minimalist Typographic Metrics: Single Paragraph Flow */}
+          <p className="services-editorial-ticker">
+            <span className="ticker-item">
+              <strong className="ticker-num">04</strong>
               <span className="ticker-label">Core Disciplines</span>
-            </div>
-            <span className="ticker-divider" aria-hidden="true">/</span>
-            <div className="ticker-col">
-              <span className="ticker-num">2–3</span>
+            </span>
+            <span className="ticker-divider" aria-hidden="true">•</span>
+            <span className="ticker-item">
+              <strong className="ticker-num">2–3</strong>
               <span className="ticker-label">Weeks Per Sprint</span>
-            </div>
-            <span className="ticker-divider" aria-hidden="true">/</span>
-            <div className="ticker-col">
-              <span className="ticker-num">100%</span>
+            </span>
+            <span className="ticker-divider" aria-hidden="true">•</span>
+            <span className="ticker-item">
+              <strong className="ticker-num">100%</strong>
               <span className="ticker-label">Code Ownership</span>
-            </div>
-            <span className="ticker-divider" aria-hidden="true">/</span>
-            <div className="ticker-col">
-              <span className="ticker-num">95+</span>
+            </span>
+            <span className="ticker-divider" aria-hidden="true">•</span>
+            <span className="ticker-item">
+              <strong className="ticker-num">95+</strong>
               <span className="ticker-label">Lighthouse Speed</span>
-            </div>
-          </div>
+            </span>
+          </p>
         </div>
 
         {/* Editorial Divider List (Zero Box/Card Containers!) */}

@@ -266,7 +266,7 @@
   animation-play-state: paused;
 }
 
-.ticker-item {
+.ticker-track .ticker-item {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;

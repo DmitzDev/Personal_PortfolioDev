@@ -45,26 +45,22 @@ export function Services() {
             End-to-end web engineering tailored for founders, startups, and product teams seeking speed, clean component architecture, and measurable ROI.
           </p>
 
-          {/* Minimalist Typographic Metrics: Single Paragraph Flow */}
-          <p className="services-editorial-ticker">
-            <span className="ticker-item">
-              <strong className="ticker-num">04</strong>
-              <span className="ticker-label">Core Disciplines</span>
+          {/* Minimalist Typographic Metrics: Pure Typography Single Paragraph (Zero Boxes!) */}
+          <p className="services-metrics-paragraph">
+            <span className="metric-inline-group">
+              <strong className="metric-num">04</strong> <span className="metric-label">Core Disciplines</span>
             </span>
-            <span className="ticker-divider" aria-hidden="true">•</span>
-            <span className="ticker-item">
-              <strong className="ticker-num">2–3</strong>
-              <span className="ticker-label">Weeks Per Sprint</span>
+            <span className="metric-sep" aria-hidden="true">•</span>
+            <span className="metric-inline-group">
+              <strong className="metric-num">2–3</strong> <span className="metric-label">Weeks Per Sprint</span>
             </span>
-            <span className="ticker-divider" aria-hidden="true">•</span>
-            <span className="ticker-item">
-              <strong className="ticker-num">100%</strong>
-              <span className="ticker-label">Code Ownership</span>
+            <span className="metric-sep" aria-hidden="true">•</span>
+            <span className="metric-inline-group">
+              <strong className="metric-num">100%</strong> <span className="metric-label">Code Ownership</span>
             </span>
-            <span className="ticker-divider" aria-hidden="true">•</span>
-            <span className="ticker-item">
-              <strong className="ticker-num">95+</strong>
-              <span className="ticker-label">Lighthouse Speed</span>
+            <span className="metric-sep" aria-hidden="true">•</span>
+            <span className="metric-inline-group">
+              <strong className="metric-num">95+</strong> <span className="metric-label">Lighthouse Speed</span>
             </span>
           </p>
         </div>

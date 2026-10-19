@@ -42,51 +42,68 @@
   margin-right: auto;
 }
 
-/* Minimalist Typographic Ticker: Fluid Single Paragraph (No 2x2 Grid) */
-.services-editorial-ticker {
+/* Minimalist Typographic Metrics: Pure Typography Single Paragraph (ZERO BOXES!) */
+.services-metrics-paragraph {
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.92rem;
-  line-height: 1.85;
+  font-size: 0.9rem;
+  line-height: 1.8;
   color: var(--text-secondary);
   text-align: center;
   margin: 0 auto;
-  max-width: 820px;
+  max-width: 860px;
   width: 100%;
   padding-top: 1.75rem;
   border-top: 1px solid var(--border);
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
-.ticker-item {
+.metric-inline-group {
   display: inline-flex;
   align-items: baseline;
   gap: 0.35rem;
   white-space: nowrap;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0;
 }
 
-.ticker-num {
+.metric-num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
-.ticker-label {
+.metric-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
-.ticker-divider {
+.metric-sep {
   display: inline-block;
   margin: 0 0.85rem;
   color: var(--border);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   user-select: none;
+  background: transparent !important;
+  border: none !important;
 }
 
 /* ==========================================================================
@@ -523,25 +540,25 @@
     padding: 4.5rem 0;
   }
 
-  .services-editorial-ticker {
+  .services-metrics-paragraph {
     font-size: 0.82rem;
     line-height: 1.75;
     padding-top: 1.25rem;
   }
 
-  .ticker-item {
+  .metric-inline-group {
     gap: 0.25rem;
   }
 
-  .ticker-num {
+  .metric-num {
     font-size: 0.95rem;
   }
 
-  .ticker-label {
+  .metric-label {
     font-size: 0.72rem;
   }
 
-  .ticker-divider {
+  .metric-sep {
     margin: 0 0.45rem;
     font-size: 0.8rem;
   }

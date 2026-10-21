@@ -103,7 +103,7 @@ export function Skills() {
               <Tilt3DCard className="skill-card glass-card">
                 <div className="skill-card-top">
                   <div className="skill-icon-wrap">
-                    <Tech3DIcon iconKey={skill.icon} size={48} />
+                    <Tech3DIcon iconKey={skill.icon} size={42} />
                   </div>
                   <div className="skill-meta-wrap">
                     <h3 className="skill-name">{skill.name}</h3>

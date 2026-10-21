@@ -81,9 +81,9 @@ export const projects = [
   },
   {
     id: 4,
-    title: "Tambayan App",
+    title: "Tambayan",
     subtitle: "Real-Time Social Network & Community Web Platform",
-    category: ["School Projects", "Web Applications"],
+    category: ["Web Applications"],
     role: "Full-Stack Web Developer",
     timeline: "2026",
     status: "In Progress",

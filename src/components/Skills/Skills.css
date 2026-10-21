@@ -177,8 +177,8 @@
 }
 
 .skill-icon-wrap {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -365,14 +365,48 @@
   }
 
   .skill-icon-wrap {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
     border-radius: 0.45rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .skill-icon-wrap .tech-3d-token {
+    --t-size: 30px !important;
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .skill-icon-wrap .tech-3d-pedestal {
+    border-radius: 8px;
+    box-shadow: 
+      0 2px 0 var(--t-sidewall-dark),
+      0 3px 2px rgba(0, 0, 0, 0.35),
+      0 6px 12px -2px rgba(0, 0, 0, 0.5);
+  }
+
+  [data-theme="light"] .skill-icon-wrap .tech-3d-pedestal {
+    box-shadow: 
+      0 2px 0 var(--t-sidewall-light),
+      0 3px 2px rgba(15, 23, 42, 0.1),
+      0 6px 12px -2px rgba(15, 23, 42, 0.15);
+  }
+
+  .skill-icon-wrap .tech-3d-emblem {
+    transform: translateZ(6px);
+  }
+
+  .skill-icon-wrap .tech-3d-img {
+    width: 17px !important;
+    height: 17px !important;
   }
 
   .skill-devicon {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
   }
 
   .skill-name {
@@ -419,5 +453,28 @@
 
   .github-calendar-scroll {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .skill-icon-wrap {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+  }
+
+  .skill-icon-wrap .tech-3d-token {
+    --t-size: 26px !important;
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .skill-icon-wrap .tech-3d-pedestal {
+    border-radius: 7px;
+  }
+
+  .skill-icon-wrap .tech-3d-img {
+    width: 14px !important;
+    height: 14px !important;
   }
 }

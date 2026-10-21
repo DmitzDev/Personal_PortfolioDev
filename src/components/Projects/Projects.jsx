@@ -269,7 +269,7 @@ export function Projects() {
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className={`modal-preview-img ${selectedProject.title === 'Tambayan App' ? 'contain-mode' : ''}`}
+                  className={`modal-preview-img ${selectedProject.title?.includes('Tambayan') ? 'contain-mode' : ''}`}
                   width="800"
                   height="450"
                   loading="lazy"

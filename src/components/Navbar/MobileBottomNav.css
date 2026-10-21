@@ -63,22 +63,26 @@
     gap: 0.2rem;
     width: 100%;
     padding: 0.5rem 0.15rem;
-    border-radius: 0.35rem;
+    border-radius: 0.5rem;
     background: transparent;
     border: none;
     color: var(--text-secondary);
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     transition:
-      color 0.15s ease,
-      background 0.15s ease,
-      box-shadow 0.15s ease,
-      transform 0.1s ease;
+      color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      background 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
   }
 
+  .mobnav-key svg {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
   .mobnav-key:active {
-    transform: scale(0.94);
+    transform: scale(0.92);
   }
 
   /* ── Key Label ── */
@@ -90,7 +94,7 @@
     text-transform: uppercase;
     line-height: 1;
     color: var(--text-secondary);
-    transition: color 0.15s ease;
+    transition: color 0.2s ease;
   }
 
   /* ── Pressed State ── */
@@ -98,6 +102,10 @@
     color: var(--accent);
     background: var(--bg-tertiary);
     box-shadow: var(--skeuo-recessed-sm);
+  }
+
+  .mobnav-key.pressed svg {
+    transform: translateY(-2px) scale(1.1);
   }
 
   .mobnav-key.pressed .mobnav-key-label {

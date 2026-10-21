@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ExternalLink, Search, X, FileText, Code2, Server, Mail } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
+import { Tilt3DCard } from '../shared/Tilt3DCard';
 import './Projects.css';
 
 const GithubIcon = ({ size = 16 }) => (
@@ -115,111 +116,117 @@ export function Projects() {
               <AnimateOnScroll
                 key={project.id}
                 animation="fade-up"
-                delay={index * 80}
-                className="case-study-card glass-card"
+                delay={(index % 4) * 70}
+                className="project-anim-card-wrap"
               >
-                {/* Visual Preview */}
-                <div
-                  className="project-image-wrapper"
-                  onClick={() => setSelectedProject(project)}
+                <Tilt3DCard
+                  className="case-study-card glass-card"
+                  maxTilt={4.5}
+                  scale={1.015}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="project-preview-img"
-                    width="600"
-                    height="340"
-                    loading="lazy"
-                  />
-                  <div className="project-hover-overlay">
-                    <span className="view-case-study-btn">
-                      <FileText size={15} />
-                      View Project
-                    </span>
-                  </div>
-                </div>
-
-                {/* Details */}
-                <div className="project-body">
-                  <div className="project-header-meta">
-                    <span className="project-cat-badge">{project.category[0]}</span>
-                    <span className={`project-status-pill ${project.status === 'Completed' ? 'status-completed' : 'status-in-progress'}`}>
-                      <span className="status-led"></span>
-                      <span className="status-label">{project.status}</span>
-                    </span>
+                  {/* Visual Preview */}
+                  <div
+                    className="project-image-wrapper"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="project-preview-img"
+                      width="600"
+                      height="340"
+                      loading="lazy"
+                    />
+                    <div className="project-hover-overlay">
+                      <span className="view-case-study-btn">
+                        <FileText size={15} />
+                        View Project
+                      </span>
+                    </div>
                   </div>
 
-                  <h3 className="project-heading">{project.title}</h3>
-                  <p className="project-subtitle-text">{project.subtitle}</p>
-                  <p className="project-summary">{project.description}</p>
+                  {/* Details */}
+                  <div className="project-body">
+                    <div className="project-header-meta">
+                      <span className="project-cat-badge">{project.category[0]}</span>
+                      <span className={`project-status-pill ${project.status === 'Completed' ? 'status-completed' : 'status-in-progress'}`}>
+                        <span className="status-led"></span>
+                        <span className="status-label">{project.status}</span>
+                      </span>
+                    </div>
 
-                  {/* Tech stack icons */}
-                  <div className="project-tech-icons">
-                    {project.technologies.map((tech) => {
-                      const info = getTechIconInfo(tech);
-                      return (
-                        <div key={tech} className="tech-icon-badge" title={tech} aria-label={tech}>
-                          {info.type === 'devicon' ? (
-                            <img
-                              src={info.src}
-                              alt={tech}
-                              className="tech-badge-img"
-                              width="16"
-                              height="16"
-                              loading="lazy"
-                              onError={(e) => {
-                                e.target.style.display = 'none';
-                              }}
-                            />
-                          ) : info.icon === 'server' ? (
-                            <Server size={16} className="tech-badge-lucide" />
-                          ) : info.icon === 'mail' ? (
-                            <Mail size={16} className="tech-badge-lucide" />
-                          ) : (
-                            <Code2 size={16} className="tech-badge-lucide" />
-                          )}
-                          <span className="tech-badge-tooltip">{tech}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
+                    <h3 className="project-heading">{project.title}</h3>
+                    <p className="project-subtitle-text">{project.subtitle}</p>
+                    <p className="project-summary">{project.description}</p>
 
-                  {/* Actions */}
-                  <div className="project-card-actions">
-                    {project.liveDemo && project.liveDemo !== '#' && (
-                      <a
-                        href={project.liveDemo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="project-action-link primary"
-                        title="Live"
-                        aria-label="Live"
+                    {/* Tech stack icons */}
+                    <div className="project-tech-icons">
+                      {project.technologies.map((tech) => {
+                        const info = getTechIconInfo(tech);
+                        return (
+                          <div key={tech} className="tech-icon-badge" title={tech} aria-label={tech}>
+                            {info.type === 'devicon' ? (
+                              <img
+                                src={info.src}
+                                alt={tech}
+                                className="tech-badge-img"
+                                width="16"
+                                height="16"
+                                loading="lazy"
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                }}
+                              />
+                            ) : info.icon === 'server' ? (
+                              <Server size={16} className="tech-badge-lucide" />
+                            ) : info.icon === 'mail' ? (
+                              <Mail size={16} className="tech-badge-lucide" />
+                            ) : (
+                              <Code2 size={16} className="tech-badge-lucide" />
+                            )}
+                            <span className="tech-badge-tooltip">{tech}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="project-card-actions">
+                      {project.liveDemo && project.liveDemo !== '#' && (
+                        <a
+                          href={project.liveDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-action-link primary"
+                          title="Live"
+                          aria-label="Live"
+                        >
+                          <span className="action-text">Live</span>
+                          <ExternalLink size={13} />
+                        </a>
+                      )}
+                      {project.github && project.github !== '#' && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-action-link"
+                          title="Source Code"
+                          aria-label="Source Code"
+                        >
+                          <GithubIcon size={14} />
+                          <span className="action-text">Source</span>
+                        </a>
+                      )}
+                      <button
+                        className="project-details-btn"
+                        onClick={() => setSelectedProject(project)}
                       >
-                        <span className="action-text">Live</span>
-                        <ExternalLink size={13} />
-                      </a>
-                    )}
-                    {project.github && project.github !== '#' && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="project-action-link"
-                        title="Source Code"
-                        aria-label="Source Code"
-                      >
-                        <GithubIcon size={14} />
-                        <span className="action-text">Source</span>
-                      </a>
-                    )}
-                    <button
-                      className="project-details-btn"
-                      onClick={() => setSelectedProject(project)}
-                    >
-                      Details →
-                    </button>
+                        Details →
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </Tilt3DCard>
               </AnimateOnScroll>
             ))
           ) : (

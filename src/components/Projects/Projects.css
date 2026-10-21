@@ -101,6 +101,12 @@
   box-sizing: border-box;
 }
 
+.project-anim-card-wrap {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
 .case-study-card {
   display: flex;
   flex-direction: column;
@@ -143,11 +149,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .case-study-card:hover .project-preview-img {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .project-hover-overlay {

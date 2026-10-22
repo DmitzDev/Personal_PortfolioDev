@@ -482,10 +482,12 @@
   height: 100%;
   width: auto;
   max-width: 100%;
+  aspect-ratio: 480 / 592;
   object-fit: contain;
   object-position: bottom center;
   filter: contrast(1.04) brightness(1.02);
   display: block;
+  flex-shrink: 0;
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
   pointer-events: none; /* Prevents portrait image from blocking hover on letters like LE and SA! */
@@ -880,7 +882,10 @@
     height: 100%;
     width: auto;
     max-width: 100%;
+    aspect-ratio: 480 / 592;
     object-fit: contain;
+    object-position: bottom center;
+    flex-shrink: 0;
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 0%, #000 93%, rgba(0, 0, 0, 0.7) 97%, transparent 100%);
   }

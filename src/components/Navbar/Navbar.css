@@ -29,44 +29,37 @@
 .capsule-brand-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  background: rgba(30, 32, 40, 0.82);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 0.45rem 1.15rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  gap: 0.65rem;
+  background: transparent;
+  padding: 0.25rem 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
   text-decoration: none;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.2s ease,
-              padding 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
   user-select: none;
-  overflow: hidden;
 }
 
 [data-theme="light"] .capsule-brand-pill {
-  background: rgba(255, 255, 255, 0.9);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(241, 245, 249, 0.8) 100%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .capsule-brand-pill:hover {
   transform: translateY(-1px);
+  opacity: 0.9;
 }
 
 /* Morphed state: when scrolled past hero portrait into projects */
 .capsule-brand-pill.is-morphed {
-  padding: 0.32rem 1.05rem 0.32rem 0.42rem;
+  padding: 0.25rem 0;
 }
 
 .capsule-brand-pill.is-morphed:hover {
   transform: translateY(-1px);
 }
+
 
 /* Photo Avatar inside Brand Pill - Enhanced entrance */
 .brand-pill-avatar-wrap {
@@ -393,15 +386,18 @@
   }
 
   .capsule-brand-pill {
-    padding: 0.35rem 0.75rem;
-    gap: 0.4rem;
+    padding: 0.2rem 0;
+    gap: 0.45rem;
     flex-shrink: 1;
     min-width: 0;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .capsule-brand-pill.is-morphed {
-    padding: 0.28rem 0.8rem 0.28rem 0.35rem;
-    gap: 0.35rem;
+    padding: 0.2rem 0;
+    gap: 0.45rem;
   }
 
   .capsule-brand-pill.is-morphed .brand-pill-avatar-wrap {

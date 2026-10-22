@@ -151,14 +151,15 @@
 
 .brand-pill-type-container {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   white-space: nowrap;
 }
 
 .brand-pill-name {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
+  line-height: 1;
   color: #ffffff;
   white-space: nowrap;
 }
@@ -169,8 +170,9 @@
 
 .brand-pill-name-mitch {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 700;
+  line-height: 1;
   color: #ffffff;
   letter-spacing: -0.01em;
 }
@@ -180,10 +182,12 @@
 }
 
 .brand-pill-name-dev {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
   color: #94a3b8;
+  letter-spacing: -0.01em;
 }
 
 [data-theme="light"] .brand-pill-name-dev {
@@ -193,8 +197,9 @@
 /* Typewriter Cursor */
 .brand-pill-cursor {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 300;
+  line-height: 1;
   margin-left: 1px;
   color: #94a3b8;
   opacity: 0;
@@ -411,16 +416,11 @@
     height: 26px;
   }
 
-  .brand-pill-name-mitch {
-    font-size: 0.88rem;
-  }
-
-  .brand-pill-name-dev {
-    font-size: 0.82rem;
-  }
-
+  .brand-pill-name-mitch,
+  .brand-pill-name-dev,
   .brand-pill-name {
-    font-size: 0.82rem;
+    font-size: 0.88rem;
+    line-height: 1;
     white-space: nowrap;
   }
 

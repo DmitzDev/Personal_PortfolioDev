@@ -178,12 +178,19 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #ffffff;
-  background: var(--accent);
+  color: var(--accent-text);
+  background: var(--gradient-accent);
   padding: 0.55rem 1.15rem;
   border-radius: 0.5rem;
-  box-shadow: var(--skeuo-extruded-sm);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--border);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
 }
+
+.project-image-wrapper:hover .view-case-study-btn {
+  transform: translateY(-2px) scale(1.03);
+}
+
 
 .project-body {
   padding: 1.35rem 1.5rem 1.5rem 1.5rem;

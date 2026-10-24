@@ -8,7 +8,7 @@
    EDITORIAL HEADER & TYPOGRAPHIC METRICS (ZERO BOXES!)
    ========================================================================== */
 .services-editorial-header {
-  margin-bottom: 4.5rem;
+  margin-bottom: 3.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,74 +36,10 @@
   line-height: 1.6;
   max-width: 720px;
   width: 100%;
-  margin-bottom: 2.25rem;
+  margin-bottom: 0;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-}
-
-/* Minimalist Typographic Metrics: Pure Typography Single Paragraph (ZERO BOXES!) */
-.services-metrics-paragraph {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  text-align: center;
-  margin: 0 auto;
-  max-width: 860px;
-  width: 100%;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--border);
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.metric-inline-group {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  white-space: nowrap;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 0 !important;
-  margin: 0;
-}
-
-.metric-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  line-height: 1;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 0 !important;
-}
-
-.metric-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 0 !important;
-}
-
-.metric-sep {
-  display: inline-block;
-  margin: 0 0.85rem;
-  color: var(--border);
-  font-size: 0.9rem;
-  user-select: none;
-  background: transparent !important;
-  border: none !important;
 }
 
 /* ==========================================================================
@@ -549,27 +485,8 @@
     padding: 4.5rem 0;
   }
 
-  .services-metrics-paragraph {
-    font-size: 0.82rem;
-    line-height: 1.75;
-    padding-top: 1.25rem;
-  }
-
-  .metric-inline-group {
-    gap: 0.25rem;
-  }
-
-  .metric-num {
-    font-size: 0.95rem;
-  }
-
-  .metric-label {
-    font-size: 0.72rem;
-  }
-
-  .metric-sep {
-    margin: 0 0.45rem;
-    font-size: 0.8rem;
+  .services-editorial-header {
+    margin-bottom: 2.5rem;
   }
 
   .service-row-trigger {

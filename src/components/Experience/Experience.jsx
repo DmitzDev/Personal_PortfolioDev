@@ -1,51 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { Briefcase, GraduationCap, Award, FileText, Calendar, MapPin, ChevronLeft, ChevronRight, Server, Database, Code2, Maximize2, ExternalLink } from 'lucide-react';
+import { Briefcase, GraduationCap, Award, Calendar, MapPin, ChevronLeft, ChevronRight, Maximize2, ExternalLink } from 'lucide-react';
 import { experience } from '../../data/experience';
 import { education } from '../../data/education';
 import { certificates, achievements } from '../../data/certificates';
-import { personalInfo } from '../../data/personalInfo';
 import './Experience.css';
-
-const getExpTechIcon = (techName) => {
-  const t = techName.toLowerCase();
-  if (t.includes('react')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' };
-  }
-  if (t.includes('javascript') || t.includes('es6')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' };
-  }
-  if (t.includes('firebase') || t.includes('firestore')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' };
-  }
-  if (t.includes('node')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' };
-  }
-  if (t.includes('css')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' };
-  }
-  if (t.includes('vite')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg' };
-  }
-  if (t.includes('state') || t.includes('redux')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg' };
-  }
-  if (t.includes('tailwind')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' };
-  }
-  if (t.includes('vercel')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg' };
-  }
-  if (t.includes('git') || t.includes('github')) {
-    return { type: 'devicon', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' };
-  }
-  if (t.includes('api') || t.includes('rest')) {
-    return { type: 'lucide', icon: 'server' };
-  }
-  if (t.includes('database') || t.includes('sql') || t.includes('architecture')) {
-    return { type: 'lucide', icon: 'database' };
-  }
-  return { type: 'lucide', icon: 'code' };
-};
 
 export function Experience() {
   const [activeTab, setActiveTab] = useState('experience');

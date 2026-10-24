@@ -133,17 +133,19 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
     return () => clearTimeout(timer);
   }, []);
 
-  // On mobile screens, auto-scroll to latest contributions on the right
+  // On mobile screens, auto-scroll to latest contributions on the right only on initial load
+  const hasAutoScrolledRef = useRef(false);
   useEffect(() => {
-    if (scrollContainerRef.current && typeof window !== 'undefined' && window.innerWidth < 768) {
+    if (!isLoading && !hasAutoScrolledRef.current && scrollContainerRef.current && typeof window !== 'undefined' && window.innerWidth < 768) {
       const timer = setTimeout(() => {
         if (scrollContainerRef.current) {
           scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+          hasAutoScrolledRef.current = true;
         }
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [isLoading, activeView]);
+  }, [isLoading]);
 
   // Smooth sinking (3D -> 2D) and rising (2D -> 3D) view switcher
   const handleSwitchView = useCallback((targetView) => {

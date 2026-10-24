@@ -256,7 +256,7 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .scroll-to-top {
     bottom: 5.5rem;
     right: 1.25rem;

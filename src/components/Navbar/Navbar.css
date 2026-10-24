@@ -354,9 +354,48 @@
   display: none;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
+  .brand-pill-role {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar-container {
+    padding: 0 1rem;
+    gap: 0.5rem;
+  }
+
+  .desktop-nav {
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    gap: 0.1rem;
+    padding: 0.2rem 0.25rem;
+  }
+
+  .nav-link {
+    padding: 0.35rem 0.52rem;
+    font-size: 0.72rem;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-actions {
+    gap: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  .btn-resume {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.74rem;
+  }
+}
+
+@media (max-width: 768px) {
   .navbar {
-    padding: 0.75rem 0;
+    padding: 0.6rem 0;
     background: var(--bg-primary);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid var(--border);
@@ -369,25 +408,15 @@
   .mobile-nav-toggle {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
+    gap: 0.45rem;
     flex-shrink: 0;
   }
 
   .navbar-container {
-    padding: 0 1rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    padding: 0.6rem 0;
-  }
-
-  .navbar-container {
     padding: 0 0.85rem;
+    width: 100%;
     gap: 0.5rem;
+    box-sizing: border-box;
   }
 
   .capsule-brand-pill {
@@ -426,10 +455,6 @@
 
   .brand-pill-role {
     display: none !important;
-  }
-
-  .mobile-nav-toggle {
-    gap: 0.45rem;
   }
 
   .btn-resume.mobile-btn {

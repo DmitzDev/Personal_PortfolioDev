@@ -420,7 +420,7 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   body {
     padding-bottom: 80px;
   }

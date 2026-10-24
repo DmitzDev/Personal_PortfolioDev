@@ -95,7 +95,6 @@ export function Services() {
                   aria-expanded={isOpen}
                 >
                   <div className="service-row-left">
-                    <span className="service-row-index">{service.code}</span>
                     <span className="service-row-icon-glyph" aria-hidden="true">
                       <IconComponent size={20} />
                     </span>

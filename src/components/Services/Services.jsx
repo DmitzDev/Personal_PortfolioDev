@@ -7,9 +7,20 @@ import {
   Minus,
   Clock,
   Terminal,
+  Layout,
+  PenTool,
+  Rocket,
+  Cpu
 } from 'lucide-react';
 import { services, clientProcess } from '../../data/services';
 import './Services.css';
+
+const SERVICE_ICONS = {
+  Layout: Layout,
+  PenTool: PenTool,
+  Rocket: Rocket,
+  Cpu: Cpu,
+};
 
 export function Services() {
   const [openServiceId, setOpenServiceId] = useState(1);
@@ -69,6 +80,7 @@ export function Services() {
         <div className="services-editorial-list">
           {services.map((service) => {
             const isOpen = openServiceId === service.id;
+            const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
 
             return (
               <div
@@ -84,6 +96,9 @@ export function Services() {
                 >
                   <div className="service-row-left">
                     <span className="service-row-index">{service.code}</span>
+                    <span className="service-row-icon-glyph" aria-hidden="true">
+                      <IconComponent size={20} />
+                    </span>
                     <div className="service-row-titles">
                       <h3 className="service-row-heading">{service.title}</h3>
                       <p className="service-row-tagline">{service.tagline}</p>

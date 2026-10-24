@@ -151,8 +151,8 @@
 
 .service-row-left {
   display: flex;
-  align-items: baseline;
-  gap: 2rem;
+  align-items: center;
+  gap: 1.5rem;
   min-width: 0;
   flex: 1;
 }
@@ -164,7 +164,30 @@
   color: var(--text-muted);
   letter-spacing: 0.05em;
   flex-shrink: 0;
-  min-width: 70px;
+  min-width: 60px;
+}
+
+.service-row-icon-glyph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-row-trigger:hover .service-row-icon-glyph,
+.service-editorial-row.is-open .service-row-icon-glyph {
+  color: var(--accent);
+  background: var(--accent-light);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .service-row-titles {
@@ -568,16 +591,31 @@
   }
 
   .service-row-left {
-    gap: 1rem;
+    gap: 0.85rem;
+  }
+
+  .service-row-icon-glyph {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .service-row-icon-glyph svg {
+    width: 17px;
+    height: 17px;
   }
 
   .service-row-index {
-    min-width: 40px;
-    font-size: 0.95rem;
+    min-width: 32px;
+    font-size: 0.85rem;
   }
 
   .service-row-heading {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+  }
+
+  .service-row-tagline {
+    font-size: 0.84rem;
   }
 
   .service-row-badge {

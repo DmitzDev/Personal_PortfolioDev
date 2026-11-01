@@ -1,13 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, lazy, Suspense } from 'react';
 import { IntroLoader } from './components/IntroLoader/IntroLoader';
 import { Navbar } from './components/Navbar/Navbar';
 import { Hero } from './components/Hero/Hero';
-import { Projects } from './components/Projects/Projects';
-import { Skills } from './components/Skills/Skills';
-import { Services } from './components/Services/Services';
-import { Experience } from './components/Experience/Experience';
-import { Contact } from './components/Contact/Contact';
-import { Footer } from './components/Footer/Footer';
+
+const Projects = lazy(() => import('./components/Projects/Projects').then(m => ({ default: m.Projects })));
+const Skills = lazy(() => import('./components/Skills/Skills').then(m => ({ default: m.Skills })));
+const Services = lazy(() => import('./components/Services/Services').then(m => ({ default: m.Services })));
+const Experience = lazy(() => import('./components/Experience/Experience').then(m => ({ default: m.Experience })));
+const Contact = lazy(() => import('./components/Contact/Contact').then(m => ({ default: m.Contact })));
+const Footer = lazy(() => import('./components/Footer/Footer').then(m => ({ default: m.Footer })));
 import { ScrollToTop } from './components/shared/ScrollToTop';
 import { Toaster } from 'sonner';
 import { useLenis } from './hooks/useLenis';
@@ -49,13 +50,17 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Projects />
-        <Skills />
-        <Services />
-        <Experience />
-        <Contact />
+        <Suspense fallback={null}>
+          <Projects />
+          <Skills />
+          <Services />
+          <Experience />
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
       <ScrollToTop />
     </div>
   );

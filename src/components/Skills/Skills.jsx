@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { skills, skillCategories } from '../../data/skills';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { Tech3DIcon } from '../shared/Tech3DIcon';
 import { Tilt3DCard } from '../shared/Tilt3DCard';
 import { Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
 import antigravitySvg from '../../assets/antigravity.svg';
-import { GitHubTelemetry } from '../GitHubTelemetry/GitHubTelemetry';
 import './Skills.css';
+
+const GitHubTelemetry = lazy(() =>
+  import('../GitHubTelemetry/GitHubTelemetry').then(m => ({ default: m.GitHubTelemetry }))
+);
 
 const getSkillIconUrl = (icon) => {
   if (icon === 'antigravity') {
@@ -187,7 +190,7 @@ export function Skills() {
 
         {/* GitHub Telemetry Bento Grid Showcase */}
         <AnimateOnScroll animation="fade-up" delay={100}>
-          <GitHubTelemetry username="DmitzDev" />
+          <Suspense fallback={<div className="p-8 text-center text-sm font-mono text-slate-500">Loading Telemetry...</div>}><GitHubTelemetry username="DmitzDev" /></Suspense>
         </AnimateOnScroll>
       </div>
     </section>

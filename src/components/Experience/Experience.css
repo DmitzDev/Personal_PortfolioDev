@@ -737,7 +737,11 @@
 }
 
 .timeline-type-pill.academic {
-  color: #10b981;
+  color: #059669;
+}
+
+[data-theme="dark"] .timeline-type-pill.academic {
+  color: #34d399;
 }
 
 .exp-card-title {

@@ -198,8 +198,8 @@ export function Projects() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="project-action-link primary"
-                          title="Live"
-                          aria-label="Live"
+                          title={`Visit ${project.title} live demo`}
+                          aria-label={`Visit ${project.title} live demo`}
                         >
                           <span className="action-text">Live</span>
                           <ExternalLink size={13} />

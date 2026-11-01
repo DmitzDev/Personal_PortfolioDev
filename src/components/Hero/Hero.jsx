@@ -238,14 +238,6 @@ export function Hero() {
                 className="char-3d"
                 style={{ '--char-i': i }}
                 onClick={() => handleLetterClick(item)}
-                role={!isDark ? 'button' : undefined}
-                tabIndex={!isDark ? 0 : undefined}
-                onKeyDown={(e) => {
-                  if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
-                    e.preventDefault();
-                    handleLetterClick(item);
-                  }
-                }}
                 title={!isDark ? `${item.char} for ${item.place} — Click to preview background (5s)` : undefined}
               >
                 {item.char}
@@ -276,14 +268,6 @@ export function Hero() {
                 className="char-3d"
                 style={{ '--char-i': i }}
                 onClick={() => handleLetterClick(item)}
-                role={!isDark ? 'button' : undefined}
-                tabIndex={!isDark ? 0 : undefined}
-                onKeyDown={(e) => {
-                  if (!isDark && (e.key === 'Enter' || e.key === ' ')) {
-                    e.preventDefault();
-                    handleLetterClick(item);
-                  }
-                }}
                 title={!isDark ? `${item.char} for ${item.place} — Click to preview background (5s)` : undefined}
               >
                 {item.char}

@@ -458,7 +458,11 @@
   }
 
   .btn-resume.mobile-btn {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.78rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 }

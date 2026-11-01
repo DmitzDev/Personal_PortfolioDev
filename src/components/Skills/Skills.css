@@ -260,6 +260,7 @@
   gap: 2rem;
   animation: tickerScroll 35s linear infinite;
   white-space: nowrap;
+  will-change: transform;
 }
 
 .ticker-track:hover {

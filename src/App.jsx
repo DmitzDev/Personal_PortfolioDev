@@ -18,7 +18,6 @@ function App() {
   const [introFinished, setIntroFinished] = useState(false);
   const { theme, changeTheme } = useTheme();
 
-  // Initialize smooth momentum scrolling
   useLenis();
 
   const handleReveal = useCallback(() => {
@@ -32,11 +31,11 @@ function App() {
 
   return (
     <div className="app-container">
-      <Toaster 
-        theme={theme} 
-        position="top-right" 
-        richColors 
-        closeButton 
+      <Toaster
+        theme={theme}
+        position="top-right"
+        richColors
+        closeButton
         toastOptions={{
           style: {
             fontFamily: "'Plus Jakarta Sans', sans-serif",

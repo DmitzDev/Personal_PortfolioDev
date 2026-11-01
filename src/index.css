@@ -185,6 +185,8 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
   padding: 3.25rem 0;
   position: relative;
   scroll-margin-top: 5.5rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
 }
 
 /* Skeuomorphic Section Header */

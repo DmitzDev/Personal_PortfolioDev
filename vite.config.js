@@ -13,9 +13,6 @@ export default defineConfig({
           if (id.includes('node_modules/lucide-react/')) {
             return 'vendor-icons';
           }
-          if (id.includes('node_modules/react-github-calendar/') || id.includes('node_modules/date-fns/')) {
-            return 'vendor-calendar';
-          }
           if (id.includes('node_modules/canvas-confetti/')) {
             return 'vendor-confetti';
           }

@@ -4,7 +4,7 @@
 .pro-theme-switch {
   background: transparent;
   border: none;
-  padding: 0;
+  padding: 6px;
   cursor: pointer;
   outline: none;
   display: inline-flex;
@@ -15,6 +15,8 @@
   -webkit-tap-highlight-color: transparent;
   flex-shrink: 0;
   transition: transform 0.15s ease;
+  min-width: 48px;
+  min-height: 48px;
 }
 
 .pro-theme-switch:active {

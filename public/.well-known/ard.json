@@ -1,0 +1,18 @@
+{
+  "name": "MitchDev Portfolio",
+  "description": "Portfolio of Mitchelle (MitchDev) — Full-Stack Web Developer & UI Engineer building high-performance web applications, modern React platforms, and client-centric digital products.",
+  "url": "https://mitchdev.vercel.app",
+  "version": "1.0.0",
+  "capabilities": [
+    "Full-Stack Web Development",
+    "React / Vite Engineering",
+    "UI/UX Design Systems",
+    "RESTful & Real-Time APIs"
+  ],
+  "author": {
+    "name": "Mitchelle Salazar",
+    "role": "Full-Stack Developer",
+    "url": "https://mitchdev.vercel.app"
+  }
+}
+

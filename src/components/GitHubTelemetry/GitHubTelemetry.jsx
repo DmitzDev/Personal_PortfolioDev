@@ -137,13 +137,19 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
   const hasAutoScrolledRef = useRef(false);
   useEffect(() => {
     if (!isLoading && !hasAutoScrolledRef.current && scrollContainerRef.current && typeof window !== 'undefined' && window.innerWidth < 768) {
+      let rafId;
       const timer = setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
-          hasAutoScrolledRef.current = true;
-        }
-      }, 150);
-      return () => clearTimeout(timer);
+        rafId = requestAnimationFrame(() => {
+          if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+            hasAutoScrolledRef.current = true;
+          }
+        });
+      }, 350);
+      return () => {
+        clearTimeout(timer);
+        if (rafId) cancelAnimationFrame(rafId);
+      };
     }
   }, [isLoading]);
 

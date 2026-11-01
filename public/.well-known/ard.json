@@ -1,16 +1,20 @@
 {
-  "$schema": "https://agenticresourcediscovery.org/schema/v1/ard.json",
-  "version": "1.0",
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "MitchDev Portfolio",
+    "identifier": "urn:air:mitchdevportfolio.vercel.app"
+  },
   "entries": [
     {
-      "name": "MitchDev Portfolio API & Profile",
-      "description": "Portfolio of Mitchelle (MitchDev) — Full-Stack Web Developer & UI Engineer building high-performance web applications, modern React platforms, and client-centric digital products.",
+      "identifier": "urn:air:mitchdevportfolio.vercel.app:service:portfolio",
+      "displayName": "MitchDev Web Engineering Profile",
+      "type": "text/html",
       "url": "https://mitchdevportfolio.vercel.app/",
-      "type": "website",
-      "metadata": {
-        "author": "Mitchelle Salazar",
-        "role": "Full-Stack Web Developer"
-      }
+      "representativeQueries": [
+        "Mitchelle Salazar front end developer portfolio",
+        "React Vite web development services",
+        "Full stack software engineer case studies"
+      ]
     }
   ]
 }

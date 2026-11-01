@@ -50,17 +50,21 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Suspense fallback={null}>
-          <Projects />
-          <Skills />
-          <Services />
-          <Experience />
-          <Contact />
-        </Suspense>
+        {introFinished && (
+          <Suspense fallback={null}>
+            <Projects />
+            <Skills />
+            <Services />
+            <Experience />
+            <Contact />
+          </Suspense>
+        )}
       </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      {introFinished && (
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
+      )}
       <ScrollToTop />
     </div>
   );

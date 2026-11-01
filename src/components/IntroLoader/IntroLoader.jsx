@@ -19,7 +19,7 @@ export function IntroLoader({ onFinish, onReveal }) {
       setIsDone(true);
       document.body.style.overflow = '';
       if (onFinish) onFinish();
-    }, 450);
+    }, 250);
   }, [onFinish, onReveal]);
 
   // Measured progress timer
@@ -42,7 +42,7 @@ export function IntroLoader({ onFinish, onReveal }) {
     document.body.style.overflow = 'hidden';
 
     let elapsed = 0;
-    const totalDuration = 700; // ms - snappy, high-performance timing
+    const totalDuration = 450; // ms - super responsive entrance
     const tick = 16;
 
     const interval = setInterval(() => {

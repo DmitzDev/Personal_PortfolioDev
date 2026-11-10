@@ -182,10 +182,10 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Main Split Showcase Layout (Left: Picture + Nav Arrows | Right: Info + Live/Source/Details) */}
+        {/* Main Split Showcase Layout (Open Architecture - No Big Outer Box Container) */}
         {currentProject ? (
-          <div className="project-showcase-card glass-card">
-            {/* LEFT SIDE: Picture thumbnail with left/right arrow buttons below */}
+          <div className="project-showcase-layout">
+            {/* LEFT SIDE: Independent picture thumbnail with left/right arrow buttons below */}
             <div className="project-showcase-visual">
               <div
                 className="project-showcase-thumbnail-wrap"
@@ -218,7 +218,7 @@ export function Projects() {
                 </div>
               </div>
 
-              {/* Left and Right arrow button below the picture */}
+              {/* Left and Right arrow buttons directly below the picture */}
               <div className="project-thumbnail-nav">
                 <button
                   type="button"
@@ -269,7 +269,7 @@ export function Projects() {
               </div>
             </div>
 
-            {/* RIGHT SIDE: Title, descriptions, Tech stack, and Live/Source/Details buttons */}
+            {/* RIGHT SIDE: Independent Title, descriptions, Tech stack, and Live/Source/Details buttons */}
             <div className="project-showcase-content">
               <div className="project-header-meta">
                 <span className="project-cat-badge">{currentProject.category[0]}</span>

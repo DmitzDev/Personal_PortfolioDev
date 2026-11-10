@@ -101,8 +101,8 @@
    ========================================================================== */
 .project-showcase-layout {
   display: grid;
-  grid-template-columns: 1.12fr 1fr;
-  gap: 3.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 4.5vw, 4.5rem);
   align-items: start;
   padding: 0.5rem 0 2rem 0;
   background: transparent;
@@ -117,13 +117,14 @@
   flex-direction: column;
   gap: 1.15rem;
   width: 100%;
+  position: relative;
 }
 
 /* ── 3D PROJECT CARDS DECK (UNTILTED / STRAIGHT STACK) ── */
 .project-deck-stage {
   position: relative;
   width: 100%;
-  height: 285px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,8 +146,7 @@
 
 .project-deck-card {
   position: absolute;
-  width: 480px;
-  max-width: 86%;
+  width: min(390px, 78%);
   height: auto;
   aspect-ratio: 800 / 368;
   display: flex;
@@ -197,30 +197,30 @@
   box-shadow: 0 28px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 255, 255, 0.22);
 }
 
-/* Previous Card (Straight / NOT tilted) */
+/* Previous Card (Left side, contained inside visual column) */
 .project-card-prev {
-  transform: translateX(-34%) translateY(0) scale(0.86) rotate(0deg) translateZ(-50px);
+  transform: translateX(-18%) translateY(0) scale(0.88) rotate(0deg) translateZ(-50px);
   z-index: 4;
   opacity: 0.52;
   filter: brightness(0.68) saturate(0.85);
 }
 
 .project-card-prev:hover {
-  transform: translateX(-37%) translateY(-3px) scale(0.89) rotate(0deg) translateZ(-25px);
+  transform: translateX(-21%) translateY(-3px) scale(0.91) rotate(0deg) translateZ(-25px);
   opacity: 0.82;
   filter: brightness(0.88) saturate(0.95);
 }
 
-/* Next Card (Straight / NOT tilted) */
+/* Next Card (Right side, strictly contained inside visual column - ZERO collision with text) */
 .project-card-next {
-  transform: translateX(34%) translateY(0) scale(0.86) rotate(0deg) translateZ(-50px);
+  transform: translateX(18%) translateY(0) scale(0.88) rotate(0deg) translateZ(-50px);
   z-index: 4;
   opacity: 0.52;
   filter: brightness(0.68) saturate(0.85);
 }
 
 .project-card-next:hover {
-  transform: translateX(37%) translateY(-3px) scale(0.89) rotate(0deg) translateZ(-25px);
+  transform: translateX(21%) translateY(-3px) scale(0.91) rotate(0deg) translateZ(-25px);
   opacity: 0.82;
   filter: brightness(0.88) saturate(0.95);
 }
@@ -355,6 +355,8 @@
   min-width: 0;
   min-height: 420px; /* Lock height to prevent page jumping */
   justify-content: flex-start;
+  position: relative;
+  z-index: 10;
 }
 
 .project-header-meta {
@@ -633,17 +635,16 @@
   }
 
   .project-deck-card {
-    width: 320px;
-    max-width: 86%;
+    width: min(320px, 78%);
     aspect-ratio: 800 / 368;
   }
 
   .project-card-prev {
-    transform: translateX(-24%) translateY(0) scale(0.82) rotate(0deg) translateZ(-35px);
+    transform: translateX(-18%) translateY(0) scale(0.84) rotate(0deg) translateZ(-35px);
   }
 
   .project-card-next {
-    transform: translateX(24%) translateY(0) scale(0.82) rotate(0deg) translateZ(-35px);
+    transform: translateX(18%) translateY(0) scale(0.84) rotate(0deg) translateZ(-35px);
   }
 
   .project-thumbnail-nav {

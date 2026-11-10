@@ -119,50 +119,136 @@
   width: 100%;
 }
 
-/* ── CERTIFICATE-STYLE PROJECT PICTURE CARD (FLAT & UNTILTED) ── */
-.project-cert-card-wrap {
+/* ── 3D PROJECT CARDS DECK (UNTILTED / STRAIGHT STACK) ── */
+.project-deck-stage {
   position: relative;
   width: 100%;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  user-select: none;
+  touch-action: pan-y;
+  overflow: visible;
+}
+
+.project-deck-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.project-deck-card {
+  position: absolute;
+  width: 440px;
+  max-width: 82%;
+  height: auto;
+  max-height: 310px;
+  aspect-ratio: 16 / 10;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
-  padding: 0;
-  border-radius: 0.85rem;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s ease;
+  will-change: transform, opacity;
 }
 
-.project-cert-img {
+.project-deck-img {
   width: 100%;
-  max-width: 100%;
-  height: auto;
-  max-height: 380px;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: contain !important;
   border-radius: 0.85rem;
   display: block;
   background: #0d1117;
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.35);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s ease,
-              border-color 0.35s ease;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-.project-cert-card-wrap:hover .project-cert-img {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 255, 255, 0.12);
+/* Front & Center Active Project Card */
+.project-card-active {
+  transform: translateX(0) translateY(0) scale(1) rotate(0deg) translateZ(0);
+  z-index: 10;
+  opacity: 1;
+  filter: brightness(1);
+  cursor: default;
 }
 
-[data-theme="light"] .project-cert-img {
+.project-card-active .project-deck-img {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 255, 255, 0.12);
+}
+
+.project-card-active:hover {
+  transform: translateX(0) translateY(-6px) scale(1.02) rotate(0deg) translateZ(10px);
+}
+
+.project-card-active:hover .project-deck-img {
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 255, 255, 0.22);
+}
+
+/* Previous Card (Straight / NOT tilted) */
+.project-card-prev {
+  transform: translateX(-34%) translateY(0) scale(0.86) rotate(0deg) translateZ(-50px);
+  z-index: 4;
+  opacity: 0.52;
+  filter: brightness(0.68) saturate(0.85);
+}
+
+.project-card-prev:hover {
+  transform: translateX(-37%) translateY(-3px) scale(0.89) rotate(0deg) translateZ(-25px);
+  opacity: 0.82;
+  filter: brightness(0.88) saturate(0.95);
+}
+
+/* Next Card (Straight / NOT tilted) */
+.project-card-next {
+  transform: translateX(34%) translateY(0) scale(0.86) rotate(0deg) translateZ(-50px);
+  z-index: 4;
+  opacity: 0.52;
+  filter: brightness(0.68) saturate(0.85);
+}
+
+.project-card-next:hover {
+  transform: translateX(37%) translateY(-3px) scale(0.89) rotate(0deg) translateZ(-25px);
+  opacity: 0.82;
+  filter: brightness(0.88) saturate(0.95);
+}
+
+/* Hidden Cards (> 3 projects) */
+.project-card-hidden {
+  transform: translateX(0) translateY(15px) scale(0.65) rotate(0deg) translateZ(-100px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Light Mode Overrides */
+[data-theme="light"] .project-deck-img {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-[data-theme="light"] .project-cert-card-wrap:hover .project-cert-img {
-  border-color: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.2);
+[data-theme="light"] .project-card-active .project-deck-img {
+  border-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .project-card-active:hover .project-deck-img {
+  border-color: rgba(0, 0, 0, 0.45);
+  box-shadow: 0 26px 55px rgba(0, 0, 0, 0.24);
 }
 
 /* ── THUMBNAIL NAVIGATION BAR (BELOW PICTURE) ── */
@@ -543,8 +629,22 @@
     min-height: auto;
   }
 
-  .project-cert-img {
-    max-height: 240px;
+  .project-deck-stage {
+    height: 240px;
+  }
+
+  .project-deck-card {
+    width: 290px;
+    max-width: 80%;
+    max-height: 200px;
+  }
+
+  .project-card-prev {
+    transform: translateX(-24%) translateY(0) scale(0.82) rotate(0deg) translateZ(-35px);
+  }
+
+  .project-card-next {
+    transform: translateX(24%) translateY(0) scale(0.82) rotate(0deg) translateZ(-35px);
   }
 
   .project-thumbnail-nav {

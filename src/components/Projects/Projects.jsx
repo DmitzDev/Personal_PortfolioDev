@@ -182,25 +182,66 @@ export function Projects() {
         {/* Main Split Showcase Layout (Open Architecture - No Big Outer Box Container) */}
         {currentProject ? (
           <div className="project-showcase-layout">
-            {/* LEFT SIDE: Independent picture thumbnail with left/right arrow buttons below */}
+            {/* LEFT SIDE: Card Deck of Project Pictures with left/right arrow buttons below */}
             <div className="project-showcase-visual">
               <div
-                className="project-cert-card-wrap"
+                className="project-deck-stage"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
-                <img
-                  src={currentProject.image}
-                  alt={currentProject.title}
-                  className="project-cert-img"
-                  width="640"
-                  height="380"
-                  loading="eager"
-                />
+                <div className="project-deck-stack">
+                  {filteredProjects.map((project, idx) => {
+                    const total = filteredProjects.length;
+                    let cardState = 'hidden';
+
+                    if (total === 1) {
+                      cardState = 'active';
+                    } else if (total === 2) {
+                      if (idx === safeIndex) cardState = 'active';
+                      else cardState = 'next';
+                    } else {
+                      if (idx === safeIndex) {
+                        cardState = 'active';
+                      } else if (idx === (safeIndex - 1 + total) % total) {
+                        cardState = 'prev';
+                      } else if (idx === (safeIndex + 1) % total) {
+                        cardState = 'next';
+                      }
+                    }
+
+                    return (
+                      <div
+                        key={project.id}
+                        className={`project-deck-card project-card-${cardState}`}
+                        onClick={() => {
+                          if (cardState === 'prev') handlePrev();
+                          else if (cardState === 'next') handleNext();
+                        }}
+                        title={
+                          cardState === 'prev'
+                            ? `Previous: ${project.title}`
+                            : cardState === 'next'
+                            ? `Next: ${project.title}`
+                            : project.title
+                        }
+                        aria-label={project.title}
+                      >
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="project-deck-img"
+                          width="640"
+                          height="400"
+                          loading="eager"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Left and Right arrow buttons directly below the picture */}
+              {/* Left and Right arrow buttons directly below the picture stack */}
               <div className="project-thumbnail-nav">
                 <button
                   type="button"

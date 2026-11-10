@@ -185,31 +185,19 @@ export function Projects() {
             {/* LEFT SIDE: Independent picture thumbnail with left/right arrow buttons below */}
             <div className="project-showcase-visual">
               <div
-                className="project-showcase-thumbnail-wrap"
+                className="project-cert-card-wrap"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
-                {/* Browser-style frame header */}
-                <div className="thumbnail-browser-bar">
-                  <span className="browser-dot red"></span>
-                  <span className="browser-dot yellow"></span>
-                  <span className="browser-dot green"></span>
-                  <span className="browser-url-pill">
-                    {currentProject.title.toLowerCase().replace(/[^a-z0-9]/g, '')}.app
-                  </span>
-                </div>
-
-                <div className="thumbnail-img-canvas">
-                  <img
-                    src={currentProject.image}
-                    alt={currentProject.title}
-                    className="project-showcase-img"
-                    width="640"
-                    height="380"
-                    loading="eager"
-                  />
-                </div>
+                <img
+                  src={currentProject.image}
+                  alt={currentProject.title}
+                  className="project-cert-img"
+                  width="640"
+                  height="380"
+                  loading="eager"
+                />
               </div>
 
               {/* Left and Right arrow buttons directly below the picture */}
@@ -283,10 +271,6 @@ export function Projects() {
               </div>
 
               <h3 className="project-showcase-title">{currentProject.title}</h3>
-
-              {currentProject.subtitle && (
-                <p className="project-showcase-subtitle">{currentProject.subtitle}</p>
-              )}
 
               <p className="project-showcase-desc">{currentProject.description}</p>
 

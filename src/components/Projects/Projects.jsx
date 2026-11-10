@@ -9,6 +9,10 @@ import {
   Mail,
   ChevronLeft,
   ChevronRight,
+  Check,
+  Calendar,
+  User,
+  Sparkles,
 } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import './Projects.css';
@@ -182,7 +186,7 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Main Split Showcase Layout (Open Architecture - No Big Outer Box Container) */}
+        {/* Main Split Showcase Layout (Open Architecture - Rock-Solid Layout Stability) */}
         {currentProject ? (
           <div className="project-showcase-layout">
             {/* LEFT SIDE: Independent picture thumbnail with left/right arrow buttons below */}
@@ -202,19 +206,29 @@ export function Projects() {
                 }}
                 aria-label={`View details of ${currentProject.title}`}
               >
-                <img
-                  src={currentProject.image}
-                  alt={currentProject.title}
-                  className="project-showcase-img"
-                  width="640"
-                  height="380"
-                  loading="eager"
-                />
-                <div className="project-thumbnail-overlay">
-                  <span className="thumbnail-view-pill">
-                    <FileText size={15} />
-                    View Details
-                  </span>
+                {/* Browser-style frame header */}
+                <div className="thumbnail-browser-bar">
+                  <span className="browser-dot red"></span>
+                  <span className="browser-dot yellow"></span>
+                  <span className="browser-dot green"></span>
+                  <span className="browser-url-pill">{currentProject.title.toLowerCase().replace(/[^a-z0-9]/g, '')}.app</span>
+                </div>
+
+                <div className="thumbnail-img-canvas">
+                  <img
+                    src={currentProject.image}
+                    alt={currentProject.title}
+                    className="project-showcase-img"
+                    width="640"
+                    height="380"
+                    loading="eager"
+                  />
+                  <div className="project-thumbnail-overlay">
+                    <span className="thumbnail-view-pill">
+                      <FileText size={15} />
+                      View Project Details
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -380,21 +394,21 @@ export function Projects() {
         )}
       </div>
 
-      {/* Case Study Modal (Triggered by Details button) */}
+      {/* Case Study Modal (Redesigned: High-End Architectural Presentation) */}
       {selectedProject && (
         <div className="modal-backdrop" onClick={() => setSelectedProject(null)}>
           <div
-            className="modal-dialog glass-card"
+            className="modal-dialog"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-project-title"
           >
-            {/* Modal Header */}
+            {/* Modal Header Bar */}
             <div className="modal-header">
-              <div className="modal-title-wrap">
-                <div className="modal-meta-row">
-                  <span className="modal-category">
+              <div className="modal-header-info">
+                <div className="modal-tags-row">
+                  <span className="modal-cat-tag">
                     {selectedProject.category.join(' • ')}
                   </span>
                   <span
@@ -407,21 +421,17 @@ export function Projects() {
                     <span className="status-led"></span>
                     <span className="status-label">{selectedProject.status}</span>
                   </span>
-                  {selectedProject.timeline && (
-                    <span className="modal-timeline-pill">
-                      {selectedProject.timeline}
-                    </span>
-                  )}
                 </div>
-                <h3 id="modal-project-title" className="modal-title">
+                <h3 id="modal-project-title" className="modal-main-title">
                   {selectedProject.title}
                 </h3>
                 {selectedProject.subtitle && (
-                  <p className="modal-subtitle">{selectedProject.subtitle}</p>
+                  <p className="modal-sub-title">{selectedProject.subtitle}</p>
                 )}
               </div>
               <button
-                className="modal-close-btn"
+                type="button"
+                className="modal-close-icon-btn"
                 onClick={() => setSelectedProject(null)}
                 aria-label="Close modal"
                 title="Close modal"
@@ -432,26 +442,86 @@ export function Projects() {
 
             {/* Scrollable Content Body */}
             <div className="modal-content-scroll">
-              <div className="modal-image-stage">
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className={`modal-preview-img ${
-                    selectedProject.title?.includes('Tambayan') ? 'contain-mode' : ''
-                  }`}
-                  width="800"
-                  height="450"
-                  loading="lazy"
-                />
+              {/* Clean Framed Visual Stage */}
+              <div className="modal-framed-stage">
+                <div className="stage-browser-header">
+                  <span className="browser-dot red"></span>
+                  <span className="browser-dot yellow"></span>
+                  <span className="browser-dot green"></span>
+                  <span className="stage-url-indicator">
+                    {selectedProject.liveDemo && selectedProject.liveDemo !== '#'
+                      ? selectedProject.liveDemo.replace('https://', '')
+                      : `${selectedProject.title.toLowerCase().replace(/[^a-z0-9]/g, '')}.app`}
+                  </span>
+                </div>
+                <div className="stage-image-container">
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className="modal-showcase-img"
+                    width="800"
+                    height="450"
+                    loading="lazy"
+                  />
+                </div>
               </div>
 
+              {/* Quick Specs Grid */}
+              <div className="modal-specs-grid">
+                {selectedProject.role && (
+                  <div className="modal-spec-card">
+                    <User size={15} className="spec-icon" />
+                    <div className="spec-text">
+                      <span className="spec-label">Role</span>
+                      <strong className="spec-value">{selectedProject.role}</strong>
+                    </div>
+                  </div>
+                )}
+                {selectedProject.timeline && (
+                  <div className="modal-spec-card">
+                    <Calendar size={15} className="spec-icon" />
+                    <div className="spec-text">
+                      <span className="spec-label">Timeline</span>
+                      <strong className="spec-value">{selectedProject.timeline}</strong>
+                    </div>
+                  </div>
+                )}
+                {selectedProject.metrics && (
+                  <div className="modal-spec-card spec-card-wide">
+                    <Sparkles size={15} className="spec-icon" />
+                    <div className="spec-text">
+                      <span className="spec-label">Key Highlight</span>
+                      <strong className="spec-value">{selectedProject.metrics}</strong>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Overview Narrative */}
               {selectedProject.description && (
-                <p className="modal-lead-desc">{selectedProject.description}</p>
+                <div className="modal-narrative-block">
+                  <h4 className="modal-block-heading">Project Overview</h4>
+                  <p className="modal-lead-desc">{selectedProject.description}</p>
+                </div>
               )}
 
-              {/* Technologies in Modal */}
+              {/* Challenge & Solution if present */}
+              {selectedProject.challenge && (
+                <div className="modal-cs-grid">
+                  <div className="modal-cs-col">
+                    <h5 className="modal-cs-title">The Engineering Challenge</h5>
+                    <p className="modal-cs-text">{selectedProject.challenge}</p>
+                  </div>
+                  <div className="modal-cs-col">
+                    <h5 className="modal-cs-title">The Implemented Solution</h5>
+                    <p className="modal-cs-text">{selectedProject.solution}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Technologies Pills */}
               <div className="modal-tech-stack">
-                <h4 className="modal-section-title">Technologies Used</h4>
+                <h4 className="modal-block-heading">Technologies &amp; Architecture</h4>
                 <div className="tech-tags-wrap">
                   {selectedProject.technologies.map((tech) => {
                     const info = getTechIconInfo(tech);
@@ -483,23 +553,25 @@ export function Projects() {
                 </div>
               </div>
 
-              {/* Features list */}
+              {/* Key Features Cards (Sleek 2-Column Grid instead of plain bullets) */}
               {selectedProject.features && selectedProject.features.length > 0 && (
-                <div className="modal-features-block">
-                  <h4 className="modal-section-title">Key Architectural Features</h4>
-                  <ul className="modal-features-list">
+                <div className="modal-features-section">
+                  <h4 className="modal-block-heading">Core System Features</h4>
+                  <div className="modal-feature-cards-grid">
                     {selectedProject.features.map((feat, idx) => (
-                      <li key={idx} className="modal-feature-item">
-                        <span className="feature-bullet">•</span>
-                        <span>{feat}</span>
-                      </li>
+                      <div key={idx} className="modal-feature-card">
+                        <span className="feature-check-glyph">
+                          <Check size={13} />
+                        </span>
+                        <span className="feature-card-text">{feat}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Modal Footer */}
+            {/* Modal Footer Actions */}
             <div className="modal-footer">
               <div className="modal-footer-links">
                 {selectedProject.liveDemo && selectedProject.liveDemo !== '#' && (

@@ -48,11 +48,11 @@
 }
 
 [data-theme="dark"] {
-  /* Refined Liquid Glass & Obsidian Dark Theme */
-  --bg-primary: #090c12;
-  --bg-secondary: rgba(18, 24, 38, 0.72);
-  --bg-tertiary: rgba(26, 34, 52, 0.65);
-  --bg-elevated: rgba(33, 44, 66, 0.85);
+  /* Architectural Titanium Slate & Silver Chrome Dark Theme (Slight Gray Background) */
+  --bg-primary: #1e222b;
+  --bg-secondary: #272d3b;
+  --bg-tertiary: #313849;
+  --bg-elevated: #3b4458;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -61,37 +61,37 @@
   --accent-light: rgba(255, 255, 255, 0.12);
   --accent-text: #090c12;
 
-  /* Polished Platinum & Glass Gradient Palette */
-  --gradient-text: linear-gradient(180deg, #ffffff 40%, #cbd5e1 100%);
+  /* Cool Platinum & Brushed Steel Slate Gradient Palette */
+  --gradient-text: linear-gradient(180deg, #f8fafc 30%, #cbd5e1 100%);
   --gradient-accent: linear-gradient(135deg, #ffffff 0%, #e2e8f0 35%, #94a3b8 75%, #64748b 100%);
   --gradient-accent-hover: linear-gradient(135deg, #ffffff 0%, #f1f5f9 45%, #cbd5e1 100%);
-  --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-  --gradient-card-border: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 70%);
-  --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  --ambient-glow: radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.08) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 70%);
+  --gradient-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 100%);
+  --gradient-card-border: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 65%);
+  --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  --ambient-glow: radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.1) 0%, rgba(148, 163, 184, 0.05) 40%, transparent 70%);
 
-  /* Liquid Glass Surface Shadows & Borders */
-  --skeuo-extruded: 0 8px 32px 0 rgba(0, 0, 0, 0.45), 0 1px 1px rgba(255, 255, 255, 0.12) inset;
-  --skeuo-extruded-sm: 0 4px 16px -2px rgba(0, 0, 0, 0.4), 0 1px 1px rgba(255, 255, 255, 0.08) inset;
-  --skeuo-extruded-hover: 0 16px 40px -4px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(255, 255, 255, 0.22) inset;
+  /* Physical Skeuomorphic Surface Shadows */
+  --skeuo-extruded: 0 1px 1px rgba(255, 255, 255, 0.12) inset, 0 10px 30px -5px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --skeuo-extruded-sm: 0 1px 1px rgba(255, 255, 255, 0.1) inset, 0 4px 14px -2px rgba(0, 0, 0, 0.35);
+  --skeuo-extruded-hover: 0 1px 1px rgba(255, 255, 255, 0.2) inset, 0 16px 36px -6px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 255, 255, 0.15);
   --skeuo-recessed: inset 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 0 1px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.08);
   --skeuo-recessed-sm: inset 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 0 1px rgba(0, 0, 0, 0.6);
-  --skeuo-btn: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-  --skeuo-btn-active: linear-gradient(145deg, #0f172a, #1e293b);
-  --skeuo-border: 1px solid rgba(255, 255, 255, 0.1);
-  --skeuo-bevel-top: rgba(255, 255, 255, 0.16);
+  --skeuo-btn: linear-gradient(145deg, #313849, #272d3b);
+  --skeuo-btn-active: linear-gradient(145deg, #1e222b, #252a37);
+  --skeuo-border: 1px solid rgba(255, 255, 255, 0.12);
+  --skeuo-bevel-top: rgba(255, 255, 255, 0.18);
   --skeuo-bevel-bottom: rgba(0, 0, 0, 0.5);
 
-  --border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.12);
   --border-focus: rgba(255, 255, 255, 0.75);
-  --badge-bg: rgba(26, 34, 52, 0.8);
+  --badge-bg: #313849;
   --badge-text: #ffffff;
 
   --led-green: #10b981;
   --led-glow: 0 0 8px #10b981, 0 0 14px rgba(16, 185, 129, 0.45);
 
-  --bg-nav-scrolled: rgba(18, 20, 26, 0.94);
-  --skeuo-nav-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+  --bg-nav-scrolled: rgba(30, 34, 43, 0.94);
+  --skeuo-nav-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
   --nav-active-bg: var(--bg-tertiary);
   --nav-active-text: #ffffff;
 }

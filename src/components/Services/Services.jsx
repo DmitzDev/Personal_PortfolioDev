@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  ArrowRight,
   ArrowUpRight,
   Check,
   Plus,
@@ -12,7 +11,7 @@ import {
   Rocket,
   Cpu
 } from 'lucide-react';
-import { services, clientProcess } from '../../data/services';
+import { services } from '../../data/services';
 import './Services.css';
 
 const SERVICE_ICONS = {
@@ -149,49 +148,7 @@ export function Services() {
           })}
         </div>
 
-        {/* 4-Step Sprint Workflow: Clean Milestone Flow (No boxes!) */}
-        <div className="workflow-editorial-section">
-          <div className="workflow-editorial-header">
-            <h3 className="workflow-title">From Architecture Spec to Production in 4 Sprints</h3>
-            <p className="workflow-desc">
-              No black-box development. Transparent communication, weekly live preview builds, and predictable milestones.
-            </p>
-          </div>
-
-          <div className="workflow-milestone-flow">
-            {clientProcess.map((step) => (
-              <div key={step.step} className="workflow-milestone-node">
-                <div className="milestone-top-bar">
-                  <span className="milestone-step-index">{step.step}</span>
-                  <span className="milestone-phase-label">{step.phase}</span>
-                </div>
-                <h4 className="milestone-title">{step.title}</h4>
-                <p className="milestone-description">{step.description}</p>
-                <div className="milestone-output">
-                  <Terminal size={12} className="milestone-terminal-icon" />
-                  <span>{step.output}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Clean Bottom Callout (No Box!) */}
-          <div className="workflow-cta-row">
-            <div className="workflow-cta-text">
-              <h4>Ready to build or modernize your application?</h4>
-              <p>Let's evaluate your requirements and scope out a delivery timeline.</p>
-            </div>
-            <a
-              href="#contact"
-              className="btn-primary workflow-cta-button"
-              onClick={(e) => scrollToContact(e, 'General Project Inquiry')}
-            >
-              <span>Schedule a Project Discovery</span>
-              <ArrowRight size={16} />
-            </a>
-          </div>
         </div>
-      </div>
     </section>
   );
 }

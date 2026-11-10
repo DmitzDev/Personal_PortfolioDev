@@ -44,7 +44,6 @@ const coreTechIcons = [
 
 export function Hero() {
   const { theme } = useTheme();
-  const videoRef = useRef(null);
   const isDark = theme === 'dark';
   const [activePlaceId, setActivePlaceId] = useState(null);
   const [isHeroReentered, setIsHeroReentered] = useState(false);
@@ -126,34 +125,7 @@ export function Hero() {
     };
   }, [isDark]);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
 
-    let timer = null;
-
-    if (isDark) {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay policy or interruption
-        });
-      }
-    } else {
-      // Keep playing smoothly during the close animation (850ms), then pause to save resources
-      timer = setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.pause();
-        }
-      }, 850);
-    }
-
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [isDark]);
 
   const scrollTo = (id) => {
     const element = document.getElementById(id);
@@ -188,21 +160,6 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-section editorial-hero">
-      {/* Dark Mode Arch Linux Atmospheric Background Video */}
-      <div className="hero-video-bg-wrap" aria-hidden="true">
-        <video
-          ref={videoRef}
-          className="hero-video-bg-media"
-          src={`${import.meta.env.BASE_URL}video/ArchLinux.mp4`}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
-        />
-        <div className="hero-video-overlay" />
-      </div>
-
       {/* Cinematic Ambient Atmosphere (Studio Streaks + Center Fog Glow) */}
       <div className="hero-atmosphere-backdrop" aria-hidden="true"></div>
 

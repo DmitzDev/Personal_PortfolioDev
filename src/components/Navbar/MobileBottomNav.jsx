@@ -22,12 +22,15 @@ export function MobileBottomNav({ activeSection, scrollTo }) {
               <li key={item.id} className="mobnav-slot">
                 <button
                   type="button"
-                  className={`mobnav-key ${isActive ? 'pressed' : ''}`}
+                  className={`mobnav-key ${isActive ? 'is-active' : ''}`}
                   onClick={() => scrollTo(item.id)}
                   aria-label={item.label}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  <Icon size={18} strokeWidth={isActive ? 2.4 : 1.8} />
+                  <div className="mobnav-icon-wrap">
+                    <Icon size={19} strokeWidth={isActive ? 2.3 : 1.7} />
+                    {isActive && <span className="mobnav-active-dot" aria-hidden="true" />}
+                  </div>
                   <span className="mobnav-key-label">{item.label}</span>
                 </button>
               </li>

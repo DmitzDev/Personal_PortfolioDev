@@ -8,7 +8,6 @@ import {
   AlertCircle,
   ChevronDown,
   Star,
-  Flame
 } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import './GitHubTelemetry.css';
@@ -456,10 +455,7 @@ export function GitHubTelemetry({ username = DEFAULT_USERNAME }) {
                       <Star size={13} className="gh-badge-icon star-icon" />
                       <span>{totalStars}</span>
                     </span>
-                    <span className="gh-stats-badge" title={`Longest Contribution Streak: ${stats?.maxStreak || 0} days`}>
-                      <Flame size={13} className="gh-badge-icon streak-icon" />
-                      <span>{stats?.maxStreak || 0}d streak</span>
-                    </span>
+
                   </div>
                 </div>
 

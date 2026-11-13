@@ -152,7 +152,7 @@ export const projects = [
     ],
     image: gasGoImg,
     liveDemo: "https://github.com/DmitzDev",
-    github: "https://github.com/DmitzDev",
+    github: "https://github.com/DmitzDev/eGasGo-Mobile",
   },
 ];
 

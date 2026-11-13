@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  ArrowRight,
   ArrowUpRight,
   Check,
   Clock,
@@ -8,10 +9,9 @@ import {
   PenTool,
   Rocket,
   Server,
-  ShieldCheck,
   Terminal,
 } from 'lucide-react';
-import { services, clientAssurances } from '../../data/services';
+import { services } from '../../data/services';
 import './Services.css';
 
 const SERVICE_ICONS = {
@@ -19,12 +19,6 @@ const SERVICE_ICONS = {
   PenTool,
   Rocket,
   Server,
-  Cpu,
-};
-
-const ASSURANCE_ICONS = {
-  Clock,
-  ShieldCheck,
   Cpu,
 };
 
@@ -51,6 +45,9 @@ const servicesStructuredData = {
 };
 
 export function Services() {
+  const [activeId, setActiveId] = useState(services[0]?.id ?? 1);
+  const activeService = services.find((s) => s.id === activeId) || services[0];
+
   const scrollToContact = (e, serviceTitle) => {
     e.preventDefault();
     const contactEl = document.getElementById('contact');
@@ -93,82 +90,110 @@ export function Services() {
             Services
           </h2>
           <p className="section-subtitle">
-            End-to-end web engineering for founders, startups, and product teams.
+            End-to-end web engineering tailored for founders, startups, and product teams.
           </p>
         </header>
 
-        {/* Clean 2x2 Minimal Service Grid */}
-        <div className="services-grid">
-          {services.map((service) => {
-            const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
+        <div className="services-split-layout">
+          {/* LEFT: Clean Interactive Service Selector */}
+          <div
+            className="services-selector-list"
+            role="tablist"
+            aria-label="Select a service"
+          >
+            {services.map((service, index) => {
+              const isActive = service.id === activeService.id;
+              const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
 
-            return (
-              <article
-                key={service.id}
-                className="service-card"
-                aria-labelledby={`service-title-${service.id}`}
-              >
-                <div className="service-card-top">
-                  <span className="service-card-icon" aria-hidden="true">
-                    <IconComponent size={20} />
+              return (
+                <button
+                  key={service.id}
+                  type="button"
+                  role="tab"
+                  id={`service-tab-${service.id}`}
+                  aria-selected={isActive}
+                  aria-controls={`service-panel-${service.id}`}
+                  className={`service-selector-item ${isActive ? 'is-active' : ''}`}
+                  onClick={() => setActiveId(service.id)}
+                >
+                  <span className="selector-icon-wrap" aria-hidden="true">
+                    <IconComponent size={19} />
                   </span>
 
-                  <span className="service-card-turnaround" title="Estimated turnaround">
-                    <Clock size={12} aria-hidden="true" />
-                    <span>{service.turnaround}</span>
+                  <span className="selector-text">
+                    <span className="selector-index">
+                      {String(index + 1).padStart(2, '0')} · {service.badge}
+                    </span>
+                    <span className="selector-title">{service.title}</span>
                   </span>
-                </div>
 
-                <h3 id={`service-title-${service.id}`} className="service-card-title">
-                  {service.title}
-                </h3>
-                <p className="service-card-tagline">{service.tagline}</p>
+                  <ArrowRight
+                    size={16}
+                    className="selector-arrow"
+                    aria-hidden="true"
+                  />
+                </button>
+              );
+            })}
+          </div>
 
-                <ul className="service-deliverables-list" aria-label={`Key deliverables for ${service.title}`}>
-                  {service.deliverables.slice(0, 3).map((item, idx) => (
-                    <li key={idx} className="service-deliverable-item">
-                      <Check size={14} className="service-check-icon" aria-hidden="true" />
+          {/* RIGHT: Focused Active Service Detail View */}
+          {activeService && (
+            <article
+              key={activeService.id}
+              id={`service-panel-${activeService.id}`}
+              role="tabpanel"
+              aria-labelledby={`service-tab-${activeService.id}`}
+              className="service-detail-panel"
+            >
+              <div className="detail-meta-row">
+                <span className="detail-code-badge">
+                  {activeService.code} · {activeService.badge}
+                </span>
+                <span className="detail-turnaround-pill">
+                  <Clock size={13} aria-hidden="true" />
+                  <span>{activeService.turnaround}</span>
+                </span>
+              </div>
+
+              <h3 className="detail-title">{activeService.title}</h3>
+              <p className="detail-description">{activeService.description}</p>
+
+              <div className="detail-deliverables-block">
+                <span className="detail-block-label">Key Deliverables</span>
+                <ul className="detail-deliverables-list">
+                  {activeService.deliverables.map((item, idx) => (
+                    <li key={idx} className="detail-deliverable-item">
+                      <span className="detail-check-icon" aria-hidden="true">
+                        <Check size={12} />
+                      </span>
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-
-                <footer className="service-card-footer">
-                  <div className="service-tech-list" aria-label={`Technologies for ${service.title}`}>
-                    {service.techStack.slice(0, 3).map((tech) => (
-                      <span key={tech} className="service-tech-pill">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <a
-                    href="#contact"
-                    className="service-inquire-link"
-                    onClick={(e) => scrollToContact(e, service.title)}
-                    aria-label={`Inquire about ${service.title}`}
-                  >
-                    <span>Inquire</span>
-                    <ArrowUpRight size={15} aria-hidden="true" />
-                  </a>
-                </footer>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* Compact 1-Line Assurances Strip */}
-        <div className="services-assurances-bar" aria-label="Engineering assurances">
-          {clientAssurances.map((assurance) => {
-            const AssuranceIcon = ASSURANCE_ICONS[assurance.icon] || ShieldCheck;
-
-            return (
-              <div key={assurance.title} className="service-assurance-pill">
-                <AssuranceIcon size={15} aria-hidden="true" />
-                <span>{assurance.title}</span>
               </div>
-            );
-          })}
+
+              <footer className="detail-footer">
+                <div className="detail-tech-list" aria-label="Tech stack">
+                  {activeService.techStack.map((tech) => (
+                    <span key={tech} className="detail-tech-pill">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href="#contact"
+                  className="detail-inquire-btn"
+                  onClick={(e) => scrollToContact(e, activeService.title)}
+                  aria-label={`Inquire about ${activeService.title}`}
+                >
+                  <span>Inquire</span>
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </a>
+              </footer>
+            </article>
+          )}
         </div>
       </div>
     </section>

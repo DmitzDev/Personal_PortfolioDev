@@ -3,6 +3,7 @@ import mitchBlogImg from '../assets/MitchBlog.webp';
 import NarutoMonopolyImg from '../assets/Monopoly.webp';
 import PortfolioImg from '../assets/Portfolio.webp';
 import tambayanLogoImg from '../assets/tambayan_t_logo.webp';
+import gasGoImg from '../assets/GasGo.webp';
 
 export const projects = [
   {
@@ -128,6 +129,30 @@ export const projects = [
     image: PortfolioImg,
     liveDemo: "https://mitchdevportfolio.vercel.app/",
     github: "https://github.com/DmitzDev/Personal-PortfolioDev",
+  },
+  {
+    id: 6,
+    title: "GasGo",
+    subtitle: "On-Demand LPG Delivery & Order Tracking Mobile App",
+    category: ["Mobile App", "Personal Projects"],
+    role: "Mobile App Developer & UI Designer",
+    timeline: "2026",
+    status: "In Progress",
+    featured: true,
+    description: "An on-demand LPG cylinder ordering and delivery mobile application featuring instant tank selection, real-time rider tracking, transparent pricing, and streamlined customer checkout.",
+    challenge: "Ordering household LPG traditionally relies on manual calls and texts with no live delivery ETA or order status visibility.",
+    solution: "Designed a mobile-first ordering flow with real-time delivery status updates, saved delivery addresses, and clean order history tracking.",
+    metrics: "Mobile-First UX • Real-Time Delivery Status • Instant Reorder Flow",
+    technologies: ["React Native", "JavaScript ES6+", "Firebase Firestore", "Firebase Auth", "REST APIs"],
+    features: [
+      "Quick LPG tank size selection and one-tap reordering",
+      "Real-time order status and delivery tracking",
+      "Saved customer delivery addresses and order history",
+      "Clean mobile-first interface optimized for fast checkout",
+    ],
+    image: gasGoImg,
+    liveDemo: "https://github.com/DmitzDev",
+    github: "https://github.com/DmitzDev",
   },
 ];
 

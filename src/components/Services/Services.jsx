@@ -90,14 +90,14 @@ export function Services() {
       <div className="container">
         <header className="section-header services-header">
           <h2 id="services-heading" className="section-title">
-            Services &amp; Capabilities
+            Services
           </h2>
           <p className="section-subtitle">
-            End-to-end web engineering tailored for founders, startups, and product teams seeking speed, clean component architecture, and measurable ROI.
+            End-to-end web engineering for founders, startups, and product teams.
           </p>
         </header>
 
-        {/* 2x2 Scannable Service Grid */}
+        {/* Clean 2x2 Minimal Service Grid */}
         <div className="services-grid">
           {services.map((service) => {
             const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
@@ -109,18 +109,12 @@ export function Services() {
                 aria-labelledby={`service-title-${service.id}`}
               >
                 <div className="service-card-top">
-                  <div className="service-card-identity">
-                    <span className="service-card-icon" aria-hidden="true">
-                      <IconComponent size={20} />
-                    </span>
-                    <div className="service-card-meta">
-                      <span className="service-card-code">{service.code}</span>
-                      <span className="service-card-badge">{service.badge}</span>
-                    </div>
-                  </div>
+                  <span className="service-card-icon" aria-hidden="true">
+                    <IconComponent size={20} />
+                  </span>
 
                   <span className="service-card-turnaround" title="Estimated turnaround">
-                    <Clock size={13} aria-hidden="true" />
+                    <Clock size={12} aria-hidden="true" />
                     <span>{service.turnaround}</span>
                   </span>
                 </div>
@@ -129,25 +123,19 @@ export function Services() {
                   {service.title}
                 </h3>
                 <p className="service-card-tagline">{service.tagline}</p>
-                <p className="service-card-desc">{service.description}</p>
 
-                <div className="service-card-deliverables">
-                  <span className="service-deliverables-label">Core Deliverables</span>
-                  <ul className="service-deliverables-list">
-                    {service.deliverables.map((item, idx) => (
-                      <li key={idx} className="service-deliverable-item">
-                        <span className="service-check-badge" aria-hidden="true">
-                          <Check size={12} />
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <ul className="service-deliverables-list" aria-label={`Key deliverables for ${service.title}`}>
+                  {service.deliverables.slice(0, 3).map((item, idx) => (
+                    <li key={idx} className="service-deliverable-item">
+                      <Check size={14} className="service-check-icon" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
 
                 <footer className="service-card-footer">
                   <div className="service-tech-list" aria-label={`Technologies for ${service.title}`}>
-                    {service.techStack.map((tech) => (
+                    {service.techStack.slice(0, 3).map((tech) => (
                       <span key={tech} className="service-tech-pill">
                         {tech}
                       </span>
@@ -156,7 +144,7 @@ export function Services() {
 
                   <a
                     href="#contact"
-                    className="service-inquire-btn"
+                    className="service-inquire-link"
                     onClick={(e) => scrollToContact(e, service.title)}
                     aria-label={`Inquire about ${service.title}`}
                   >
@@ -169,20 +157,15 @@ export function Services() {
           })}
         </div>
 
-        {/* Engineering Assurances Strip */}
-        <div className="services-assurances" aria-label="Engineering assurances">
+        {/* Compact 1-Line Assurances Strip */}
+        <div className="services-assurances-bar" aria-label="Engineering assurances">
           {clientAssurances.map((assurance) => {
             const AssuranceIcon = ASSURANCE_ICONS[assurance.icon] || ShieldCheck;
 
             return (
-              <div key={assurance.title} className="service-assurance-item">
-                <span className="service-assurance-icon" aria-hidden="true">
-                  <AssuranceIcon size={18} />
-                </span>
-                <div className="service-assurance-copy">
-                  <h3 className="service-assurance-title">{assurance.title}</h3>
-                  <p className="service-assurance-desc">{assurance.description}</p>
-                </div>
+              <div key={assurance.title} className="service-assurance-pill">
+                <AssuranceIcon size={15} aria-hidden="true" />
+                <span>{assurance.title}</span>
               </div>
             );
           })}

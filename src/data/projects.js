@@ -83,7 +83,7 @@ export const projects = [
     id: 4,
     title: "Tambayan",
     subtitle: "Real-Time Social Network & Community Web Platform",
-    category: ["Web Applications"],
+    category: ["Web Applications", "Mobile App"],
     role: "Full-Stack Web Developer",
     timeline: "2026",
     status: "In Progress",
@@ -134,6 +134,7 @@ export const projects = [
 export const projectCategories = [
   "All",
   "Web Applications",
+  "Mobile App",
   "School Projects",
   "Personal Projects",
 ];

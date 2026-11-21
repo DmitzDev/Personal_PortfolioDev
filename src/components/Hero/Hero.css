@@ -853,19 +853,23 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1.15rem;
+    gap: 1rem;
     width: auto;
   }
 
   .hero-btn-corner {
     padding: 0.65rem 1.35rem;
     font-size: 0.85rem;
+    min-height: 44px;
     flex: initial;
     width: auto;
   }
 
   .hero-link-work {
     font-size: 0.88rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .hero-bottom-right-corner {
@@ -893,16 +897,16 @@
 /* Phone Viewports (<= 768px) */
 @media (max-width: 768px) {
   .hero-section.editorial-hero {
-    padding: 4.8rem 1.25rem max(5rem, calc(4.25rem + env(safe-area-inset-bottom))) 1.25rem;
-    gap: 1.25rem;
+    padding: 4.6rem 1.1rem 2.5rem 1.1rem;
+    gap: 1.15rem;
   }
 
   .hero-center-stage {
-    min-height: 330px;
+    min-height: 290px;
   }
 
   .hero-portrait-stage {
-    height: 320px;
+    height: clamp(260px, 38vh, 360px);
     max-height: 42vh;
   }
 

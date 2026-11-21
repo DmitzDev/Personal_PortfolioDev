@@ -136,7 +136,7 @@
 @media (max-width: 768px) {
   .footer {
     padding-top: 2.5rem;
-    padding-bottom: 6.5rem; /* Ensure clearance for bottom navigation dock */
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
   }
 
   .footer-top {

@@ -260,9 +260,6 @@
 
 @media (max-width: 768px) {
   .scroll-to-top {
-    bottom: 5.5rem;
-    right: 1.25rem;
-    width: 42px;
-    height: 42px;
+    display: none;
   }
 }

@@ -1312,6 +1312,7 @@
     height: 240px;
     perspective: 700px;
     width: 100%;
+    overflow: hidden;
   }
 
   .cert-deck-stack {

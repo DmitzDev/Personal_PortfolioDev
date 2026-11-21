@@ -6,7 +6,7 @@ const navItems = [
   { id: 'hero', label: 'Home', icon: Home },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
   { id: 'skills', label: 'Tech', icon: Cpu },
-  { id: 'experience', label: 'Experience', icon: Briefcase },
+  { id: 'experience', label: 'Career', icon: Briefcase },
   { id: 'contact', label: 'Contact', icon: Send },
 ];
 
@@ -27,10 +27,9 @@ export function MobileBottomNav({ activeSection, scrollTo }) {
                   aria-label={item.label}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  <div className="mobnav-icon-wrap">
-                    <Icon size={19} strokeWidth={isActive ? 2.3 : 1.7} />
-                    {isActive && <span className="mobnav-active-dot" aria-hidden="true" />}
-                  </div>
+                  <span className="mobnav-icon-wrap" aria-hidden="true">
+                    <Icon size={18} strokeWidth={isActive ? 2.2 : 1.75} />
+                  </span>
                   <span className="mobnav-key-label">{item.label}</span>
                 </button>
               </li>

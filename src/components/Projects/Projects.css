@@ -569,6 +569,10 @@
    MOBILE RESPONSIVENESS (PHONES & TABLETS)
    ========================================================================== */
 @media (max-width: 860px) {
+  .projects-section {
+    overflow-x: clip;
+  }
+
   .projects-controls {
     flex-direction: column;
     align-items: stretch;
@@ -609,6 +613,10 @@
     min-width: 0;
     padding: 0.65rem 1rem;
     box-sizing: border-box;
+  }
+
+  .search-input {
+    font-size: 16px;
   }
 
   /* Single Column Layout (No outer box container) */

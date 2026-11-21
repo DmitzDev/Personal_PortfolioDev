@@ -395,9 +395,11 @@
 
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.6rem 0;
-    background: var(--bg-primary);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 0.55rem 0;
+    background: var(--bg-nav-scrolled);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--skeuo-nav-shadow);
     border-bottom: 1px solid var(--border);
   }
 

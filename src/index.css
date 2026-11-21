@@ -423,27 +423,40 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-card-title {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  body {
-    padding-bottom: 80px;
-  }
-}
-
-@media (max-width: 768px) {
   html {
     scroll-padding-top: 4.5rem;
   }
+
+  body {
+    overflow-x: clip;
+    padding-bottom: 84px;
+  }
+
   .section {
-    padding: 2.25rem 0;
+    padding: 3rem 0;
     scroll-margin-top: 4.5rem;
   }
+
   .section-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+    text-align: center;
   }
+
   .section-title {
-    font-size: 2rem;
+    font-size: clamp(1.65rem, 6vw, 2rem);
+    letter-spacing: -0.025em;
   }
+
+  .section-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    max-width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .container {
-    padding: 0 1rem;
+    padding: 0 1.1rem;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;

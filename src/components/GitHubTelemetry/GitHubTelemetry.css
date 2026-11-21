@@ -884,9 +884,10 @@
   .gh-main-header {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 0.65rem;
     width: 100%;
     margin-bottom: 0.85rem;
     padding-bottom: 0.65rem;

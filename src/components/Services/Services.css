@@ -338,9 +338,10 @@
 
   .service-selector-item {
     width: auto;
+    min-height: 44px;
     flex-shrink: 0;
-    padding: 0.7rem 1rem;
-    gap: 0.65rem;
+    padding: 0.55rem 1rem;
+    gap: 0.6rem;
     border-radius: 9999px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
@@ -374,11 +375,11 @@
 
 @media (max-width: 640px) {
   .services-section {
-    padding: 4rem 0;
+    padding: 3rem 0;
   }
 
   .services-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
 
   .service-detail-panel {

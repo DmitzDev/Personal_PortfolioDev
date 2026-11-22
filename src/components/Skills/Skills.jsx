@@ -2,7 +2,6 @@ import React, { useState, lazy, Suspense } from 'react';
 import { skills, skillCategories } from '../../data/skills';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { Tech3DIcon } from '../shared/Tech3DIcon';
-import { Tilt3DCard } from '../shared/Tilt3DCard';
 import { Terminal, ChevronLeft, ChevronRight } from 'lucide-react';
 import antigravitySvg from '../../assets/antigravity.svg';
 import './Skills.css';
@@ -18,7 +17,7 @@ const getSkillIconUrl = (icon) => {
   return `/icons/${icon}.svg`;
 };
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 3;
 
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -89,34 +88,27 @@ export function Skills() {
           ))}
         </div>
 
-        {/* Skills Cards Grid */}
+        {/* Unboxed Tech Stack Rows (3 per page: Left Icon | Right Description) */}
         <div
-          className={`skills-grid ${totalPages > 1 ? 'is-paginated' : ''}`}
+          className={`skills-rows-list ${totalPages > 1 ? 'is-paginated' : ''}`}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {displayedSkills.map((skill, index) => (
-            <AnimateOnScroll
-              key={skill.name}
-              animation="fade-up"
-              delay={(index % 6) * 60}
-              className="skill-card-wrapper"
-            >
-              <Tilt3DCard className="skill-card glass-card">
-                <div className="skill-card-top">
-                  <div className="skill-icon-wrap">
-                    <Tech3DIcon iconKey={skill.icon} size={42} />
-                  </div>
-                  <div className="skill-meta-wrap">
-                    <h3 className="skill-name">{skill.name}</h3>
-                    <span className="skill-level-badge">{skill.badge || skill.level}</span>
-                  </div>
-                </div>
+          {displayedSkills.map((skill) => (
+            <div key={skill.name} className="skill-row-item">
+              <div className="skill-row-icon">
+                <Tech3DIcon iconKey={skill.icon} size={46} />
+              </div>
 
-                <p className="skill-description">{skill.description}</p>
-              </Tilt3DCard>
-            </AnimateOnScroll>
+              <div className="skill-row-content">
+                <div className="skill-row-header">
+                  <h3 className="skill-row-name">{skill.name}</h3>
+                  <span className="skill-row-badge">{skill.badge || skill.level}</span>
+                </div>
+                <p className="skill-row-desc">{skill.description}</p>
+              </div>
+            </div>
           ))}
         </div>
 

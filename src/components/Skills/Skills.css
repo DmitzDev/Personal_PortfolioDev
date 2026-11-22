@@ -45,23 +45,24 @@
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.22);
 }
 
-/* Skills Grid */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+/* Unboxed Tech Stack Rows (Left: Icon | Right: Name + Description, 3 per page) */
+.skills-rows-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 780px;
+  margin: 0 auto 1.75rem auto;
+  border-top: 1px solid var(--border);
 }
 
-.skills-grid.is-paginated {
-  min-height: 380px;
+.skills-rows-list.is-paginated {
+  min-height: 295px;
 }
 
-.skills-grid.is-paginated .skill-card {
-  animation: skillCardFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.skills-rows-list.is-paginated .skill-row-item {
+  animation: skillRowFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes skillCardFadeIn {
+@keyframes skillRowFadeIn {
   from {
     opacity: 0;
     transform: translateY(6px);
@@ -70,6 +71,62 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.skill-row-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+}
+
+.skill-row-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.skill-row-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.skill-row-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.skill-row-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.skill-row-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.skill-row-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
 }
 
 /* Pagination Controls (Desktop and Mobile) */
@@ -331,13 +388,11 @@
     border-radius: 9999px;
   }
 
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.6rem;
-    margin-bottom: 1rem;
+  .skills-rows-list {
+    margin-bottom: 1.25rem;
   }
 
-  .skills-grid.is-paginated {
+  .skills-rows-list.is-paginated {
     min-height: auto;
   }
 
@@ -353,68 +408,53 @@
     font-size: 0.82rem;
   }
 
-  .skill-card {
-    padding: 0.7rem 0.8rem;
-    border-radius: 0.75rem;
-    min-width: 0;
+  .skill-row-item {
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.95rem 0.25rem;
   }
 
-  .skill-card-top {
-    gap: 0.6rem;
-    margin-bottom: 0;
-    align-items: center;
+  .skill-row-icon {
+    width: 38px;
+    height: 38px;
+    margin-top: 2px;
   }
 
-  .skill-icon-wrap {
-    width: 30px;
-    height: 30px;
-    min-width: 30px;
-    border-radius: 0.45rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .skill-row-icon .tech-3d-token {
+    --t-size: 38px !important;
+    width: 38px !important;
+    height: 38px !important;
   }
 
-  .skill-icon-wrap .tech-3d-token {
-    --t-size: 30px !important;
-    width: 30px !important;
-    height: 30px !important;
-  }
-
-  .skill-icon-wrap .tech-3d-pedestal {
-    border-radius: 8px;
+  .skill-row-icon .tech-3d-pedestal {
+    border-radius: 9px;
     box-shadow: none;
   }
 
-  [data-theme="light"] .skill-icon-wrap .tech-3d-pedestal {
+  [data-theme="light"] .skill-row-icon .tech-3d-pedestal {
     box-shadow: none;
   }
 
-  .skill-icon-wrap .tech-3d-emblem {
+  .skill-row-icon .tech-3d-emblem {
     transform: none;
   }
 
-  .skill-icon-wrap .tech-3d-img {
-    width: 18px !important;
-    height: 18px !important;
+  .skill-row-icon .tech-3d-img {
+    width: 22px !important;
+    height: 22px !important;
   }
 
-  .skill-devicon {
-    width: 18px;
-    height: 18px;
+  .skill-row-name {
+    font-size: 0.96rem;
   }
 
-  .skill-name {
-    font-size: 0.85rem;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .skill-row-badge {
+    font-size: 0.68rem;
   }
 
-  .skill-level-badge,
-  .skill-description {
-    display: none;
+  .skill-row-desc {
+    font-size: 0.82rem;
+    line-height: 1.48;
   }
 
   .skills-ticker-wrapper {

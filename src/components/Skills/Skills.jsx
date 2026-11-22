@@ -22,11 +22,7 @@ const ITEMS_PER_PAGE = 3;
 export function Skills() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-
-  const handleCategoryChange = (category) => {
-    setActiveCategory(category);
-    setCurrentPage(1);
-  };
+  const [selectedSkillName, setSelectedSkillName] = useState(skills[0]?.name || '');
 
   const filteredSkills = activeCategory === 'All'
     ? skills
@@ -37,6 +33,25 @@ export function Skills() {
   const displayedSkills = totalPages > 1
     ? filteredSkills.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
     : filteredSkills;
+
+  const activeSkill =
+    displayedSkills.find((s) => s.name === selectedSkillName) || displayedSkills[0] || null;
+
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    setCurrentPage(1);
+    const nextFiltered = category === 'All'
+      ? skills
+      : skills.filter(skill => skill.category === category);
+    if (nextFiltered[0]) setSelectedSkillName(nextFiltered[0].name);
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setCurrentPage(newPage);
+    const nextSlice = filteredSkills.slice((newPage - 1) * ITEMS_PER_PAGE, newPage * ITEMS_PER_PAGE);
+    if (nextSlice[0]) setSelectedSkillName(nextSlice[0].name);
+  };
 
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
@@ -58,11 +73,6 @@ export function Skills() {
     } else if (distance < -45 && currentPage > 1) {
       handlePageChange(currentPage - 1);
     }
-  };
-
-  const handlePageChange = (newPage) => {
-    if (newPage < 1 || newPage > totalPages) return;
-    setCurrentPage(newPage);
   };
 
   return (
@@ -88,67 +98,87 @@ export function Skills() {
           ))}
         </div>
 
-        {/* Unboxed Tech Stack Rows (3 per page: Left Icon | Right Description) */}
+        {/* Interactive 3-Icon Split Showcase (Left: 3 Icons + Pagination | Right: Focused Description) */}
         <div
-          className={`skills-rows-list ${totalPages > 1 ? 'is-paginated' : ''}`}
+          className="skills-split-showcase"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {displayedSkills.map((skill) => (
-            <div key={skill.name} className="skill-row-item">
-              <div className="skill-row-icon">
-                <Tech3DIcon iconKey={skill.icon} size={46} />
-              </div>
-
-              <div className="skill-row-content">
-                <div className="skill-row-header">
-                  <h3 className="skill-row-name">{skill.name}</h3>
-                  <span className="skill-row-badge">{skill.badge || skill.level}</span>
-                </div>
-                <p className="skill-row-desc">{skill.description}</p>
-              </div>
+          {/* LEFT: 3 Selectable Stack Icons + Pagination */}
+          <div className="skills-icon-column">
+            <div className="skills-icon-dock" role="tablist" aria-label="Select a technology">
+              {displayedSkills.map((skill) => {
+                const isActive = activeSkill?.name === skill.name;
+                return (
+                  <button
+                    key={skill.name}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`skill-dock-btn ${isActive ? 'is-active' : ''}`}
+                    onClick={() => setSelectedSkillName(skill.name)}
+                    title={skill.name}
+                  >
+                    <span className="skill-dock-icon">
+                      <Tech3DIcon iconKey={skill.icon} size={46} />
+                    </span>
+                    <span className="skill-dock-label">{skill.name}</span>
+                  </button>
+                );
+              })}
             </div>
-          ))}
-        </div>
 
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="skills-pagination">
-            <button
-              type="button"
-              className="skills-page-btn nav-btn"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              aria-label="Previous skills page"
-            >
-              <ChevronLeft size={16} />
-            </button>
-
-            <div className="skills-page-numbers">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            {totalPages > 1 && (
+              <div className="skills-pagination">
                 <button
-                  key={pageNum}
                   type="button"
-                  className={`skills-page-btn num-btn ${currentPage === pageNum ? 'active' : ''}`}
-                  onClick={() => handlePageChange(pageNum)}
+                  className="skills-page-btn nav-btn"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  aria-label="Previous skills page"
                 >
-                  {pageNum}
+                  <ChevronLeft size={16} />
                 </button>
-              ))}
-            </div>
 
-            <button
-              type="button"
-              className="skills-page-btn nav-btn"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              aria-label="Next skills page"
-            >
-              <ChevronRight size={16} />
-            </button>
+                <div className="skills-page-numbers">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                    <button
+                      key={pageNum}
+                      type="button"
+                      className={`skills-page-btn num-btn ${currentPage === pageNum ? 'active' : ''}`}
+                      onClick={() => handlePageChange(pageNum)}
+                    >
+                      {pageNum}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  className="skills-page-btn nav-btn"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  aria-label="Next skills page"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            )}
           </div>
-        )}
+
+          {/* RIGHT: Unboxed Focused Description */}
+          {activeSkill && (
+            <div key={activeSkill.name} className="skills-focus-detail" role="tabpanel">
+              <div className="skill-focus-meta">
+                <span className="skill-focus-category">{activeSkill.category}</span>
+                <span className="skill-focus-badge">{activeSkill.badge || activeSkill.level}</span>
+              </div>
+              <h3 className="skill-focus-title">{activeSkill.name}</h3>
+              <p className="skill-focus-desc">{activeSkill.description}</p>
+            </div>
+          )}
+        </div>
 
         {/* Continuous Tech Stack Marquee */}
         <div className="skills-ticker-wrapper glass-card">

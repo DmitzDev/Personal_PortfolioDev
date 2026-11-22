@@ -511,14 +511,14 @@
 
 .hero-corner-role {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.4;
   margin: 0 0 0.65rem 0;
   letter-spacing: -0.015em;
-  text-align: justify;
-  text-justify: inter-word;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .hero-corner-desc {

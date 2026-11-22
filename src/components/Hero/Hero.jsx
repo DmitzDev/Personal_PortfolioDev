@@ -254,7 +254,7 @@ export function Hero() {
         {/* Left Corner: Role, Bio & CTAs */}
         <AnimateOnScroll animation="fade-up" delay={80} className="hero-bottom-left-corner">
           <p className="hero-corner-role">
-            AI-Native Full-Stack Developer &amp; Computer Engineering
+            AI-Native Full-Stack Developer
           </p>
 
           <p className="hero-corner-desc">

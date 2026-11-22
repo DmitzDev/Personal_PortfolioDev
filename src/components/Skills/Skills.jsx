@@ -128,43 +128,14 @@ export function Skills() {
             })}
           </div>
 
-          {/* RIGHT: Editorial Architectural Detail View */}
+          {/* RIGHT: Clean Focused Description (Minimal Text) */}
           {activeSkill && (
             <div key={activeSkill.name} className="skills-focus-detail" role="tabpanel">
-              <div className="skill-focus-top">
-                <span className="skill-focus-index">
-                  {String(
-                    displayedSkills.findIndex((s) => s.name === activeSkill.name) + 1
-                  ).padStart(2, '0')}{' '}
-                  / {String(displayedSkills.length).padStart(2, '0')}
-                </span>
-                <span className="skill-focus-category">{activeSkill.category}</span>
-                {activeSkill.badge && (
-                  <span className="skill-focus-badge">{activeSkill.badge}</span>
-                )}
-              </div>
-
+              {activeSkill.level && (
+                <span className="skill-focus-badge">{activeSkill.level}</span>
+              )}
               <h3 className="skill-focus-title">{activeSkill.name}</h3>
               <p className="skill-focus-desc">{activeSkill.description}</p>
-
-              <div className="skill-focus-specs">
-                <div className="skill-spec-item">
-                  <span className="skill-spec-label">DOMAIN</span>
-                  <span className="skill-spec-value">{activeSkill.category}</span>
-                </div>
-                {activeSkill.level && (
-                  <div className="skill-spec-item">
-                    <span className="skill-spec-label">PROFICIENCY</span>
-                    <span className="skill-spec-value">{activeSkill.level}</span>
-                  </div>
-                )}
-                {activeSkill.badge && (
-                  <div className="skill-spec-item">
-                    <span className="skill-spec-label">TIER</span>
-                    <span className="skill-spec-value">{activeSkill.badge}</span>
-                  </div>
-                )}
-              </div>
             </div>
           )}
         </div>

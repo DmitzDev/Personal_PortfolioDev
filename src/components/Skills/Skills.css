@@ -122,102 +122,48 @@
   line-height: 1.25;
 }
 
-/* Right Column: Editorial Architectural Detail View */
+/* Right Column: Clean Focused Description (Minimal Text) */
 .skills-focus-detail {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  align-items: flex-start;
+  gap: 0.65rem;
   min-width: 0;
-  min-height: 210px;
+  min-height: 165px;
   justify-content: center;
   padding-left: 2.5rem;
   border-left: 1px solid var(--border);
   animation: skillRowFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.skill-focus-top {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.skill-focus-index {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  opacity: 0.7;
-}
-
-.skill-focus-category {
+.skill-focus-badge {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
-}
-
-.skill-focus-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--text-primary);
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
-  padding: 0.18rem 0.6rem;
+  padding: 0.2rem 0.65rem;
   border-radius: 9999px;
-  margin-left: auto;
 }
 
 .skill-focus-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+  font-size: clamp(1.65rem, 2.6vw, 2.2rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text-primary);
   line-height: 1.15;
-  margin: 0.1rem 0 0 0;
+  margin: 0;
 }
 
 .skill-focus-desc {
-  font-size: 1rem;
+  font-size: 1.02rem;
   color: var(--text-secondary);
   line-height: 1.65;
-  max-width: 52ch;
-  margin: 0 0 0.5rem 0;
-}
-
-.skill-focus-specs {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  padding-top: 1rem;
-  margin-top: 0.25rem;
-  border-top: 1px dashed var(--border);
-}
-
-.skill-spec-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.skill-spec-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-}
-
-.skill-spec-value {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  max-width: 48ch;
+  margin: 0;
 }
 
 @keyframes skillRowFadeIn {
@@ -546,11 +492,6 @@
     padding: 0.95rem 0.25rem 0 0.25rem;
     border-left: none;
     border-top: 1px dashed var(--border);
-  }
-
-  .skill-focus-specs {
-    gap: 1.25rem;
-    padding-top: 0.75rem;
   }
 
   .skill-focus-title {

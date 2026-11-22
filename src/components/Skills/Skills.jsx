@@ -98,73 +98,34 @@ export function Skills() {
           ))}
         </div>
 
-        {/* Interactive 3-Icon Split Showcase (Left: 3 Icons + Pagination | Right: Focused Description) */}
+        {/* Interactive Vertical 3-Icon Split Showcase */}
         <div
           className="skills-split-showcase"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {/* LEFT: 3 Selectable Stack Icons + Pagination */}
-          <div className="skills-icon-column">
-            <div className="skills-icon-dock" role="tablist" aria-label="Select a technology">
-              {displayedSkills.map((skill) => {
-                const isActive = activeSkill?.name === skill.name;
-                return (
-                  <button
-                    key={skill.name}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    className={`skill-dock-btn ${isActive ? 'is-active' : ''}`}
-                    onClick={() => setSelectedSkillName(skill.name)}
-                    title={skill.name}
-                  >
-                    <span className="skill-dock-icon">
-                      <Tech3DIcon iconKey={skill.icon} size={46} />
-                    </span>
-                    <span className="skill-dock-label">{skill.name}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {totalPages > 1 && (
-              <div className="skills-pagination">
+          {/* LEFT: 3 Selectable Stack Icons (Vertical Column) */}
+          <div className="skills-icon-dock" role="tablist" aria-label="Select a technology">
+            {displayedSkills.map((skill) => {
+              const isActive = activeSkill?.name === skill.name;
+              return (
                 <button
+                  key={skill.name}
                   type="button"
-                  className="skills-page-btn nav-btn"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  aria-label="Previous skills page"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`skill-dock-btn ${isActive ? 'is-active' : ''}`}
+                  onClick={() => setSelectedSkillName(skill.name)}
+                  title={skill.name}
                 >
-                  <ChevronLeft size={16} />
+                  <span className="skill-dock-icon">
+                    <Tech3DIcon iconKey={skill.icon} size={42} />
+                  </span>
+                  <span className="skill-dock-label">{skill.name}</span>
                 </button>
-
-                <div className="skills-page-numbers">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                    <button
-                      key={pageNum}
-                      type="button"
-                      className={`skills-page-btn num-btn ${currentPage === pageNum ? 'active' : ''}`}
-                      onClick={() => handlePageChange(pageNum)}
-                    >
-                      {pageNum}
-                    </button>
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  className="skills-page-btn nav-btn"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  aria-label="Next skills page"
-                >
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            )}
+              );
+            })}
           </div>
 
           {/* RIGHT: Unboxed Focused Description */}
@@ -179,6 +140,44 @@ export function Skills() {
             </div>
           )}
         </div>
+
+        {/* Centered Pagination Controls (Original Position) */}
+        {totalPages > 1 && (
+          <div className="skills-pagination">
+            <button
+              type="button"
+              className="skills-page-btn nav-btn"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              aria-label="Previous skills page"
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            <div className="skills-page-numbers">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  key={pageNum}
+                  type="button"
+                  className={`skills-page-btn num-btn ${currentPage === pageNum ? 'active' : ''}`}
+                  onClick={() => handlePageChange(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="skills-page-btn nav-btn"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              aria-label="Next skills page"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        )}
 
         {/* Continuous Tech Stack Marquee */}
         <div className="skills-ticker-wrapper glass-card">

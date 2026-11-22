@@ -254,11 +254,11 @@ export function Hero() {
         {/* Left Corner: Role, Bio & CTAs */}
         <AnimateOnScroll animation="fade-up" delay={80} className="hero-bottom-left-corner">
           <p className="hero-corner-role">
-            Front-End Web Developer &amp; Computer Engineering
+            AI-Native Full-Stack Developer &amp; Computer Engineering
           </p>
 
           <p className="hero-corner-desc">
-            I craft modern web applications, high-performance user interfaces, and dependable digital products with clean component architecture. Based in the Philippines.
+            I architect and ship production web and mobile applications using modern full-stack engineering and AI-native workflows. Based in the Philippines.
           </p>
 
           <div className="hero-corner-actions">

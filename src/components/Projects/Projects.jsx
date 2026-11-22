@@ -300,10 +300,12 @@ export function Projects() {
                   className={`project-status-pill ${
                     currentProject.status === 'Completed'
                       ? 'status-completed'
+                      : currentProject.status === 'Maintenance'
+                      ? 'status-maintenance'
                       : 'status-in-progress'
                   }`}
                 >
-                  <span className="status-led"></span>
+                  <span className="status-dot" aria-hidden="true"></span>
                   <span className="status-label">{currentProject.status}</span>
                 </span>
                 {currentProject.timeline && (

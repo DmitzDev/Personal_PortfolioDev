@@ -383,22 +383,73 @@
 .project-status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.42rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.25rem 0.65rem;
-  border-radius: 0.4rem;
-  background: var(--bg-tertiary);
+  padding: 0.25rem 0.7rem;
+  border-radius: 9999px;
   border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
 }
 
-.project-status-pill .status-led {
-  width: 7px;
-  height: 7px;
+.project-status-pill .status-dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--led-green);
-  box-shadow: var(--led-glow);
+  flex-shrink: 0;
+}
+
+/* Completed — Emerald */
+.project-status-pill.status-completed {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.project-status-pill.status-completed .status-dot {
+  background: #10b981;
+}
+
+[data-theme="light"] .project-status-pill.status-completed {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(5, 150, 105, 0.3);
+  color: #047857;
+}
+
+/* In Progress — Amber */
+.project-status-pill.status-in-progress {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.32);
+  color: #fbbf24;
+}
+
+.project-status-pill.status-in-progress .status-dot {
+  background: #f59e0b;
+}
+
+[data-theme="light"] .project-status-pill.status-in-progress {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(217, 119, 6, 0.35);
+  color: #b45309;
+}
+
+/* Maintenance — Sky / Slate Blue */
+.project-status-pill.status-maintenance {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+}
+
+.project-status-pill.status-maintenance .status-dot {
+  background: #0ea5e9;
+}
+
+[data-theme="light"] .project-status-pill.status-maintenance {
+  background: rgba(14, 165, 233, 0.12);
+  border-color: rgba(2, 132, 199, 0.3);
+  color: #0369a1;
 }
 
 .project-timeline-tag {

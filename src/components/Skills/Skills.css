@@ -50,7 +50,7 @@
   display: grid;
   grid-template-columns: 0.72fr 1.28fr;
   gap: 3rem;
-  align-items: center;
+  align-items: start;
   max-width: 920px;
   margin: 0 auto 1.75rem auto;
   padding: 0.5rem 0;
@@ -127,11 +127,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
   gap: 0.65rem;
   min-width: 0;
-  min-height: 165px;
-  justify-content: center;
-  padding-left: 2.5rem;
+  padding: 0.25rem 0 0.25rem 2.5rem;
   border-left: 1px solid var(--border);
   animation: skillRowFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -162,6 +162,7 @@
   font-size: 1.02rem;
   color: var(--text-secondary);
   line-height: 1.65;
+  text-align: left;
   max-width: 48ch;
   margin: 0;
 }

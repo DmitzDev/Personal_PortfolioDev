@@ -4,6 +4,7 @@ import NarutoMonopolyImg from '../assets/Monopoly.webp';
 import PortfolioImg from '../assets/Portfolio.webp';
 import tambayanLogoImg from '../assets/tambayan_t_logo.webp';
 import gasGoImg from '../assets/GasGo.webp';
+import inventechImg from '../assets/Inventech.webp';
 
 export const projects = [
   {
@@ -153,6 +154,30 @@ export const projects = [
     image: gasGoImg,
     liveDemo: "https://github.com/DmitzDev",
     github: "https://github.com/DmitzDev/eGasGo-Mobile",
+  },
+  {
+    id: 7,
+    title: "InvenTech",
+    subtitle: "Engineering Laboratory Kiosk Inventory Management System",
+    category: ["School Projects", "Web Applications"],
+    role: "Thesis Project — Lead Developer & UI Architect",
+    timeline: "2026",
+    status: "Completed",
+    featured: true,
+    description: "A kiosk-based inventory management system built for engineering laboratories as our capstone thesis project. Streamlines equipment borrowing, asset tracking, return verification, and real-time lab inventory monitoring.",
+    challenge: "Manual paper logbooks in engineering laboratories caused slow borrowing queues, missing asset records, and lack of real-time equipment availability tracking.",
+    solution: "Built a self-service kiosk web interface with fast equipment borrowing workflows, real-time inventory status updates, and structured laboratory asset tracking.",
+    metrics: "Thesis Capstone System • Kiosk-First UX • Real-Time Asset Tracking",
+    technologies: ["React", "Vite", "JavaScript ES6+", "Firebase Firestore", "Modern CSS"],
+    features: [
+      "Self-service kiosk interface for rapid equipment borrowing",
+      "Real-time engineering laboratory asset availability tracking",
+      "Borrower logging and return verification workflow",
+      "Clean light/dark responsive interface tailored for kiosk displays",
+    ],
+    image: inventechImg,
+    liveDemo: null,
+    github: null,
   },
 ];
 

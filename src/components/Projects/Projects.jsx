@@ -349,36 +349,39 @@ export function Projects() {
                 </div>
               </div>
 
-              {/* Action Buttons: Live and Source Only */}
-              <div className="project-showcase-actions">
-                {currentProject.liveDemo && currentProject.liveDemo !== '#' && (
-                  <a
-                    href={currentProject.liveDemo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-project-action btn-action-live"
-                    title={`Visit ${currentProject.title} Live`}
-                    aria-label={`Visit ${currentProject.title} Live Demo`}
-                  >
-                    <span>Live</span>
-                    <ExternalLink size={15} />
-                  </a>
-                )}
+              {/* Action Buttons: Live and Source Only (omitted for private/thesis repos) */}
+              {((currentProject.liveDemo && currentProject.liveDemo !== '#') ||
+                (currentProject.github && currentProject.github !== '#')) && (
+                <div className="project-showcase-actions">
+                  {currentProject.liveDemo && currentProject.liveDemo !== '#' && (
+                    <a
+                      href={currentProject.liveDemo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-project-action btn-action-live"
+                      title={`Visit ${currentProject.title} Live`}
+                      aria-label={`Visit ${currentProject.title} Live Demo`}
+                    >
+                      <span>Live</span>
+                      <ExternalLink size={15} />
+                    </a>
+                  )}
 
-                {currentProject.github && currentProject.github !== '#' && (
-                  <a
-                    href={currentProject.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-project-action btn-action-source"
-                    title="View Source Code"
-                    aria-label={`View Source Code for ${currentProject.title}`}
-                  >
-                    <GithubIcon size={15} />
-                    <span>Source</span>
-                  </a>
-                )}
-              </div>
+                  {currentProject.github && currentProject.github !== '#' && (
+                    <a
+                      href={currentProject.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-project-action btn-action-source"
+                      title="View Source Code"
+                      aria-label={`View Source Code for ${currentProject.title}`}
+                    >
+                      <GithubIcon size={15} />
+                      <span>Source</span>
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         ) : (

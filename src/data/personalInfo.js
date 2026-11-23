@@ -1,5 +1,5 @@
 import mitchImage from '../assets/Mitch.webp';
-import mdLogo from '../assets/MDLogo.png';
+import mdLogo from '../assets/MDLogo.webp';
 
 export const personalInfo = {
   name: "Mitchelle",

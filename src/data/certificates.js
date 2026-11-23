@@ -1,13 +1,24 @@
+import pocketTracerImg from '../assets/PocketTracer.webp';
 import ciscoExamImg from '../assets/CiscoPacketTracerExam.webp';
 import ciscoIoTImg from '../assets/CiscoIoTPacketTracer.webp';
 import ciscoNetworkingImg from '../assets/CiscoNetworkingPacketTracer.webp';
 import ciscoGettingStartedImg from '../assets/CiscoGettingStartedPacketTracer.webp';
 import COSHSeminarImg from '../assets/COSHSeminar.webp';
-import RSTWDost from '../assets/RSTWDost.jpeg';
+import RSTWDost from '../assets/RSTWDost.webp';
 
 export const certificates = [
   {
     id: 1,
+    title: "Introduction to Packet Tracer",
+    organization: "Cisco Networking Academy",
+    date: "November 2025",
+    credentialUrl: "https://www.netacad.com/",
+    image: pocketTracerImg,
+    skills: ["Cisco Packet Tracer", "Simple Networks", "Network Controllers", "Smart Home IoT"],
+    description: "Student-level Certificate of Completion for building simple networks, configuring network controllers, and simulating smart home IoT devices in Cisco Packet Tracer.",
+  },
+  {
+    id: 2,
     title: "Introduction to Packet Tracer Exam",
     organization: "Cisco Networking Academy",
     date: "November 2025",
@@ -17,7 +28,7 @@ export const certificates = [
     description: "Passed the Cisco Networking Academy examination verifying practical proficiency in network simulation, topology design, and packet flow diagnostics.",
   },
   {
-    id: 2,
+    id: 3,
     title: "Exploring Internet of Things with Cisco Packet Tracer",
     organization: "Cisco Networking Academy",
     date: "November 2025",
@@ -28,7 +39,7 @@ export const certificates = [
     description: "Completed hands-on simulation training on connecting smart IoT devices, configuring network controllers, and modeling automated smart environments.",
   },
   {
-    id: 3,
+    id: 4,
     title: "Exploring Networking with Cisco Packet Tracer",
     organization: "Cisco Networking Academy",
     date: "November 2025",
@@ -39,7 +50,7 @@ export const certificates = [
     description: "Demonstrated competence in building, configuring, and troubleshooting wired and wireless local area networks inside Cisco Packet Tracer.",
   },
   {
-    id: 4,
+    id: 5,
     title: "Getting Started with Cisco Packet Tracer",
     organization: "Cisco Networking Academy",
     date: "November 2025",
@@ -50,7 +61,7 @@ export const certificates = [
     description: "Foundational Cisco Networking Academy credential covering virtual lab setup, physical/logical workspace modeling, and simulation workflows.",
   },
   {
-    id: 5,
+    id: 6,
     title: "Regional Science & Technology Week (RSTW)",
     organization: "DOST Region 1",
     date: "February 2026",
@@ -60,7 +71,7 @@ export const certificates = [
     description: "Recognized for technical participation, technology exhibition, and digital innovation showcases.",
   },
   {
-    id: 6,
+    id: 7,
     title: "Construction Occupational Safety & Health (COSH-SO2)",
     organization: "JCOSH / DOLE Accredited",
     date: "March 2026",

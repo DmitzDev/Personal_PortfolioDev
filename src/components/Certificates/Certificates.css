@@ -317,9 +317,96 @@
   text-decoration: none;
 }
 
-.cert-deck-bottom-bar {
+.cert-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
   margin-top: 0;
-  margin-bottom: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cert-arrow-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: var(--skeuo-extruded-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cert-arrow-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(255, 90, 31, 0.35);
+  border-color: var(--accent);
+}
+
+.cert-arrow-btn:active {
+  transform: translateY(0);
+}
+
+.cert-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cert-dot {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cert-dot::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: var(--border);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cert-dot:hover::before {
+  background: var(--text-muted);
+  transform: scale(1.2);
+}
+
+.cert-dot.active::before {
+  width: 28px;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(255, 90, 31, 0.45);
+  transform: scale(1.04);
+}
+
+.cert-swipe-hint {
+  display: none;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  opacity: 0.95;
+  margin-top: 0.25rem;
 }
 
 
@@ -528,47 +615,18 @@
 
 
 @media (max-width: 768px) {
-  .cert-group-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.28rem;
-    border-radius: 0.65rem;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    box-shadow: var(--skeuo-recessed-sm);
-    margin-bottom: 1.25rem;
-    align-self: flex-start;
+  .cert-arrow-desktop-only {
+    display: none;
   }
 
-  .cert-group-toggle-btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 0.42rem 0.85rem;
-    border-radius: 0.45rem;
-    background: transparent;
-    color: var(--text-muted);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
+  .cert-bottom-bar {
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 
-  .cert-group-toggle-btn:hover {
-    color: var(--text-primary);
-  }
-
-  .cert-group-toggle-btn.is-active {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    box-shadow: var(--skeuo-extruded-sm);
-  }
-
-  [data-theme="dark"] .cert-group-toggle-btn.is-active {
-    background: var(--accent);
-    color: var(--accent-text);
+  .cert-swipe-hint {
+    display: block;
+    margin-bottom: 1.5rem;
   }
 
   .cert-deck-showcase {

@@ -206,10 +206,10 @@ export function Certificates() {
           </div>
 
           {/* Bottom Controls: Desktop arrows, dots, mobile swipe */}
-          <div className="exp-swiper-bottom-bar cert-deck-bottom-bar">
+          <div className="cert-bottom-bar">
             <button
               type="button"
-              className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+              className="cert-arrow-btn cert-arrow-desktop-only"
               onClick={handlePrevCert}
               aria-label="Previous credential"
               title="Previous credential"
@@ -217,12 +217,12 @@ export function Certificates() {
               <ChevronLeft size={18} />
             </button>
 
-            <div className="exp-swiper-dots">
+            <div className="cert-dots">
               {visibleCerts.map((cert, idx) => (
                 <button
                   key={cert.id}
                   type="button"
-                  className={`exp-dot ${idx === safeIndex ? 'active' : ''}`}
+                  className={`cert-dot ${idx === safeIndex ? 'active' : ''}`}
                   onClick={() => setActiveCertIndex(idx)}
                   aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
                 />
@@ -231,7 +231,7 @@ export function Certificates() {
 
             <button
               type="button"
-              className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+              className="cert-arrow-btn cert-arrow-desktop-only"
               onClick={handleNextCert}
               aria-label="Next credential"
               title="Next credential"
@@ -240,7 +240,7 @@ export function Certificates() {
             </button>
           </div>
 
-          <div className="exp-swipe-hint">
+          <div className="cert-swipe-hint">
             <span>← Swipe cards left &amp; right to switch →</span>
           </div>
         </div>

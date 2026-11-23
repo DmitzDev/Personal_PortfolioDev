@@ -178,16 +178,29 @@ export function Skills() {
           </div>
         )}
 
-        {/* Continuous Tech Stack Marquee */}
-        <div className="skills-ticker-wrapper glass-card">
+        {/* Continuous Tech Stack Marquee (Unboxed Editorial Strip) */}
+        <div className="skills-ticker-wrapper">
           <div className="ticker-label">
-            <Terminal size={14} />
-            <span>PRODUCTION ARSENAL:</span>
+            <Terminal size={13} aria-hidden="true" />
+            <span>PRODUCTION ARSENAL</span>
           </div>
           <div className="ticker-track-container">
             <div className="ticker-track">
               {[...skills, ...skills].map((item, idx) => (
-                <div key={`${item.name}-${idx}`} className="ticker-item">
+                <button
+                  key={`${item.name}-${idx}`}
+                  type="button"
+                  className="ticker-item"
+                  onClick={() => {
+                    const targetIndex = skills.findIndex((s) => s.name === item.name);
+                    if (targetIndex !== -1) {
+                      setActiveCategory('All');
+                      setCurrentPage(Math.floor(targetIndex / ITEMS_PER_PAGE) + 1);
+                      setSelectedSkillName(item.name);
+                    }
+                  }}
+                  title={`Inspect ${item.name}`}
+                >
                   <img
                     src={getSkillIconUrl(item.icon)}
                     alt={item.name}
@@ -202,7 +215,7 @@ export function Skills() {
                     }}
                   />
                   <span>{item.name}</span>
-                </div>
+                </button>
               ))}
             </div>
           </div>

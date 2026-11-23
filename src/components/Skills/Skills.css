@@ -325,30 +325,29 @@
   margin-top: auto;
 }
 
-/* Skills Ticker */
+/* Skills Ticker (Unboxed Editorial Marquee Strip) */
 .skills-ticker-wrapper {
   display: flex;
   align-items: center;
-  border-radius: 0.85rem;
-  background: var(--bg-secondary);
-  background-image: var(--gradient-surface);
-  box-shadow: var(--skeuo-extruded);
-  border-top: 1px solid var(--skeuo-bevel-top);
-  border-bottom: 1px solid var(--skeuo-bevel-bottom);
+  gap: 1.5rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: transparent;
   overflow: hidden;
-  margin-bottom: 2rem;
-  padding: 0.75rem 0;
+  margin-bottom: 2.25rem;
+  padding: 1rem 0;
 }
 
 .ticker-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0 1.25rem;
+  gap: 0.45rem;
+  padding-right: 1.25rem;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  color: var(--accent);
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
   white-space: nowrap;
   border-right: 1px solid var(--border);
   flex-shrink: 0;
@@ -359,12 +358,15 @@
   position: relative;
   width: 100%;
   display: flex;
+  mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%);
 }
 
 .ticker-track {
   display: flex;
-  gap: 2rem;
-  animation: tickerScroll 35s linear infinite;
+  align-items: center;
+  gap: 2.25rem;
+  animation: tickerScroll 38s linear infinite;
   white-space: nowrap;
   will-change: transform;
 }
@@ -376,19 +378,29 @@
 .ticker-track .ticker-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
+  gap: 0.55rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
   color: var(--text-secondary);
-  background: var(--bg-tertiary);
-  box-shadow: var(--skeuo-recessed-sm);
-  padding: 0.35rem 0.75rem;
-  border-radius: 0.4rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.25rem 0.15rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.ticker-track .ticker-item:hover {
+  opacity: 1;
+  color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
 .ticker-icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
 }
 
@@ -523,14 +535,19 @@
   .skills-ticker-wrapper {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 0.65rem;
+    padding: 0.85rem 0;
+    margin-bottom: 1.5rem;
   }
 
   .ticker-label {
     border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.5rem;
-    width: 100%;
+    padding-right: 0;
+    font-size: 0.66rem;
+  }
+
+  .ticker-track {
+    gap: 1.65rem;
   }
 
   .github-activity-card {

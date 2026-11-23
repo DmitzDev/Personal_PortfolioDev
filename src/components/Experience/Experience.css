@@ -527,30 +527,30 @@
   transform: translateX(0) translateY(-6px) scale(1.02) rotate(0deg) translateZ(10px);
 }
 
-/* Previous Card (Tilted left like playing card in hand) */
+/* Previous Card (Straight, recessed to the left) */
 .cert-card-prev {
-  transform: translateX(-40%) translateY(8px) scale(0.85) rotate(-7deg) translateZ(-60px);
+  transform: translateX(-40%) translateY(0) scale(0.85) rotate(0deg) translateZ(-60px);
   z-index: 4;
   opacity: 0.52;
   filter: brightness(0.65) saturate(0.8);
 }
 
 .cert-card-prev:hover {
-  transform: translateX(-45%) translateY(4px) scale(0.88) rotate(-5deg) translateZ(-30px);
+  transform: translateX(-45%) translateY(-4px) scale(0.88) rotate(0deg) translateZ(-30px);
   opacity: 0.85;
   filter: brightness(0.85) saturate(0.95);
 }
 
-/* Next Card (Tilted right like playing card in hand) */
+/* Next Card (Straight, recessed to the right) */
 .cert-card-next {
-  transform: translateX(40%) translateY(8px) scale(0.85) rotate(7deg) translateZ(-60px);
+  transform: translateX(40%) translateY(0) scale(0.85) rotate(0deg) translateZ(-60px);
   z-index: 4;
   opacity: 0.52;
   filter: brightness(0.65) saturate(0.8);
 }
 
 .cert-card-next:hover {
-  transform: translateX(45%) translateY(4px) scale(0.88) rotate(5deg) translateZ(-30px);
+  transform: translateX(45%) translateY(-4px) scale(0.88) rotate(0deg) translateZ(-30px);
   opacity: 0.85;
   filter: brightness(0.85) saturate(0.95);
 }
@@ -1458,12 +1458,12 @@
   }
 
   .cert-card-prev {
-    transform: translateX(-35%) translateY(4px) scale(0.85) rotate(-6deg) translateZ(-40px);
+    transform: translateX(-35%) translateY(0) scale(0.85) rotate(0deg) translateZ(-40px);
     opacity: 0.55;
   }
 
   .cert-card-next {
-    transform: translateX(35%) translateY(4px) scale(0.85) rotate(6deg) translateZ(-40px);
+    transform: translateX(35%) translateY(0) scale(0.85) rotate(0deg) translateZ(-40px);
     opacity: 0.55;
   }
 

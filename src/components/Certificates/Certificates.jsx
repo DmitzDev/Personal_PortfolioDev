@@ -257,7 +257,7 @@ export function Certificates() {
           aria-modal="true"
           aria-labelledby="cert-modal-title"
         >
-          <div className="cert-modal-dialog glass-card" onClick={(e) => e.stopPropagation()}>
+          <div className="cert-modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="cert-modal-header">
               <div className="cert-modal-header-info">
                 <div className="cert-modal-meta-row">
@@ -287,6 +287,7 @@ export function Certificates() {
                 src={selectedCert.image}
                 alt={selectedCert.title}
                 loading="eager"
+                decoding="async"
               />
             </div>
             <div className="cert-modal-footer">

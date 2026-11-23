@@ -1,3 +1,4 @@
+import ciscoPythonEssentials1Img from '../assets/CiscoPythonEssentials1.webp';
 import pocketTracerImg from '../assets/PocketTracer.webp';
 import ciscoExamImg from '../assets/CiscoPacketTracerExam.webp';
 import ciscoIoTImg from '../assets/CiscoIoTPacketTracer.webp';
@@ -7,6 +8,16 @@ import COSHSeminarImg from '../assets/COSHSeminar.webp';
 import RSTWDost from '../assets/RSTWDost.webp';
 
 export const certificates = [
+  {
+    id: 8,
+    title: "Python Essentials 1",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    credentialUrl: "https://www.netacad.com/",
+    image: ciscoPythonEssentials1Img,
+    skills: ["Python 3", "Algorithmic Thinking", "Python Standard Library", "Debugging & Refactoring"],
+    description: "Completed the Cisco Networking Academy & OpenEDG Python Institute Statement of Achievement covering Python 3 design, debugging, algorithmic problem-solving, and the Python Standard Library.",
+  },
   {
     id: 1,
     title: "Introduction to Packet Tracer",

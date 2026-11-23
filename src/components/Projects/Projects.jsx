@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowRight,
   ExternalLink,
   Code2,
   Server,
   Mail,
+  Maximize2,
+  X,
 } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import './Projects.css';
@@ -54,6 +56,7 @@ const getStatusClass = (status) => {
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedId, setSelectedId] = useState(projects[0]?.id ?? 1);
+  const [lightboxProject, setLightboxProject] = useState(null);
 
   const filteredProjects = projects.filter((project) =>
     activeCategory === 'All' || project.category.includes(activeCategory)
@@ -71,6 +74,15 @@ export function Projects() {
       setSelectedId(nextFiltered[0].id);
     }
   };
+
+  useEffect(() => {
+    if (!lightboxProject) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setLightboxProject(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [lightboxProject]);
 
   return (
     <section id="projects" className="section projects-section" aria-labelledby="projects-heading">
@@ -96,10 +108,10 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Interactive Project Index + Live Preview Split */}
+        {/* Studio Project Index + Live Preview Split */}
         {currentProject ? (
           <div className="projects-index-layout">
-            {/* LEFT: 1-Click Numbered Project Index */}
+            {/* LEFT: Visual Thumbnail Index */}
             <div className="project-index-list" role="tablist" aria-label="Select a project">
               {filteredProjects.map((project, idx) => {
                 const isActive = project.id === currentProject.id;
@@ -120,6 +132,17 @@ export function Projects() {
                       {String(idx + 1).padStart(2, '0')}
                     </span>
 
+                    <span className="index-thumb-wrap" aria-hidden="true">
+                      <img
+                        src={project.image}
+                        alt=""
+                        className="index-thumb-img"
+                        width="56"
+                        height="26"
+                        loading="lazy"
+                      />
+                    </span>
+
                     <span className="index-item-main">
                       <span className="index-item-title">{project.title}</span>
                       <span className="index-item-cat">{project.category[0]}</span>
@@ -137,7 +160,7 @@ export function Projects() {
               })}
             </div>
 
-            {/* RIGHT: Focused Live Preview Stage */}
+            {/* RIGHT: Studio Live Preview Stage */}
             <article
               key={currentProject.id}
               id={`project-panel-${currentProject.id}`}
@@ -145,7 +168,13 @@ export function Projects() {
               aria-labelledby={`project-tab-${currentProject.id}`}
               className="project-preview-stage"
             >
-              <div className="project-preview-media">
+              <button
+                type="button"
+                className="project-preview-media"
+                onClick={() => setLightboxProject(currentProject)}
+                aria-label={`Enlarge ${currentProject.title} preview`}
+                title="Click to enlarge preview"
+              >
                 <img
                   src={currentProject.image}
                   alt={currentProject.title}
@@ -154,7 +183,11 @@ export function Projects() {
                   height="368"
                   loading="eager"
                 />
-              </div>
+                <span className="preview-zoom-hint" aria-hidden="true">
+                  <Maximize2 size={13} />
+                  <span>Preview</span>
+                </span>
+              </button>
 
               <div className="project-preview-body">
                 <div className="project-header-meta">
@@ -169,6 +202,10 @@ export function Projects() {
                 </div>
 
                 <h3 className="project-showcase-title">{currentProject.title}</h3>
+                {currentProject.role && (
+                  <p className="project-role-line">{currentProject.role}</p>
+                )}
+
                 <p className="project-showcase-desc">{currentProject.description}</p>
 
                 <div className="project-showcase-tech">
@@ -245,6 +282,37 @@ export function Projects() {
           </div>
         )}
       </div>
+
+      {/* Lightbox Preview */}
+      {lightboxProject && (
+        <div
+          className="project-lightbox-backdrop"
+          onClick={() => setLightboxProject(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${lightboxProject.title} full preview`}
+        >
+          <div
+            className="project-lightbox-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="project-lightbox-close"
+              onClick={() => setLightboxProject(null)}
+              aria-label="Close preview"
+            >
+              <X size={18} />
+            </button>
+            <img
+              src={lightboxProject.image}
+              alt={lightboxProject.title}
+              className="project-lightbox-img"
+            />
+            <p className="project-lightbox-caption">{lightboxProject.title}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

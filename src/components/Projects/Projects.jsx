@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import {
+  ArrowRight,
   ExternalLink,
-  Search,
   Code2,
   Server,
   Mail,
-  ChevronLeft,
-  ChevronRight,
 } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import './Projects.css';
@@ -29,366 +27,221 @@ const GithubIcon = ({ size = 16 }) => (
 
 const getTechIconInfo = (tech) => {
   const t = tech.toLowerCase();
-  if (t.includes('react')) {
-    return { type: 'devicon', src: '/icons/react.svg' };
-  }
-  if (t.includes('node')) {
-    return { type: 'devicon', src: '/icons/nodejs.svg' };
-  }
-  if (t.includes('vite')) {
-    return { type: 'devicon', src: '/icons/vitejs.svg' };
-  }
+  if (t.includes('react')) return { type: 'devicon', src: '/icons/react.svg' };
+  if (t.includes('node')) return { type: 'devicon', src: '/icons/nodejs.svg' };
+  if (t.includes('vite')) return { type: 'devicon', src: '/icons/vitejs.svg' };
   if (t.includes('javascript') || t.includes('js')) {
-    if (t.includes('email')) {
-      return { type: 'lucide', icon: 'mail' };
-    }
+    if (t.includes('email')) return { type: 'lucide', icon: 'mail' };
     return { type: 'devicon', src: '/icons/javascript.svg' };
   }
-  if (t.includes('css')) {
-    return { type: 'devicon', src: '/icons/css3.svg' };
-  }
-  if (t.includes('html')) {
-    return { type: 'devicon', src: '/icons/html5.svg' };
-  }
-  if (t.includes('firebase')) {
-    return { type: 'devicon', src: '/icons/firebase.svg' };
-  }
-  if (t.includes('flutter')) {
-    return { type: 'devicon', src: '/icons/flutter.svg' };
-  }
-  if (t.includes('dart')) {
-    return { type: 'devicon', src: '/icons/dart.svg' };
-  }
-  if (t.includes('state') || t.includes('redux')) {
-    return { type: 'devicon', src: '/icons/redux.svg' };
-  }
-  if (t.includes('api') || t.includes('rest')) {
-    return { type: 'lucide', icon: 'server' };
-  }
-  if (t.includes('email')) {
-    return { type: 'lucide', icon: 'mail' };
-  }
+  if (t.includes('css')) return { type: 'devicon', src: '/icons/css3.svg' };
+  if (t.includes('html')) return { type: 'devicon', src: '/icons/html5.svg' };
+  if (t.includes('firebase')) return { type: 'devicon', src: '/icons/firebase.svg' };
+  if (t.includes('flutter')) return { type: 'devicon', src: '/icons/flutter.svg' };
+  if (t.includes('dart')) return { type: 'devicon', src: '/icons/dart.svg' };
+  if (t.includes('state') || t.includes('redux')) return { type: 'devicon', src: '/icons/redux.svg' };
+  if (t.includes('api') || t.includes('rest')) return { type: 'lucide', icon: 'server' };
+  if (t.includes('email')) return { type: 'lucide', icon: 'mail' };
   return { type: 'lucide', icon: 'code' };
+};
+
+const getStatusClass = (status) => {
+  if (status === 'Completed') return 'status-completed';
+  if (status === 'Maintenance') return 'status-maintenance';
+  return 'status-in-progress';
 };
 
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedId, setSelectedId] = useState(projects[0]?.id ?? 1);
 
-  // Touch Swipe State for Mobile
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
+  const filteredProjects = projects.filter((project) =>
+    activeCategory === 'All' || project.category.includes(activeCategory)
+  );
 
-  const filteredProjects = projects.filter((project) => {
-    const matchesCategory =
-      activeCategory === 'All' || project.category.includes(activeCategory);
+  const currentProject =
+    filteredProjects.find((p) => p.id === selectedId) || filteredProjects[0] || null;
 
-    const query = searchQuery.toLowerCase().trim();
-    if (!query) return matchesCategory;
-
-    const matchesSearch =
-      project.title.toLowerCase().includes(query) ||
-      (project.subtitle && project.subtitle.toLowerCase().includes(query)) ||
-      project.description.toLowerCase().includes(query) ||
-      project.technologies.some((tech) => tech.toLowerCase().includes(query));
-
-    return matchesCategory && matchesSearch;
-  });
-
-  const safeIndex =
-    filteredProjects.length > 0
-      ? Math.min(currentIndex, filteredProjects.length - 1)
-      : 0;
-  const currentProject = filteredProjects[safeIndex];
-
-  const handlePrev = () => {
-    if (filteredProjects.length <= 1) return;
-    setCurrentIndex((prev) =>
-      prev > 0 ? prev - 1 : filteredProjects.length - 1
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    const nextFiltered = projects.filter((project) =>
+      category === 'All' || project.category.includes(category)
     );
-  };
-
-  const handleNext = () => {
-    if (filteredProjects.length <= 1) return;
-    setCurrentIndex((prev) =>
-      prev < filteredProjects.length - 1 ? prev + 1 : 0
-    );
-  };
-
-  const handleTouchStart = (e) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    const distance = touchStartX - touchEndX;
-    if (distance > 45) {
-      handleNext();
-    } else if (distance < -45) {
-      handlePrev();
+    if (nextFiltered[0]) {
+      setSelectedId(nextFiltered[0].id);
     }
   };
 
   return (
-    <section id="projects" className="section projects-section">
+    <section id="projects" className="section projects-section" aria-labelledby="projects-heading">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">Projects</h2>
+          <h2 id="projects-heading" className="section-title">Projects</h2>
           <p className="section-subtitle">
-            Featured web systems and applications built for scale and performance.
+            Featured web, mobile, and engineering systems built for production.
           </p>
         </div>
 
-        {/* Filter Controls & Search */}
-        <div className="projects-controls">
-          <div className="projects-filter">
-            {projectCategories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
-                onClick={() => {
-                  setActiveCategory(category);
-                  setCurrentIndex(0);
-                }}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          <div className="projects-search glass-card">
-            <Search size={18} className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search by tech or keyword..."
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setCurrentIndex(0);
-              }}
-              className="search-input"
-              aria-label="Search projects"
-            />
-          </div>
+        {/* Category Filter Bar */}
+        <div className="projects-filter" role="group" aria-label="Filter projects by category">
+          {projectCategories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
+              onClick={() => handleCategoryChange(category)}
+            >
+              {category}
+            </button>
+          ))}
         </div>
 
-        {/* Main Split Showcase Layout (Open Architecture - No Big Outer Box Container) */}
+        {/* Interactive Project Index + Live Preview Split */}
         {currentProject ? (
-          <div className="project-showcase-layout">
-            {/* LEFT SIDE: Card Deck of Project Pictures with left/right arrow buttons below */}
-            <div className="project-showcase-visual">
-              <div
-                className="project-deck-stage"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                <div className="project-deck-stack">
-                  {filteredProjects.map((project, idx) => {
-                    const total = filteredProjects.length;
-                    let cardState = 'hidden';
+          <div className="projects-index-layout">
+            {/* LEFT: 1-Click Numbered Project Index */}
+            <div className="project-index-list" role="tablist" aria-label="Select a project">
+              {filteredProjects.map((project, idx) => {
+                const isActive = project.id === currentProject.id;
+                const statusClass = getStatusClass(project.status);
 
-                    if (total === 1) {
-                      cardState = 'active';
-                    } else if (total === 2) {
-                      if (idx === safeIndex) cardState = 'active';
-                      else cardState = 'next';
-                    } else {
-                      if (idx === safeIndex) {
-                        cardState = 'active';
-                      } else if (idx === (safeIndex - 1 + total) % total) {
-                        cardState = 'prev';
-                      } else if (idx === (safeIndex + 1) % total) {
-                        cardState = 'next';
-                      }
-                    }
+                return (
+                  <button
+                    key={project.id}
+                    type="button"
+                    role="tab"
+                    id={`project-tab-${project.id}`}
+                    aria-selected={isActive}
+                    aria-controls={`project-panel-${project.id}`}
+                    className={`project-index-item ${isActive ? 'is-active' : ''}`}
+                    onClick={() => setSelectedId(project.id)}
+                  >
+                    <span className="index-item-num">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
 
-                    return (
-                      <div
-                        key={project.id}
-                        className={`project-deck-card project-card-${cardState}`}
-                        onClick={() => {
-                          if (cardState === 'prev') handlePrev();
-                          else if (cardState === 'next') handleNext();
-                        }}
-                        title={
-                          cardState === 'prev'
-                            ? `Previous: ${project.title}`
-                            : cardState === 'next'
-                            ? `Next: ${project.title}`
-                            : project.title
-                        }
-                        aria-label={project.title}
-                      >
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="project-deck-img"
-                          width="640"
-                          height="400"
-                          loading="eager"
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
+                    <span className="index-item-main">
+                      <span className="index-item-title">{project.title}</span>
+                      <span className="index-item-cat">{project.category[0]}</span>
+                    </span>
+
+                    <span
+                      className={`index-status-dot ${statusClass}`}
+                      title={project.status}
+                      aria-label={project.status}
+                    />
+
+                    <ArrowRight size={15} className="index-item-arrow" aria-hidden="true" />
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* RIGHT: Focused Live Preview Stage */}
+            <article
+              key={currentProject.id}
+              id={`project-panel-${currentProject.id}`}
+              role="tabpanel"
+              aria-labelledby={`project-tab-${currentProject.id}`}
+              className="project-preview-stage"
+            >
+              <div className="project-preview-media">
+                <img
+                  src={currentProject.image}
+                  alt={currentProject.title}
+                  className="project-preview-img"
+                  width="800"
+                  height="368"
+                  loading="eager"
+                />
               </div>
 
-              {/* Left and Right arrow buttons directly below the picture stack */}
-              <div className="project-thumbnail-nav">
-                <button
-                  type="button"
-                  className="project-nav-arrow-btn prev-btn"
-                  onClick={handlePrev}
-                  aria-label="Previous project"
-                  title="Previous project"
-                >
-                  <ChevronLeft size={22} />
-                </button>
-
-                <div className="project-nav-indicators">
-                  <span className="project-nav-counter">
-                    <strong className="counter-current">
-                      {String(safeIndex + 1).padStart(2, '0')}
-                    </strong>
-                    <span className="counter-sep">/</span>
-                    <span className="counter-total">
-                      {String(filteredProjects.length).padStart(2, '0')}
-                    </span>
+              <div className="project-preview-body">
+                <div className="project-header-meta">
+                  <span className="project-cat-badge">{currentProject.category[0]}</span>
+                  <span className={`project-status-pill ${getStatusClass(currentProject.status)}`}>
+                    <span className="status-dot" aria-hidden="true"></span>
+                    <span className="status-label">{currentProject.status}</span>
                   </span>
+                  {currentProject.timeline && (
+                    <span className="project-timeline-tag">{currentProject.timeline}</span>
+                  )}
+                </div>
 
-                  <div className="project-nav-dots" role="tablist" aria-label="Select project">
-                    {filteredProjects.map((p, idx) => (
-                      <button
-                        key={p.id}
-                        type="button"
-                        role="tab"
-                        aria-selected={idx === safeIndex}
-                        className={`project-nav-dot ${idx === safeIndex ? 'active' : ''}`}
-                        onClick={() => setCurrentIndex(idx)}
-                        aria-label={`Jump to project ${idx + 1}: ${p.title}`}
-                        title={p.title}
-                      />
-                    ))}
+                <h3 className="project-showcase-title">{currentProject.title}</h3>
+                <p className="project-showcase-desc">{currentProject.description}</p>
+
+                <div className="project-showcase-tech">
+                  <span className="tech-heading-label">TECH STACK</span>
+                  <div className="project-tech-badges-list">
+                    {currentProject.technologies.map((tech) => {
+                      const info = getTechIconInfo(tech);
+                      return (
+                        <div key={tech} className="tech-icon-pill" title={tech}>
+                          {info.type === 'devicon' ? (
+                            <img
+                              src={info.src}
+                              alt={tech}
+                              className="tech-pill-img"
+                              width="16"
+                              height="16"
+                              loading="lazy"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                          ) : info.icon === 'server' ? (
+                            <Server size={14} className="tech-pill-lucide" />
+                          ) : info.icon === 'mail' ? (
+                            <Mail size={14} className="tech-pill-lucide" />
+                          ) : (
+                            <Code2 size={14} className="tech-pill-lucide" />
+                          )}
+                          <span className="tech-pill-text">{tech}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className="project-nav-arrow-btn next-btn"
-                  onClick={handleNext}
-                  aria-label="Next project"
-                  title="Next project"
-                >
-                  <ChevronRight size={22} />
-                </button>
-              </div>
-            </div>
+                {((currentProject.liveDemo && currentProject.liveDemo !== '#') ||
+                  (currentProject.github && currentProject.github !== '#')) && (
+                  <div className="project-showcase-actions">
+                    {currentProject.liveDemo && currentProject.liveDemo !== '#' && (
+                      <a
+                        href={currentProject.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-project-action btn-action-live"
+                        title={`Visit ${currentProject.title} Live`}
+                        aria-label={`Visit ${currentProject.title} Live Demo`}
+                      >
+                        <span>Live</span>
+                        <ExternalLink size={15} />
+                      </a>
+                    )}
 
-            {/* RIGHT SIDE: Independent Title, descriptions, Tech stack, and Live/Source buttons */}
-            <div className="project-showcase-content">
-              <div className="project-header-meta">
-                <span className="project-cat-badge">{currentProject.category[0]}</span>
-                <span
-                  className={`project-status-pill ${
-                    currentProject.status === 'Completed'
-                      ? 'status-completed'
-                      : currentProject.status === 'Maintenance'
-                      ? 'status-maintenance'
-                      : 'status-in-progress'
-                  }`}
-                >
-                  <span className="status-dot" aria-hidden="true"></span>
-                  <span className="status-label">{currentProject.status}</span>
-                </span>
-                {currentProject.timeline && (
-                  <span className="project-timeline-tag">{currentProject.timeline}</span>
+                    {currentProject.github && currentProject.github !== '#' && (
+                      <a
+                        href={currentProject.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-project-action btn-action-source"
+                        title="View Source Code"
+                        aria-label={`View Source Code for ${currentProject.title}`}
+                      >
+                        <GithubIcon size={15} />
+                        <span>Source</span>
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
-
-              <h3 className="project-showcase-title">{currentProject.title}</h3>
-
-              <p className="project-showcase-desc">{currentProject.description}</p>
-
-              {/* Tech Stack */}
-              <div className="project-showcase-tech">
-                <span className="tech-heading-label">TECH STACK</span>
-                <div className="project-tech-badges-list">
-                  {currentProject.technologies.map((tech) => {
-                    const info = getTechIconInfo(tech);
-                    return (
-                      <div key={tech} className="tech-icon-pill" title={tech}>
-                        {info.type === 'devicon' ? (
-                          <img
-                            src={info.src}
-                            alt={tech}
-                            className="tech-pill-img"
-                            width="16"
-                            height="16"
-                            loading="lazy"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                            }}
-                          />
-                        ) : info.icon === 'server' ? (
-                          <Server size={14} className="tech-pill-lucide" />
-                        ) : info.icon === 'mail' ? (
-                          <Mail size={14} className="tech-pill-lucide" />
-                        ) : (
-                          <Code2 size={14} className="tech-pill-lucide" />
-                        )}
-                        <span className="tech-pill-text">{tech}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Action Buttons: Live and Source Only (omitted for private/thesis repos) */}
-              {((currentProject.liveDemo && currentProject.liveDemo !== '#') ||
-                (currentProject.github && currentProject.github !== '#')) && (
-                <div className="project-showcase-actions">
-                  {currentProject.liveDemo && currentProject.liveDemo !== '#' && (
-                    <a
-                      href={currentProject.liveDemo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-project-action btn-action-live"
-                      title={`Visit ${currentProject.title} Live`}
-                      aria-label={`Visit ${currentProject.title} Live Demo`}
-                    >
-                      <span>Live</span>
-                      <ExternalLink size={15} />
-                    </a>
-                  )}
-
-                  {currentProject.github && currentProject.github !== '#' && (
-                    <a
-                      href={currentProject.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-project-action btn-action-source"
-                      title="View Source Code"
-                      aria-label={`View Source Code for ${currentProject.title}`}
-                    >
-                      <GithubIcon size={15} />
-                      <span>Source</span>
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
+            </article>
           </div>
         ) : (
-          <div className="no-projects glass-card">
-            <p>No projects matched your criteria. Try resetting the filters.</p>
+          <div className="no-projects">
+            <p>No projects matched this category.</p>
           </div>
         )}
       </div>

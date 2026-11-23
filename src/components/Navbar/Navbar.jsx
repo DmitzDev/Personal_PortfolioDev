@@ -13,6 +13,7 @@ const navLinks = [
   { id: 'skills', label: 'Tech' },
   { id: 'services', label: 'Services' },
   { id: 'experience', label: 'Experience' },
+  { id: 'certificates', label: 'Certificates' },
   { id: 'contact', label: 'Contact' },
 ];
 

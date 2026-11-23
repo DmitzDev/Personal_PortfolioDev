@@ -7,6 +7,7 @@ const Projects = lazy(() => import('./components/Projects/Projects').then(m => (
 const Skills = lazy(() => import('./components/Skills/Skills').then(m => ({ default: m.Skills })));
 const Services = lazy(() => import('./components/Services/Services').then(m => ({ default: m.Services })));
 const Experience = lazy(() => import('./components/Experience/Experience').then(m => ({ default: m.Experience })));
+const Certificates = lazy(() => import('./components/Certificates/Certificates').then(m => ({ default: m.Certificates })));
 const Contact = lazy(() => import('./components/Contact/Contact').then(m => ({ default: m.Contact })));
 const Footer = lazy(() => import('./components/Footer/Footer').then(m => ({ default: m.Footer })));
 import { ScrollToTop } from './components/shared/ScrollToTop';
@@ -56,6 +57,7 @@ function App() {
             <Skills />
             <Services />
             <Experience />
+            <Certificates />
             <Contact />
           </Suspense>
         )}

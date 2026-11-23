@@ -1,22 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { Briefcase, GraduationCap, Award, Calendar, MapPin, ChevronLeft, ChevronRight, Maximize2, ExternalLink, X } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { Briefcase, GraduationCap, Award, Calendar, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { experience } from '../../data/experience';
 import { education } from '../../data/education';
-import { certificates, achievements } from '../../data/certificates';
 import './Experience.css';
 
 export function Experience() {
   const [activeTab, setActiveTab] = useState('experience');
-  const [selectedCert, setSelectedCert] = useState(null);
-
-  useEffect(() => {
-    if (!selectedCert) return undefined;
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setSelectedCert(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedCert]);
 
   // 1. Work Experience Swiper State
   const [activeExpIndex, setActiveExpIndex] = useState(0);
@@ -27,10 +16,6 @@ export function Experience() {
   const [activeEduIndex, setActiveEduIndex] = useState(0);
   const [slideEduDir, setSlideEduDir] = useState('next');
   const [isEduAnimating, setIsEduAnimating] = useState(false);
-
-  // 3. Certificates 3D Deck State
-  const [certGroup, setCertGroup] = useState('cisco');
-  const [activeCertIndex, setActiveCertIndex] = useState(0);
 
   // Shared Touch Coordinates
   const [touchStartX, setTouchStartX] = useState(null);
@@ -93,9 +78,9 @@ export function Experience() {
     <section id="experience" className="section experience-section">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">Experience, Education & Credentials</h2>
+          <h2 className="section-title">Experience &amp; Education</h2>
           <p className="section-subtitle">
-            A comprehensive record of client engagements, technical internships, computer engineering education, and industry certifications.
+            A comprehensive record of client engagements, technical internships, and computer engineering education.
           </p>
         </div>
 
@@ -115,13 +100,6 @@ export function Experience() {
             >
               <GraduationCap size={16} />
               <span>Education</span>
-            </button>
-            <button
-              className={`exp-tab-btn ${activeTab === 'credentials' ? 'active' : ''}`}
-              onClick={() => setActiveTab('credentials')}
-            >
-              <Award size={16} />
-              <span>Certificates & Honors</span>
             </button>
           </div>
         </div>
@@ -324,291 +302,7 @@ export function Experience() {
           </div>
         )}
 
-        {/* TAB 3: CERTIFICATES & HONORS (3D PLAYING CARDS "BARAHA" DECK + CISCO / SEMINARS TOGGLE) */}
-        {activeTab === 'credentials' && (() => {
-          const isCiscoCert = (c) => c.organization.toLowerCase().includes('cisco');
-          const visibleCerts =
-            certGroup === 'cisco'
-              ? certificates.filter(isCiscoCert)
-              : certificates.filter((c) => !isCiscoCert(c));
-
-          const total = visibleCerts.length;
-          const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
-          const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
-
-          const handlePrevCert = () => {
-            if (total <= 1) return;
-            setActiveCertIndex((prev) => (prev - 1 + total) % total);
-          };
-
-          const handleNextCert = () => {
-            if (total <= 1) return;
-            setActiveCertIndex((prev) => (prev + 1) % total);
-          };
-
-          return (
-            <div className="credentials-view">
-              <div className="cert-deck-showcase">
-                {/* Left Side: 3D Playing Cards ("Baraha") Deck */}
-                <div
-                  className="cert-deck-stage"
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={() => handleTouchEnd(handleNextCert, handlePrevCert)}
-                >
-                  <div className="cert-deck-stack">
-                    {visibleCerts.map((cert, idx) => {
-                      let cardState = 'hidden';
-                      if (total === 1) {
-                        cardState = 'active';
-                      } else if (total === 2) {
-                        cardState = idx === safeIndex ? 'active' : 'next';
-                      } else {
-                        if (idx === safeIndex) {
-                          cardState = 'active';
-                        } else if (idx === (safeIndex - 1 + total) % total) {
-                          cardState = 'prev';
-                        } else if (idx === (safeIndex + 1) % total) {
-                          cardState = 'next';
-                        }
-                      }
-
-                      return (
-                        <div
-                          key={cert.id}
-                          className={`cert-deck-card cert-card-${cardState}`}
-                          onClick={() => {
-                            if (cardState === 'prev') handlePrevCert();
-                            else if (cardState === 'next') handleNextCert();
-                            else if (cardState === 'active') setSelectedCert(cert);
-                          }}
-                          title={
-                            cardState === 'active'
-                              ? 'Click to enlarge certificate'
-                              : cardState === 'prev'
-                              ? `Previous: ${cert.title}`
-                              : `Next: ${cert.title}`
-                          }
-                          aria-label={cert.title}
-                        >
-                          <div className="cert-deck-card-inner">
-                            <img
-                              src={cert.image}
-                              alt={cert.title}
-                              className="cert-deck-img"
-                              width="600"
-                              height="400"
-                              loading="lazy"
-                            />
-                            {cardState === 'active' && (
-                              <div className="cert-deck-hover-overlay">
-                                <span className="cert-expand-pill">
-                                  <Maximize2 size={13} />
-                                  <span>Enlarge</span>
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Right Side: Category Toggle + Clean Unboxed Context Details */}
-                {currentCert && (
-                  <div className="cert-details-unboxed">
-                    <div className="cert-group-toggle" role="tablist" aria-label="Certificate category">
-                      <button
-                        type="button"
-                        role="tab"
-                        aria-selected={certGroup === 'cisco'}
-                        className={`cert-group-toggle-btn ${certGroup === 'cisco' ? 'is-active' : ''}`}
-                        onClick={() => {
-                          setCertGroup('cisco');
-                          setActiveCertIndex(0);
-                        }}
-                      >
-                        Cisco Academy
-                      </button>
-                      <button
-                        type="button"
-                        role="tab"
-                        aria-selected={certGroup === 'other'}
-                        className={`cert-group-toggle-btn ${certGroup === 'other' ? 'is-active' : ''}`}
-                        onClick={() => {
-                          setCertGroup('other');
-                          setActiveCertIndex(0);
-                        }}
-                      >
-                        Industry &amp; Seminars
-                      </button>
-                    </div>
-
-                    <div className="cert-unboxed-meta-bar">
-                      <span className="cert-unboxed-issuer">{currentCert.organization}</span>
-                      <span className="cert-unboxed-date">
-                        <Calendar size={13} />
-                        <span>{currentCert.date}</span>
-                      </span>
-                    </div>
-
-                    <h3 className="cert-unboxed-title">{currentCert.title}</h3>
-                    <p className="cert-unboxed-desc">{currentCert.description}</p>
-
-                    {currentCert.skills && currentCert.skills.length > 0 && (
-                      <div className="cert-unboxed-skills-section">
-                        <span className="cert-unboxed-skills-title">Key Competencies</span>
-                        <div className="cert-skills-wrap">
-                          {currentCert.skills.map((s) => (
-                            <span key={s} className="tech-pill">{s}</span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
-                      <div className="cert-unboxed-actions">
-                        <a
-                          href={currentCert.credentialUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-secondary cert-action-btn"
-                        >
-                          <ExternalLink size={15} />
-                          <span>Verify Credential</span>
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* Bottom Controls: Desktop arrows, dots, mobile swipe */}
-              <div className="exp-swiper-bottom-bar cert-deck-bottom-bar">
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
-                  onClick={handlePrevCert}
-                  aria-label="Previous credential"
-                  title="Previous credential"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-
-                <div className="exp-swiper-dots">
-                  {visibleCerts.map((cert, idx) => (
-                    <button
-                      key={cert.id}
-                      type="button"
-                      className={`exp-dot ${idx === safeIndex ? 'active' : ''}`}
-                      onClick={() => setActiveCertIndex(idx)}
-                      aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
-                  onClick={handleNextCert}
-                  aria-label="Next credential"
-                  title="Next credential"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
-
-              <div className="exp-swipe-hint">
-                <span>← Swipe cards left &amp; right to switch →</span>
-              </div>
-
-              {/* Honors & Milestones Grid */}
-              <div className="achievements-section-wrap">
-                <h4 className="sub-heading">Academic &amp; Industry Honors</h4>
-                <div className="achievements-grid">
-                  {achievements.map((ach) => (
-                    <div key={ach.id} className="achievement-card glass-card">
-                      <div className="ach-metric">{ach.metric}</div>
-                      <h5 className="ach-title">{ach.title}</h5>
-                      <p className="ach-desc">{ach.description}</p>
-                      <span className="ach-year">{ach.year}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          );
-        })()}
       </div>
-
-      {/* Certificate Inspector Modal */}
-      {selectedCert && (
-        <div
-          className="cert-modal-backdrop"
-          onClick={() => setSelectedCert(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cert-modal-title"
-        >
-          <div className="cert-modal-dialog glass-card" onClick={(e) => e.stopPropagation()}>
-            <div className="cert-modal-header">
-              <div className="cert-modal-header-info">
-                <div className="cert-modal-meta-row">
-                  <span className="cert-modal-issuer">
-                    <Award size={13} />
-                    {selectedCert.organization}
-                  </span>
-                  <span className="cert-modal-dot" aria-hidden="true">·</span>
-                  <span className="cert-modal-date">
-                    <Calendar size={13} />
-                    {selectedCert.date}
-                  </span>
-                </div>
-                <h3 id="cert-modal-title" className="cert-modal-title">{selectedCert.title}</h3>
-              </div>
-              <button
-                type="button"
-                className="cert-close-btn"
-                onClick={() => setSelectedCert(null)}
-                aria-label="Close certificate preview"
-              >
-                <X size={18} />
-              </button>
-            </div>
-            <div className="cert-modal-img-wrap">
-              <img
-                src={selectedCert.image}
-                alt={selectedCert.title}
-                loading="eager"
-              />
-            </div>
-            <div className="cert-modal-footer">
-              <div className="cert-modal-footer-body">
-                <p className="cert-modal-desc">{selectedCert.description}</p>
-                {selectedCert.skills?.length > 0 && (
-                  <div className="cert-modal-skills">
-                    {selectedCert.skills.map((skill) => (
-                      <span key={skill} className="cert-modal-skill-pill">{skill}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {selectedCert.credentialUrl && selectedCert.credentialUrl !== '#' && (
-                <a
-                  href={selectedCert.credentialUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary cert-action-btn"
-                >
-                  <ExternalLink size={15} />
-                  <span>Verify Credential</span>
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

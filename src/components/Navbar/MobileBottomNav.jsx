@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, FolderKanban, Cpu, Briefcase, Send } from 'lucide-react';
+import { Home, FolderKanban, Cpu, Briefcase, Award, Send } from 'lucide-react';
 import './MobileBottomNav.css';
 
 const navItems = [
@@ -7,6 +7,7 @@ const navItems = [
   { id: 'projects', label: 'Projects', icon: FolderKanban },
   { id: 'skills', label: 'Tech', icon: Cpu },
   { id: 'experience', label: 'Career', icon: Briefcase },
+  { id: 'certificates', label: 'Certs', icon: Award },
   { id: 'contact', label: 'Contact', icon: Send },
 ];
 

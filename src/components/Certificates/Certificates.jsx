@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Award, Calendar, ChevronLeft, ChevronRight, Maximize2, ExternalLink, X } from 'lucide-react';
 import { certificates } from '../../data/certificates';
-import '../Experience/Experience.css';
+import './Certificates.css';
 
 export function Certificates() {
   const [certGroup, setCertGroup] = useState('cisco');

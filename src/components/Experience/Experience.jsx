@@ -21,7 +21,6 @@ export function Experience() {
 
   // 3. Certificates Swiper State
   const [activeCertIndex, setActiveCertIndex] = useState(0);
-  const [isCertAnimating, setIsCertAnimating] = useState(false);
 
   // Shared Touch Coordinates
   const [touchStartX, setTouchStartX] = useState(null);

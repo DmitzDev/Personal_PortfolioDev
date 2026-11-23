@@ -1,3 +1,10 @@
+.cert-deck-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .cert-group-toggle {
   display: inline-flex;
   align-items: center;
@@ -7,8 +14,8 @@
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
   box-shadow: var(--skeuo-recessed-sm);
-  margin-bottom: 1.25rem;
-  align-self: flex-start;
+  margin-bottom: 0.75rem;
+  align-self: center;
 }
 
 .cert-group-toggle-btn {

@@ -70,13 +70,41 @@ export function Certificates() {
 
         <div className="credentials-view">
           <div className="cert-deck-showcase">
-            {/* Left Side: 3D Cards Deck */}
-            <div
-              className="cert-deck-stage"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
+            {/* Left Side: Fixed Category Toggle + 3D Cards Deck */}
+            <div className="cert-deck-column">
+              <div className="cert-group-toggle" role="tablist" aria-label="Certificate category">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={certGroup === 'cisco'}
+                  className={`cert-group-toggle-btn ${certGroup === 'cisco' ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setCertGroup('cisco');
+                    setActiveCertIndex(0);
+                  }}
+                >
+                  Cisco Academy
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={certGroup === 'other'}
+                  className={`cert-group-toggle-btn ${certGroup === 'other' ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setCertGroup('other');
+                    setActiveCertIndex(0);
+                  }}
+                >
+                  Industry &amp; Seminars
+                </button>
+              </div>
+
+              <div
+                className="cert-deck-stage"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
               <div className="cert-deck-stack">
                 {visibleCerts.map((cert, idx) => {
                   let cardState = 'hidden';
@@ -107,8 +135,8 @@ export function Certificates() {
                         cardState === 'active'
                           ? 'Click to enlarge certificate'
                           : cardState === 'prev'
-                          ? `Previous: ${cert.title}`
-                          : `Next: ${cert.title}`
+                            ? `Previous: ${cert.title}`
+                            : `Next: ${cert.title}`
                       }
                       aria-label={cert.title}
                     >
@@ -133,39 +161,13 @@ export function Certificates() {
                     </div>
                   );
                 })}
+                </div>
               </div>
             </div>
 
-            {/* Right Side: Category Toggle + Clean Unboxed Context Details */}
+            {/* Right Side: Clean Unboxed Context Details */}
             {currentCert && (
               <div className="cert-details-unboxed">
-                <div className="cert-group-toggle" role="tablist" aria-label="Certificate category">
-                  <button
-                    type="button"
-                    role="tab"
-                    aria-selected={certGroup === 'cisco'}
-                    className={`cert-group-toggle-btn ${certGroup === 'cisco' ? 'is-active' : ''}`}
-                    onClick={() => {
-                      setCertGroup('cisco');
-                      setActiveCertIndex(0);
-                    }}
-                  >
-                    Cisco Academy
-                  </button>
-                  <button
-                    type="button"
-                    role="tab"
-                    aria-selected={certGroup === 'other'}
-                    className={`cert-group-toggle-btn ${certGroup === 'other' ? 'is-active' : ''}`}
-                    onClick={() => {
-                      setCertGroup('other');
-                      setActiveCertIndex(0);
-                    }}
-                  >
-                    Industry &amp; Seminars
-                  </button>
-                </div>
-
                 <div className="cert-unboxed-meta-bar">
                   <span className="cert-unboxed-issuer">{currentCert.organization}</span>
                   <span className="cert-unboxed-date">

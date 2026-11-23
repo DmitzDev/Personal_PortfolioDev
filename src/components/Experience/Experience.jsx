@@ -341,7 +341,6 @@ export function Experience() {
               {/* Top 2-Column Showcase: Big Uncropped Certificate (Left) + Crisp Details (Right) */}
               {currentCert && (
                 <div
-                  key={currentCert.id}
                   className="cert-centerpiece-stage"
                   onTouchStart={handleTouchStart}
                   onTouchMove={handleTouchMove}
@@ -393,12 +392,12 @@ export function Experience() {
                 </div>
               )}
 
-              {/* Bottom Grouped Text Switcher (Cisco vs Industry & Seminars) */}
+              {/* Bottom Clean 2-Group Editorial Switcher (Zero Pill Boxes) */}
               <div className="cert-grouped-switcher">
                 <div className="cert-switcher-group">
-                  <span className="cert-switcher-label">CISCO ACADEMY</span>
-                  <div className="cert-switcher-pills" role="tablist" aria-label="Cisco certificates">
-                    {ciscoCerts.map((cert) => {
+                  <span className="cert-switcher-label">CISCO NETWORKING ACADEMY</span>
+                  <div className="cert-switcher-links" role="tablist" aria-label="Cisco certificates">
+                    {ciscoCerts.map((cert, i) => {
                       const idx = certificates.findIndex((c) => c.id === cert.id);
                       const isActive = idx === activeCertIndex;
                       return (
@@ -407,22 +406,21 @@ export function Experience() {
                           type="button"
                           role="tab"
                           aria-selected={isActive}
-                          className={`cert-pill-btn ${isActive ? 'is-active' : ''}`}
+                          className={`cert-tab-link ${isActive ? 'is-active' : ''}`}
                           onClick={() => setActiveCertIndex(idx)}
                         >
-                          {getShortCertLabel(cert.title)}
+                          <span className="cert-tab-num">{String(i + 1).padStart(2, '0')}</span>
+                          <span>{getShortCertLabel(cert.title)}</span>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                <span className="cert-switcher-divider" aria-hidden="true" />
-
                 <div className="cert-switcher-group">
                   <span className="cert-switcher-label">INDUSTRY &amp; SEMINARS</span>
-                  <div className="cert-switcher-pills" role="tablist" aria-label="Other certificates">
-                    {otherCerts.map((cert) => {
+                  <div className="cert-switcher-links" role="tablist" aria-label="Other certificates">
+                    {otherCerts.map((cert, i) => {
                       const idx = certificates.findIndex((c) => c.id === cert.id);
                       const isActive = idx === activeCertIndex;
                       return (
@@ -431,10 +429,13 @@ export function Experience() {
                           type="button"
                           role="tab"
                           aria-selected={isActive}
-                          className={`cert-pill-btn ${isActive ? 'is-active' : ''}`}
+                          className={`cert-tab-link ${isActive ? 'is-active' : ''}`}
                           onClick={() => setActiveCertIndex(idx)}
                         >
-                          {getShortCertLabel(cert.title)}
+                          <span className="cert-tab-num">
+                            {String(ciscoCerts.length + i + 1).padStart(2, '0')}
+                          </span>
+                          <span>{getShortCertLabel(cert.title)}</span>
                         </button>
                       );
                     })}

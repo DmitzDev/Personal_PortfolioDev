@@ -19,6 +19,9 @@ export function Experience() {
   const [slideEduDir, setSlideEduDir] = useState('next');
   const [isEduAnimating, setIsEduAnimating] = useState(false);
 
+  // 3. Certificates Centerpiece State
+  const [activeCertIndex, setActiveCertIndex] = useState(0);
+
   // Shared Touch Coordinates
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
@@ -311,76 +314,141 @@ export function Experience() {
           </div>
         )}
 
-        {/* TAB 3: CERTIFICATES & HONORS (3x2 FLOATING DOCUMENT GALLERY) */}
-        {activeTab === 'credentials' && (
-          <div className="credentials-view">
-            <div className="cert-gallery-grid" role="list" aria-label="Verified certificates">
-              {certificates.map((cert, idx) => (
-                <article
-                  key={cert.id}
-                  role="listitem"
-                  className="cert-gallery-item"
-                  onClick={() => setSelectedCert(cert)}
+        {/* TAB 3: CERTIFICATES & HONORS (CENTERPIECE CERTIFICATE + THUMBNAIL FILMSTRIP) */}
+        {activeTab === 'credentials' && (() => {
+          const currentCert = certificates[activeCertIndex] || certificates[0];
+          const handlePrevCert = () =>
+            setActiveCertIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
+          const handleNextCert = () =>
+            setActiveCertIndex((prev) => (prev + 1) % certificates.length);
+
+          return (
+            <div className="credentials-view">
+              {/* Top Centerpiece Stage */}
+              {currentCert && (
+                <div
+                  key={currentCert.id}
+                  className="cert-centerpiece-stage"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={() => handleTouchEnd(handleNextCert, handlePrevCert)}
                 >
-                  <div className="cert-gallery-frame">
+                  <button
+                    type="button"
+                    className="cert-centerpiece-frame"
+                    onClick={() => setSelectedCert(currentCert)}
+                    aria-label={`Enlarge ${currentCert.title}`}
+                    title="Click to enlarge certificate"
+                  >
                     <img
-                      src={cert.image}
-                      alt={cert.title}
-                      className="cert-gallery-img"
-                      width="600"
-                      height="406"
-                      loading="lazy"
+                      src={currentCert.image}
+                      alt={currentCert.title}
+                      className="cert-centerpiece-img"
+                      width="800"
+                      height="542"
+                      loading="eager"
                     />
-                  </div>
+                  </button>
 
-                  <div className="cert-gallery-caption">
-                    <div className="cert-gallery-meta">
-                      <span className="cert-gallery-num">
-                        {String(idx + 1).padStart(2, '0')}
+                  <div className="cert-centerpiece-info">
+                    <div className="cert-centerpiece-meta">
+                      <span className="cert-unboxed-issuer">{currentCert.organization}</span>
+                      <span className="cert-unboxed-date">
+                        <Calendar size={13} />
+                        <span>{currentCert.date}</span>
                       </span>
-                      <span className="cert-gallery-issuer">{cert.organization}</span>
-                      <span className="cert-gallery-date">{cert.date}</span>
                     </div>
 
-                    <h3 className="cert-gallery-title">{cert.title}</h3>
+                    <h3 className="cert-unboxed-title">{currentCert.title}</h3>
+                    {currentCert.certId && (
+                      <p className="cert-id-line">Cert ID: {currentCert.certId}</p>
+                    )}
+                    <p className="cert-unboxed-desc">{currentCert.description}</p>
 
-                    <div className="cert-gallery-tags">
-                      {cert.certId ? (
-                        <span className="cert-gallery-id">
-                          ID: {cert.certId.slice(0, 8)}…
-                        </span>
-                      ) : (
-                        cert.skills?.[0] && (
-                          <span className="cert-gallery-id">{cert.skills[0]}</span>
-                        )
-                      )}
-                      {cert.skills?.slice(0, 2).map((skill) => (
-                        <span key={skill} className="cert-gallery-tag">
-                          {skill}
-                        </span>
-                      ))}
+                    {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
+                      <div className="cert-unboxed-actions">
+                        <a
+                          href={currentCert.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-secondary cert-action-btn"
+                        >
+                          <ExternalLink size={15} />
+                          <span>Verify Credential</span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Bottom Thumbnail Filmstrip */}
+              <div className="cert-filmstrip-bar">
+                <button
+                  type="button"
+                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                  onClick={handlePrevCert}
+                  aria-label="Previous certificate"
+                  title="Previous certificate"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+
+                <div className="cert-thumbstrip" role="tablist" aria-label="Select certificate">
+                  {certificates.map((cert, idx) => {
+                    const isActive = idx === activeCertIndex;
+                    return (
+                      <button
+                        key={cert.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        className={`cert-thumb-btn ${isActive ? 'is-active' : ''}`}
+                        onClick={() => setActiveCertIndex(idx)}
+                        title={cert.title}
+                        aria-label={cert.title}
+                      >
+                        <img
+                          src={cert.image}
+                          alt=""
+                          className="cert-thumb-img"
+                          width="72"
+                          height="48"
+                          loading="lazy"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
+                  onClick={handleNextCert}
+                  aria-label="Next certificate"
+                  title="Next certificate"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+
+              {/* Honors & Milestones Grid */}
+              <div className="achievements-section-wrap">
+                <h4 className="sub-heading">Academic &amp; Industry Honors</h4>
+                <div className="achievements-grid">
+                  {achievements.map((ach) => (
+                    <div key={ach.id} className="achievement-card glass-card">
+                      <div className="ach-metric">{ach.metric}</div>
+                      <h5 className="ach-title">{ach.title}</h5>
+                      <p className="ach-desc">{ach.description}</p>
+                      <span className="ach-year">{ach.year}</span>
                     </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            {/* Honors & Milestones Grid */}
-            <div className="achievements-section-wrap">
-              <h4 className="sub-heading">Academic &amp; Industry Honors</h4>
-              <div className="achievements-grid">
-                {achievements.map((ach) => (
-                  <div key={ach.id} className="achievement-card glass-card">
-                    <div className="ach-metric">{ach.metric}</div>
-                    <h5 className="ach-title">{ach.title}</h5>
-                    <p className="ach-desc">{ach.description}</p>
-                    <span className="ach-year">{ach.year}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
 
       {/* Certificate Inspector Modal */}

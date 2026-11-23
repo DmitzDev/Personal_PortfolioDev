@@ -21,6 +21,7 @@ export function Experience() {
 
   // 3. Certificates Centerpiece State
   const [activeCertIndex, setActiveCertIndex] = useState(0);
+  const [certFilter, setCertFilter] = useState('All');
 
   // Shared Touch Coordinates
   const [touchStartX, setTouchStartX] = useState(null);
@@ -314,16 +315,52 @@ export function Experience() {
           </div>
         )}
 
-        {/* TAB 3: CERTIFICATES & HONORS (CENTERPIECE CERTIFICATE + THUMBNAIL FILMSTRIP) */}
+        {/* TAB 3: CERTIFICATES & HONORS (CENTERPIECE CERTIFICATE + GROUPED THUMBNAIL FILMSTRIP) */}
         {activeTab === 'credentials' && (() => {
-          const currentCert = certificates[activeCertIndex] || certificates[0];
+          const isCiscoCert = (cert) =>
+            cert.organization.toLowerCase().includes('cisco');
+
+          const filteredCerts =
+            certFilter === 'Cisco'
+              ? certificates.filter(isCiscoCert)
+              : certFilter === 'Other'
+              ? certificates.filter((c) => !isCiscoCert(c))
+              : certificates;
+
+          const safeCertIndex =
+            filteredCerts.length > 0
+              ? Math.min(activeCertIndex, filteredCerts.length - 1)
+              : 0;
+          const currentCert = filteredCerts[safeCertIndex] || filteredCerts[0];
+
           const handlePrevCert = () =>
-            setActiveCertIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
+            setActiveCertIndex((prev) => (prev - 1 + filteredCerts.length) % filteredCerts.length);
           const handleNextCert = () =>
-            setActiveCertIndex((prev) => (prev + 1) % certificates.length);
+            setActiveCertIndex((prev) => (prev + 1) % filteredCerts.length);
 
           return (
             <div className="credentials-view">
+              {/* Clean Group Filter Pills (Cisco vs Non-Cisco) */}
+              <div className="cert-filter-bar" role="group" aria-label="Filter certificates">
+                {[
+                  { key: 'All', label: 'All' },
+                  { key: 'Cisco', label: 'Cisco Networking Academy' },
+                  { key: 'Other', label: 'Other Certificates' },
+                ].map((tab) => (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    className={`cert-filter-btn ${certFilter === tab.key ? 'is-active' : ''}`}
+                    onClick={() => {
+                      setCertFilter(tab.key);
+                      setActiveCertIndex(0);
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
               {/* Top Centerpiece Stage */}
               {currentCert && (
                 <div
@@ -360,9 +397,6 @@ export function Experience() {
                     </div>
 
                     <h3 className="cert-unboxed-title">{currentCert.title}</h3>
-                    {currentCert.certId && (
-                      <p className="cert-id-line">Cert ID: {currentCert.certId}</p>
-                    )}
                     <p className="cert-unboxed-desc">{currentCert.description}</p>
 
                     {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
@@ -382,7 +416,7 @@ export function Experience() {
                 </div>
               )}
 
-              {/* Bottom Thumbnail Filmstrip */}
+              {/* Bottom Thumbnail Filmstrip (Cisco grouped together, separated from Non-Cisco) */}
               <div className="cert-filmstrip-bar">
                 <button
                   type="button"
@@ -395,28 +429,38 @@ export function Experience() {
                 </button>
 
                 <div className="cert-thumbstrip" role="tablist" aria-label="Select certificate">
-                  {certificates.map((cert, idx) => {
-                    const isActive = idx === activeCertIndex;
+                  {filteredCerts.map((cert, idx) => {
+                    const isActive = idx === safeCertIndex;
+                    const prevCert = idx > 0 ? filteredCerts[idx - 1] : null;
+                    const showGroupDivider =
+                      certFilter === 'All' &&
+                      prevCert &&
+                      isCiscoCert(prevCert) !== isCiscoCert(cert);
+
                     return (
-                      <button
-                        key={cert.id}
-                        type="button"
-                        role="tab"
-                        aria-selected={isActive}
-                        className={`cert-thumb-btn ${isActive ? 'is-active' : ''}`}
-                        onClick={() => setActiveCertIndex(idx)}
-                        title={cert.title}
-                        aria-label={cert.title}
-                      >
-                        <img
-                          src={cert.image}
-                          alt=""
-                          className="cert-thumb-img"
-                          width="72"
-                          height="48"
-                          loading="lazy"
-                        />
-                      </button>
+                      <React.Fragment key={cert.id}>
+                        {showGroupDivider && (
+                          <span className="cert-thumb-divider" aria-hidden="true" />
+                        )}
+                        <button
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          className={`cert-thumb-btn ${isActive ? 'is-active' : ''}`}
+                          onClick={() => setActiveCertIndex(idx)}
+                          title={cert.title}
+                          aria-label={cert.title}
+                        >
+                          <img
+                            src={cert.image}
+                            alt=""
+                            className="cert-thumb-img"
+                            width="72"
+                            height="48"
+                            loading="lazy"
+                          />
+                        </button>
+                      </React.Fragment>
                     );
                   })}
                 </div>
@@ -461,9 +505,6 @@ export function Experience() {
                   {selectedCert.organization} · {selectedCert.date}
                 </span>
                 <h3 className="cert-modal-title">{selectedCert.title}</h3>
-                {selectedCert.certId && (
-                  <p className="cert-id-line">Cert ID: {selectedCert.certId}</p>
-                )}
               </div>
               <button
                 type="button"

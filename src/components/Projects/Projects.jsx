@@ -5,7 +5,6 @@ import {
   Code2,
   Server,
   Mail,
-  Maximize2,
   X,
 } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
@@ -183,10 +182,6 @@ export function Projects() {
                   height="368"
                   loading="eager"
                 />
-                <span className="preview-zoom-hint" aria-hidden="true">
-                  <Maximize2 size={13} />
-                  <span>Preview</span>
-                </span>
               </button>
 
               <div className="project-preview-body">

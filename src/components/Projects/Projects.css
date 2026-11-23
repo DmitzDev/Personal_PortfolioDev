@@ -261,32 +261,6 @@
   display: block;
 }
 
-.preview-zoom-hint {
-  position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.7rem;
-  border-radius: 9999px;
-  background: rgba(15, 23, 42, 0.78);
-  backdrop-filter: blur(8px);
-  color: #f8fafc;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none;
-}
-
-.project-preview-media:hover .preview-zoom-hint {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .project-preview-body {
   display: flex;
   flex-direction: column;

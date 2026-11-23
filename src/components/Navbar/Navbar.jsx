@@ -163,7 +163,7 @@ export function Navbar() {
               e.preventDefault();
               scrollTo('hero');
             }}
-            aria-label={isMorphed ? 'MitchDev - Return to Top' : 'Mitchelle Salazar - Front-End Developer'}
+            aria-label={isMorphed ? 'MitchDev - Return to Top' : 'Mitchelle Salazar - AI-Native Developer'}
           >
             {/* Scrolled Photo Avatar on Left Side */}
             <div className={`brand-pill-avatar-wrap ${isMorphed ? 'is-active' : ''}`} ref={avatarRef} aria-hidden={!isMorphed}>
@@ -194,9 +194,9 @@ export function Navbar() {
                 <span className={`brand-pill-cursor ${isTyping ? 'typing' : ''}`} aria-hidden="true">|</span>
               </div>
 
-              {/* Front-End Developer tag that smoothly slides away on morph */}
+              {/* AI-Native Developer tag that smoothly slides away on morph */}
               <span className={`brand-pill-role ${isMorphed ? 'is-hidden' : ''}`}>
-                Front-End Developer
+                AI-Native Developer
               </span>
             </div>
           </a>

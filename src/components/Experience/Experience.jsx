@@ -19,10 +19,6 @@ export function Experience() {
   const [slideEduDir, setSlideEduDir] = useState('next');
   const [isEduAnimating, setIsEduAnimating] = useState(false);
 
-  // 3. Certificates Centerpiece State
-  const [activeCertIndex, setActiveCertIndex] = useState(0);
-  const [certFilter, setCertFilter] = useState('All');
-
   // Shared Touch Coordinates
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
@@ -315,165 +311,60 @@ export function Experience() {
           </div>
         )}
 
-        {/* TAB 3: CERTIFICATES & HONORS (CENTERPIECE CERTIFICATE + GROUPED THUMBNAIL FILMSTRIP) */}
+        {/* TAB 3: CERTIFICATES & HONORS (CLEAN GROUPED SHOWCASE: CISCO + OTHER) */}
         {activeTab === 'credentials' && (() => {
-          const isCiscoCert = (cert) =>
-            cert.organization.toLowerCase().includes('cisco');
+          const ciscoCerts = certificates.filter((c) =>
+            c.organization.toLowerCase().includes('cisco')
+          );
+          const otherCerts = certificates.filter(
+            (c) => !c.organization.toLowerCase().includes('cisco')
+          );
 
-          const filteredCerts =
-            certFilter === 'Cisco'
-              ? certificates.filter(isCiscoCert)
-              : certFilter === 'Other'
-              ? certificates.filter((c) => !isCiscoCert(c))
-              : certificates;
-
-          const safeCertIndex =
-            filteredCerts.length > 0
-              ? Math.min(activeCertIndex, filteredCerts.length - 1)
-              : 0;
-          const currentCert = filteredCerts[safeCertIndex] || filteredCerts[0];
-
-          const handlePrevCert = () =>
-            setActiveCertIndex((prev) => (prev - 1 + filteredCerts.length) % filteredCerts.length);
-          const handleNextCert = () =>
-            setActiveCertIndex((prev) => (prev + 1) % filteredCerts.length);
+          const renderCertTile = (cert) => (
+            <button
+              key={cert.id}
+              type="button"
+              className="cert-showcase-tile"
+              onClick={() => setSelectedCert(cert)}
+              aria-label={`View ${cert.title}`}
+            >
+              <div className="cert-tile-media">
+                <img
+                  src={cert.image}
+                  alt={cert.title}
+                  className="cert-tile-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="cert-tile-caption">
+                <span className="cert-tile-title">{cert.title}</span>
+                <span className="cert-tile-sub">{cert.date}</span>
+              </div>
+            </button>
+          );
 
           return (
             <div className="credentials-view">
-              {/* Clean Group Filter Pills (Cisco vs Non-Cisco) */}
-              <div className="cert-filter-bar" role="group" aria-label="Filter certificates">
-                {[
-                  { key: 'All', label: 'All' },
-                  { key: 'Cisco', label: 'Cisco Networking Academy' },
-                  { key: 'Other', label: 'Other Certificates' },
-                ].map((tab) => (
-                  <button
-                    key={tab.key}
-                    type="button"
-                    className={`cert-filter-btn ${certFilter === tab.key ? 'is-active' : ''}`}
-                    onClick={() => {
-                      setCertFilter(tab.key);
-                      setActiveCertIndex(0);
-                    }}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
+              {/* Group 1: Cisco Networking Academy */}
+              <div className="cert-group-section">
+                <div className="cert-group-header">
+                  <h3 className="cert-group-title">Cisco Networking Academy</h3>
+                  <span className="cert-group-count">{ciscoCerts.length} Certificates</span>
+                </div>
+                <div className="cert-group-grid cert-grid-cisco">
+                  {ciscoCerts.map(renderCertTile)}
+                </div>
               </div>
 
-              {/* Top Centerpiece Stage */}
-              {currentCert && (
-                <div
-                  key={currentCert.id}
-                  className="cert-centerpiece-stage"
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={() => handleTouchEnd(handleNextCert, handlePrevCert)}
-                >
-                  <button
-                    type="button"
-                    className="cert-centerpiece-frame"
-                    onClick={() => setSelectedCert(currentCert)}
-                    aria-label={`Enlarge ${currentCert.title}`}
-                    title="Click to enlarge certificate"
-                  >
-                    <img
-                      src={currentCert.image}
-                      alt={currentCert.title}
-                      className="cert-centerpiece-img"
-                      width="800"
-                      height="542"
-                      loading="eager"
-                    />
-                  </button>
-
-                  <div className="cert-centerpiece-info">
-                    <div className="cert-centerpiece-meta">
-                      <span className="cert-unboxed-issuer">{currentCert.organization}</span>
-                      <span className="cert-unboxed-date">
-                        <Calendar size={13} />
-                        <span>{currentCert.date}</span>
-                      </span>
-                    </div>
-
-                    <h3 className="cert-unboxed-title">{currentCert.title}</h3>
-                    <p className="cert-unboxed-desc">{currentCert.description}</p>
-
-                    {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
-                      <div className="cert-unboxed-actions">
-                        <a
-                          href={currentCert.credentialUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-secondary cert-action-btn"
-                        >
-                          <ExternalLink size={15} />
-                          <span>Verify Credential</span>
-                        </a>
-                      </div>
-                    )}
-                  </div>
+              {/* Group 2: Seminars & Industry Credentials */}
+              <div className="cert-group-section">
+                <div className="cert-group-header">
+                  <h3 className="cert-group-title">Industry &amp; Seminars</h3>
+                  <span className="cert-group-count">{otherCerts.length} Certificates</span>
                 </div>
-              )}
-
-              {/* Bottom Thumbnail Filmstrip (Cisco grouped together, separated from Non-Cisco) */}
-              <div className="cert-filmstrip-bar">
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
-                  onClick={handlePrevCert}
-                  aria-label="Previous certificate"
-                  title="Previous certificate"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-
-                <div className="cert-thumbstrip" role="tablist" aria-label="Select certificate">
-                  {filteredCerts.map((cert, idx) => {
-                    const isActive = idx === safeCertIndex;
-                    const prevCert = idx > 0 ? filteredCerts[idx - 1] : null;
-                    const showGroupDivider =
-                      certFilter === 'All' &&
-                      prevCert &&
-                      isCiscoCert(prevCert) !== isCiscoCert(cert);
-
-                    return (
-                      <React.Fragment key={cert.id}>
-                        {showGroupDivider && (
-                          <span className="cert-thumb-divider" aria-hidden="true" />
-                        )}
-                        <button
-                          type="button"
-                          role="tab"
-                          aria-selected={isActive}
-                          className={`cert-thumb-btn ${isActive ? 'is-active' : ''}`}
-                          onClick={() => setActiveCertIndex(idx)}
-                          title={cert.title}
-                          aria-label={cert.title}
-                        >
-                          <img
-                            src={cert.image}
-                            alt=""
-                            className="cert-thumb-img"
-                            width="72"
-                            height="48"
-                            loading="lazy"
-                          />
-                        </button>
-                      </React.Fragment>
-                    );
-                  })}
+                <div className="cert-group-grid cert-grid-other">
+                  {otherCerts.map(renderCertTile)}
                 </div>
-
-                <button
-                  type="button"
-                  className="exp-swiper-arrow-btn exp-arrow-desktop-only"
-                  onClick={handleNextCert}
-                  aria-label="Next certificate"
-                  title="Next certificate"
-                >
-                  <ChevronRight size={18} />
-                </button>
               </div>
 
               {/* Honors & Milestones Grid */}

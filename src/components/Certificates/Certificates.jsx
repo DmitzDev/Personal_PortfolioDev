@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Award, Calendar, ChevronLeft, ChevronRight, Maximize2, ExternalLink, X } from 'lucide-react';
-import { certificates, achievements } from '../../data/certificates';
+import { certificates } from '../../data/certificates';
 import '../Experience/Experience.css';
 
 export function Certificates() {
@@ -62,9 +62,9 @@ export function Certificates() {
     <section id="certificates" className="section certificates-section">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">Certificates &amp; Honors</h2>
+          <h2 className="section-title">Certificates</h2>
           <p className="section-subtitle">
-            Verified Cisco Networking Academy credentials, industry seminars, and academic honors.
+            Verified Cisco Networking Academy credentials and industry seminar certifications.
           </p>
         </div>
 
@@ -242,21 +242,6 @@ export function Certificates() {
 
           <div className="exp-swipe-hint">
             <span>← Swipe cards left &amp; right to switch →</span>
-          </div>
-
-          {/* Honors & Milestones Grid */}
-          <div className="achievements-section-wrap">
-            <h4 className="sub-heading">Academic &amp; Industry Honors</h4>
-            <div className="achievements-grid">
-              {achievements.map((ach) => (
-                <div key={ach.id} className="achievement-card glass-card">
-                  <div className="ach-metric">{ach.metric}</div>
-                  <h5 className="ach-title">{ach.title}</h5>
-                  <p className="ach-desc">{ach.description}</p>
-                  <span className="ach-year">{ach.year}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

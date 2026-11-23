@@ -398,126 +398,144 @@
 
 /* 3D Playing Cards ("Baraha") Deck & Unboxed Details Showcase */
 /* ==========================================================================
-   GROUPED CERTIFICATE SHOWCASE (CISCO + INDUSTRY & SEMINARS)
+   BIG CERTIFICATE STAGE + GROUPED TEXT SWITCHER
    ========================================================================== */
-.cert-group-section {
-  width: 100%;
-  margin: 0 auto 3rem auto;
-}
-
-.cert-group-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.75rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.cert-group-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.cert-group-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-muted);
-}
-
-.cert-group-grid {
+.cert-centerpiece-stage {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: minmax(320px, 500px) 1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto 2.25rem auto;
+  animation: certUnboxedFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.cert-grid-cisco {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.cert-grid-other {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 680px;
-}
-
-.cert-showcase-tile {
+.cert-centerpiece-frame {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   padding: 0;
   background: transparent;
   border: none;
-  text-align: left;
-  cursor: pointer;
+  cursor: zoom-in;
+}
+
+.cert-centerpiece-img {
+  max-width: 100%;
+  max-height: 350px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.85rem;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s ease,
+              border-color 0.25s ease;
+}
+
+.cert-centerpiece-frame:hover .cert-centerpiece-img {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="light"] .cert-centerpiece-img {
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14), 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .cert-centerpiece-frame:hover .cert-centerpiece-img {
+  border-color: rgba(15, 23, 42, 0.32);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.2);
+}
+
+.cert-centerpiece-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   min-width: 0;
+}
+
+.cert-centerpiece-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+}
+
+/* Bottom Grouped Text Switcher (Cisco vs Industry & Seminars) */
+.cert-grouped-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  max-width: 1040px;
+  margin: 0 auto 3.25rem auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.cert-switcher-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cert-switcher-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.cert-switcher-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.cert-pill-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.55rem;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.cert-tile-media {
-  width: 100%;
-  height: 195px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-}
-
-.cert-tile-img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 0.7rem;
-  display: block;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.22);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.25s ease,
-              border-color 0.2s ease;
-}
-
-.cert-showcase-tile:hover .cert-tile-img {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.6);
-}
-
-[data-theme="light"] .cert-tile-img {
-  border-color: rgba(15, 23, 42, 0.12);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12), 0 2px 5px rgba(15, 23, 42, 0.06);
-}
-
-[data-theme="light"] .cert-showcase-tile:hover .cert-tile-img {
-  border-color: rgba(15, 23, 42, 0.32);
-  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.18);
-}
-
-.cert-tile-caption {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 0 0.15rem;
-}
-
-.cert-tile-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
+.cert-pill-btn:hover {
   color: var(--text-primary);
-  line-height: 1.3;
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
-.cert-tile-sub {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--text-muted);
+.cert-pill-btn.is-active {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.cert-switcher-divider {
+  width: 1px;
+  height: 26px;
+  background: var(--border);
 }
 
 .cert-modal-footer {
@@ -540,43 +558,53 @@
   min-width: 220px;
 }
 
-@media (max-width: 1024px) {
-  .cert-grid-cisco {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 860px) {
+  .cert-centerpiece-stage {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    margin-bottom: 1.5rem;
   }
-}
 
-@media (max-width: 680px) {
-  .cert-group-section {
+  .cert-centerpiece-img {
+    max-height: 240px;
+  }
+
+  .cert-grouped-switcher {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
     margin-bottom: 2.25rem;
   }
 
-  .cert-grid-cisco,
-  .cert-grid-other {
-    display: flex;
+  .cert-switcher-divider {
+    display: none;
+  }
+
+  .cert-switcher-group {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .cert-switcher-pills {
+    width: 100%;
+    flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    gap: 1rem;
-    max-width: 100%;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
-  .cert-grid-cisco::-webkit-scrollbar,
-  .cert-grid-other::-webkit-scrollbar {
+  .cert-switcher-pills::-webkit-scrollbar {
     display: none;
   }
 
-  .cert-showcase-tile {
-    flex: 0 0 76%;
-    max-width: 280px;
-    scroll-snap-align: start;
-  }
-
-  .cert-tile-media {
-    height: 175px;
+  .cert-pill-btn {
+    flex-shrink: 0;
+    min-height: 42px;
+    white-space: nowrap;
   }
 }
 
@@ -1485,126 +1513,144 @@
   }
 
   /* ==========================================================================
-   GROUPED CERTIFICATE SHOWCASE (CISCO + INDUSTRY & SEMINARS)
+   BIG CERTIFICATE STAGE + GROUPED TEXT SWITCHER
    ========================================================================== */
-.cert-group-section {
-  width: 100%;
-  margin: 0 auto 3rem auto;
-}
-
-.cert-group-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.75rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.cert-group-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.cert-group-count {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-muted);
-}
-
-.cert-group-grid {
+.cert-centerpiece-stage {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: minmax(320px, 500px) 1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto 2.25rem auto;
+  animation: certUnboxedFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.cert-grid-cisco {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.cert-grid-other {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 680px;
-}
-
-.cert-showcase-tile {
+.cert-centerpiece-frame {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   padding: 0;
   background: transparent;
   border: none;
-  text-align: left;
-  cursor: pointer;
+  cursor: zoom-in;
+}
+
+.cert-centerpiece-img {
+  max-width: 100%;
+  max-height: 350px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.85rem;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s ease,
+              border-color 0.25s ease;
+}
+
+.cert-centerpiece-frame:hover .cert-centerpiece-img {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="light"] .cert-centerpiece-img {
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14), 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .cert-centerpiece-frame:hover .cert-centerpiece-img {
+  border-color: rgba(15, 23, 42, 0.32);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.2);
+}
+
+.cert-centerpiece-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   min-width: 0;
+}
+
+.cert-centerpiece-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+}
+
+/* Bottom Grouped Text Switcher (Cisco vs Industry & Seminars) */
+.cert-grouped-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  max-width: 1040px;
+  margin: 0 auto 3.25rem auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.cert-switcher-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cert-switcher-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.cert-switcher-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.cert-pill-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.55rem;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.cert-tile-media {
-  width: 100%;
-  height: 195px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-}
-
-.cert-tile-img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 0.7rem;
-  display: block;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.22);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.25s ease,
-              border-color 0.2s ease;
-}
-
-.cert-showcase-tile:hover .cert-tile-img {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.6);
-}
-
-[data-theme="light"] .cert-tile-img {
-  border-color: rgba(15, 23, 42, 0.12);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12), 0 2px 5px rgba(15, 23, 42, 0.06);
-}
-
-[data-theme="light"] .cert-showcase-tile:hover .cert-tile-img {
-  border-color: rgba(15, 23, 42, 0.32);
-  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.18);
-}
-
-.cert-tile-caption {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 0 0.15rem;
-}
-
-.cert-tile-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
+.cert-pill-btn:hover {
   color: var(--text-primary);
-  line-height: 1.3;
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
-.cert-tile-sub {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--text-muted);
+.cert-pill-btn.is-active {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.cert-switcher-divider {
+  width: 1px;
+  height: 26px;
+  background: var(--border);
 }
 
 .cert-modal-footer {
@@ -1627,43 +1673,53 @@
   min-width: 220px;
 }
 
-@media (max-width: 1024px) {
-  .cert-grid-cisco {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 860px) {
+  .cert-centerpiece-stage {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    margin-bottom: 1.5rem;
   }
-}
 
-@media (max-width: 680px) {
-  .cert-group-section {
+  .cert-centerpiece-img {
+    max-height: 240px;
+  }
+
+  .cert-grouped-switcher {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
     margin-bottom: 2.25rem;
   }
 
-  .cert-grid-cisco,
-  .cert-grid-other {
-    display: flex;
+  .cert-switcher-divider {
+    display: none;
+  }
+
+  .cert-switcher-group {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .cert-switcher-pills {
+    width: 100%;
+    flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    gap: 1rem;
-    max-width: 100%;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
-  .cert-grid-cisco::-webkit-scrollbar,
-  .cert-grid-other::-webkit-scrollbar {
+  .cert-switcher-pills::-webkit-scrollbar {
     display: none;
   }
 
-  .cert-showcase-tile {
-    flex: 0 0 76%;
-    max-width: 280px;
-    scroll-snap-align: start;
-  }
-
-  .cert-tile-media {
-    height: 175px;
+  .cert-pill-btn {
+    flex-shrink: 0;
+    min-height: 42px;
+    white-space: nowrap;
   }
 }
 

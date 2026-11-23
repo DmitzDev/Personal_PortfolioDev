@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Briefcase, GraduationCap, Award, Calendar, MapPin, ChevronLeft, ChevronRight, Maximize2, ExternalLink } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Briefcase, GraduationCap, Award, Calendar, MapPin, ChevronLeft, ChevronRight, Maximize2, ExternalLink, X } from 'lucide-react';
 import { experience } from '../../data/experience';
 import { education } from '../../data/education';
 import { certificates, achievements } from '../../data/certificates';
@@ -8,6 +8,15 @@ import './Experience.css';
 export function Experience() {
   const [activeTab, setActiveTab] = useState('experience');
   const [selectedCert, setSelectedCert] = useState(null);
+
+  useEffect(() => {
+    if (!selectedCert) return undefined;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setSelectedCert(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedCert]);
 
   // 1. Work Experience Swiper State
   const [activeExpIndex, setActiveExpIndex] = useState(0);
@@ -535,14 +544,28 @@ export function Experience() {
 
       {/* Certificate Inspector Modal */}
       {selectedCert && (
-        <div className="cert-modal-backdrop" onClick={() => setSelectedCert(null)}>
+        <div
+          className="cert-modal-backdrop"
+          onClick={() => setSelectedCert(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cert-modal-title"
+        >
           <div className="cert-modal-dialog glass-card" onClick={(e) => e.stopPropagation()}>
             <div className="cert-modal-header">
-              <div>
-                <span className="cert-modal-issuer">
-                  {selectedCert.organization} · {selectedCert.date}
-                </span>
-                <h3 className="cert-modal-title">{selectedCert.title}</h3>
+              <div className="cert-modal-header-info">
+                <div className="cert-modal-meta-row">
+                  <span className="cert-modal-issuer">
+                    <Award size={13} />
+                    {selectedCert.organization}
+                  </span>
+                  <span className="cert-modal-dot" aria-hidden="true">·</span>
+                  <span className="cert-modal-date">
+                    <Calendar size={13} />
+                    {selectedCert.date}
+                  </span>
+                </div>
+                <h3 id="cert-modal-title" className="cert-modal-title">{selectedCert.title}</h3>
               </div>
               <button
                 type="button"
@@ -550,20 +573,27 @@ export function Experience() {
                 onClick={() => setSelectedCert(null)}
                 aria-label="Close certificate preview"
               >
-                ✕
+                <X size={18} />
               </button>
             </div>
             <div className="cert-modal-img-wrap">
               <img
                 src={selectedCert.image}
                 alt={selectedCert.title}
-                width="900"
-                height="610"
                 loading="eager"
               />
             </div>
             <div className="cert-modal-footer">
-              <p className="cert-modal-desc">{selectedCert.description}</p>
+              <div className="cert-modal-footer-body">
+                <p className="cert-modal-desc">{selectedCert.description}</p>
+                {selectedCert.skills?.length > 0 && (
+                  <div className="cert-modal-skills">
+                    {selectedCert.skills.map((skill) => (
+                      <span key={skill} className="cert-modal-skill-pill">{skill}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
               {selectedCert.credentialUrl && selectedCert.credentialUrl !== '#' && (
                 <a
                   href={selectedCert.credentialUrl}

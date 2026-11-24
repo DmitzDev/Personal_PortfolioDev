@@ -1,6 +1,6 @@
 /* ==========================================================================
-   MOBILE BOTTOM NAV — RESTRAINED ARCHITECTURAL TAB DOCK
-   Clean frosted bar, crisp active pill, ergonomic 48px touch targets.
+   MOBILE BOTTOM NAV — 5-TAB ARCHITECTURAL DOCK + "MORE" POPOVER
+   Clean frosted bar, spacious touch targets, zero crowding.
    ========================================================================== */
 
 .mobnav-dock-root {
@@ -19,6 +19,68 @@
     padding: 0 0.75rem max(0.65rem, env(safe-area-inset-bottom)) 0.75rem;
   }
 
+  /* ── FLOATING "MORE" POPOVER SHEET ── */
+  .mobnav-more-sheet {
+    pointer-events: auto;
+    position: absolute;
+    right: 0.75rem;
+    bottom: calc(100% + 0.55rem);
+    min-width: 172px;
+    padding: 0.4rem;
+    border-radius: 0.9rem;
+    background: var(--bg-nav-scrolled);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    box-shadow: var(--skeuo-extruded);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    animation: mobnavSheetIn 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes mobnavSheetIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .mobnav-more-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border-radius: 0.6rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.16s ease, color 0.16s ease;
+  }
+
+  .mobnav-more-item:hover,
+  .mobnav-more-item.is-active {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+
+  [data-theme="light"] .mobnav-more-item.is-active {
+    color: #0f172a;
+    background: rgba(15, 23, 42, 0.08);
+  }
+
+  /* ── MAIN 5-SLOT DOCK ── */
   .mobnav-dock {
     pointer-events: auto;
     width: 100%;
@@ -41,7 +103,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 0.1rem;
+    gap: 0.2rem;
   }
 
   .mobnav-slot {
@@ -56,11 +118,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.18rem;
+    gap: 0.2rem;
     width: 100%;
-    min-height: 46px;
-    padding: 0.32rem 0.1rem;
-    border-radius: 0.7rem;
+    min-height: 48px;
+    padding: 0.35rem 0.25rem;
+    border-radius: 0.75rem;
     background: transparent;
     border: none;
     color: var(--text-muted);
@@ -77,21 +139,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
   }
 
   .mobnav-key-label {
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    font-size: 0.6rem;
+    font-size: 0.66rem;
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.01em;
     line-height: 1;
     color: inherit;
     white-space: nowrap;
   }
 
-  /* Crisp Active Pill State (Zero Neon / Glowing Dots) */
+  /* Crisp Active Pill State */
   .mobnav-key.is-active {
     color: var(--text-primary);
     background: var(--bg-tertiary);
@@ -103,7 +165,8 @@
     background: rgba(15, 23, 42, 0.08);
   }
 
-  .mobnav-key:focus-visible {
+  .mobnav-key:focus-visible,
+  .mobnav-more-item:focus-visible {
     outline: 2px solid var(--border-focus);
     outline-offset: -2px;
   }

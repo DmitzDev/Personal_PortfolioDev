@@ -106,7 +106,9 @@
 
 .cert-flip-card {
   position: relative;
-  display: inline-flex;
+  width: 100%;
+  min-height: 360px;
+  display: flex;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
@@ -133,7 +135,9 @@
 }
 
 .cert-flip-front {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  margin: auto;
   transform: rotateY(0deg);
 }
 
@@ -376,6 +380,10 @@
   .cert-frame-panel {
     perspective: 900px;
     -webkit-perspective: 900px;
+  }
+
+  .cert-flip-card {
+    min-height: 245px;
   }
 
   .cert-frame-img {

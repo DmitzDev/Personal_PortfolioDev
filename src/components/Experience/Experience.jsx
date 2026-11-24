@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Briefcase, GraduationCap, Award, MapPin } from 'lucide-react';
 import { experience } from '../../data/experience';
 import { education } from '../../data/education';
+import { Tech3DIcon } from '../shared/Tech3DIcon';
 import './Experience.css';
 
 export function Experience() {
@@ -14,7 +15,7 @@ export function Experience() {
         <div className="section-header">
           <h2 className="section-title">Experience &amp; Education</h2>
           <p className="section-subtitle">
-            Selected engineering roles, client engagements, and academic background in computer engineering.
+            Engineering roles, client work, and academic milestones.
           </p>
         </div>
 
@@ -61,7 +62,7 @@ export function Experience() {
                     <span className="exp-timeline-period">{item.duration}</span>
                     {item.location && (
                       <span className="exp-timeline-submeta">
-                        <MapPin size={12} />
+                        <MapPin size={11} />
                         <span>{item.location}</span>
                       </span>
                     )}
@@ -75,9 +76,8 @@ export function Experience() {
                     <span className="exp-timeline-line" />
                   </div>
 
-                  {/* Right Unboxed Editorial Content */}
+                  {/* Right Unboxed Content (Minimal Copy + Pure Tech Icons) */}
                   <div className="exp-timeline-content">
-                    {/* Mobile-only compact date/location row */}
                     <div className="exp-timeline-mobile-meta">
                       <span className="exp-timeline-period">{item.duration}</span>
                       {item.location && (
@@ -88,25 +88,19 @@ export function Experience() {
                       )}
                     </div>
 
-                    <div className="exp-node-eyebrow">
-                      <span className="exp-node-org">{item.company}</span>
-                      {item.type && (
-                        <>
-                          <span className="exp-node-sep" aria-hidden="true">·</span>
-                          <span className="exp-node-type">{item.type}</span>
-                        </>
-                      )}
-                    </div>
-
+                    <span className="exp-node-org">{item.company}</span>
                     <h3 className="exp-node-title">{item.position}</h3>
                     <p className="exp-node-desc">{item.description}</p>
 
                     {item.tech?.length > 0 && (
-                      <div className="exp-node-tags" aria-label="Technologies used">
-                        {item.tech.map((tech) => (
-                          <span key={tech} className="tech-pill">
-                            {tech}
-                          </span>
+                      <div className="exp-tech-icons-row" aria-label="Technologies used">
+                        {item.tech.map((t) => (
+                          <div key={t.name} className="exp-tech-icon-item">
+                            <Tech3DIcon iconKey={t.icon} size={38} />
+                            <span className="exp-tech-tooltip" role="tooltip">
+                              {t.name}
+                            </span>
+                          </div>
                         ))}
                       </div>
                     )}
@@ -129,8 +123,11 @@ export function Experience() {
                   {/* Desktop Left Meta Column */}
                   <div className="exp-timeline-meta">
                     <span className="exp-timeline-period">{edu.year}</span>
-                    {edu.status && (
-                      <span className="exp-timeline-submeta">{edu.status}</span>
+                    {edu.location && (
+                      <span className="exp-timeline-submeta">
+                        <MapPin size={11} />
+                        <span>{edu.location}</span>
+                      </span>
                     )}
                   </div>
 
@@ -142,20 +139,19 @@ export function Experience() {
                     <span className="exp-timeline-line" />
                   </div>
 
-                  {/* Right Unboxed Editorial Content */}
+                  {/* Right Unboxed Content */}
                   <div className="exp-timeline-content">
-                    {/* Mobile-only compact date/standing row */}
                     <div className="exp-timeline-mobile-meta">
                       <span className="exp-timeline-period">{edu.year}</span>
-                      {edu.status && (
-                        <span className="exp-timeline-submeta">{edu.status}</span>
+                      {edu.location && (
+                        <span className="exp-timeline-submeta">
+                          <MapPin size={11} />
+                          <span>{edu.location}</span>
+                        </span>
                       )}
                     </div>
 
-                    <div className="exp-node-eyebrow">
-                      <span className="exp-node-org">{edu.school}</span>
-                    </div>
-
+                    <span className="exp-node-org">{edu.school}</span>
                     <h3 className="exp-node-title">{edu.degree}</h3>
                     <p className="exp-node-desc">{edu.description}</p>
 

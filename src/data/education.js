@@ -2,11 +2,11 @@ export const education = [
   {
     id: 1,
     school: "Universidad de Dagupan",
-    degree: "Bachelor of Science in Computer Engineering",
+    degree: "BS in Computer Engineering",
     year: "2022 – Present",
+    location: "Dagupan City",
     awards: ["Academic Excellence", "Engineering Society"],
-    status: "In Progress / Senior Standing",
-    description: "Specializing in software engineering, full-stack web technologies, embedded microcontrollers, and network systems. Actively participating in software engineering projects and university tech colloquiums.",
+    description: "Focused on software engineering, full-stack web systems, embedded hardware, and networking.",
   },
   {
     id: 2,
@@ -14,8 +14,7 @@ export const education = [
     degree: "Senior High School — ICT Strand",
     year: "2020 – 2022",
     awards: ["With Honors", "Stewardship Award"],
-    status: "Graduated with Honors",
-    description: "Completed Information & Communications Technology track with honors. Developed foundational programming algorithms and introductory web systems.",
+    description: "Graduated with honors specializing in programming fundamentals and web systems.",
   },
   {
     id: 3,
@@ -23,7 +22,6 @@ export const education = [
     degree: "Junior High School",
     year: "2016 – 2020",
     awards: ["With Honors"],
-    status: "Graduated with Honors",
-    description: "Completed secondary education with honors, cultivating early passion for computer science and digital design.",
+    description: "Completed secondary education with honors and an early focus on computing.",
   },
 ];

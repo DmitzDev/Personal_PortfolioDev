@@ -153,21 +153,12 @@
   position: absolute;
   inset: -7px;
   border-radius: 50%;
-  padding: 1.5px;
-  background: conic-gradient(
-    from 0deg,
-    rgba(255, 255, 255, 0.85) 0deg,
-    rgba(255, 255, 255, 0.15) 95deg,
-    transparent 180deg,
-    rgba(255, 255, 255, 0.45) 280deg,
-    rgba(255, 255, 255, 0.85) 360deg
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(255, 255, 255, 0.85);
+  border-right-color: rgba(255, 255, 255, 0.35);
   pointer-events: none;
   will-change: transform;
-  animation: introRingSpin 1.8s linear infinite, introLogoFadeIn 0.35s ease-out both;
+  animation: introRingSpin 1.4s linear infinite, introLogoFadeIn 0.3s ease-out both;
 }
 
 @keyframes introRingSpin {
@@ -183,11 +174,11 @@
 @keyframes introLogoReveal {
   0% {
     opacity: 0;
-    transform: scale(0.65) rotate(-14deg);
+    transform: scale(0.72) rotate(-10deg);
   }
-  65% {
+  70% {
     opacity: 1;
-    transform: scale(1.05) rotate(2deg);
+    transform: scale(1.03) rotate(1.5deg);
   }
   100% {
     opacity: 1;
@@ -200,25 +191,16 @@
     transform: translateX(-140%) skewX(-22deg);
     opacity: 0;
   }
-  20% {
-    opacity: 0.75;
+  25% {
+    opacity: 0.65;
   }
-  65% {
+  70% {
     transform: translateX(140%) skewX(-22deg);
     opacity: 0;
   }
   100% {
     transform: translateX(140%) skewX(-22deg);
     opacity: 0;
-  }
-}
-
-@keyframes introLogoPulse {
-  0%, 100% {
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 18px rgba(255, 255, 255, 0.16);
-  }
-  50% {
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.85), 0 0 28px rgba(255, 255, 255, 0.32);
   }
 }
 
@@ -231,28 +213,29 @@
   overflow: hidden;
   z-index: 1;
   will-change: transform, opacity;
-  animation: introLogoReveal 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: introLogoReveal 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .intro-logomark::after {
   content: '';
   position: absolute;
   inset: 0;
-  width: 60%;
+  width: 55%;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0.4),
     transparent
   );
   pointer-events: none;
-  animation: introLogoSheen 1.4s ease-in-out 0.25s infinite;
+  will-change: transform, opacity;
+  animation: introLogoSheen 1.2s ease-in-out 0.2s 1 both;
 }
 
 .intro-loader.is-revealing .intro-logomark {
-  transform: scale(1.08);
+  transform: scale(1.06);
   opacity: 0;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
 }
 
 .intro-logomark__img {
@@ -261,10 +244,18 @@
   border-radius: 50%;
   object-fit: cover;
   display: block;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.16);
   border: 2px solid rgba(255, 255, 255, 0.35);
   background: #090c12;
-  animation: introLogoPulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-logomark-ring,
+  .intro-logomark,
+  .intro-logomark::after,
+  .intro-logomark-aura {
+    animation: none !important;
+  }
 }
 
 .intro-logomark__fallback {

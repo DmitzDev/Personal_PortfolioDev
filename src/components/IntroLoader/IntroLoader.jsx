@@ -42,7 +42,7 @@ export function IntroLoader({ onFinish, onReveal }) {
     document.body.style.overflow = 'hidden';
 
     let elapsed = 0;
-    const totalDuration = 900; // ms - crisp entrance with logo animation
+    const totalDuration = 700; // ms - snappy entrance with smooth logo animation
     const tick = 16;
 
     const interval = setInterval(() => {

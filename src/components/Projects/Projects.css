@@ -224,13 +224,13 @@
 .project-preview-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 800 / 410;
+  aspect-ratio: 800 / 385;
   padding: 0;
   border-radius: 0.9rem;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.25);
-  background: transparent;
+  background: var(--bg-secondary);
   cursor: zoom-in;
   display: block;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -257,8 +257,8 @@
 .project-preview-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 

@@ -4,17 +4,19 @@ import {
   FolderKanban,
   Cpu,
   Award,
-  MoreHorizontal,
-  X,
+  Plus,
   Briefcase,
   Layers,
   Send,
 } from 'lucide-react';
 import './MobileBottomNav.css';
 
-const primaryItems = [
+const leftItems = [
   { id: 'hero', label: 'Home', icon: Home },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
+];
+
+const rightItems = [
   { id: 'skills', label: 'Tech', icon: Cpu },
   { id: 'certificates', label: 'Certs', icon: Award },
 ];
@@ -82,7 +84,7 @@ export function MobileBottomNav({ activeSection, scrollTo }) {
 
       <nav className="mobnav-dock" aria-label="Mobile Navigation">
         <ul className="mobnav-list">
-          {primaryItems.map((item) => {
+          {leftItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
             return (
@@ -103,25 +105,40 @@ export function MobileBottomNav({ activeSection, scrollTo }) {
             );
           })}
 
-          <li className="mobnav-slot">
+          {/* Center Circular "+" Button */}
+          <li className="mobnav-slot mobnav-center-slot">
             <button
               type="button"
-              className={`mobnav-key ${moreOpen || isMoreActive ? 'is-active' : ''}`}
+              className={`mobnav-plus-btn ${moreOpen ? 'is-open' : ''} ${isMoreActive ? 'is-active' : ''}`}
               onClick={() => setMoreOpen((prev) => !prev)}
               aria-label="More sections"
               aria-expanded={moreOpen}
               aria-haspopup="menu"
             >
-              <span className="mobnav-icon-wrap" aria-hidden="true">
-                {moreOpen ? (
-                  <X size={18} strokeWidth={2.2} />
-                ) : (
-                  <MoreHorizontal size={18} strokeWidth={isMoreActive ? 2.2 : 1.75} />
-                )}
-              </span>
-              <span className="mobnav-key-label">More</span>
+              <Plus size={20} strokeWidth={2.3} className="mobnav-plus-icon" aria-hidden="true" />
             </button>
           </li>
+
+          {rightItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeSection === item.id;
+            return (
+              <li key={item.id} className="mobnav-slot">
+                <button
+                  type="button"
+                  className={`mobnav-key ${isActive ? 'is-active' : ''}`}
+                  onClick={() => handleNavigate(item.id)}
+                  aria-label={item.label}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <span className="mobnav-icon-wrap" aria-hidden="true">
+                    <Icon size={18} strokeWidth={isActive ? 2.2 : 1.75} />
+                  </span>
+                  <span className="mobnav-key-label">{item.label}</span>
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </div>

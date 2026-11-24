@@ -19,15 +19,16 @@
     padding: 0 0.75rem max(0.65rem, env(safe-area-inset-bottom)) 0.75rem;
   }
 
-  /* ── FLOATING "MORE" POPOVER SHEET ── */
+  /* ── FLOATING "MORE" POPOVER SHEET (CENTERED ABOVE + BUTTON) ── */
   .mobnav-more-sheet {
     pointer-events: auto;
     position: absolute;
-    right: 0.75rem;
-    bottom: calc(100% + 0.55rem);
-    min-width: 172px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(100% + 0.65rem);
+    min-width: 184px;
     padding: 0.4rem;
-    border-radius: 0.9rem;
+    border-radius: 0.95rem;
     background: var(--bg-nav-scrolled);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -42,11 +43,11 @@
   @keyframes mobnavSheetIn {
     from {
       opacity: 0;
-      transform: translateY(8px) scale(0.96);
+      transform: translateX(-50%) translateY(8px) scale(0.96);
     }
     to {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateX(-50%) translateY(0) scale(1);
     }
   }
 
@@ -166,8 +167,53 @@
   }
 
   .mobnav-key:focus-visible,
-  .mobnav-more-item:focus-visible {
+  .mobnav-more-item:focus-visible,
+  .mobnav-plus-btn:focus-visible {
     outline: 2px solid var(--border-focus);
     outline-offset: -2px;
+  }
+
+  /* ── CENTER CIRCULAR "+" BUTTON ── */
+  .mobnav-center-slot {
+    flex: 0 0 auto;
+    padding: 0 0.2rem;
+  }
+
+  .mobnav-plus-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-accent);
+    color: var(--accent-text);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+  }
+
+  [data-theme="dark"] .mobnav-plus-btn {
+    background: var(--accent);
+    color: var(--accent-text);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  }
+
+  .mobnav-plus-btn:active {
+    transform: scale(0.92);
+  }
+
+  .mobnav-plus-icon {
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobnav-plus-btn.is-open .mobnav-plus-icon {
+    transform: rotate(45deg);
+  }
+
+  .mobnav-plus-btn.is-active:not(.is-open) {
+    box-shadow: 0 0 0 3px var(--accent-light), 0 4px 14px rgba(15, 23, 42, 0.25);
   }
 }

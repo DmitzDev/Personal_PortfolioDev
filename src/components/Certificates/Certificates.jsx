@@ -4,23 +4,17 @@ import { certificates } from '../../data/certificates';
 import './Certificates.css';
 
 export function Certificates() {
-  const [certGroup, setCertGroup] = useState('badges');
+  const [certGroup, setCertGroup] = useState('cisco');
   const [activeCertIndex, setActiveCertIndex] = useState(0);
 
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
   const isCiscoCert = (c) => c.organization.toLowerCase().includes('cisco');
-  const badgedCerts = certificates.filter((c) => isCiscoCert(c) && c.hasBadge);
-  const ciscoNoBadgeCerts = certificates.filter((c) => isCiscoCert(c) && !c.hasBadge);
+  const ciscoCerts = certificates.filter(isCiscoCert);
   const otherCerts = certificates.filter((c) => !isCiscoCert(c));
 
-  const visibleCerts =
-    certGroup === 'badges'
-      ? badgedCerts
-      : certGroup === 'cisco'
-        ? ciscoNoBadgeCerts
-        : otherCerts;
+  const visibleCerts = certGroup === 'cisco' ? ciscoCerts : otherCerts;
 
   const total = visibleCerts.length;
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
@@ -72,19 +66,6 @@ export function Certificates() {
                 <button
                   type="button"
                   role="tab"
-                  aria-selected={certGroup === 'badges'}
-                  className={`cert-group-toggle-btn ${certGroup === 'badges' ? 'is-active' : ''}`}
-                  onClick={() => {
-                    setCertGroup('badges');
-                    setActiveCertIndex(0);
-                  }}
-                >
-                  <span>With Badges</span>
-                  <span className="cert-toggle-count">{String(badgedCerts.length).padStart(2, '0')}</span>
-                </button>
-                <button
-                  type="button"
-                  role="tab"
                   aria-selected={certGroup === 'cisco'}
                   className={`cert-group-toggle-btn ${certGroup === 'cisco' ? 'is-active' : ''}`}
                   onClick={() => {
@@ -92,8 +73,8 @@ export function Certificates() {
                     setActiveCertIndex(0);
                   }}
                 >
-                  <span>Cisco Certificates</span>
-                  <span className="cert-toggle-count">{String(ciscoNoBadgeCerts.length).padStart(2, '0')}</span>
+                  <span>Cisco Academy</span>
+                  <span className="cert-toggle-count">{String(ciscoCerts.length).padStart(2, '0')}</span>
                 </button>
                 <button
                   type="button"
@@ -171,7 +152,10 @@ export function Certificates() {
             {currentCert && (
               <div className="cert-details-unboxed">
                 <div className="cert-unboxed-meta-bar">
-                  <span className="cert-unboxed-issuer">{currentCert.organization}</span>
+                  <span className="cert-unboxed-issuer">
+                    {currentCert.organization}
+                    {currentCert.hasBadge ? ' · Verified Badge' : ''}
+                  </span>
                   <div className="cert-unboxed-meta-right">
                     <span className="cert-unboxed-date">
                       <Calendar size={13} />

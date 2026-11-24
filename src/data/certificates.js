@@ -11,17 +11,6 @@ import RSTWDost from '../assets/RSTWDost.webp';
 
 export const certificates = [
   {
-    id: 9,
-    title: "JavaScript Essentials 1",
-    organization: "Cisco Networking Academy",
-    date: "November 2026",
-    hasBadge: false,
-    credentialUrl: "https://www.netacad.com/profile?tab=badges",
-    image: ciscoJSEssentials1Img,
-    skills: ["JavaScript ES6+", "Control Flow", "Data Types", "Functions & Debugging"],
-    description: "Awarded by Cisco Networking Academy & OpenEDG JS Institute for completing core JavaScript programming, data types, flow control, and functions.",
-  },
-  {
     id: 10,
     title: "JavaScript Essentials 1 — Statement of Achievement",
     organization: "Cisco Networking Academy",
@@ -53,6 +42,17 @@ export const certificates = [
     image: pocketTracerImg,
     skills: ["Cisco Packet Tracer", "Simple Networks", "Network Controllers", "Smart Home IoT"],
     description: "Student-level Certificate of Completion for building simple networks, configuring network controllers, and simulating smart home IoT devices in Cisco Packet Tracer.",
+  },
+  {
+    id: 9,
+    title: "JavaScript Essentials 1",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    hasBadge: false,
+    credentialUrl: "https://www.netacad.com/profile?tab=badges",
+    image: ciscoJSEssentials1Img,
+    skills: ["JavaScript ES6+", "Control Flow", "Data Types", "Functions & Debugging"],
+    description: "Awarded by Cisco Networking Academy & OpenEDG JS Institute for completing core JavaScript programming, data types, flow control, and functions.",
   },
   {
     id: 2,

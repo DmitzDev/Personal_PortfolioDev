@@ -61,7 +61,7 @@
 }
 
 
-/* Brand Mark (MD Logo in Hero -> Portrait Photo when scrolled past Hero) */
+/* Brand Mark (3D Coin Flip: MD Logo in Hero -> Portrait Photo when scrolled past Hero) */
 .brand-pill-avatar-wrap {
   position: relative;
   display: flex;
@@ -70,7 +70,7 @@
   width: 30px;
   height: 30px;
   margin-right: 0.55rem;
-  overflow: hidden;
+  perspective: 400px;
   flex-shrink: 0;
 }
 
@@ -79,13 +79,16 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  overflow: hidden;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.capsule-brand-pill.is-morphed .brand-pill-avatar-inner {
+  transform: rotateY(180deg);
 }
 
 [data-theme="light"] .brand-pill-avatar-inner {
@@ -99,16 +102,12 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   object-fit: cover;
   display: block;
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
-  transition: opacity 0.28s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.capsule-brand-pill.is-morphed .brand-pill-logo-img {
-  opacity: 0;
-  transform: scale(0.55) rotate(-14deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
 }
 
 .brand-pill-avatar-img {
@@ -116,17 +115,13 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   object-fit: cover;
   object-position: top center;
-  opacity: 0;
-  transform: scale(0.65) rotate(14deg);
   display: block;
-  transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.capsule-brand-pill.is-morphed .brand-pill-avatar-img {
-  opacity: 1;
-  transform: scale(1.15) translateY(1.5px) rotate(0deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: rotateY(180deg) scale(1.12) translateY(1px);
 }
 
 /* Elegant light sheen gleam across the avatar on entrance */

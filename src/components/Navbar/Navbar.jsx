@@ -166,9 +166,20 @@ export function Navbar() {
             }}
             aria-label={isMorphed ? 'MitchDev - Return to Top' : 'Mitchelle Salazar - AI-Native Developer'}
           >
-            {/* Scrolled Photo Avatar on Left Side */}
-            <div className={`brand-pill-avatar-wrap ${isMorphed ? 'is-active' : ''}`} ref={avatarRef} aria-hidden={!isMorphed}>
+            {/* Brand Mark on Left Side: MD Logo in Hero -> Portrait Photo on Scroll */}
+            <div className={`brand-pill-avatar-wrap ${isMorphed ? 'is-active' : ''}`} ref={avatarRef}>
               <div className="brand-pill-avatar-inner">
+                {personalInfo.logoImage && (
+                  <img
+                    src={personalInfo.logoImage}
+                    alt="MD Logo"
+                    className="brand-pill-logo-img"
+                    width="30"
+                    height="30"
+                    loading="eager"
+                    aria-hidden={isMorphed}
+                  />
+                )}
                 <img
                   src={ceoMitchNoBg}
                   alt="Mitchelle Salazar"
@@ -176,6 +187,7 @@ export function Navbar() {
                   width="30"
                   height="30"
                   loading="eager"
+                  aria-hidden={!isMorphed}
                 />
                 <span className="brand-pill-avatar-gleam" aria-hidden="true" />
               </div>

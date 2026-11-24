@@ -12,8 +12,8 @@
   align-items: center;
   justify-content: center;
   background: #080a0f;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
   overflow: hidden;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .intro-loader.is-revealing {
-  background: transparent !important;
+  background: transparent;
   pointer-events: none;
 }
 
@@ -250,11 +250,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-logomark-ring,
-  .intro-logomark,
-  .intro-logomark::after,
-  .intro-logomark-aura {
-    animation: none !important;
+  .intro-loader .intro-logomark-ring,
+  .intro-loader .intro-logomark,
+  .intro-loader .intro-logomark::after,
+  .intro-loader .intro-logomark-aura {
+    animation: none;
   }
 }
 
@@ -294,10 +294,10 @@
 .intro-wordmark__accent {
   background: var(--gradient-accent);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   display: inline-block;
-  font-weight: 850;
+  font-weight: 800;
 }
 
 .intro-role-tag {

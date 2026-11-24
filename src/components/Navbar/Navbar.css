@@ -61,34 +61,17 @@
 }
 
 
-/* Photo Avatar inside Brand Pill - Enhanced entrance */
+/* Brand Mark (MD Logo in Hero -> Portrait Photo when scrolled past Hero) */
 .brand-pill-avatar-wrap {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 0;
-  height: 30px;
-  opacity: 0;
-  transform: scale(0.2) rotate(-16deg);
-  margin-right: 0;
-  overflow: hidden;
-  pointer-events: none;
-  transition: width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-              height 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-              opacity 0.28s ease,
-              transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
-              margin-right 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  flex-shrink: 0;
-}
-
-.capsule-brand-pill.is-morphed .brand-pill-avatar-wrap {
   width: 30px;
   height: 30px;
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
   margin-right: 0.55rem;
-  pointer-events: auto;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .brand-pill-avatar-inner {
@@ -111,13 +94,39 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
+.brand-pill-logo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  transition: opacity 0.28s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.capsule-brand-pill.is-morphed .brand-pill-logo-img {
+  opacity: 0;
+  transform: scale(0.55) rotate(-14deg);
+}
+
 .brand-pill-avatar-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  transform: scale(1.15) translateY(1.5px);
+  opacity: 0;
+  transform: scale(0.65) rotate(14deg);
   display: block;
+  transition: opacity 0.28s ease, transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.capsule-brand-pill.is-morphed .brand-pill-avatar-img {
+  opacity: 1;
+  transform: scale(1.15) translateY(1.5px) rotate(0deg);
 }
 
 /* Elegant light sheen gleam across the avatar on entrance */

@@ -55,9 +55,9 @@ function App() {
           <Suspense fallback={null}>
             <Projects />
             <Skills />
-            <Services />
-            <Experience />
             <Certificates />
+            <Experience />
+            <Services />
             <Contact />
           </Suspense>
         )}

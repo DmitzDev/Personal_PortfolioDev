@@ -11,9 +11,9 @@ const navLinks = [
   { id: 'hero', label: 'Home' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Tech' },
-  { id: 'services', label: 'Services' },
-  { id: 'experience', label: 'Experience' },
   { id: 'certificates', label: 'Certificates' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'services', label: 'Services' },
   { id: 'contact', label: 'Contact' },
 ];
 

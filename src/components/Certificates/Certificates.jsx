@@ -1,24 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Award, Calendar, ChevronLeft, ChevronRight, Maximize2, ExternalLink, X } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Calendar, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { certificates } from '../../data/certificates';
 import './Certificates.css';
 
 export function Certificates() {
   const [certGroup, setCertGroup] = useState('cisco');
   const [activeCertIndex, setActiveCertIndex] = useState(0);
-  const [selectedCert, setSelectedCert] = useState(null);
 
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
-
-  useEffect(() => {
-    if (!selectedCert) return undefined;
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setSelectedCert(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedCert]);
 
   const isCiscoCert = (c) => c.organization.toLowerCase().includes('cisco');
   const ciscoCount = certificates.filter(isCiscoCert).length;
@@ -133,14 +123,13 @@ export function Certificates() {
                       onClick={() => {
                         if (cardState === 'prev') handlePrevCert();
                         else if (cardState === 'next') handleNextCert();
-                        else if (cardState === 'active') setSelectedCert(cert);
                       }}
                       title={
-                        cardState === 'active'
-                          ? 'Click to enlarge certificate'
-                          : cardState === 'prev'
-                            ? `Previous: ${cert.title}`
-                            : `Next: ${cert.title}`
+                        cardState === 'prev'
+                          ? `Previous: ${cert.title}`
+                          : cardState === 'next'
+                            ? `Next: ${cert.title}`
+                            : cert.title
                       }
                       aria-label={cert.title}
                     >
@@ -153,14 +142,6 @@ export function Certificates() {
                           height="400"
                           loading="lazy"
                         />
-                        {cardState === 'active' && (
-                          <div className="cert-deck-hover-overlay">
-                            <span className="cert-expand-pill">
-                              <Maximize2 size={13} />
-                              <span>Enlarge</span>
-                            </span>
-                          </div>
-                        )}
                       </div>
                     </div>
                   );
@@ -199,16 +180,8 @@ export function Certificates() {
                   </div>
                 )}
 
-                <div className="cert-unboxed-actions">
-                  <button
-                    type="button"
-                    className="btn-primary cert-action-btn"
-                    onClick={() => setSelectedCert(currentCert)}
-                  >
-                    <Maximize2 size={15} />
-                    <span>Preview Certificate</span>
-                  </button>
-                  {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
+                {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
+                  <div className="cert-unboxed-actions">
                     <a
                       href={currentCert.credentialUrl}
                       target="_blank"
@@ -218,8 +191,8 @@ export function Certificates() {
                       <ExternalLink size={15} />
                       <span>Verify Credential</span>
                     </a>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -264,75 +237,6 @@ export function Certificates() {
           </div>
         </div>
       </div>
-
-      {/* Certificate Inspector Modal */}
-      {selectedCert && (
-        <div
-          className="cert-modal-backdrop"
-          onClick={() => setSelectedCert(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cert-modal-title"
-        >
-          <div className="cert-modal-dialog" onClick={(e) => e.stopPropagation()}>
-            <div className="cert-modal-header">
-              <div className="cert-modal-header-info">
-                <div className="cert-modal-meta-row">
-                  <span className="cert-modal-issuer">
-                    <Award size={13} />
-                    {selectedCert.organization}
-                  </span>
-                  <span className="cert-modal-dot" aria-hidden="true">·</span>
-                  <span className="cert-modal-date">
-                    <Calendar size={13} />
-                    {selectedCert.date}
-                  </span>
-                </div>
-                <h3 id="cert-modal-title" className="cert-modal-title">{selectedCert.title}</h3>
-              </div>
-              <button
-                type="button"
-                className="cert-close-btn"
-                onClick={() => setSelectedCert(null)}
-                aria-label="Close certificate preview"
-              >
-                <X size={18} />
-              </button>
-            </div>
-            <div className="cert-modal-img-wrap">
-              <img
-                src={selectedCert.image}
-                alt={selectedCert.title}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <div className="cert-modal-footer">
-              <div className="cert-modal-footer-body">
-                <p className="cert-modal-desc">{selectedCert.description}</p>
-                {selectedCert.skills?.length > 0 && (
-                  <div className="cert-modal-skills">
-                    {selectedCert.skills.map((skill) => (
-                      <span key={skill} className="cert-modal-skill-pill">{skill}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {selectedCert.credentialUrl && selectedCert.credentialUrl !== '#' && (
-                <a
-                  href={selectedCert.credentialUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary cert-action-btn"
-                >
-                  <ExternalLink size={15} />
-                  <span>Verify Credential</span>
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

@@ -29,14 +29,9 @@ export function Certificates() {
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
   const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
 
-  // Preload & decode adjacent certificates so 3D flip never drops frames on mobile
+  // Preload & decode certificate images so switching tabs or flipping never stalls
   useEffect(() => {
-    if (total <= 1) return;
-    const preloadTargets = [
-      visibleCerts[(safeIndex + 1) % total],
-      visibleCerts[(safeIndex - 1 + total) % total],
-    ];
-    preloadTargets.forEach((cert) => {
+    certificates.forEach((cert) => {
       if (!cert?.image) return;
       const img = new window.Image();
       img.src = cert.image;
@@ -44,7 +39,7 @@ export function Certificates() {
         img.decode().catch(() => {});
       }
     });
-  }, [safeIndex, total, visibleCerts]);
+  }, []);
 
   const triggerCertSwitch = (nextIdx, dir) => {
     if (nextIdx === safeIndex || !currentCert) return;
@@ -151,23 +146,27 @@ export function Certificates() {
                     key={`flip-${outgoingCert.id}-${currentCert.id}`}
                     className={`cert-flip-card is-flipping-${flipDir}`}
                   >
-                    <img
-                      src={outgoingCert.image}
-                      alt=""
-                      aria-hidden="true"
-                      className="cert-frame-img cert-flip-face cert-flip-front"
-                      decoding="async"
-                    />
-                    <img
-                      src={currentCert.image}
-                      alt={currentCert.title}
-                      className="cert-frame-img cert-flip-face cert-flip-back"
-                      loading="eager"
-                      decoding="async"
-                    />
+                    <div className="cert-flip-face cert-flip-front" aria-hidden="true">
+                      <img
+                        src={outgoingCert.image}
+                        alt=""
+                        className="cert-frame-img"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="cert-flip-face cert-flip-back">
+                      <img
+                        src={currentCert.image}
+                        alt={currentCert.title}
+                        className="cert-frame-img"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </div>
                   </div>
                 ) : (
                   <img
+                    key={currentCert.id}
                     src={currentCert.image}
                     alt={currentCert.title}
                     className="cert-frame-img"

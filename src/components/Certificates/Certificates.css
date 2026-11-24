@@ -125,26 +125,28 @@
 }
 
 .cert-flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+.cert-flip-face .cert-frame-img {
   box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14);
 }
 
-[data-theme="dark"] .cert-flip-face {
+[data-theme="dark"] .cert-flip-face .cert-frame-img {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
 }
 
 .cert-flip-front {
-  position: absolute;
-  inset: 0;
-  margin: auto;
   transform: rotateY(0deg);
 }
 
 .cert-flip-back {
-  position: absolute;
-  inset: 0;
-  margin: auto;
   transform: rotateY(180deg);
 }
 

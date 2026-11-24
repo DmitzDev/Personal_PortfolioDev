@@ -42,7 +42,7 @@ export function IntroLoader({ onFinish, onReveal }) {
     document.body.style.overflow = 'hidden';
 
     let elapsed = 0;
-    const totalDuration = 450; // ms - super responsive entrance
+    const totalDuration = 900; // ms - crisp entrance with logo animation
     const tick = 16;
 
     const interval = setInterval(() => {
@@ -106,17 +106,18 @@ export function IntroLoader({ onFinish, onReveal }) {
 
       {/* Center Console Content */}
       <div className="intro-center">
-        {/* Logo Mark with Ambient Backlight Glow */}
+        {/* Logo Mark with Ambient Backlight Glow & Orbital Ring */}
         <div className="intro-logomark-wrapper">
           <div className="intro-logomark-aura" />
+          <div className="intro-logomark-ring" aria-hidden="true" />
           <div className="intro-logomark">
             {personalInfo.logoImage ? (
               <img
                 src={personalInfo.logoImage}
                 alt="MitchDev Logo"
                 className="intro-logomark__img"
-                width="64"
-                height="64"
+                width="92"
+                height="92"
               />
             ) : (
               <span className="intro-logomark__fallback">MD</span>

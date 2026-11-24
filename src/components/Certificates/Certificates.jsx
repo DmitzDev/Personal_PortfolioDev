@@ -29,6 +29,23 @@ export function Certificates() {
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
   const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
 
+  // Preload & decode adjacent certificates so 3D flip never drops frames on mobile
+  useEffect(() => {
+    if (total <= 1) return;
+    const preloadTargets = [
+      visibleCerts[(safeIndex + 1) % total],
+      visibleCerts[(safeIndex - 1 + total) % total],
+    ];
+    preloadTargets.forEach((cert) => {
+      if (!cert?.image) return;
+      const img = new window.Image();
+      img.src = cert.image;
+      if (typeof img.decode === 'function') {
+        img.decode().catch(() => {});
+      }
+    });
+  }, [safeIndex, total, visibleCerts]);
+
   const triggerCertSwitch = (nextIdx, dir) => {
     if (nextIdx === safeIndex || !currentCert) return;
     if (flipTimerRef.current) clearTimeout(flipTimerRef.current);
@@ -39,7 +56,7 @@ export function Certificates() {
     flipTimerRef.current = setTimeout(() => {
       setIsFlipping(false);
       setOutgoingCert(null);
-    }, 420);
+    }, 560);
   };
 
   const handlePrevCert = () => {

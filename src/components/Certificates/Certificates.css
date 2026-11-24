@@ -98,7 +98,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1200px;
+  perspective: 1400px;
+  -webkit-perspective: 1400px;
   touch-action: pan-y;
   user-select: none;
 }
@@ -109,20 +110,26 @@
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   will-change: transform;
 }
 
 .cert-flip-card.is-flipping-next {
-  animation: certFlip180Next 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: certFlip180Next 0.56s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .cert-flip-card.is-flipping-prev {
-  animation: certFlip180Prev 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: certFlip180Prev 0.56s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .cert-flip-face {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14);
+}
+
+[data-theme="dark"] .cert-flip-face {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
 }
 
 .cert-flip-front {
@@ -158,8 +165,8 @@
   0% {
     transform: rotateY(0deg) scale(1);
   }
-  50% {
-    transform: rotateY(90deg) scale(0.95);
+  45% {
+    transform: rotateY(90deg) scale(0.96);
   }
   100% {
     transform: rotateY(180deg) scale(1);
@@ -170,8 +177,8 @@
   0% {
     transform: rotateY(0deg) scale(1);
   }
-  50% {
-    transform: rotateY(-90deg) scale(0.95);
+  45% {
+    transform: rotateY(-90deg) scale(0.96);
   }
   100% {
     transform: rotateY(-180deg) scale(1);
@@ -364,6 +371,11 @@
   .cert-group-toggle-btn {
     font-size: 0.72rem;
     padding: 0.42rem 0.75rem;
+  }
+
+  .cert-frame-panel {
+    perspective: 900px;
+    -webkit-perspective: 900px;
   }
 
   .cert-frame-img {

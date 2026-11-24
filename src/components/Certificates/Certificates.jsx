@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { certificates } from '../../data/certificates';
 import './Certificates.css';
@@ -7,9 +7,18 @@ export function Certificates() {
   const [certGroup, setCertGroup] = useState('cisco');
   const [activeCertIndex, setActiveCertIndex] = useState(0);
   const [flipDir, setFlipDir] = useState('next');
+  const [outgoingCert, setOutgoingCert] = useState(null);
+  const [isFlipping, setIsFlipping] = useState(false);
 
+  const flipTimerRef = useRef(null);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+
+  useEffect(() => {
+    return () => {
+      if (flipTimerRef.current) clearTimeout(flipTimerRef.current);
+    };
+  }, []);
 
   const isCiscoCert = (c) => c.organization.toLowerCase().includes('cisco');
   const ciscoCerts = certificates.filter(isCiscoCert);
@@ -20,16 +29,27 @@ export function Certificates() {
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
   const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
 
+  const triggerCertSwitch = (nextIdx, dir) => {
+    if (nextIdx === safeIndex || !currentCert) return;
+    if (flipTimerRef.current) clearTimeout(flipTimerRef.current);
+    setOutgoingCert(currentCert);
+    setFlipDir(dir);
+    setIsFlipping(true);
+    setActiveCertIndex(nextIdx);
+    flipTimerRef.current = setTimeout(() => {
+      setIsFlipping(false);
+      setOutgoingCert(null);
+    }, 420);
+  };
+
   const handlePrevCert = () => {
     if (total <= 1) return;
-    setFlipDir('prev');
-    setActiveCertIndex((prev) => (prev - 1 + total) % total);
+    triggerCertSwitch((safeIndex - 1 + total) % total, 'prev');
   };
 
   const handleNextCert = () => {
     if (total <= 1) return;
-    setFlipDir('next');
-    setActiveCertIndex((prev) => (prev + 1) % total);
+    triggerCertSwitch((safeIndex + 1) % total, 'next');
   };
 
   const handleTouchStart = (e) => {
@@ -69,6 +89,9 @@ export function Certificates() {
               aria-selected={certGroup === 'cisco'}
               className={`cert-group-toggle-btn ${certGroup === 'cisco' ? 'is-active' : ''}`}
               onClick={() => {
+                if (flipTimerRef.current) clearTimeout(flipTimerRef.current);
+                setIsFlipping(false);
+                setOutgoingCert(null);
                 setCertGroup('cisco');
                 setActiveCertIndex(0);
               }}
@@ -82,6 +105,9 @@ export function Certificates() {
               aria-selected={certGroup === 'other'}
               className={`cert-group-toggle-btn ${certGroup === 'other' ? 'is-active' : ''}`}
               onClick={() => {
+                if (flipTimerRef.current) clearTimeout(flipTimerRef.current);
+                setIsFlipping(false);
+                setOutgoingCert(null);
                 setCertGroup('other');
                 setActiveCertIndex(0);
               }}
@@ -96,21 +122,42 @@ export function Certificates() {
         {currentCert && (
           <>
             <div className="cert-gallery-stage">
-              {/* Left: Pure Unboxed Certificate Image */}
+              {/* Left: Pure Unboxed Certificate Image with 180° Card Flip */}
               <div
                 className="cert-frame-panel"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
-                <img
-                  key={`${certGroup}-${currentCert.id}`}
-                  src={currentCert.image}
-                  alt={currentCert.title}
-                  className={`cert-frame-img flip-${flipDir}`}
-                  loading="eager"
-                  decoding="async"
-                />
+                {isFlipping && outgoingCert ? (
+                  <div
+                    key={`flip-${outgoingCert.id}-${currentCert.id}`}
+                    className={`cert-flip-card is-flipping-${flipDir}`}
+                  >
+                    <img
+                      src={outgoingCert.image}
+                      alt=""
+                      aria-hidden="true"
+                      className="cert-frame-img cert-flip-face cert-flip-front"
+                      decoding="async"
+                    />
+                    <img
+                      src={currentCert.image}
+                      alt={currentCert.title}
+                      className="cert-frame-img cert-flip-face cert-flip-back"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={currentCert.image}
+                    alt={currentCert.title}
+                    className="cert-frame-img"
+                    loading="eager"
+                    decoding="async"
+                  />
+                )}
               </div>
 
               {/* Right: Clean Unboxed Editorial Details */}
@@ -173,8 +220,7 @@ export function Certificates() {
                       className={`cert-dot ${idx === safeIndex ? 'is-active' : ''}`}
                       onClick={() => {
                         if (idx === safeIndex) return;
-                        setFlipDir(idx > safeIndex ? 'next' : 'prev');
-                        setActiveCertIndex(idx);
+                        triggerCertSwitch(idx, idx > safeIndex ? 'next' : 'prev');
                       }}
                       aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
                     />

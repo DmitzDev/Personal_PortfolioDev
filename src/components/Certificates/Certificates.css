@@ -98,8 +98,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1200px;
   touch-action: pan-y;
   user-select: none;
+}
+
+.cert-flip-card {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.cert-flip-card.is-flipping-next {
+  animation: certFlip180Next 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cert-flip-card.is-flipping-prev {
+  animation: certFlip180Prev 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cert-flip-face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.cert-flip-front {
+  position: relative;
+  transform: rotateY(0deg);
+}
+
+.cert-flip-back {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transform: rotateY(180deg);
 }
 
 .cert-frame-img {
@@ -114,38 +149,32 @@
   box-shadow: 0 18px 42px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 23, 42, 0.06);
 }
 
-.cert-frame-img.flip-next {
-  animation: certFlipNext 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.cert-frame-img.flip-prev {
-  animation: certFlipPrev 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
 [data-theme="dark"] .cert-frame-img {
   border-color: rgba(255, 255, 255, 0.16);
   box-shadow: 0 22px 50px rgba(0, 0, 0, 0.65), 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
-@keyframes certFlipNext {
+@keyframes certFlip180Next {
   0% {
-    opacity: 0;
-    transform: perspective(1000px) rotateY(22deg) scale(0.96);
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(90deg) scale(0.95);
   }
   100% {
-    opacity: 1;
-    transform: none;
+    transform: rotateY(180deg) scale(1);
   }
 }
 
-@keyframes certFlipPrev {
+@keyframes certFlip180Prev {
   0% {
-    opacity: 0;
-    transform: perspective(1000px) rotateY(-22deg) scale(0.96);
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(-90deg) scale(0.95);
   }
   100% {
-    opacity: 1;
-    transform: none;
+    transform: rotateY(-180deg) scale(1);
   }
 }
 

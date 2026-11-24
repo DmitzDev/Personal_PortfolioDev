@@ -41,7 +41,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 0.2rem;
+    gap: 0.1rem;
   }
 
   .mobnav-slot {
@@ -56,11 +56,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.2rem;
+    gap: 0.18rem;
     width: 100%;
-    min-height: 48px;
-    padding: 0.35rem 0.25rem;
-    border-radius: 0.75rem;
+    min-height: 46px;
+    padding: 0.32rem 0.1rem;
+    border-radius: 0.7rem;
     background: transparent;
     border: none;
     color: var(--text-muted);
@@ -77,15 +77,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 
   .mobnav-key-label {
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    font-size: 0.66rem;
+    font-size: 0.6rem;
     font-weight: 600;
-    letter-spacing: 0.01em;
+    letter-spacing: -0.01em;
     line-height: 1;
     color: inherit;
     white-space: nowrap;

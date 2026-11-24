@@ -1,13 +1,14 @@
 import React from 'react';
-import { Home, FolderKanban, Cpu, Briefcase, Award, Send } from 'lucide-react';
+import { Home, FolderKanban, Cpu, Award, Briefcase, Layers, Send } from 'lucide-react';
 import './MobileBottomNav.css';
 
 const navItems = [
   { id: 'hero', label: 'Home', icon: Home },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
   { id: 'skills', label: 'Tech', icon: Cpu },
-  { id: 'experience', label: 'Career', icon: Briefcase },
   { id: 'certificates', label: 'Certs', icon: Award },
+  { id: 'experience', label: 'Career', icon: Briefcase },
+  { id: 'services', label: 'Services', icon: Layers },
   { id: 'contact', label: 'Contact', icon: Send },
 ];
 
@@ -29,7 +30,7 @@ export function MobileBottomNav({ activeSection, scrollTo }) {
                   aria-current={isActive ? 'page' : undefined}
                 >
                   <span className="mobnav-icon-wrap" aria-hidden="true">
-                    <Icon size={18} strokeWidth={isActive ? 2.2 : 1.75} />
+                    <Icon size={17} strokeWidth={isActive ? 2.2 : 1.75} />
                   </span>
                   <span className="mobnav-key-label">{item.label}</span>
                 </button>

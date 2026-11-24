@@ -8,6 +8,8 @@
 .cert-group-toggle {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 0.3rem;
   padding: 0.28rem;
   border-radius: 0.65rem;
@@ -16,6 +18,7 @@
   box-shadow: var(--skeuo-recessed-sm);
   margin-bottom: 0.75rem;
   align-self: center;
+  max-width: 100%;
 }
 
 .cert-group-toggle-btn {

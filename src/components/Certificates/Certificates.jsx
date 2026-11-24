@@ -6,6 +6,7 @@ import './Certificates.css';
 export function Certificates() {
   const [certGroup, setCertGroup] = useState('cisco');
   const [activeCertIndex, setActiveCertIndex] = useState(0);
+  const [flipDir, setFlipDir] = useState('next');
 
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
@@ -21,11 +22,13 @@ export function Certificates() {
 
   const handlePrevCert = () => {
     if (total <= 1) return;
+    setFlipDir('prev');
     setActiveCertIndex((prev) => (prev - 1 + total) % total);
   };
 
   const handleNextCert = () => {
     if (total <= 1) return;
+    setFlipDir('next');
     setActiveCertIndex((prev) => (prev + 1) % total);
   };
 
@@ -101,10 +104,10 @@ export function Certificates() {
                 onTouchEnd={handleTouchEnd}
               >
                 <img
-                  key={currentCert.id}
+                  key={`${certGroup}-${currentCert.id}`}
                   src={currentCert.image}
                   alt={currentCert.title}
-                  className="cert-frame-img"
+                  className={`cert-frame-img flip-${flipDir}`}
                   loading="eager"
                   decoding="async"
                 />
@@ -168,7 +171,11 @@ export function Certificates() {
                       key={cert.id}
                       type="button"
                       className={`cert-dot ${idx === safeIndex ? 'is-active' : ''}`}
-                      onClick={() => setActiveCertIndex(idx)}
+                      onClick={() => {
+                        if (idx === safeIndex) return;
+                        setFlipDir(idx > safeIndex ? 'next' : 'prev');
+                        setActiveCertIndex(idx);
+                      }}
                       aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
                     />
                   ))}

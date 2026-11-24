@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Calendar, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, ExternalLink, ShieldCheck } from 'lucide-react';
 import { certificates } from '../../data/certificates';
 import './Certificates.css';
 
@@ -15,10 +15,10 @@ export function Certificates() {
   const otherCerts = certificates.filter((c) => !isCiscoCert(c));
 
   const visibleCerts = certGroup === 'cisco' ? ciscoCerts : otherCerts;
-
   const total = visibleCerts.length;
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
   const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
+  const progressPercent = total > 0 ? ((safeIndex + 1) / total) * 100 : 0;
 
   const handlePrevCert = () => {
     if (total <= 1) return;
@@ -58,185 +58,143 @@ export function Certificates() {
           </p>
         </div>
 
-        <div className="credentials-view">
-          <div className="cert-deck-showcase">
-            {/* Left Side: Fixed Category Toggle + 3D Cards Deck */}
-            <div className="cert-deck-column">
-              <div className="cert-group-toggle" role="tablist" aria-label="Certificate category">
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={certGroup === 'cisco'}
-                  className={`cert-group-toggle-btn ${certGroup === 'cisco' ? 'is-active' : ''}`}
-                  onClick={() => {
-                    setCertGroup('cisco');
-                    setActiveCertIndex(0);
-                  }}
-                >
-                  <span>Cisco Academy</span>
-                  <span className="cert-toggle-count">{String(ciscoCerts.length).padStart(2, '0')}</span>
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={certGroup === 'other'}
-                  className={`cert-group-toggle-btn ${certGroup === 'other' ? 'is-active' : ''}`}
-                  onClick={() => {
-                    setCertGroup('other');
-                    setActiveCertIndex(0);
-                  }}
-                >
-                  <span>Industry &amp; Seminars</span>
-                  <span className="cert-toggle-count">{String(otherCerts.length).padStart(2, '0')}</span>
-                </button>
+        {/* Centered 2-Tab Category Switch */}
+        <div className="cert-switch-wrap">
+          <div className="cert-group-toggle" role="tablist" aria-label="Certificate category">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={certGroup === 'cisco'}
+              className={`cert-group-toggle-btn ${certGroup === 'cisco' ? 'is-active' : ''}`}
+              onClick={() => {
+                setCertGroup('cisco');
+                setActiveCertIndex(0);
+              }}
+            >
+              <span>Cisco Academy</span>
+              <span className="cert-toggle-count">{String(ciscoCerts.length).padStart(2, '0')}</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={certGroup === 'other'}
+              className={`cert-group-toggle-btn ${certGroup === 'other' ? 'is-active' : ''}`}
+              onClick={() => {
+                setCertGroup('other');
+                setActiveCertIndex(0);
+              }}
+            >
+              <span>Industry &amp; Seminars</span>
+              <span className="cert-toggle-count">{String(otherCerts.length).padStart(2, '0')}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Clean Editorial Gallery Showcase */}
+        {currentCert && (
+          <div className="cert-gallery-stage">
+            {/* Left: Crisp Uncropped Certificate Frame */}
+            <div
+              className="cert-frame-panel"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <div className="cert-frame-mat">
+                <img
+                  key={currentCert.id}
+                  src={currentCert.image}
+                  alt={currentCert.title}
+                  className="cert-frame-img"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </div>
+
+            {/* Right: Clean Unboxed Editorial Details & Minimal Stepper */}
+            <div className="cert-editorial-panel" key={`detail-${currentCert.id}`}>
+              <div className="cert-editorial-eyebrow">
+                <span className="cert-editorial-org">{currentCert.organization}</span>
+                {currentCert.hasBadge && (
+                  <span className="cert-verified-chip">
+                    <ShieldCheck size={13} />
+                    <span>Verified Badge</span>
+                  </span>
+                )}
               </div>
 
-              <div
-                className="cert-deck-stage"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-              <div className="cert-deck-stack">
-                {visibleCerts.map((cert, idx) => {
-                  let cardState = 'hidden';
-                  if (total === 1) {
-                    cardState = 'active';
-                  } else if (total === 2) {
-                    cardState = idx === safeIndex ? 'active' : 'next';
-                  } else {
-                    if (idx === safeIndex) {
-                      cardState = 'active';
-                    } else if (idx === (safeIndex - 1 + total) % total) {
-                      cardState = 'prev';
-                    } else if (idx === (safeIndex + 1) % total) {
-                      cardState = 'next';
-                    }
-                  }
+              <h3 className="cert-editorial-title">{currentCert.title}</h3>
 
-                  return (
-                    <div
-                      key={cert.id}
-                      className={`cert-deck-card cert-card-${cardState}`}
-                      onClick={() => {
-                        if (cardState === 'prev') handlePrevCert();
-                        else if (cardState === 'next') handleNextCert();
-                      }}
-                      title={
-                        cardState === 'prev'
-                          ? `Previous: ${cert.title}`
-                          : cardState === 'next'
-                            ? `Next: ${cert.title}`
-                            : cert.title
-                      }
-                      aria-label={cert.title}
+              <div className="cert-editorial-date">
+                <Calendar size={13} />
+                <span>{currentCert.date}</span>
+              </div>
+
+              <p className="cert-editorial-desc">{currentCert.description}</p>
+
+              {currentCert.skills?.length > 0 && (
+                <div className="cert-editorial-skills" aria-label="Key competencies">
+                  {currentCert.skills.map((skill) => (
+                    <span key={skill} className="tech-pill">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div className="cert-editorial-footer">
+                {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
+                  <a
+                    href={currentCert.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-secondary cert-verify-btn"
+                  >
+                    <ExternalLink size={15} />
+                    <span>Verify Credential</span>
+                  </a>
+                )}
+
+                {total > 1 && (
+                  <div className="cert-stepper">
+                    <button
+                      type="button"
+                      className="cert-stepper-btn"
+                      onClick={handlePrevCert}
+                      aria-label="Previous certificate"
+                      title="Previous certificate"
                     >
-                      <div className="cert-deck-card-inner">
-                        <img
-                          src={cert.image}
-                          alt={cert.title}
-                          className="cert-deck-img"
-                          width="600"
-                          height="400"
-                          loading="lazy"
+                      <ChevronLeft size={17} />
+                    </button>
+
+                    <div className="cert-stepper-progress">
+                      <span className="cert-stepper-count">
+                        {String(safeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                      </span>
+                      <div className="cert-progress-track" aria-hidden="true">
+                        <div
+                          className="cert-progress-fill"
+                          style={{ width: `${progressPercent}%` }}
                         />
                       </div>
                     </div>
-                  );
-                })}
-                </div>
-              </div>
-            </div>
 
-            {/* Right Side: Clean Unboxed Context Details */}
-            {currentCert && (
-              <div className="cert-details-unboxed">
-                <div className="cert-unboxed-meta-bar">
-                  <span className="cert-unboxed-issuer">
-                    {currentCert.organization}
-                    {currentCert.hasBadge ? ' · Verified Badge' : ''}
-                  </span>
-                  <div className="cert-unboxed-meta-right">
-                    <span className="cert-unboxed-date">
-                      <Calendar size={13} />
-                      <span>{currentCert.date}</span>
-                    </span>
-                    <span className="cert-index-counter">
-                      {String(safeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-                    </span>
-                  </div>
-                </div>
-
-                <h3 className="cert-unboxed-title">{currentCert.title}</h3>
-                <p className="cert-unboxed-desc">{currentCert.description}</p>
-
-                {currentCert.skills && currentCert.skills.length > 0 && (
-                  <div className="cert-unboxed-skills-section">
-                    <span className="cert-unboxed-skills-title">Key Competencies</span>
-                    <div className="cert-skills-wrap">
-                      {currentCert.skills.map((s) => (
-                        <span key={s} className="tech-pill">{s}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
-                  <div className="cert-unboxed-actions">
-                    <a
-                      href={currentCert.credentialUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-secondary cert-action-btn"
+                    <button
+                      type="button"
+                      className="cert-stepper-btn"
+                      onClick={handleNextCert}
+                      aria-label="Next certificate"
+                      title="Next certificate"
                     >
-                      <ExternalLink size={15} />
-                      <span>Verify Credential</span>
-                    </a>
+                      <ChevronRight size={17} />
+                    </button>
                   </div>
                 )}
               </div>
-            )}
-          </div>
-
-          {/* Bottom Controls: Desktop arrows, dots, mobile swipe */}
-          <div className="cert-bottom-bar">
-            <button
-              type="button"
-              className="cert-arrow-btn cert-arrow-desktop-only"
-              onClick={handlePrevCert}
-              aria-label="Previous credential"
-              title="Previous credential"
-            >
-              <ChevronLeft size={18} />
-            </button>
-
-            <div className="cert-dots">
-              {visibleCerts.map((cert, idx) => (
-                <button
-                  key={cert.id}
-                  type="button"
-                  className={`cert-dot ${idx === safeIndex ? 'active' : ''}`}
-                  onClick={() => setActiveCertIndex(idx)}
-                  aria-label={`Go to certificate ${idx + 1}: ${cert.title}`}
-                />
-              ))}
             </div>
-
-            <button
-              type="button"
-              className="cert-arrow-btn cert-arrow-desktop-only"
-              onClick={handleNextCert}
-              aria-label="Next credential"
-              title="Next credential"
-            >
-              <ChevronRight size={18} />
-            </button>
           </div>
-
-          <div className="cert-swipe-hint">
-            <span>← Swipe cards left &amp; right to switch →</span>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

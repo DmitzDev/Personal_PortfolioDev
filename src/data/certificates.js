@@ -1,3 +1,5 @@
+import ciscoJSEssentials1Img from '../assets/CiscoJSEssentials1.webp';
+import ciscoJSEssentials1StatementImg from '../assets/CiscoJSEssentials1Statement.webp';
 import ciscoPythonEssentials1Img from '../assets/CiscoPythonEssentials1.webp';
 import pocketTracerImg from '../assets/PocketTracer.webp';
 import ciscoExamImg from '../assets/CiscoPacketTracerExam.webp';
@@ -8,6 +10,26 @@ import COSHSeminarImg from '../assets/COSHSeminar.webp';
 import RSTWDost from '../assets/RSTWDost.webp';
 
 export const certificates = [
+  {
+    id: 9,
+    title: "JavaScript Essentials 1",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    credentialUrl: "https://www.netacad.com/",
+    image: ciscoJSEssentials1Img,
+    skills: ["JavaScript ES6+", "Control Flow", "Data Types", "Functions & Debugging"],
+    description: "Awarded by Cisco Networking Academy & OpenEDG JS Institute for completing core JavaScript programming, data types, flow control, and functions.",
+  },
+  {
+    id: 10,
+    title: "JavaScript Essentials 1 — Statement of Achievement",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    credentialUrl: "https://www.netacad.com/",
+    image: ciscoJSEssentials1StatementImg,
+    skills: ["Algorithmic Thinking", "Exception Handling", "Program Execution", "Core JS Syntax"],
+    description: "Student-level Statement of Achievement verifying algorithmic problem-solving, exception handling, and software development workflows in JavaScript.",
+  },
   {
     id: 8,
     title: "Python Essentials 1",

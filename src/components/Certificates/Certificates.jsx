@@ -21,6 +21,8 @@ export function Certificates() {
   }, [selectedCert]);
 
   const isCiscoCert = (c) => c.organization.toLowerCase().includes('cisco');
+  const ciscoCount = certificates.filter(isCiscoCert).length;
+  const otherCount = certificates.length - ciscoCount;
   const visibleCerts =
     certGroup === 'cisco'
       ? certificates.filter(isCiscoCert)
@@ -83,7 +85,8 @@ export function Certificates() {
                     setActiveCertIndex(0);
                   }}
                 >
-                  Cisco Academy
+                  <span>Cisco Academy</span>
+                  <span className="cert-toggle-count">{String(ciscoCount).padStart(2, '0')}</span>
                 </button>
                 <button
                   type="button"
@@ -95,7 +98,8 @@ export function Certificates() {
                     setActiveCertIndex(0);
                   }}
                 >
-                  Industry &amp; Seminars
+                  <span>Industry &amp; Seminars</span>
+                  <span className="cert-toggle-count">{String(otherCount).padStart(2, '0')}</span>
                 </button>
               </div>
 
@@ -170,10 +174,15 @@ export function Certificates() {
               <div className="cert-details-unboxed">
                 <div className="cert-unboxed-meta-bar">
                   <span className="cert-unboxed-issuer">{currentCert.organization}</span>
-                  <span className="cert-unboxed-date">
-                    <Calendar size={13} />
-                    <span>{currentCert.date}</span>
-                  </span>
+                  <div className="cert-unboxed-meta-right">
+                    <span className="cert-unboxed-date">
+                      <Calendar size={13} />
+                      <span>{currentCert.date}</span>
+                    </span>
+                    <span className="cert-index-counter">
+                      {String(safeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                    </span>
+                  </div>
                 </div>
 
                 <h3 className="cert-unboxed-title">{currentCert.title}</h3>
@@ -190,8 +199,16 @@ export function Certificates() {
                   </div>
                 )}
 
-                {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
-                  <div className="cert-unboxed-actions">
+                <div className="cert-unboxed-actions">
+                  <button
+                    type="button"
+                    className="btn-primary cert-action-btn"
+                    onClick={() => setSelectedCert(currentCert)}
+                  >
+                    <Maximize2 size={15} />
+                    <span>Preview Certificate</span>
+                  </button>
+                  {currentCert.credentialUrl && currentCert.credentialUrl !== '#' && (
                     <a
                       href={currentCert.credentialUrl}
                       target="_blank"
@@ -201,8 +218,8 @@ export function Certificates() {
                       <ExternalLink size={15} />
                       <span>Verify Credential</span>
                     </a>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             )}
           </div>

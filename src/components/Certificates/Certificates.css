@@ -19,6 +19,9 @@
 }
 
 .cert-group-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 700;
@@ -31,6 +34,25 @@
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.cert-toggle-count {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.08rem 0.36rem;
+  border-radius: 0.3rem;
+  background: rgba(15, 23, 42, 0.07);
+  color: inherit;
+  opacity: 0.78;
+}
+
+[data-theme="dark"] .cert-group-toggle-btn:not(.is-active) .cert-toggle-count {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .cert-group-toggle-btn.is-active .cert-toggle-count {
+  background: rgba(9, 12, 18, 0.16);
+  opacity: 0.9;
 }
 
 .cert-group-toggle-btn:hover {
@@ -186,6 +208,21 @@
   box-shadow: 0 28px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 255, 255, 0.28);
 }
 
+[data-theme="light"] .cert-deck-img {
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .cert-card-active .cert-deck-img {
+  border-color: rgba(15, 23, 42, 0.2);
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .cert-card-active:hover .cert-deck-img {
+  border-color: rgba(15, 23, 42, 0.35);
+  box-shadow: 0 24px 52px rgba(15, 23, 42, 0.22), 0 6px 14px rgba(15, 23, 42, 0.1);
+}
+
 /* Hover overlay on active card */
 .cert-deck-hover-overlay {
   position: absolute;
@@ -261,6 +298,12 @@
   color: var(--accent);
 }
 
+.cert-unboxed-meta-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
 .cert-unboxed-date {
   display: inline-flex;
   align-items: center;
@@ -268,6 +311,18 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   color: var(--text-muted);
+}
+
+.cert-index-counter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 0.16rem 0.5rem;
+  border-radius: 0.35rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
 }
 
 .cert-unboxed-title {

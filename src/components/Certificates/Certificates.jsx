@@ -1,7 +1,69 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Calendar, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import {
+  Activity,
+  BookOpen,
+  Braces,
+  Bug,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  CircuitBoard,
+  ClipboardCheck,
+  Cpu,
+  ExternalLink,
+  FlaskConical,
+  Gauge,
+  GitBranch,
+  Globe,
+  HardHat,
+  Home,
+  Lightbulb,
+  Network,
+  Radio,
+  Router,
+  ShieldAlert,
+  ShieldCheck,
+  Terminal,
+  Workflow,
+} from 'lucide-react';
 import { certificates } from '../../data/certificates';
+import { Tech3DIcon } from '../shared/Tech3DIcon';
 import './Certificates.css';
+
+const renderSkillEmblem = (skill) => {
+  const s = skill.toLowerCase();
+  if (s.includes('python')) return <Tech3DIcon iconKey="python" size={38} />;
+  if (s.includes('javascript') || s === 'core js') return <Tech3DIcon iconKey="javascript" size={38} />;
+
+  let IconComp = Cpu;
+  if (s.includes('algorithm')) IconComp = Workflow;
+  else if (s.includes('exception')) IconComp = ShieldAlert;
+  else if (s.includes('library')) IconComp = BookOpen;
+  else if (s.includes('debug')) IconComp = Bug;
+  else if (s.includes('packet tracer') || s.includes('simulation') || s.includes('topology')) IconComp = Network;
+  else if (s.includes('smart home')) IconComp = Home;
+  else if (s.includes('network') || s.includes('lan')) IconComp = Router;
+  else if (s.includes('control flow')) IconComp = GitBranch;
+  else if (s.includes('function')) IconComp = Braces;
+  else if (s.includes('analysis') || s.includes('inspection')) IconComp = Activity;
+  else if (s.includes('diagnostic')) IconComp = Gauge;
+  else if (s.includes('sensor')) IconComp = Radio;
+  else if (s.includes('microcontroller')) IconComp = CircuitBoard;
+  else if (s.includes('ip address')) IconComp = Globe;
+  else if (s.includes('routing')) IconComp = Router;
+  else if (s.includes('cli')) IconComp = Terminal;
+  else if (s.includes('innovation')) IconComp = Lightbulb;
+  else if (s.includes('research')) IconComp = FlaskConical;
+  else if (s.includes('risk')) IconComp = ShieldCheck;
+  else if (s.includes('safety')) IconComp = HardHat;
+  else if (s.includes('sop')) IconComp = ClipboardCheck;
+
+  return (
+    <span className="cert-skill-icon-box" aria-hidden="true">
+      <IconComp size={17} strokeWidth={1.9} />
+    </span>
+  );
+};
 
 export function Certificates() {
   const [certGroup, setCertGroup] = useState('cisco');
@@ -190,11 +252,19 @@ export function Certificates() {
                 <p className="cert-editorial-desc">{currentCert.description}</p>
 
                 {currentCert.skills?.length > 0 && (
-                  <div className="cert-editorial-skills" aria-label="Key competencies">
+                  <div className="cert-skill-icons-row" aria-label="Key competencies">
                     {currentCert.skills.map((skill) => (
-                      <span key={skill} className="tech-pill">
-                        {skill}
-                      </span>
+                      <div
+                        key={skill}
+                        className="cert-skill-icon-item"
+                        tabIndex={0}
+                        aria-label={skill}
+                      >
+                        {renderSkillEmblem(skill)}
+                        <span className="cert-skill-tooltip" role="tooltip">
+                          {skill}
+                        </span>
+                      </div>
                     ))}
                   </div>
                 )}

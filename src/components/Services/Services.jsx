@@ -20,6 +20,13 @@ const SERVICE_ICONS = {
   Server,
 };
 
+const MOBILE_TAB_LABELS = {
+  1: 'Full-Stack',
+  2: 'UI Systems',
+  3: 'MVP Launch',
+  4: 'API & Cloud',
+};
+
 const servicesStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
@@ -111,7 +118,10 @@ export function Services() {
                   onClick={() => setActiveId(service.id)}
                 >
                   <IconComponent size={15} strokeWidth={2} aria-hidden="true" />
-                  <span>{service.title}</span>
+                  <span className="service-tab-label-desktop">{service.title}</span>
+                  <span className="service-tab-label-mobile">
+                    {MOBILE_TAB_LABELS[service.id] || service.title}
+                  </span>
                 </button>
               );
             })}

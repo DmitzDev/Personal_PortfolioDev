@@ -1,7 +1,7 @@
 /* ==========================================================================
-   CONTACT SECTION — CRAFTED SINGLE-CARD INQUIRY FORM
-   Single centered card with studio header bar, icon-prefixed recessed
-   inputs, live completion counter, and micro-animated submit CTA.
+   CONTACT SECTION — SWISS-GRID CONNECTED FORM
+   Single architectural frame with hairline-divided input cells,
+   clean focus states, and compact action bar. Zero clutter.
    ========================================================================== */
 
 .contact-section {
@@ -13,207 +13,166 @@
   margin-bottom: 2rem;
 }
 
-.contact-form-wrap {
-  max-width: 660px;
+.contact-frame-wrap {
+  max-width: 680px;
   width: 100%;
   margin: 0 auto;
 }
 
-.contact-form-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1.2rem;
+.contact-grid-form {
+  width: 100%;
+  border-radius: 0.95rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded);
+  box-shadow: var(--skeuo-extruded-sm);
+  overflow: hidden;
 }
 
-/* ── STUDIO HEADER BAR ── */
-.contact-studio-bar {
+.contact-grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.contact-cell {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 1.75rem;
-  background: var(--bg-tertiary);
+  flex-direction: column;
+  padding: 1.05rem 1.25rem;
   border-bottom: 1px solid var(--border);
+  transition: background-color 0.18s ease;
 }
 
-.contact-studio-left {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
+.contact-grid-row .contact-cell:first-child {
+  border-right: 1px solid var(--border);
 }
 
-.contact-studio-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+.contact-cell:focus-within {
+  background: var(--bg-tertiary);
 }
 
-.contact-studio-title {
+.contact-cell.has-error {
+  box-shadow: inset 3px 0 0 #ef4444;
+}
+
+.contact-cell label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-primary);
-}
-
-.contact-studio-progress {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
   color: var(--text-muted);
+  margin-bottom: 0.45rem;
 }
 
-/* ── FORM BODY ── */
-.inquiry-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  padding: 1.75rem;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.42rem;
-}
-
-.form-group label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.input-icon-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-leading-icon {
-  position: absolute;
-  left: 0.95rem;
-  color: var(--text-muted);
-  pointer-events: none;
-  transition: color 0.2s ease;
-}
-
-.input-icon-wrap.is-textarea .input-leading-icon {
-  top: 0.92rem;
-}
-
-.input-icon-wrap:focus-within .input-leading-icon {
-  color: var(--accent);
-}
-
-.form-group input,
-.form-group textarea {
+.contact-cell input,
+.contact-cell textarea {
   width: 100%;
-  padding: 0.82rem 1rem 0.82rem 2.55rem;
-  border-radius: 0.7rem;
-  background: var(--bg-tertiary);
-  box-shadow: var(--skeuo-recessed);
-  border-top: 1px solid var(--skeuo-bevel-bottom);
-  border-bottom: 1px solid var(--skeuo-bevel-top);
-  border-left: none;
-  border-right: none;
+  padding: 0.15rem 0;
+  border: none;
+  background: transparent;
   color: var(--text-primary);
-  font-family: inherit;
-  font-size: 0.9rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.94rem;
+  font-weight: 500;
   outline: none;
-  transition: box-shadow 0.2s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  box-shadow: var(--skeuo-recessed), 0 0 0 1.5px var(--accent);
+.contact-cell input::placeholder,
+.contact-cell textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.55;
 }
 
-.form-group textarea {
+.contact-cell textarea {
   resize: vertical;
-  min-height: 118px;
+  min-height: 104px;
+  line-height: 1.55;
 }
 
-.required-star {
-  color: #ef4444;
-  margin-left: 2px;
-}
-
-[data-theme="dark"] .required-star {
-  color: #f87171;
-}
-
-.form-group input.input-error,
-.form-group textarea.input-error {
-  box-shadow: var(--skeuo-recessed), 0 0 0 1px rgba(239, 68, 68, 0.75);
-}
-
-.field-error {
-  display: flex;
+.contact-cell-error {
+  display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.76rem;
+  gap: 0.32rem;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: #ef4444;
-  margin-top: 0.1rem;
 }
 
-[data-theme="dark"] .field-error {
+[data-theme="dark"] .contact-cell-error {
   color: #f87171;
 }
 
-.submit-btn {
-  margin-top: 0.35rem;
-  width: 100%;
-  min-height: 48px;
-  padding: 0.88rem 1.25rem;
+/* ── BOTTOM ACTION BAR ── */
+.contact-form-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--bg-tertiary);
+}
+
+.contact-form-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.contact-form-submit {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
+  height: 40px;
+  padding: 0 1.35rem;
+  border-radius: 0.55rem;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
   font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--skeuo-extruded-sm);
+  transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.submit-send-icon {
-  transition: transform 0.2s ease;
+.contact-form-submit:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--skeuo-extruded);
 }
 
-.submit-btn:hover:not(:disabled) .submit-send-icon {
-  transform: translate(2px, -2px);
+.contact-submit-arrow {
+  transition: transform 0.18s ease;
 }
 
-.submit-alert {
+.contact-form-submit:hover:not(:disabled) .contact-submit-arrow {
+  transform: translateX(3px);
+}
+
+.contact-form-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.contact-status-banner {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.82rem 1rem;
-  border-radius: 0.65rem;
+  gap: 0.55rem;
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--border);
   font-size: 0.84rem;
   font-weight: 600;
 }
 
-.submit-alert.success {
-  background: var(--bg-tertiary);
-  box-shadow: var(--skeuo-recessed-sm);
+.contact-status-banner.success {
   color: #10b981;
 }
 
-.submit-alert.error {
-  background: var(--bg-tertiary);
-  box-shadow: var(--skeuo-recessed-sm);
+.contact-status-banner.error {
   color: #ef4444;
 }
 
@@ -222,34 +181,40 @@
    ========================================================================== */
 @media (max-width: 640px) {
   .contact-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.4rem;
   }
 
-  .contact-form-card {
-    border-radius: 1rem;
-  }
-
-  .contact-studio-bar {
-    padding: 0.8rem 1.15rem;
-  }
-
-  .inquiry-form {
-    padding: 1.25rem 1.15rem;
-    gap: 1rem;
-  }
-
-  .form-row {
+  .contact-grid-row {
     grid-template-columns: 1fr;
-    gap: 0.95rem;
   }
 
-  .form-group input,
-  .form-group textarea {
+  .contact-grid-row .contact-cell:first-child {
+    border-right: none;
+  }
+
+  .contact-cell {
+    padding: 0.95rem 1.05rem;
+  }
+
+  .contact-cell input,
+  .contact-cell textarea {
     font-size: 16px; /* Prevents iOS Safari auto-zoom */
   }
 
-  .submit-btn {
-    min-height: 48px;
-    font-size: 0.94rem;
+  .contact-form-bar {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 0.65rem;
+    padding: 0.95rem 1.05rem;
+  }
+
+  .contact-form-note {
+    text-align: center;
+  }
+
+  .contact-form-submit {
+    width: 100%;
+    height: 44px;
+    font-size: 0.9rem;
   }
 }

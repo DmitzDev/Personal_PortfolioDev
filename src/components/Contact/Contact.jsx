@@ -1,13 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {
-  Send,
-  Check,
-  AlertCircle,
-  User,
-  AtSign,
-  Layers,
-  MessageSquare,
-} from 'lucide-react';
+import { ArrowRight, Check, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
@@ -39,15 +31,15 @@ export function Contact() {
       case 'email':
         if (!trimmed) return 'Please enter your email address.';
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmed)) {
-          return 'Please enter a valid email address (e.g. name@company.com).';
+          return 'Please enter a valid email address.';
         }
         return '';
       case 'subject':
-        if (!trimmed) return 'Please enter a subject or project scope.';
+        if (!trimmed) return 'Please enter a subject.';
         if (trimmed.length < 3) return 'Subject must be at least 3 characters.';
         return '';
       case 'message':
-        if (!trimmed) return 'Please describe your project requirements.';
+        if (!trimmed) return 'Please enter your message.';
         if (trimmed.length < 10) return 'Message must be at least 10 characters.';
         return '';
       default:
@@ -96,9 +88,7 @@ export function Contact() {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      toast.error('Please fix the errors before submitting.', {
-        description: 'Ensure all required fields are filled out correctly.',
-      });
+      toast.error('Please check the highlighted fields.');
       const firstErrorField = Object.keys(validationErrors)[0];
       const el = form.current?.querySelector(`[name="${firstErrorField}"]`);
       if (el) el.focus();
@@ -127,29 +117,20 @@ export function Contact() {
             origin: { y: 0.6 },
             colors: ['#ffffff', '#94a3b8', '#38bdf8', '#10b981'],
           });
-          toast.success('Message sent successfully!', {
-            description: "Thanks for reaching out! I'll get back to you as soon as possible.",
-          });
+          toast.success('Message sent successfully!');
           setTimeout(() => setSubmitStatus(null), 6000);
         },
         (error) => {
           setIsSubmitting(false);
           setSubmitStatus('error');
-          const err =
-            error.text || error.message || 'Failed to dispatch email. Please try again later.';
+          const err = error.text || error.message || 'Failed to send message. Please try again.';
           setErrorMessage(err);
-          toast.error('Failed to send message', {
-            description: err,
-          });
+          toast.error('Failed to send message', { description: err });
           console.error('EmailJS Error:', error);
           setTimeout(() => setSubmitStatus(null), 8000);
         }
       );
   };
-
-  const filledCount = ['name', 'email', 'subject', 'message'].filter(
-    (k) => formData[k].trim().length > 0
-  ).length;
 
   return (
     <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
@@ -159,164 +140,124 @@ export function Contact() {
             Get in Touch
           </h2>
           <p className="section-subtitle">
-            Have a project or opportunity in mind? Send me a message below.
+            Have a project or role in mind? Send a message below.
           </p>
         </header>
 
-        <AnimateOnScroll animation="fade-up" delay={60} className="contact-form-wrap">
-          <div className="contact-form-card">
-            {/* Sleek Studio Bar */}
-            <div className="contact-studio-bar">
-              <div className="contact-studio-left">
-                <span className="contact-studio-dot" aria-hidden="true" />
-                <span className="contact-studio-title">Direct Inquiry</span>
+        <AnimateOnScroll animation="fade-up" delay={50} className="contact-frame-wrap">
+          <form ref={form} className="contact-grid-form" onSubmit={handleSubmit} noValidate>
+            <div className="contact-grid-row">
+              <div className={`contact-cell ${touched.name && errors.name ? 'has-error' : ''}`}>
+                <label htmlFor="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={touched.name && Boolean(errors.name)}
+                  aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                  placeholder="Alex Morgan"
+                />
+                {touched.name && errors.name && (
+                  <span id="name-error" className="contact-cell-error" role="alert">
+                    <AlertCircle size={12} aria-hidden="true" />
+                    <span>{errors.name}</span>
+                  </span>
+                )}
               </div>
-              <span className="contact-studio-progress">
-                {filledCount}/4 completed
-              </span>
+
+              <div className={`contact-cell ${touched.email && errors.email ? 'has-error' : ''}`}>
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={touched.email && Boolean(errors.email)}
+                  aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                  placeholder="alex@company.com"
+                />
+                {touched.email && errors.email && (
+                  <span id="email-error" className="contact-cell-error" role="alert">
+                    <AlertCircle size={12} aria-hidden="true" />
+                    <span>{errors.email}</span>
+                  </span>
+                )}
+              </div>
             </div>
 
-            <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="name">
-                    Name <span className="required-star">*</span>
-                  </label>
-                  <div className="input-icon-wrap">
-                    <User size={15} className="input-leading-icon" aria-hidden="true" />
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-invalid={touched.name && Boolean(errors.name)}
-                      aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
-                      className={touched.name && errors.name ? 'input-error' : ''}
-                      placeholder="Alex Morgan"
-                    />
-                  </div>
-                  {touched.name && errors.name && (
-                    <span id="name-error" className="field-error" role="alert">
-                      <AlertCircle size={13} aria-hidden="true" />
-                      <span>{errors.name}</span>
-                    </span>
-                  )}
-                </div>
+            <div className={`contact-cell contact-cell-full ${touched.subject && errors.subject ? 'has-error' : ''}`}>
+              <label htmlFor="subject">Subject</label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={touched.subject && Boolean(errors.subject)}
+                aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
+                placeholder="Web App / UI Engineering"
+              />
+              {touched.subject && errors.subject && (
+                <span id="subject-error" className="contact-cell-error" role="alert">
+                  <AlertCircle size={12} aria-hidden="true" />
+                  <span>{errors.subject}</span>
+                </span>
+              )}
+            </div>
 
-                <div className="form-group">
-                  <label htmlFor="email">
-                    Email <span className="required-star">*</span>
-                  </label>
-                  <div className="input-icon-wrap">
-                    <AtSign size={15} className="input-leading-icon" aria-hidden="true" />
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-invalid={touched.email && Boolean(errors.email)}
-                      aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
-                      className={touched.email && errors.email ? 'input-error' : ''}
-                      placeholder="alex@company.com"
-                    />
-                  </div>
-                  {touched.email && errors.email && (
-                    <span id="email-error" className="field-error" role="alert">
-                      <AlertCircle size={13} aria-hidden="true" />
-                      <span>{errors.email}</span>
-                    </span>
-                  )}
-                </div>
-              </div>
+            <div className={`contact-cell contact-cell-full ${touched.message && errors.message ? 'has-error' : ''}`}>
+              <label htmlFor="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                value={formData.message}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={touched.message && Boolean(errors.message)}
+                aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
+                placeholder="Tell me briefly about your project and timeline..."
+              />
+              {touched.message && errors.message && (
+                <span id="message-error" className="contact-cell-error" role="alert">
+                  <AlertCircle size={12} aria-hidden="true" />
+                  <span>{errors.message}</span>
+                </span>
+              )}
+            </div>
 
-              <div className="form-group">
-                <label htmlFor="subject">
-                  Subject <span className="required-star">*</span>
-                </label>
-                <div className="input-icon-wrap">
-                  <Layers size={15} className="input-leading-icon" aria-hidden="true" />
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    aria-invalid={touched.subject && Boolean(errors.subject)}
-                    aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
-                    className={touched.subject && errors.subject ? 'input-error' : ''}
-                    placeholder="Web App / UI Engineering"
-                  />
-                </div>
-                {touched.subject && errors.subject && (
-                  <span id="subject-error" className="field-error" role="alert">
-                    <AlertCircle size={13} aria-hidden="true" />
-                    <span>{errors.subject}</span>
-                  </span>
-                )}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="message">
-                  Message <span className="required-star">*</span>
-                </label>
-                <div className="input-icon-wrap is-textarea">
-                  <MessageSquare size={15} className="input-leading-icon" aria-hidden="true" />
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    value={formData.message}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    aria-invalid={touched.message && Boolean(errors.message)}
-                    aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
-                    className={touched.message && errors.message ? 'input-error' : ''}
-                    placeholder="Tell me briefly about your project and timeline..."
-                  />
-                </div>
-                {touched.message && errors.message && (
-                  <span id="message-error" className="field-error" role="alert">
-                    <AlertCircle size={13} aria-hidden="true" />
-                    <span>{errors.message}</span>
-                  </span>
-                )}
-              </div>
-
+            <div className="contact-form-bar">
+              <span className="contact-form-note">All fields required</span>
               <button
                 type="submit"
-                className="btn-primary submit-btn"
+                className="contact-form-submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? (
-                  <span>Sending Message...</span>
-                ) : (
-                  <>
-                    <span>Send Message</span>
-                    <Send size={15} className="submit-send-icon" aria-hidden="true" />
-                  </>
-                )}
+                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                {!isSubmitting && <ArrowRight size={15} className="contact-submit-arrow" aria-hidden="true" />}
               </button>
+            </div>
 
-              {submitStatus === 'success' && (
-                <div className="submit-alert success" role="status">
-                  <Check size={17} aria-hidden="true" />
-                  <span>Message received! I&apos;ll get back to you shortly.</span>
-                </div>
-              )}
+            {submitStatus === 'success' && (
+              <div className="contact-status-banner success" role="status">
+                <Check size={16} aria-hidden="true" />
+                <span>Message received. I&apos;ll get back to you shortly.</span>
+              </div>
+            )}
 
-              {submitStatus === 'error' && (
-                <div className="submit-alert error" role="alert">
-                  <AlertCircle size={17} aria-hidden="true" />
-                  <span>{errorMessage}</span>
-                </div>
-              )}
-            </form>
-          </div>
+            {submitStatus === 'error' && (
+              <div className="contact-status-banner error" role="alert">
+                <AlertCircle size={16} aria-hidden="true" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+          </form>
         </AnimateOnScroll>
       </div>
     </section>

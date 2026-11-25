@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Send, Check, AlertCircle, Copy, Mail } from 'lucide-react';
+import { Send, Check, AlertCircle, Copy } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
@@ -155,36 +155,48 @@ export function Contact() {
   return (
     <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
       <div className="container">
-        <header className="section-header contact-header">
-          <h2 id="contact-heading" className="section-title">
-            Let&apos;s Work Together
-          </h2>
-          <p className="section-subtitle">
-            Have a project in mind? Send a message below or email me directly.
-          </p>
+        <div className="contact-editorial-grid">
+          {/* Left: Clean Unboxed Editorial Info */}
+          <AnimateOnScroll animation="fade-up" delay={40} className="contact-editorial-info">
+            <span className="contact-eyebrow">Contact</span>
+            <h2 id="contact-heading" className="contact-editorial-title">
+              Let&apos;s Build Something Exceptional
+            </h2>
+            <p className="contact-editorial-subtitle">
+              Have a project, MVP, or front-end role in mind? Drop a note or reach out directly.
+            </p>
 
-          <div className="contact-direct-bar">
-            <a href={`mailto:${personalInfo.email}`} className="contact-email-link">
-              <Mail size={15} aria-hidden="true" />
-              <span>{personalInfo.email}</span>
-            </a>
-            <button
-              type="button"
-              className={`contact-copy-chip ${copiedEmail ? 'is-copied' : ''}`}
-              onClick={handleCopyEmail}
-              aria-label="Copy email address"
-            >
-              {copiedEmail ? <Check size={13} /> : <Copy size={13} />}
-              <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
-            </button>
-          </div>
-        </header>
+            <div className="contact-meta-list">
+              <div className="contact-meta-item">
+                <span className="contact-meta-label">Email</span>
+                <div className="contact-meta-value-row">
+                  <a href={`mailto:${personalInfo.email}`} className="contact-meta-link">
+                    {personalInfo.email}
+                  </a>
+                  <button
+                    type="button"
+                    className={`contact-inline-copy ${copiedEmail ? 'is-copied' : ''}`}
+                    onClick={handleCopyEmail}
+                    aria-label="Copy email address"
+                  >
+                    {copiedEmail ? <Check size={13} /> : <Copy size={13} />}
+                    <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+              </div>
 
-        <AnimateOnScroll animation="fade-up" delay={60} className="contact-form-wrap">
-          <div className="contact-form-card">
-            <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
-              <div className="form-row">
-                <div className="form-group">
+              <div className="contact-meta-item">
+                <span className="contact-meta-label">Location</span>
+                <span className="contact-meta-text">{personalInfo.location}</span>
+              </div>
+            </div>
+          </AnimateOnScroll>
+
+          {/* Right: Unboxed Minimal Underline Form */}
+          <AnimateOnScroll animation="fade-up" delay={90} className="contact-editorial-form-col">
+            <form ref={form} className="contact-minimal-form" onSubmit={handleSubmit} noValidate>
+              <div className="contact-minimal-row">
+                <div className="contact-minimal-field">
                   <label htmlFor="name">
                     Name <span className="required-star">*</span>
                   </label>
@@ -208,7 +220,7 @@ export function Contact() {
                   )}
                 </div>
 
-                <div className="form-group">
+                <div className="contact-minimal-field">
                   <label htmlFor="email">
                     Email <span className="required-star">*</span>
                   </label>
@@ -233,7 +245,7 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className="contact-minimal-field">
                 <label htmlFor="subject">
                   Subject <span className="required-star">*</span>
                 </label>
@@ -257,14 +269,14 @@ export function Contact() {
                 )}
               </div>
 
-              <div className="form-group">
+              <div className="contact-minimal-field">
                 <label htmlFor="message">
                   Message <span className="required-star">*</span>
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows="4"
+                  rows="3"
                   value={formData.message}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -281,37 +293,39 @@ export function Contact() {
                 )}
               </div>
 
-              <button
-                type="submit"
-                className="btn-primary submit-btn"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <span>Sending...</span>
-                ) : (
-                  <>
-                    <span>Send Message</span>
-                    <Send size={15} aria-hidden="true" />
-                  </>
-                )}
-              </button>
+              <div className="contact-minimal-actions">
+                <button
+                  type="submit"
+                  className="contact-minimal-submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send size={15} aria-hidden="true" />
+                    </>
+                  )}
+                </button>
+              </div>
 
               {submitStatus === 'success' && (
                 <div className="submit-alert success" role="status">
-                  <Check size={18} aria-hidden="true" />
+                  <Check size={17} aria-hidden="true" />
                   <span>Message received! I&apos;ll get back to you shortly.</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
                 <div className="submit-alert error" role="alert">
-                  <AlertCircle size={18} aria-hidden="true" />
+                  <AlertCircle size={17} aria-hidden="true" />
                   <span>{errorMessage}</span>
                 </div>
               )}
             </form>
-          </div>
-        </AnimateOnScroll>
+          </AnimateOnScroll>
+        </div>
       </div>
     </section>
   );

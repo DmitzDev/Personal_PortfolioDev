@@ -20,7 +20,7 @@ import RSTWDost from '../assets/RSTWDost.webp';
 export const certificates = [
   {
     id: 13,
-    title: "Introduction to Cybersecurity — Certificate of Course Completion",
+    title: "Intro to Cybersecurity (Badge)",
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: true,
@@ -33,7 +33,7 @@ export const certificates = [
   },
   {
     id: 14,
-    title: "Introduction to Cybersecurity",
+    title: "Intro to Cybersecurity",
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: false,
@@ -46,7 +46,7 @@ export const certificates = [
   },
   {
     id: 11,
-    title: "HTML Essentials — Statement of Achievement",
+    title: "HTML Essentials (Badge)",
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: true,
@@ -72,7 +72,7 @@ export const certificates = [
   },
   {
     id: 10,
-    title: "JavaScript Essentials 1 — Statement of Achievement",
+    title: "JavaScript Essentials 1 (Badge)",
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: true,
@@ -98,7 +98,7 @@ export const certificates = [
   },
   {
     id: 1,
-    title: "Introduction to Packet Tracer",
+    title: "Intro to Packet Tracer",
     organization: "Cisco Networking Academy",
     date: "November 2025",
     hasBadge: true,
@@ -122,7 +122,7 @@ export const certificates = [
   },
   {
     id: 2,
-    title: "Introduction to Packet Tracer Exam",
+    title: "Packet Tracer Exam",
     organization: "Cisco Networking Academy",
     date: "November 2025",
     hasBadge: false,
@@ -133,7 +133,7 @@ export const certificates = [
   },
   {
     id: 3,
-    title: "Exploring Internet of Things with Cisco Packet Tracer",
+    title: "IoT with Packet Tracer",
     organization: "Cisco Networking Academy",
     date: "November 2025",
     hasBadge: false,
@@ -145,7 +145,7 @@ export const certificates = [
   },
   {
     id: 4,
-    title: "Exploring Networking with Cisco Packet Tracer",
+    title: "Networking with Packet Tracer",
     organization: "Cisco Networking Academy",
     date: "November 2025",
     hasBadge: false,
@@ -157,7 +157,7 @@ export const certificates = [
   },
   {
     id: 5,
-    title: "Getting Started with Cisco Packet Tracer",
+    title: "Getting Started: Packet Tracer",
     organization: "Cisco Networking Academy",
     date: "November 2025",
     hasBadge: false,
@@ -169,7 +169,7 @@ export const certificates = [
   },
   {
     id: 6,
-    title: "Regional Science & Technology Week (RSTW)",
+    title: "RSTW 2025 (DOST)",
     organization: "DOST Region 1",
     date: "February 2026",
     credentialUrl: "#",
@@ -179,7 +179,7 @@ export const certificates = [
   },
   {
     id: 7,
-    title: "Construction Occupational Safety & Health (COSH-SO2)",
+    title: "COSH-SO2 Safety Training",
     organization: "JCOSH / DOLE Accredited",
     date: "March 2026",
     credentialUrl: "#",

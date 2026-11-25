@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ArrowUpRight,
   Check,
   Clock,
   Layout,
   PenTool,
+  Plus,
   Rocket,
   Server,
   Terminal,
@@ -43,6 +44,8 @@ const servicesStructuredData = {
 };
 
 export function Services() {
+  const [openId, setOpenId] = useState(services[0]?.id ?? 1);
+
   const scrollToContact = (e, serviceTitle) => {
     e.preventDefault();
     const contactEl = document.getElementById('contact');
@@ -89,67 +92,92 @@ export function Services() {
           </p>
         </header>
 
-        <div className="services-bento-grid">
+        <div className="services-accordion">
           {services.map((service) => {
+            const isOpen = openId === service.id;
             const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
 
             return (
-              <article key={service.id} className="service-bento-card">
-                <div className="service-card-top">
-                  <div className="service-icon-badge" aria-hidden="true">
-                    <IconComponent size={20} strokeWidth={1.9} />
+              <article
+                key={service.id}
+                className={`service-row ${isOpen ? 'is-open' : ''}`}
+              >
+                <button
+                  type="button"
+                  className="service-row-trigger"
+                  aria-expanded={isOpen}
+                  aria-controls={`service-drawer-${service.id}`}
+                  onClick={() => setOpenId(isOpen ? null : service.id)}
+                >
+                  <div className="service-trigger-left">
+                    <span className="service-row-num">{service.code}</span>
+                    <span className="service-row-icon" aria-hidden="true">
+                      <IconComponent size={18} strokeWidth={1.9} />
+                    </span>
+                    <h3 className="service-row-title">{service.title}</h3>
                   </div>
 
-                  <div className="service-meta-pills">
-                    <span className="service-code-label">{service.code}</span>
-                    <span className="service-turnaround-pill">
+                  <div className="service-trigger-right">
+                    <span className="service-row-sprint">
                       <Clock size={12} aria-hidden="true" />
                       <span>{service.turnaround}</span>
                     </span>
+                    <span className="service-row-plus" aria-hidden="true">
+                      <Plus size={18} strokeWidth={2} />
+                    </span>
+                  </div>
+                </button>
+
+                <div
+                  id={`service-drawer-${service.id}`}
+                  className="service-row-drawer"
+                  aria-hidden={!isOpen}
+                >
+                  <div className="service-row-drawer-inner">
+                    <div className="service-drawer-grid">
+                      <div className="service-drawer-main">
+                        <p className="service-drawer-desc">{service.description}</p>
+                        <ul className="service-drawer-deliverables" aria-label="Key deliverables">
+                          {service.deliverables.map((item) => (
+                            <li key={item} className="service-drawer-item">
+                              <Check size={13} strokeWidth={2.4} aria-hidden="true" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="service-drawer-side">
+                        <div className="service-tech-icons" aria-label="Tech stack">
+                          {service.techStack.map((tech) => (
+                            <div
+                              key={tech.name}
+                              className="service-tech-item"
+                              tabIndex={isOpen ? 0 : -1}
+                              aria-label={tech.name}
+                            >
+                              <Tech3DIcon iconKey={tech.icon} size={38} />
+                              <span className="service-tech-tooltip" role="tooltip">
+                                {tech.name}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <a
+                          href="#contact"
+                          className="service-inquire-btn"
+                          tabIndex={isOpen ? 0 : -1}
+                          onClick={(e) => scrollToContact(e, service.title)}
+                          aria-label={`Inquire about ${service.title}`}
+                        >
+                          <span>Inquire</span>
+                          <ArrowUpRight size={15} aria-hidden="true" />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <h3 className="service-card-title">{service.title}</h3>
-                <p className="service-card-desc">{service.description}</p>
-
-                <ul className="service-deliverables-list" aria-label="Key deliverables">
-                  {service.deliverables.map((item) => (
-                    <li key={item} className="service-deliverable-item">
-                      <span className="service-check-dot" aria-hidden="true">
-                        <Check size={11} strokeWidth={2.6} />
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <footer className="service-card-footer">
-                  <div className="service-tech-icons" aria-label="Tech stack">
-                    {service.techStack.map((tech) => (
-                      <div
-                        key={tech.name}
-                        className="service-tech-item"
-                        tabIndex={0}
-                        aria-label={tech.name}
-                      >
-                        <Tech3DIcon iconKey={tech.icon} size={36} />
-                        <span className="service-tech-tooltip" role="tooltip">
-                          {tech.name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <a
-                    href="#contact"
-                    className="service-inquire-btn"
-                    onClick={(e) => scrollToContact(e, service.title)}
-                    aria-label={`Inquire about ${service.title}`}
-                  >
-                    <span>Inquire</span>
-                    <ArrowUpRight size={15} aria-hidden="true" />
-                  </a>
-                </footer>
               </article>
             );
           })}

@@ -1,14 +1,5 @@
-import React, { useState } from 'react';
-import {
-  ArrowUpRight,
-  Check,
-  Clock,
-  Layout,
-  PenTool,
-  Rocket,
-  Server,
-  Terminal,
-} from 'lucide-react';
+import React from 'react';
+import { ArrowUpRight, Layout, PenTool, Rocket, Server, Terminal } from 'lucide-react';
 import { services } from '../../data/services';
 import { Tech3DIcon } from '../shared/Tech3DIcon';
 import './Services.css';
@@ -18,13 +9,6 @@ const SERVICE_ICONS = {
   PenTool,
   Rocket,
   Server,
-};
-
-const MOBILE_TAB_LABELS = {
-  1: 'Full-Stack',
-  2: 'UI Systems',
-  3: 'MVP Launch',
-  4: 'API & Cloud',
 };
 
 const servicesStructuredData = {
@@ -50,9 +34,6 @@ const servicesStructuredData = {
 };
 
 export function Services() {
-  const [activeId, setActiveId] = useState(services[0]?.id ?? 1);
-  const activeService = services.find((s) => s.id === activeId) || services[0];
-
   const scrollToContact = (e, serviceTitle) => {
     e.preventDefault();
     const contactEl = document.getElementById('contact');
@@ -99,104 +80,53 @@ export function Services() {
           </p>
         </header>
 
-        {/* Top Horizontal Service Tabs */}
-        <div className="services-tabs-wrap">
-          <div className="services-tabs-bar" role="tablist" aria-label="Select a service">
-            {services.map((service) => {
-              const isActive = service.id === activeService.id;
-              const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
+        <div className="services-cards-grid">
+          {services.map((service) => {
+            const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
 
-              return (
-                <button
-                  key={service.id}
-                  type="button"
-                  role="tab"
-                  id={`service-tab-${service.id}`}
-                  aria-selected={isActive}
-                  aria-controls={`service-panel-${service.id}`}
-                  className={`service-tab-pill ${isActive ? 'is-active' : ''}`}
-                  onClick={() => setActiveId(service.id)}
-                >
-                  <IconComponent size={15} strokeWidth={2} aria-hidden="true" />
-                  <span className="service-tab-label-desktop">{service.title}</span>
-                  <span className="service-tab-label-mobile">
-                    {MOBILE_TAB_LABELS[service.id] || service.title}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Unboxed 2-Column Split Spotlight */}
-        {activeService && (
-          <article
-            key={activeService.id}
-            id={`service-panel-${activeService.id}`}
-            role="tabpanel"
-            aria-labelledby={`service-tab-${activeService.id}`}
-            className="service-spotlight-grid"
-          >
-            {/* Left: Description & Deliverables */}
-            <div className="service-spotlight-main">
-              <div className="service-eyebrow-row">
-                <span className="service-eyebrow-code">
-                  {activeService.code} · {activeService.badge}
-                </span>
-                <span className="service-turnaround-chip">
-                  <Clock size={12} aria-hidden="true" />
-                  <span>{activeService.turnaround}</span>
-                </span>
-              </div>
-
-              <h3 className="service-spotlight-title">{activeService.title}</h3>
-              <p className="service-spotlight-desc">{activeService.description}</p>
-
-              <ul className="service-deliverables" aria-label="Key deliverables">
-                {activeService.deliverables.map((item) => (
-                  <li key={item} className="service-deliverable-row">
-                    <span className="service-check-badge" aria-hidden="true">
-                      <Check size={12} strokeWidth={2.5} />
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Right: Pure Tech3DIcon Stack + Inquire Action */}
-            <div className="service-spotlight-side">
-              <div className="service-stack-block">
-                <span className="service-side-label">Core Stack</span>
-                <div className="service-tech-icons" aria-label="Tech stack">
-                  {activeService.techStack.map((tech) => (
-                    <div
-                      key={tech.name}
-                      className="service-tech-item"
-                      tabIndex={0}
-                      aria-label={tech.name}
-                    >
-                      <Tech3DIcon iconKey={tech.icon} size={42} />
-                      <span className="service-tech-tooltip" role="tooltip">
-                        {tech.name}
-                      </span>
-                    </div>
-                  ))}
+            return (
+              <article key={service.id} className="service-card">
+                <div className="service-card-top">
+                  <div className="service-card-icon-wrap" aria-hidden="true">
+                    <IconComponent size={18} strokeWidth={2} />
+                  </div>
+                  <span className="service-card-code">{service.code}</span>
                 </div>
-              </div>
 
-              <a
-                href="#contact"
-                className="service-inquire-btn"
-                onClick={(e) => scrollToContact(e, activeService.title)}
-                aria-label={`Inquire about ${activeService.title}`}
-              >
-                <span>Start a Project</span>
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            </div>
-          </article>
-        )}
+                <h3 className="service-card-title">{service.title}</h3>
+                <p className="service-card-desc">{service.description}</p>
+
+                <div className="service-card-footer">
+                  <div className="service-tech-icons" aria-label="Tech stack">
+                    {service.techStack.map((tech) => (
+                      <div
+                        key={tech.name}
+                        className="service-tech-item"
+                        tabIndex={0}
+                        aria-label={tech.name}
+                      >
+                        <Tech3DIcon iconKey={tech.icon} size={34} />
+                        <span className="service-tech-tooltip" role="tooltip">
+                          {tech.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <a
+                    href="#contact"
+                    className="service-inquire-btn"
+                    onClick={(e) => scrollToContact(e, service.title)}
+                    aria-label={`Inquire about ${service.title}`}
+                  >
+                    <span>Start a Project</span>
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

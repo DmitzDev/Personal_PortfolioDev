@@ -141,12 +141,30 @@ export function Projects() {
                     >
                       {isMobileApp ? (
                         <div className="device-phone">
+                          <span className="device-phone-btn-vol-up" aria-hidden="true" />
+                          <span className="device-phone-btn-vol-down" aria-hidden="true" />
+                          <span className="device-phone-btn-power" aria-hidden="true" />
                           <div className="device-phone-body">
-                            <div className="device-phone-island" aria-hidden="true" />
+                            <div className="device-phone-island" aria-hidden="true">
+                              <span className="device-phone-lens" />
+                            </div>
                             <div className="device-phone-screen">
+                              <div className="device-phone-glare" aria-hidden="true" />
                               <div className="device-phone-statusbar" aria-hidden="true">
                                 <span>9:41</span>
-                                <span className="device-phone-signals">•••</span>
+                                <span className="device-phone-icons">
+                                  <svg width="13" height="9" viewBox="0 0 13 9" fill="currentColor">
+                                    <rect x="0" y="5" width="2" height="4" rx="0.5" />
+                                    <rect x="3.5" y="3.5" width="2" height="5.5" rx="0.5" />
+                                    <rect x="7" y="2" width="2" height="7" rx="0.5" />
+                                    <rect x="10.5" y="0" width="2" height="9" rx="0.5" />
+                                  </svg>
+                                  <svg width="16" height="9" viewBox="0 0 16 9" fill="none">
+                                    <rect x="0.5" y="0.5" width="13" height="8" rx="2" stroke="currentColor" strokeOpacity="0.6" />
+                                    <rect x="2" y="2" width="9" height="5" rx="1" fill="currentColor" />
+                                    <rect x="14.5" y="2.8" width="1.5" height="3.4" rx="0.7" fill="currentColor" fillOpacity="0.6" />
+                                  </svg>
+                                </span>
                               </div>
                               <div className="device-phone-media-wrap">
                                 <img
@@ -169,8 +187,11 @@ export function Projects() {
                       ) : (
                         <div className="device-laptop">
                           <div className="device-laptop-lid">
-                            <div className="device-laptop-cam" aria-hidden="true" />
+                            <div className="device-laptop-notch-top" aria-hidden="true">
+                              <span className="device-laptop-cam" />
+                            </div>
                             <div className="device-laptop-screen">
+                              <div className="device-laptop-glare" aria-hidden="true" />
                               <img
                                 src={project.image}
                                 alt={project.title}
@@ -182,8 +203,9 @@ export function Projects() {
                             </div>
                           </div>
                           <div className="device-laptop-base" aria-hidden="true">
-                            <div className="device-laptop-notch" />
+                            <div className="device-laptop-groove" />
                           </div>
+                          <div className="device-laptop-shadow" aria-hidden="true" />
                         </div>
                       )}
 

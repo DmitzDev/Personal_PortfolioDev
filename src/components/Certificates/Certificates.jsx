@@ -72,20 +72,6 @@ export function Certificates() {
   const [outgoingCert, setOutgoingCert] = useState(null);
   const [isFlipping, setIsFlipping] = useState(false);
 
-  useEffect(() => {
-    if (!currentCert?.credlyBadgeId) return;
-    const existingScript = document.querySelector(
-      'script[src*="cdn.credly.com/assets/utilities/embed.js"]'
-    );
-    if (existingScript) {
-      existingScript.remove();
-    }
-    const script = document.createElement('script');
-    script.src = 'https://cdn.credly.com/assets/utilities/embed.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }, [currentCert?.credlyBadgeId]);
-
   const flipTimerRef = useRef(null);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
@@ -104,6 +90,20 @@ export function Certificates() {
   const total = visibleCerts.length;
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
   const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
+
+  useEffect(() => {
+    if (!currentCert?.credlyBadgeId) return;
+    const existingScript = document.querySelector(
+      'script[src*="cdn.credly.com/assets/utilities/embed.js"]'
+    );
+    if (existingScript) {
+      existingScript.remove();
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdn.credly.com/assets/utilities/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, [currentCert?.credlyBadgeId]);
 
   // Preload & decode certificate images so switching tabs or flipping never stalls
   useEffect(() => {

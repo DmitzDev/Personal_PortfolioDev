@@ -143,7 +143,7 @@
 .device-laptop-screen {
   position: relative;
   width: 100%;
-  aspect-ratio: 800 / 372;
+  aspect-ratio: 16 / 10;
   border-radius: 7px;
   overflow: hidden;
   background: #090b0f;
@@ -161,7 +161,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: top center;
   display: block;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -303,34 +303,14 @@
 
 .device-phone-screen {
   position: relative;
-  aspect-ratio: 9 / 16.5;
+  aspect-ratio: 9 / 17;
   border-radius: 27px;
   overflow: hidden;
-  background: #0b0e14;
+  background: linear-gradient(180deg, #161b24 0%, #0b0e14 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0.72rem 0.65rem 0.55rem 0.65rem;
-}
-
-.device-phone-bg-blur {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(22px) brightness(0.55) saturate(1.25);
-  transform: scale(1.22);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.device-phone-statusbar,
-.device-phone-media-wrap,
-.device-phone-app-meta,
-.device-phone-homebar {
-  position: relative;
-  z-index: 2;
+  padding: 0.72rem 0.7rem 0.55rem 0.7rem;
 }
 
 .device-phone-glare {

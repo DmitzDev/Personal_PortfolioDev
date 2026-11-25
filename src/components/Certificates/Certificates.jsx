@@ -72,6 +72,22 @@ export function Certificates() {
   const [outgoingCert, setOutgoingCert] = useState(null);
   const [isFlipping, setIsFlipping] = useState(false);
 
+  const credlyBadges = certificates.filter((c) => Boolean(c.credlyBadgeId));
+
+  useEffect(() => {
+    if (credlyBadges.length === 0) return;
+    const existingScript = document.querySelector(
+      'script[src*="cdn.credly.com/assets/utilities/embed.js"]'
+    );
+    if (existingScript) {
+      existingScript.remove();
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdn.credly.com/assets/utilities/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, [credlyBadges.length]);
+
   const flipTimerRef = useRef(null);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
@@ -325,6 +341,25 @@ export function Certificates() {
               </div>
             )}
           </>
+        )}
+
+        {/* Official Credly Verified Badges */}
+        {credlyBadges.length > 0 && (
+          <div className="credly-badges-section">
+            <h3 className="credly-badges-heading">Verified Credly Badges</h3>
+            <div className="credly-badges-grid">
+              {credlyBadges.map((badge) => (
+                <div key={badge.credlyBadgeId} className="credly-badge-frame">
+                  <div
+                    data-iframe-width="150"
+                    data-iframe-height="270"
+                    data-share-badge-id={badge.credlyBadgeId}
+                    data-share-badge-host="https://www.credly.com"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     </section>

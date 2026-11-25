@@ -86,14 +86,20 @@ export function Services() {
 
             return (
               <article key={service.id} className="service-card">
-                <div className="service-card-top">
+                <span className="service-card-watermark" aria-hidden="true">
+                  {service.code}
+                </span>
+
+                <div className="service-card-head">
                   <div className="service-card-icon-wrap" aria-hidden="true">
-                    <IconComponent size={18} strokeWidth={2} />
+                    <IconComponent size={19} strokeWidth={2} />
                   </div>
-                  <span className="service-card-code">{service.code}</span>
+                  <div className="service-card-heading">
+                    <span className="service-card-kicker">{service.badge}</span>
+                    <h3 className="service-card-title">{service.title}</h3>
+                  </div>
                 </div>
 
-                <h3 className="service-card-title">{service.title}</h3>
                 <p className="service-card-desc">{service.description}</p>
 
                 <div className="service-card-footer">
@@ -105,7 +111,7 @@ export function Services() {
                         tabIndex={0}
                         aria-label={tech.name}
                       >
-                        <Tech3DIcon iconKey={tech.icon} size={34} />
+                        <Tech3DIcon iconKey={tech.icon} size={32} />
                         <span className="service-tech-tooltip" role="tooltip">
                           {tech.name}
                         </span>
@@ -119,8 +125,8 @@ export function Services() {
                     onClick={(e) => scrollToContact(e, service.title)}
                     aria-label={`Inquire about ${service.title}`}
                   >
-                    <span>Start a Project</span>
-                    <ArrowUpRight size={15} aria-hidden="true" />
+                    <span>Inquire</span>
+                    <ArrowUpRight size={14} aria-hidden="true" />
                   </a>
                 </div>
               </article>

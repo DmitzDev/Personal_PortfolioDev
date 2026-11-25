@@ -5,7 +5,6 @@ import {
   Clock,
   Layout,
   PenTool,
-  Plus,
   Rocket,
   Server,
   Terminal,
@@ -44,7 +43,8 @@ const servicesStructuredData = {
 };
 
 export function Services() {
-  const [openId, setOpenId] = useState(services[0]?.id ?? 1);
+  const [activeId, setActiveId] = useState(services[0]?.id ?? 1);
+  const activeService = services.find((s) => s.id === activeId) || services[0];
 
   const scrollToContact = (e, serviceTitle) => {
     e.preventDefault();
@@ -92,96 +92,101 @@ export function Services() {
           </p>
         </header>
 
-        <div className="services-accordion">
-          {services.map((service) => {
-            const isOpen = openId === service.id;
-            const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
+        {/* Top Horizontal Service Tabs */}
+        <div className="services-tabs-wrap">
+          <div className="services-tabs-bar" role="tablist" aria-label="Select a service">
+            {services.map((service) => {
+              const isActive = service.id === activeService.id;
+              const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
 
-            return (
-              <article
-                key={service.id}
-                className={`service-row ${isOpen ? 'is-open' : ''}`}
-              >
+              return (
                 <button
+                  key={service.id}
                   type="button"
-                  className="service-row-trigger"
-                  aria-expanded={isOpen}
-                  aria-controls={`service-drawer-${service.id}`}
-                  onClick={() => setOpenId(isOpen ? null : service.id)}
+                  role="tab"
+                  id={`service-tab-${service.id}`}
+                  aria-selected={isActive}
+                  aria-controls={`service-panel-${service.id}`}
+                  className={`service-tab-pill ${isActive ? 'is-active' : ''}`}
+                  onClick={() => setActiveId(service.id)}
                 >
-                  <div className="service-trigger-left">
-                    <span className="service-row-num">{service.code}</span>
-                    <span className="service-row-icon" aria-hidden="true">
-                      <IconComponent size={18} strokeWidth={1.9} />
-                    </span>
-                    <h3 className="service-row-title">{service.title}</h3>
-                  </div>
-
-                  <div className="service-trigger-right">
-                    <span className="service-row-sprint">
-                      <Clock size={12} aria-hidden="true" />
-                      <span>{service.turnaround}</span>
-                    </span>
-                    <span className="service-row-plus" aria-hidden="true">
-                      <Plus size={18} strokeWidth={2} />
-                    </span>
-                  </div>
+                  <IconComponent size={15} strokeWidth={2} aria-hidden="true" />
+                  <span>{service.title}</span>
                 </button>
-
-                <div
-                  id={`service-drawer-${service.id}`}
-                  className="service-row-drawer"
-                  aria-hidden={!isOpen}
-                >
-                  <div className="service-row-drawer-inner">
-                    <div className="service-drawer-grid">
-                      <div className="service-drawer-main">
-                        <p className="service-drawer-desc">{service.description}</p>
-                        <ul className="service-drawer-deliverables" aria-label="Key deliverables">
-                          {service.deliverables.map((item) => (
-                            <li key={item} className="service-drawer-item">
-                              <Check size={13} strokeWidth={2.4} aria-hidden="true" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="service-drawer-side">
-                        <div className="service-tech-icons" aria-label="Tech stack">
-                          {service.techStack.map((tech) => (
-                            <div
-                              key={tech.name}
-                              className="service-tech-item"
-                              tabIndex={isOpen ? 0 : -1}
-                              aria-label={tech.name}
-                            >
-                              <Tech3DIcon iconKey={tech.icon} size={38} />
-                              <span className="service-tech-tooltip" role="tooltip">
-                                {tech.name}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-
-                        <a
-                          href="#contact"
-                          className="service-inquire-btn"
-                          tabIndex={isOpen ? 0 : -1}
-                          onClick={(e) => scrollToContact(e, service.title)}
-                          aria-label={`Inquire about ${service.title}`}
-                        >
-                          <span>Inquire</span>
-                          <ArrowUpRight size={15} aria-hidden="true" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+
+        {/* Unboxed 2-Column Split Spotlight */}
+        {activeService && (
+          <article
+            key={activeService.id}
+            id={`service-panel-${activeService.id}`}
+            role="tabpanel"
+            aria-labelledby={`service-tab-${activeService.id}`}
+            className="service-spotlight-grid"
+          >
+            {/* Left: Description & Deliverables */}
+            <div className="service-spotlight-main">
+              <div className="service-eyebrow-row">
+                <span className="service-eyebrow-code">
+                  {activeService.code} · {activeService.badge}
+                </span>
+                <span className="service-turnaround-chip">
+                  <Clock size={12} aria-hidden="true" />
+                  <span>{activeService.turnaround}</span>
+                </span>
+              </div>
+
+              <h3 className="service-spotlight-title">{activeService.title}</h3>
+              <p className="service-spotlight-desc">{activeService.description}</p>
+
+              <ul className="service-deliverables" aria-label="Key deliverables">
+                {activeService.deliverables.map((item) => (
+                  <li key={item} className="service-deliverable-row">
+                    <span className="service-check-badge" aria-hidden="true">
+                      <Check size={12} strokeWidth={2.5} />
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right: Pure Tech3DIcon Stack + Inquire Action */}
+            <div className="service-spotlight-side">
+              <div className="service-stack-block">
+                <span className="service-side-label">Core Stack</span>
+                <div className="service-tech-icons" aria-label="Tech stack">
+                  {activeService.techStack.map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="service-tech-item"
+                      tabIndex={0}
+                      aria-label={tech.name}
+                    >
+                      <Tech3DIcon iconKey={tech.icon} size={42} />
+                      <span className="service-tech-tooltip" role="tooltip">
+                        {tech.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <a
+                href="#contact"
+                className="service-inquire-btn"
+                onClick={(e) => scrollToContact(e, activeService.title)}
+                aria-label={`Inquire about ${activeService.title}`}
+              >
+                <span>Start a Project</span>
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+            </div>
+          </article>
+        )}
       </div>
     </section>
   );

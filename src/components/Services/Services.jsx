@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  ArrowRight,
   ArrowUpRight,
   Check,
   Clock,
-  Cpu,
   Layout,
   PenTool,
   Rocket,
@@ -12,6 +10,7 @@ import {
   Terminal,
 } from 'lucide-react';
 import { services } from '../../data/services';
+import { Tech3DIcon } from '../shared/Tech3DIcon';
 import './Services.css';
 
 const SERVICE_ICONS = {
@@ -19,7 +18,6 @@ const SERVICE_ICONS = {
   PenTool,
   Rocket,
   Server,
-  Cpu,
 };
 
 const servicesStructuredData = {
@@ -45,9 +43,6 @@ const servicesStructuredData = {
 };
 
 export function Services() {
-  const [activeId, setActiveId] = useState(services[0]?.id ?? 1);
-  const activeService = services.find((s) => s.id === activeId) || services[0];
-
   const scrollToContact = (e, serviceTitle) => {
     e.preventDefault();
     const contactEl = document.getElementById('contact');
@@ -90,110 +85,74 @@ export function Services() {
             Services
           </h2>
           <p className="section-subtitle">
-            End-to-end web engineering tailored for founders, startups, and product teams.
+            Focused web engineering for startups, founders, and product teams.
           </p>
         </header>
 
-        <div className="services-split-layout">
-          {/* LEFT: Clean Interactive Service Selector */}
-          <div
-            className="services-selector-list"
-            role="tablist"
-            aria-label="Select a service"
-          >
-            {services.map((service, index) => {
-              const isActive = service.id === activeService.id;
-              const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
+        <div className="services-bento-grid">
+          {services.map((service) => {
+            const IconComponent = SERVICE_ICONS[service.icon] || Terminal;
 
-              return (
-                <button
-                  key={service.id}
-                  type="button"
-                  role="tab"
-                  id={`service-tab-${service.id}`}
-                  aria-selected={isActive}
-                  aria-controls={`service-panel-${service.id}`}
-                  className={`service-selector-item ${isActive ? 'is-active' : ''}`}
-                  onClick={() => setActiveId(service.id)}
-                >
-                  <span className="selector-icon-wrap" aria-hidden="true">
-                    <IconComponent size={19} />
-                  </span>
+            return (
+              <article key={service.id} className="service-bento-card">
+                <div className="service-card-top">
+                  <div className="service-icon-badge" aria-hidden="true">
+                    <IconComponent size={20} strokeWidth={1.9} />
+                  </div>
 
-                  <span className="selector-text">
-                    <span className="selector-index">
-                      {String(index + 1).padStart(2, '0')} · {service.badge}
+                  <div className="service-meta-pills">
+                    <span className="service-code-label">{service.code}</span>
+                    <span className="service-turnaround-pill">
+                      <Clock size={12} aria-hidden="true" />
+                      <span>{service.turnaround}</span>
                     </span>
-                    <span className="selector-title">{service.title}</span>
-                  </span>
+                  </div>
+                </div>
 
-                  <ArrowRight
-                    size={16}
-                    className="selector-arrow"
-                    aria-hidden="true"
-                  />
-                </button>
-              );
-            })}
-          </div>
+                <h3 className="service-card-title">{service.title}</h3>
+                <p className="service-card-desc">{service.description}</p>
 
-          {/* RIGHT: Focused Active Service Detail View */}
-          {activeService && (
-            <article
-              key={activeService.id}
-              id={`service-panel-${activeService.id}`}
-              role="tabpanel"
-              aria-labelledby={`service-tab-${activeService.id}`}
-              className="service-detail-panel"
-            >
-              <div className="detail-meta-row">
-                <span className="detail-code-badge">
-                  {activeService.code} · {activeService.badge}
-                </span>
-                <span className="detail-turnaround-pill">
-                  <Clock size={13} aria-hidden="true" />
-                  <span>{activeService.turnaround}</span>
-                </span>
-              </div>
-
-              <h3 className="detail-title">{activeService.title}</h3>
-              <p className="detail-description">{activeService.description}</p>
-
-              <div className="detail-deliverables-block">
-                <span className="detail-block-label">Key Deliverables</span>
-                <ul className="detail-deliverables-list">
-                  {activeService.deliverables.map((item, idx) => (
-                    <li key={idx} className="detail-deliverable-item">
-                      <span className="detail-check-icon" aria-hidden="true">
-                        <Check size={12} />
+                <ul className="service-deliverables-list" aria-label="Key deliverables">
+                  {service.deliverables.map((item) => (
+                    <li key={item} className="service-deliverable-item">
+                      <span className="service-check-dot" aria-hidden="true">
+                        <Check size={11} strokeWidth={2.6} />
                       </span>
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
 
-              <footer className="detail-footer">
-                <div className="detail-tech-list" aria-label="Tech stack">
-                  {activeService.techStack.map((tech) => (
-                    <span key={tech} className="detail-tech-pill">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                <footer className="service-card-footer">
+                  <div className="service-tech-icons" aria-label="Tech stack">
+                    {service.techStack.map((tech) => (
+                      <div
+                        key={tech.name}
+                        className="service-tech-item"
+                        tabIndex={0}
+                        aria-label={tech.name}
+                      >
+                        <Tech3DIcon iconKey={tech.icon} size={36} />
+                        <span className="service-tech-tooltip" role="tooltip">
+                          {tech.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
 
-                <a
-                  href="#contact"
-                  className="detail-inquire-btn"
-                  onClick={(e) => scrollToContact(e, activeService.title)}
-                  aria-label={`Inquire about ${activeService.title}`}
-                >
-                  <span>Inquire</span>
-                  <ArrowUpRight size={15} aria-hidden="true" />
-                </a>
-              </footer>
-            </article>
-          )}
+                  <a
+                    href="#contact"
+                    className="service-inquire-btn"
+                    onClick={(e) => scrollToContact(e, service.title)}
+                    aria-label={`Inquire about ${service.title}`}
+                  >
+                    <span>Inquire</span>
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                </footer>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

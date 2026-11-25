@@ -1,400 +1,299 @@
+/* ==========================================================================
+   SERVICES SECTION — CLEAN 2x2 ARCHITECTURAL BENTO GRID
+   Minimal copy, crisp glass tech stack icons, fluid desktop & mobile layout.
+   ========================================================================== */
+
 .services-section {
   position: relative;
   background-color: var(--bg-primary);
-  padding: 5.5rem 0;
 }
 
 .services-header {
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
-/* ==========================================================================
-   INTERACTIVE SPLIT SHOWCASE LAYOUT
-   ========================================================================== */
-.services-split-layout {
+/* ── 2x2 DESKTOP BENTO GRID ── */
+.services-bento-grid {
   display: grid;
-  grid-template-columns: 0.92fr 1.15fr;
-  gap: 2.5rem;
-  align-items: start;
-}
-
-/* ── LEFT SELECTOR LIST ── */
-.services-selector-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.service-selector-item {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  max-width: 1080px;
   width: 100%;
+  margin: 0 auto;
+}
+
+.service-bento-card {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.1rem 1.2rem;
-  border-radius: 0.9rem;
-  background: transparent;
-  border: 1px solid transparent;
-  text-align: left;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: background-color 0.22s ease,
-              border-color 0.22s ease,
-              box-shadow 0.22s ease,
-              transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.service-selector-item:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--border);
-  transform: translateX(3px);
-}
-
-[data-theme="light"] .service-selector-item:hover {
-  background: rgba(15, 23, 42, 0.03);
-}
-
-.service-selector-item.is-active {
+  flex-direction: column;
+  padding: 1.75rem;
+  border-radius: 1.1rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-top: 1px solid var(--skeuo-bevel-top);
   box-shadow: var(--skeuo-extruded-sm);
-  color: var(--text-primary);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.24s ease,
+              border-color 0.24s ease;
 }
 
-.service-selector-item:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
+.service-bento-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--skeuo-extruded);
+  border-color: rgba(15, 23, 42, 0.22);
 }
 
-.selector-icon-wrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 0.7rem;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  flex-shrink: 0;
-  transition: color 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
+[data-theme="dark"] .service-bento-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
-.service-selector-item.is-active .selector-icon-wrap {
-  color: var(--text-primary);
-  border-color: var(--accent);
-}
-
-.selector-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
-  flex: 1;
-}
-
-.selector-index {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.selector-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.02rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1.3;
-}
-
-.service-selector-item:not(.is-active) .selector-title {
-  color: var(--text-secondary);
-}
-
-.selector-arrow {
-  color: var(--text-muted);
-  opacity: 0;
-  transform: translateX(-6px);
-  flex-shrink: 0;
-  transition: opacity 0.22s ease, transform 0.22s ease, color 0.22s ease;
-}
-
-.service-selector-item:hover .selector-arrow {
-  opacity: 0.65;
-  transform: translateX(0);
-}
-
-.service-selector-item.is-active .selector-arrow {
-  opacity: 1;
-  transform: translateX(0);
-  color: var(--text-primary);
-}
-
-/* ── RIGHT DETAIL PANEL ── */
-.service-detail-panel {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  border-radius: 1rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-top: 1px solid var(--skeuo-bevel-top);
-  box-shadow: var(--skeuo-extruded-sm);
-  animation: servicePanelIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes servicePanelIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.detail-meta-row {
+/* ── CARD TOP: ICON BADGE & TURNAROUND META ── */
+.service-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  flex-wrap: wrap;
   margin-bottom: 1.15rem;
 }
 
-.detail-code-badge {
+.service-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-recessed-sm);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.service-meta-pills {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.service-code-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--text-muted);
+  letter-spacing: 0.04em;
 }
 
-.detail-turnaround-pill {
+.service-turnaround-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.28rem 0.7rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 9999px;
-  background: var(--bg-tertiary);
+  background: var(--bg-primary);
   border: 1px solid var(--border);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
 
-.detail-title {
+/* ── TITLE, COMPACT COPY & DELIVERABLES ── */
+.service-card-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+  font-size: 1.28rem;
   font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
   color: var(--text-primary);
-  margin: 0 0 0.75rem 0;
+  margin: 0 0 0.45rem 0;
 }
 
-.detail-description {
-  font-size: 0.95rem;
+.service-card-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.58;
   color: var(--text-secondary);
-  line-height: 1.65;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.15rem 0;
 }
 
-.detail-deliverables-block {
-  padding-top: 1.25rem;
-  border-top: 1px dashed var(--border);
-  margin-bottom: 1.75rem;
-}
-
-.detail-block-label {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 0.85rem;
-}
-
-.detail-deliverables-list {
+.service-deliverables-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 1.4rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
+  flex: 1;
 }
 
-.detail-deliverable-item {
+.service-deliverable-item {
   display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 0.88rem;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: var(--text-primary);
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
-.detail-check-icon {
+.service-check-dot {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
-  background: var(--accent-light);
+  background: var(--bg-tertiary);
   border: 1px solid var(--border);
   color: var(--text-primary);
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
-.detail-footer {
-  padding-top: 1.25rem;
+/* ── CARD FOOTER: PURE TECH3D ICONS + INQUIRE CTA ── */
+.service-card-footer {
+  padding-top: 1.1rem;
   border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.85rem;
   flex-wrap: wrap;
 }
 
-.detail-tech-list {
+.service-tech-icons {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  flex: 1;
-  min-width: 0;
+  gap: 0.45rem;
 }
 
-.detail-tech-pill {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--bg-tertiary);
+.service-tech-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.service-tech-tooltip {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 0.24rem 0.52rem;
+  border-radius: 0.38rem;
+  background: var(--bg-secondary);
   border: 1px solid var(--border);
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.4rem;
+  box-shadow: var(--skeuo-extruded-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-primary);
   white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  z-index: 15;
 }
 
-.detail-inquire-btn {
+.service-tech-item:hover .service-tech-tooltip,
+.service-tech-item:focus-visible .service-tech-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.service-inquire-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  padding: 0.55rem 1.05rem;
-  border-radius: 0.6rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 0.58rem;
   background: var(--accent);
   color: var(--accent-text);
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   text-decoration: none;
   flex-shrink: 0;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.detail-inquire-btn:hover {
+.service-inquire-btn:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: var(--skeuo-extruded-sm);
 }
 
-.detail-inquire-btn:focus-visible {
+.service-inquire-btn:focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 2px;
 }
 
 /* ==========================================================================
-   RESPONSIVENESS (TABLET & MOBILE)
+   RESPONSIVE TABLET & MOBILE
    ========================================================================== */
-@media (max-width: 900px) {
-  .services-split-layout {
+@media (max-width: 860px) {
+  .services-bento-grid {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-
-  .services-selector-list {
-    flex-direction: row;
-    overflow-x: auto;
-    padding-bottom: 0.35rem;
-    gap: 0.55rem;
-    scrollbar-width: none;
-  }
-
-  .services-selector-list::-webkit-scrollbar {
-    display: none;
-  }
-
-  .service-selector-item {
-    width: auto;
-    min-height: 44px;
-    flex-shrink: 0;
-    padding: 0.55rem 1rem;
-    gap: 0.6rem;
-    border-radius: 9999px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-  }
-
-  .service-selector-item:hover {
-    transform: none;
-  }
-
-  .selector-icon-wrap {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-  }
-
-  .selector-icon-wrap svg {
-    width: 15px;
-    height: 15px;
-  }
-
-  .selector-index,
-  .selector-arrow {
-    display: none;
-  }
-
-  .selector-title {
-    font-size: 0.84rem;
-    white-space: nowrap;
+    gap: 1.15rem;
+    max-width: 620px;
   }
 }
 
-@media (max-width: 640px) {
-  .services-section {
-    padding: 3rem 0;
-  }
-
+@media (max-width: 768px) {
   .services-header {
     margin-bottom: 1.75rem;
   }
 
-  .service-detail-panel {
-    padding: 1.35rem;
+  .service-bento-card {
+    padding: 1.25rem;
+    border-radius: 0.95rem;
   }
 
-  .detail-footer {
+  .service-bento-card:hover {
+    transform: none;
+  }
+
+  .service-card-top {
+    margin-bottom: 0.9rem;
+  }
+
+  .service-icon-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.68rem;
+  }
+
+  .service-card-title {
+    font-size: 1.15rem;
+  }
+
+  .service-card-desc {
+    font-size: 0.86rem;
+    line-height: 1.52;
+    margin-bottom: 0.95rem;
+  }
+
+  .service-deliverables-list {
+    gap: 0.42rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .service-deliverable-item {
+    font-size: 0.82rem;
+  }
+
+  .service-card-footer {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.9rem;
+    gap: 0.85rem;
+    padding-top: 0.95rem;
   }
 
-  .detail-inquire-btn {
+  .service-inquire-btn {
     width: 100%;
-    min-height: 44px;
-    padding: 0.65rem 1rem;
+    min-height: 42px;
   }
 }

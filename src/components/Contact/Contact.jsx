@@ -1,10 +1,63 @@
 import React, { useState, useRef } from 'react';
-import { Send, Check, AlertCircle } from 'lucide-react';
+import {
+  Send,
+  Check,
+  AlertCircle,
+  Mail,
+  Copy,
+  MapPin,
+  ArrowUpRight,
+  Sparkles,
+} from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
+import { personalInfo } from '../../data/personalInfo';
+import { socialLinks } from '../../data/socialLinks';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
+
+const QUICK_SCOPES = [
+  'Full-Stack Web App',
+  'UI / Figma to React',
+  'MVP Launch',
+  'API & Automation',
+];
+
+const SocialIconSVG = ({ name, size = 17 }) => {
+  switch (name) {
+    case 'Github':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 8 18v4" />
+        </svg>
+      );
+    case 'Linkedin':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect width="4" height="12" x="2" y="9" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+      );
+    case 'Facebook':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+        </svg>
+      );
+    case 'Instagram':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -18,6 +71,7 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const form = useRef();
 
@@ -58,19 +112,36 @@ export function Contact() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (touched[name]) {
       const fieldError = validateField(name, value);
-      setErrors(prev => ({ ...prev, [name]: fieldError }));
+      setErrors((prev) => ({ ...prev, [name]: fieldError }));
     }
   };
 
   const handleBlur = (e) => {
     const { name, value } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
+    setTouched((prev) => ({ ...prev, [name]: true }));
     const fieldError = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: fieldError }));
+    setErrors((prev) => ({ ...prev, [name]: fieldError }));
+  };
+
+  const handleQuickScope = (scope) => {
+    setFormData((prev) => ({ ...prev, subject: scope }));
+    setTouched((prev) => ({ ...prev, subject: true }));
+    setErrors((prev) => ({ ...prev, subject: '' }));
+  };
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(personalInfo.email);
+      setCopiedEmail(true);
+      toast.success('Email copied to clipboard!');
+      setTimeout(() => setCopiedEmail(false), 2200);
+    } catch {
+      toast.error('Could not copy email. Please use the mail link.');
+    }
   };
 
   const handleSubmit = (e) => {
@@ -99,57 +170,145 @@ export function Contact() {
 
     setIsSubmitting(true);
 
-    emailjs.sendForm(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      form.current,
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-    )
-      .then(() => {
-        setIsSubmitting(false);
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        setTouched({});
-        setErrors({});
-        confetti({
-          particleCount: 90,
-          spread: 75,
-          origin: { y: 0.6 },
-          colors: ['#ffffff', '#94a3b8', '#38bdf8', '#10b981'],
-        });
-        toast.success('Message sent successfully!', {
-          description: "Thanks for reaching out! I'll get back to you as soon as possible.",
-        });
-        setTimeout(() => setSubmitStatus(null), 6000);
-      }, (error) => {
-        setIsSubmitting(false);
-        setSubmitStatus('error');
-        const err = error.text || error.message || 'Failed to dispatch email. Please email directly.';
-        setErrorMessage(err);
-        toast.error('Failed to send message', {
-          description: err,
-        });
-        console.error('EmailJS Error:', error);
-        setTimeout(() => setSubmitStatus(null), 8000);
-      });
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          setIsSubmitting(false);
+          setSubmitStatus('success');
+          setFormData({ name: '', email: '', subject: '', message: '' });
+          setTouched({});
+          setErrors({});
+          confetti({
+            particleCount: 90,
+            spread: 75,
+            origin: { y: 0.6 },
+            colors: ['#ffffff', '#94a3b8', '#38bdf8', '#10b981'],
+          });
+          toast.success('Message sent successfully!', {
+            description: "Thanks for reaching out! I'll get back to you as soon as possible.",
+          });
+          setTimeout(() => setSubmitStatus(null), 6000);
+        },
+        (error) => {
+          setIsSubmitting(false);
+          setSubmitStatus('error');
+          const err =
+            error.text || error.message || 'Failed to dispatch email. Please email directly.';
+          setErrorMessage(err);
+          toast.error('Failed to send message', {
+            description: err,
+          });
+          console.error('EmailJS Error:', error);
+          setTimeout(() => setSubmitStatus(null), 8000);
+        }
+      );
   };
 
   return (
-    <section id="contact" className="section contact-section">
+    <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
       <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">Let's Build Something Exceptional</h2>
-          <p className="section-subtitle">
-            Whether you have an upcoming web project, need a front-end MVP engineered, or want to discuss front-end contracting — my inbox is open.
-          </p>
-        </div>
+        <div className="contact-split-layout">
+          {/* Left Column: Direct Connect & Quick Scopes */}
+          <AnimateOnScroll animation="fade-up" delay={40} className="contact-info-col">
+            <div className="contact-availability-pill">
+              <span className="contact-pulse-dot" aria-hidden="true" />
+              <span>{personalInfo.statusBadge || 'Available for new projects'}</span>
+            </div>
 
-        <div className="contact-grid">
-          {/* Inquiry Form */}
-          <AnimateOnScroll animation="fade-up" delay={80} className="contact-form-col">
-            <div className="contact-form-card glass-card">
-              <h3 className="form-card-title">Send a Direct Message</h3>
-              <p className="form-card-desc">Fill in the project details below and I'll review your scope.</p>
+            <h2 id="contact-heading" className="contact-split-title">
+              Let&apos;s Build Something Exceptional
+            </h2>
+            <p className="contact-split-subtitle">
+              Have a web app, UI system, or MVP in mind? Send a message or reach out directly — I
+              usually reply within 24 hours.
+            </p>
+
+            {/* Direct Contact Channels */}
+            <div className="contact-channels">
+              <div className="contact-channel-row">
+                <div className="contact-channel-icon" aria-hidden="true">
+                  <Mail size={17} />
+                </div>
+                <div className="contact-channel-meta">
+                  <span className="contact-channel-label">Direct Email</span>
+                  <a href={`mailto:${personalInfo.email}`} className="contact-channel-value">
+                    {personalInfo.email}
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  className={`contact-copy-btn ${copiedEmail ? 'is-copied' : ''}`}
+                  onClick={handleCopyEmail}
+                  aria-label="Copy email address"
+                >
+                  {copiedEmail ? <Check size={14} /> : <Copy size={14} />}
+                  <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
+                </button>
+              </div>
+
+              <div className="contact-channel-row">
+                <div className="contact-channel-icon" aria-hidden="true">
+                  <MapPin size={17} />
+                </div>
+                <div className="contact-channel-meta">
+                  <span className="contact-channel-label">Location &amp; Hours</span>
+                  <span className="contact-channel-text">{personalInfo.location}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="contact-social-block">
+              <span className="contact-block-label">Connect Elsewhere</span>
+              <div className="contact-social-row">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-social-pill"
+                    aria-label={link.name}
+                  >
+                    <SocialIconSVG name={link.icon} size={16} />
+                    <span>{link.name}</span>
+                    <ArrowUpRight size={13} className="contact-social-arrow" aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </AnimateOnScroll>
+
+          {/* Right Column: Project Inquiry Form */}
+          <AnimateOnScroll animation="fade-up" delay={100} className="contact-form-col">
+            <div className="contact-form-card">
+              <div className="contact-form-header">
+                <h3 className="form-card-title">Send a Message</h3>
+                <span className="contact-scope-hint">
+                  <Sparkles size={13} aria-hidden="true" />
+                  <span>Quick topics</span>
+                </span>
+              </div>
+
+              {/* 1-Tap Quick Scope Chips */}
+              <div className="contact-scope-chips" role="group" aria-label="Quick project topics">
+                {QUICK_SCOPES.map((scope) => (
+                  <button
+                    key={scope}
+                    type="button"
+                    className={`contact-scope-chip ${formData.subject === scope ? 'is-selected' : ''}`}
+                    onClick={() => handleQuickScope(scope)}
+                  >
+                    {scope}
+                  </button>
+                ))}
+              </div>
 
               <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
                 <div className="form-row">
@@ -204,7 +363,7 @@ export function Contact() {
 
                 <div className="form-group">
                   <label htmlFor="subject">
-                    Subject / Project Scope <span className="required-star">*</span>
+                    Subject / Scope <span className="required-star">*</span>
                   </label>
                   <input
                     type="text"
@@ -228,7 +387,7 @@ export function Contact() {
 
                 <div className="form-group">
                   <label htmlFor="message">
-                    Project Requirements &amp; Timeline <span className="required-star">*</span>
+                    Project Details <span className="required-star">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -240,8 +399,8 @@ export function Contact() {
                     aria-invalid={touched.message && Boolean(errors.message)}
                     aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
                     className={touched.message && errors.message ? 'input-error' : ''}
-                    placeholder="Describe your project, target launch date, and key features..."
-                  ></textarea>
+                    placeholder="Tell me about your project goals, timeline, and key features..."
+                  />
                   {touched.message && errors.message && (
                     <span id="message-error" className="field-error" role="alert">
                       <AlertCircle size={13} aria-hidden="true" />
@@ -260,20 +419,21 @@ export function Contact() {
                   ) : (
                     <>
                       <span>Dispatch Message</span>
-                      <Send size={16} />
+                      <Send size={15} aria-hidden="true" />
                     </>
                   )}
                 </button>
 
                 {submitStatus === 'success' && (
-                  <div className="submit-alert success">
-                    <Check size={18} />
-                    <span>Message received! I'll review your project details and respond shortly.</span>
+                  <div className="submit-alert success" role="status">
+                    <Check size={18} aria-hidden="true" />
+                    <span>Message received! I&apos;ll review your details and reply shortly.</span>
                   </div>
                 )}
 
                 {submitStatus === 'error' && (
-                  <div className="submit-alert error">
+                  <div className="submit-alert error" role="alert">
+                    <AlertCircle size={18} aria-hidden="true" />
                     <span>{errorMessage}</span>
                   </div>
                 )}

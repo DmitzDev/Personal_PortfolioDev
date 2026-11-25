@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
-  ArrowRight,
   ExternalLink,
   Code2,
   Server,
   Mail,
   X,
+  Maximize2,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
+import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Projects.css';
 
-const GithubIcon = ({ size = 16 }) => (
+const GithubIcon = ({ size = 15 }) => (
   <svg
     width={size}
     height={size}
@@ -22,7 +26,7 @@ const GithubIcon = ({ size = 16 }) => (
     strokeLinejoin="round"
     aria-hidden="true"
   >
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 8 18v4"></path>
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 8 18v4" />
   </svg>
 );
 
@@ -54,52 +58,56 @@ const getStatusClass = (status) => {
 
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedId, setSelectedId] = useState(projects[0]?.id ?? 1);
+  const [showAll, setShowAll] = useState(false);
   const [lightboxProject, setLightboxProject] = useState(null);
 
-  const filteredProjects = projects.filter((project) =>
-    activeCategory === 'All' || project.category.includes(activeCategory)
+  const filteredProjects = projects.filter(
+    (project) => activeCategory === 'All' || project.category.includes(activeCategory)
   );
 
-  const currentProject =
-    filteredProjects.find((p) => p.id === selectedId) || filteredProjects[0] || null;
+  const visibleProjects =
+    activeCategory === 'All' && !showAll
+      ? filteredProjects.slice(0, 4)
+      : filteredProjects;
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
-    const nextFiltered = projects.filter((project) =>
-      category === 'All' || project.category.includes(category)
-    );
-    if (nextFiltered[0]) {
-      setSelectedId(nextFiltered[0].id);
-    }
+    setShowAll(false);
   };
 
   useEffect(() => {
-    if (!lightboxProject) return;
+    if (!lightboxProject) return undefined;
     const onKeyDown = (e) => {
       if (e.key === 'Escape') setLightboxProject(null);
     };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, [lightboxProject]);
 
   return (
     <section id="projects" className="section projects-section" aria-labelledby="projects-heading">
       <div className="container">
-        <div className="section-header">
-          <h2 id="projects-heading" className="section-title">Projects</h2>
+        <header className="section-header projects-header">
+          <h2 id="projects-heading" className="section-title">
+            Projects
+          </h2>
           <p className="section-subtitle">
             Featured web, mobile, and engineering systems built for production.
           </p>
-        </div>
+        </header>
 
-        {/* Category Filter Bar */}
-        <div className="projects-filter" role="group" aria-label="Filter projects by category">
+        {/* Category Filter Pills */}
+        <div className="projects-filter-bar" role="group" aria-label="Filter projects by category">
           {projectCategories.map((category) => (
             <button
               key={category}
               type="button"
-              className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
+              className={`projects-filter-pill ${activeCategory === category ? 'is-active' : ''}`}
               onClick={() => handleCategoryChange(category)}
             >
               {category}
@@ -107,207 +115,181 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Studio Project Index + Live Preview Split */}
-        {currentProject ? (
-          <div className="projects-index-layout">
-            {/* LEFT: Visual Thumbnail Index */}
-            <div className="project-index-list" role="tablist" aria-label="Select a project">
-              {filteredProjects.map((project, idx) => {
-                const isActive = project.id === currentProject.id;
-                const statusClass = getStatusClass(project.status);
+        {/* Alternating Z-Pattern Editorial Rows */}
+        {visibleProjects.length > 0 ? (
+          <div className="projects-z-list">
+            {visibleProjects.map((project, idx) => {
+              const isReversed = idx % 2 === 1;
+              const statusClass = getStatusClass(project.status);
+              const hasLive = project.liveDemo && project.liveDemo !== '#';
+              const hasGithub = project.github && project.github !== '#';
 
-                return (
-                  <button
-                    key={project.id}
-                    type="button"
-                    role="tab"
-                    id={`project-tab-${project.id}`}
-                    aria-selected={isActive}
-                    aria-controls={`project-panel-${project.id}`}
-                    className={`project-index-item ${isActive ? 'is-active' : ''}`}
-                    onClick={() => setSelectedId(project.id)}
-                  >
-                    <span className="index-item-num">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-
-                    <span className="index-thumb-wrap" aria-hidden="true">
+              return (
+                <AnimateOnScroll
+                  key={project.id}
+                  animation="fade-up"
+                  delay={idx < 2 ? idx * 60 : 40}
+                >
+                  <article className={`project-z-row ${isReversed ? 'is-reversed' : ''}`}>
+                    {/* Media Preview */}
+                    <button
+                      type="button"
+                      className="project-z-media"
+                      onClick={() => setLightboxProject(project)}
+                      aria-label={`Enlarge ${project.title} preview`}
+                    >
                       <img
                         src={project.image}
-                        alt=""
-                        className="index-thumb-img"
-                        width="56"
-                        height="26"
-                        loading="lazy"
+                        alt={project.title}
+                        className="project-z-img"
+                        width="800"
+                        height="500"
+                        loading={idx < 2 ? 'eager' : 'lazy'}
                       />
-                    </span>
+                      <span className="project-z-zoom" aria-hidden="true">
+                        <Maximize2 size={14} />
+                      </span>
+                    </button>
 
-                    <span className="index-item-main">
-                      <span className="index-item-title">{project.title}</span>
-                      <span className="index-item-cat">{project.category[0]}</span>
-                    </span>
+                    {/* Project Details */}
+                    <div className="project-z-details">
+                      <div className="project-z-meta">
+                        <span className="project-z-index">
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                        <span className="project-z-category">{project.category[0]}</span>
+                        <span className={`project-z-status ${statusClass}`}>
+                          <span className="status-dot" aria-hidden="true" />
+                          <span>{project.status}</span>
+                        </span>
+                        {project.timeline && (
+                          <span className="project-z-year">{project.timeline}</span>
+                        )}
+                      </div>
 
-                    <span
-                      className={`index-status-dot ${statusClass}`}
-                      title={project.status}
-                      aria-label={project.status}
-                    />
+                      <h3 className="project-z-title">{project.title}</h3>
+                      <p className="project-z-desc">{project.description}</p>
 
-                    <ArrowRight size={15} className="index-item-arrow" aria-hidden="true" />
-                  </button>
-                );
-              })}
-            </div>
+                      {/* Tech Stack Icons */}
+                      <div className="project-z-tech" aria-label="Tech stack">
+                        {project.technologies.map((tech) => {
+                          const info = getTechIconInfo(tech);
+                          return (
+                            <span key={tech} className="project-z-tech-chip" title={tech}>
+                              {info.type === 'devicon' ? (
+                                <img
+                                  src={info.src}
+                                  alt=""
+                                  width="15"
+                                  height="15"
+                                  loading="lazy"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                  }}
+                                />
+                              ) : info.icon === 'server' ? (
+                                <Server size={14} aria-hidden="true" />
+                              ) : info.icon === 'mail' ? (
+                                <Mail size={14} aria-hidden="true" />
+                              ) : (
+                                <Code2 size={14} aria-hidden="true" />
+                              )}
+                              <span>{tech}</span>
+                            </span>
+                          );
+                        })}
+                      </div>
 
-            {/* RIGHT: Studio Live Preview Stage */}
-            <article
-              key={currentProject.id}
-              id={`project-panel-${currentProject.id}`}
-              role="tabpanel"
-              aria-labelledby={`project-tab-${currentProject.id}`}
-              className="project-preview-stage"
-            >
-              <button
-                type="button"
-                className="project-preview-media"
-                onClick={() => setLightboxProject(currentProject)}
-                aria-label={`Enlarge ${currentProject.title} preview`}
-                title="Click to enlarge preview"
-              >
-                <img
-                  src={currentProject.image}
-                  alt={currentProject.title}
-                  className="project-preview-img"
-                  width="800"
-                  height="368"
-                  loading="eager"
-                />
-              </button>
-
-              <div className="project-preview-body">
-                <div className="project-header-meta">
-                  <span className="project-cat-badge">{currentProject.category[0]}</span>
-                  <span className={`project-status-pill ${getStatusClass(currentProject.status)}`}>
-                    <span className="status-dot" aria-hidden="true"></span>
-                    <span className="status-label">{currentProject.status}</span>
-                  </span>
-                  {currentProject.timeline && (
-                    <span className="project-timeline-tag">{currentProject.timeline}</span>
-                  )}
-                </div>
-
-                <h3 className="project-showcase-title">{currentProject.title}</h3>
-                {currentProject.role && (
-                  <p className="project-role-line">{currentProject.role}</p>
-                )}
-
-                <p className="project-showcase-desc">{currentProject.description}</p>
-
-                <div className="project-showcase-tech">
-                  <span className="tech-heading-label">TECH STACK</span>
-                  <div className="project-tech-badges-list">
-                    {currentProject.technologies.map((tech) => {
-                      const info = getTechIconInfo(tech);
-                      return (
-                        <div key={tech} className="tech-icon-pill" title={tech}>
-                          {info.type === 'devicon' ? (
-                            <img
-                              src={info.src}
-                              alt={tech}
-                              className="tech-pill-img"
-                              width="16"
-                              height="16"
-                              loading="lazy"
-                              onError={(e) => {
-                                e.target.style.display = 'none';
-                              }}
-                            />
-                          ) : info.icon === 'server' ? (
-                            <Server size={14} className="tech-pill-lucide" />
-                          ) : info.icon === 'mail' ? (
-                            <Mail size={14} className="tech-pill-lucide" />
-                          ) : (
-                            <Code2 size={14} className="tech-pill-lucide" />
+                      {/* Action Links */}
+                      {(hasLive || hasGithub) && (
+                        <div className="project-z-actions">
+                          {hasLive && (
+                            <a
+                              href={project.liveDemo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="project-z-btn-primary"
+                            >
+                              <span>Live Demo</span>
+                              <ExternalLink size={14} aria-hidden="true" />
+                            </a>
                           )}
-                          <span className="tech-pill-text">{tech}</span>
+                          {hasGithub && (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="project-z-btn-secondary"
+                            >
+                              <GithubIcon size={14} />
+                              <span>GitHub</span>
+                            </a>
+                          )}
                         </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {((currentProject.liveDemo && currentProject.liveDemo !== '#') ||
-                  (currentProject.github && currentProject.github !== '#')) && (
-                  <div className="project-showcase-actions">
-                    {currentProject.liveDemo && currentProject.liveDemo !== '#' && (
-                      <a
-                        href={currentProject.liveDemo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-project-action btn-action-live"
-                        title={`Visit ${currentProject.title} Live`}
-                        aria-label={`Visit ${currentProject.title} Live Demo`}
-                      >
-                        <span>Live</span>
-                        <ExternalLink size={15} />
-                      </a>
-                    )}
-
-                    {currentProject.github && currentProject.github !== '#' && (
-                      <a
-                        href={currentProject.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-project-action btn-action-source"
-                        title="View Source Code"
-                        aria-label={`View Source Code for ${currentProject.title}`}
-                      >
-                        <GithubIcon size={15} />
-                        <span>Source</span>
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-            </article>
+                      )}
+                    </div>
+                  </article>
+                </AnimateOnScroll>
+              );
+            })}
           </div>
         ) : (
           <div className="no-projects">
             <p>No projects matched this category.</p>
           </div>
         )}
-      </div>
 
-      {/* Lightbox Preview */}
-      {lightboxProject && (
-        <div
-          className="project-lightbox-backdrop"
-          onClick={() => setLightboxProject(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${lightboxProject.title} full preview`}
-        >
-          <div
-            className="project-lightbox-content"
-            onClick={(e) => e.stopPropagation()}
-          >
+        {/* Show More / Less Toggle when viewing All */}
+        {activeCategory === 'All' && filteredProjects.length > 4 && (
+          <div className="projects-more-wrap">
             <button
               type="button"
-              className="project-lightbox-close"
-              onClick={() => setLightboxProject(null)}
-              aria-label="Close preview"
+              className="projects-more-btn"
+              onClick={() => setShowAll((prev) => !prev)}
             >
-              <X size={18} />
+              <span>
+                {showAll
+                  ? 'Show Featured Only'
+                  : `View All ${filteredProjects.length} Projects`}
+              </span>
+              {showAll ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
-            <img
-              src={lightboxProject.image}
-              alt={lightboxProject.title}
-              className="project-lightbox-img"
-            />
-            <p className="project-lightbox-caption">{lightboxProject.title}</p>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
+      {/* Lightbox Modal via Portal */}
+      {lightboxProject &&
+        createPortal(
+          <div
+            className="project-lightbox-backdrop"
+            onClick={() => setLightboxProject(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${lightboxProject.title} full preview`}
+          >
+            <div
+              className="project-lightbox-content"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="project-lightbox-close"
+                onClick={() => setLightboxProject(null)}
+                aria-label="Close preview"
+              >
+                <X size={18} />
+              </button>
+              <img
+                src={lightboxProject.image}
+                alt={lightboxProject.title}
+                className="project-lightbox-img"
+              />
+              <p className="project-lightbox-caption">{lightboxProject.title}</p>
+            </div>
+          </div>,
+          document.body
+        )}
     </section>
   );
 }

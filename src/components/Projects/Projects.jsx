@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useState } from 'react';
 import {
   ExternalLink,
   Code2,
   Server,
   Mail,
-  X,
-  Maximize2,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
@@ -59,7 +56,6 @@ const getStatusClass = (status) => {
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [showAll, setShowAll] = useState(false);
-  const [lightboxProject, setLightboxProject] = useState(null);
 
   const filteredProjects = projects.filter(
     (project) => activeCategory === 'All' || project.category.includes(activeCategory)
@@ -74,20 +70,6 @@ export function Projects() {
     setActiveCategory(category);
     setShowAll(false);
   };
-
-  useEffect(() => {
-    if (!lightboxProject) return undefined;
-    const onKeyDown = (e) => {
-      if (e.key === 'Escape') setLightboxProject(null);
-    };
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [lightboxProject]);
 
   return (
     <section id="projects" className="section projects-section" aria-labelledby="projects-heading">
@@ -133,11 +115,8 @@ export function Projects() {
                 >
                   <article className={`project-z-row ${isReversed ? 'is-reversed' : ''}`}>
                     {/* Device Frame Preview: Phone for Mobile App, Laptop for Web */}
-                    <button
-                      type="button"
-                      className={`project-device-btn ${isMobileApp ? 'is-mobile-device' : 'is-laptop-device'}`}
-                      onClick={() => setLightboxProject(project)}
-                      aria-label={`Enlarge ${project.title} preview`}
+                    <div
+                      className={`project-device-frame ${isMobileApp ? 'is-mobile-device' : 'is-laptop-device'}`}
                     >
                       {isMobileApp ? (
                         <div className="device-phone">
@@ -208,11 +187,7 @@ export function Projects() {
                           <div className="device-laptop-shadow" aria-hidden="true" />
                         </div>
                       )}
-
-                      <span className="project-z-zoom" aria-hidden="true">
-                        <Maximize2 size={14} />
-                      </span>
-                    </button>
+                    </div>
 
                     {/* Project Details */}
                     <div className="project-z-details">
@@ -320,39 +295,6 @@ export function Projects() {
           </div>
         )}
       </div>
-
-      {/* Lightbox Modal via Portal */}
-      {lightboxProject &&
-        createPortal(
-          <div
-            className="project-lightbox-backdrop"
-            onClick={() => setLightboxProject(null)}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${lightboxProject.title} full preview`}
-          >
-            <div
-              className="project-lightbox-content"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                type="button"
-                className="project-lightbox-close"
-                onClick={() => setLightboxProject(null)}
-                aria-label="Close preview"
-              >
-                <X size={18} />
-              </button>
-              <img
-                src={lightboxProject.image}
-                alt={lightboxProject.title}
-                className="project-lightbox-img"
-              />
-              <p className="project-lightbox-caption">{lightboxProject.title}</p>
-            </div>
-          </div>,
-          document.body
-        )}
     </section>
   );
 }

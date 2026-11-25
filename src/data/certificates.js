@@ -1,3 +1,4 @@
+import badgeHTMLImg from '../assets/BadgeHTML.webp';
 import ciscoHTMLEssentialsImg from '../assets/CiscoHTMLEssentials.webp';
 import ciscoHTMLEssentialsStatementImg from '../assets/CiscoHTMLEssentialsStatement.webp';
 import ciscoJSEssentials1Img from '../assets/CiscoJSEssentials1.webp';
@@ -18,6 +19,7 @@ export const certificates = [
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: true,
+    badgeImage: badgeHTMLImg,
     credlyBadgeId: "e2f52132-ae0a-49db-9897-93d47d530ec5",
     credentialUrl: "https://www.netacad.com/profile?tab=badges",
     image: ciscoHTMLEssentialsStatementImg,

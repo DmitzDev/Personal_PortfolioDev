@@ -91,20 +91,6 @@ export function Certificates() {
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
   const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
 
-  useEffect(() => {
-    if (!currentCert?.credlyBadgeId) return;
-    const existingScript = document.querySelector(
-      'script[src*="cdn.credly.com/assets/utilities/embed.js"]'
-    );
-    if (existingScript) {
-      existingScript.remove();
-    }
-    const script = document.createElement('script');
-    script.src = 'https://cdn.credly.com/assets/utilities/embed.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }, [currentCert?.credlyBadgeId]);
-
   // Preload & decode certificate images so switching tabs or flipping never stalls
   useEffect(() => {
     certificates.forEach((cert) => {
@@ -295,15 +281,23 @@ export function Certificates() {
                       <span>Verify Credential</span>
                     </a>
 
-                    {currentCert.credlyBadgeId && (
-                      <div className="cert-inline-credly-badge" key={currentCert.credlyBadgeId}>
-                        <div
-                          data-iframe-width="150"
-                          data-iframe-height="270"
-                          data-share-badge-id={currentCert.credlyBadgeId}
-                          data-share-badge-host="https://www.credly.com"
+                    {currentCert.credlyBadgeId && currentCert.badgeImage && (
+                      <a
+                        href={`https://www.credly.com/badges/${currentCert.credlyBadgeId}/public_url`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cert-inline-credly-badge"
+                        title={`View ${currentCert.title} on Credly`}
+                        aria-label={`View ${currentCert.title} verified badge on Credly`}
+                      >
+                        <img
+                          src={currentCert.badgeImage}
+                          alt={`${currentCert.title} Verified Badge`}
+                          width="48"
+                          height="48"
+                          loading="lazy"
                         />
-                      </div>
+                      </a>
                     )}
                   </div>
                 )}

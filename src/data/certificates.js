@@ -1,6 +1,9 @@
+import badgeCybersecurityImg from '../assets/BadgeCybersecurity.webp';
 import badgeHTMLImg from '../assets/BadgeHTML.webp';
 import badgeJSImg from '../assets/BadgeJS.webp';
 import badgePythonImg from '../assets/BadgePython.webp';
+import ciscoCybersecurityImg from '../assets/CiscoCybersecurity.webp';
+import ciscoCybersecurityCompletionImg from '../assets/CiscoCybersecurityCompletion.webp';
 import ciscoHTMLEssentialsImg from '../assets/CiscoHTMLEssentials.webp';
 import ciscoHTMLEssentialsStatementImg from '../assets/CiscoHTMLEssentialsStatement.webp';
 import ciscoJSEssentials1Img from '../assets/CiscoJSEssentials1.webp';
@@ -15,6 +18,32 @@ import COSHSeminarImg from '../assets/COSHSeminar.webp';
 import RSTWDost from '../assets/RSTWDost.webp';
 
 export const certificates = [
+  {
+    id: 13,
+    title: "Introduction to Cybersecurity — Certificate of Course Completion",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    hasBadge: true,
+    badgeImage: badgeCybersecurityImg,
+    credlyBadgeId: "97f63018-2194-4a5f-b5e7-6e344872c92d",
+    credentialUrl: "https://www.netacad.com/profile?tab=badges",
+    image: ciscoCybersecurityCompletionImg,
+    skills: ["Cyber Threats", "Network Defense", "Online Safety"],
+    description: "Student-level cybersecurity credential covering threats, attacks, and defense.",
+  },
+  {
+    id: 14,
+    title: "Introduction to Cybersecurity",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    hasBadge: false,
+    badgeImage: badgeCybersecurityImg,
+    credlyBadgeId: "97f63018-2194-4a5f-b5e7-6e344872c92d",
+    credentialUrl: "https://www.netacad.com/profile?tab=badges",
+    image: ciscoCybersecurityImg,
+    skills: ["Cybersecurity", "Vulnerability Analysis", "Security"],
+    description: "Fundamentals of online safety, cyber threats, and organizational protection.",
+  },
   {
     id: 11,
     title: "HTML Essentials — Statement of Achievement",

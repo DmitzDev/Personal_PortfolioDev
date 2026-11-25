@@ -1,9 +1,12 @@
 import badgeCybersecurityImg from '../assets/BadgeCybersecurity.webp';
+import badgeEthicalHackerImg from '../assets/BadgeEthicalHacker.webp';
 import badgeHTMLImg from '../assets/BadgeHTML.webp';
 import badgeJSImg from '../assets/BadgeJS.webp';
 import badgePythonImg from '../assets/BadgePython.webp';
 import ciscoCybersecurityImg from '../assets/CiscoCybersecurity.webp';
 import ciscoCybersecurityCompletionImg from '../assets/CiscoCybersecurityCompletion.webp';
+import ciscoEthicalHackerImg from '../assets/CiscoEthicalHacker.webp';
+import ciscoEthicalHackerCompletionImg from '../assets/CiscoEthicalHackerCompletion.webp';
 import ciscoHTMLEssentialsImg from '../assets/CiscoHTMLEssentials.webp';
 import ciscoHTMLEssentialsStatementImg from '../assets/CiscoHTMLEssentialsStatement.webp';
 import ciscoJSEssentials1Img from '../assets/CiscoJSEssentials1.webp';
@@ -18,6 +21,32 @@ import COSHSeminarImg from '../assets/COSHSeminar.webp';
 import RSTWDost from '../assets/RSTWDost.webp';
 
 export const certificates = [
+  {
+    id: 15,
+    title: "Ethical Hacker (Badge)",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    hasBadge: true,
+    badgeImage: badgeEthicalHackerImg,
+    credlyBadgeId: "cdb0fd32-174a-4e6e-a029-9d9acd205ba1",
+    credentialUrl: "https://www.netacad.com/profile?tab=badges",
+    image: ciscoEthicalHackerCompletionImg,
+    skills: ["Penetration Testing", "Vulnerability Scanning", "Exploit Analysis"],
+    description: "Student-level ethical hacking credential covering pentesting and security exploits.",
+  },
+  {
+    id: 16,
+    title: "Ethical Hacker",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    hasBadge: false,
+    badgeImage: badgeEthicalHackerImg,
+    credlyBadgeId: "cdb0fd32-174a-4e6e-a029-9d9acd205ba1",
+    credentialUrl: "https://www.netacad.com/profile?tab=badges",
+    image: ciscoEthicalHackerImg,
+    skills: ["Ethical Hacking", "Network Security", "Reporting"],
+    description: "Methodological ethical hacking, reconnaissance, and vulnerability assessment.",
+  },
   {
     id: 13,
     title: "Intro to Cybersecurity (Badge)",

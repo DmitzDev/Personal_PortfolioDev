@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Send, Check, AlertCircle, Copy, Mail, X, ArrowUpRight } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
@@ -235,175 +236,177 @@ export function Contact() {
         </AnimateOnScroll>
       </div>
 
-      {/* Modal Contact Form */}
-      {isModalOpen && (
-        <div
-          className="contact-modal-backdrop"
-          role="presentation"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsModalOpen(false);
-          }}
-        >
+      {/* Modal Contact Form rendered via Portal to escape section stacking/overflow */}
+      {isModalOpen &&
+        createPortal(
           <div
-            className="contact-modal-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="contact-modal-title"
+            className="contact-modal-backdrop"
+            role="presentation"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setIsModalOpen(false);
+            }}
           >
-            <div className="contact-modal-header">
-              <div>
-                <h3 id="contact-modal-title" className="contact-modal-title">
-                  Send a Message
-                </h3>
-                <p className="contact-modal-desc">
-                  Or email directly at{' '}
-                  <a href={`mailto:${personalInfo.email}`} className="contact-modal-email">
-                    {personalInfo.email}
-                  </a>
-                </p>
+            <div
+              className="contact-modal-card"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="contact-modal-title"
+            >
+              <div className="contact-modal-header">
+                <div>
+                  <h3 id="contact-modal-title" className="contact-modal-title">
+                    Send a Message
+                  </h3>
+                  <p className="contact-modal-desc">
+                    Or email directly at{' '}
+                    <a href={`mailto:${personalInfo.email}`} className="contact-modal-email">
+                      {personalInfo.email}
+                    </a>
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="contact-modal-close"
+                  onClick={() => setIsModalOpen(false)}
+                  aria-label="Close contact form"
+                >
+                  <X size={18} />
+                </button>
               </div>
-              <button
-                type="button"
-                className="contact-modal-close"
-                onClick={() => setIsModalOpen(false)}
-                aria-label="Close contact form"
-              >
-                <X size={18} />
-              </button>
-            </div>
 
-            <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
-              <div className="form-row">
+              <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="name">
+                      Name <span className="required-star">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-invalid={touched.name && Boolean(errors.name)}
+                      aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                      className={touched.name && errors.name ? 'input-error' : ''}
+                      placeholder="Alex Morgan"
+                      autoFocus
+                    />
+                    {touched.name && errors.name && (
+                      <span id="name-error" className="field-error" role="alert">
+                        <AlertCircle size={13} aria-hidden="true" />
+                        <span>{errors.name}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="email">
+                      Email <span className="required-star">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-invalid={touched.email && Boolean(errors.email)}
+                      aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                      className={touched.email && errors.email ? 'input-error' : ''}
+                      placeholder="alex@company.com"
+                    />
+                    {touched.email && errors.email && (
+                      <span id="email-error" className="field-error" role="alert">
+                        <AlertCircle size={13} aria-hidden="true" />
+                        <span>{errors.email}</span>
+                      </span>
+                    )}
+                  </div>
+                </div>
+
                 <div className="form-group">
-                  <label htmlFor="name">
-                    Name <span className="required-star">*</span>
+                  <label htmlFor="subject">
+                    Subject <span className="required-star">*</span>
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    aria-invalid={touched.name && Boolean(errors.name)}
-                    aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
-                    className={touched.name && errors.name ? 'input-error' : ''}
-                    placeholder="Alex Morgan"
-                    autoFocus
+                    aria-invalid={touched.subject && Boolean(errors.subject)}
+                    aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
+                    className={touched.subject && errors.subject ? 'input-error' : ''}
+                    placeholder="Web App / UI Engineering"
                   />
-                  {touched.name && errors.name && (
-                    <span id="name-error" className="field-error" role="alert">
+                  {touched.subject && errors.subject && (
+                    <span id="subject-error" className="field-error" role="alert">
                       <AlertCircle size={13} aria-hidden="true" />
-                      <span>{errors.name}</span>
+                      <span>{errors.subject}</span>
                     </span>
                   )}
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email">
-                    Email <span className="required-star">*</span>
+                  <label htmlFor="message">
+                    Message <span className="required-star">*</span>
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    value={formData.message}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    aria-invalid={touched.email && Boolean(errors.email)}
-                    aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
-                    className={touched.email && errors.email ? 'input-error' : ''}
-                    placeholder="alex@company.com"
+                    aria-invalid={touched.message && Boolean(errors.message)}
+                    aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
+                    className={touched.message && errors.message ? 'input-error' : ''}
+                    placeholder="Tell me briefly about your project and timeline..."
                   />
-                  {touched.email && errors.email && (
-                    <span id="email-error" className="field-error" role="alert">
+                  {touched.message && errors.message && (
+                    <span id="message-error" className="field-error" role="alert">
                       <AlertCircle size={13} aria-hidden="true" />
-                      <span>{errors.email}</span>
+                      <span>{errors.message}</span>
                     </span>
                   )}
                 </div>
-              </div>
 
-              <div className="form-group">
-                <label htmlFor="subject">
-                  Subject <span className="required-star">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={touched.subject && Boolean(errors.subject)}
-                  aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
-                  className={touched.subject && errors.subject ? 'input-error' : ''}
-                  placeholder="Web App / UI Engineering"
-                />
-                {touched.subject && errors.subject && (
-                  <span id="subject-error" className="field-error" role="alert">
-                    <AlertCircle size={13} aria-hidden="true" />
-                    <span>{errors.subject}</span>
-                  </span>
+                <button
+                  type="submit"
+                  className="btn-primary submit-btn"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send size={15} aria-hidden="true" />
+                    </>
+                  )}
+                </button>
+
+                {submitStatus === 'success' && (
+                  <div className="submit-alert success" role="status">
+                    <Check size={17} aria-hidden="true" />
+                    <span>Message received! I&apos;ll get back to you shortly.</span>
+                  </div>
                 )}
-              </div>
 
-              <div className="form-group">
-                <label htmlFor="message">
-                  Message <span className="required-star">*</span>
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  value={formData.message}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={touched.message && Boolean(errors.message)}
-                  aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
-                  className={touched.message && errors.message ? 'input-error' : ''}
-                  placeholder="Tell me briefly about your project and timeline..."
-                />
-                {touched.message && errors.message && (
-                  <span id="message-error" className="field-error" role="alert">
-                    <AlertCircle size={13} aria-hidden="true" />
-                    <span>{errors.message}</span>
-                  </span>
+                {submitStatus === 'error' && (
+                  <div className="submit-alert error" role="alert">
+                    <AlertCircle size={17} aria-hidden="true" />
+                    <span>{errorMessage}</span>
+                  </div>
                 )}
-              </div>
-
-              <button
-                type="submit"
-                className="btn-primary submit-btn"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <span>Sending...</span>
-                ) : (
-                  <>
-                    <span>Send Message</span>
-                    <Send size={15} aria-hidden="true" />
-                  </>
-                )}
-              </button>
-
-              {submitStatus === 'success' && (
-                <div className="submit-alert success" role="status">
-                  <Check size={17} aria-hidden="true" />
-                  <span>Message received! I&apos;ll get back to you shortly.</span>
-                </div>
-              )}
-
-              {submitStatus === 'error' && (
-                <div className="submit-alert error" role="alert">
-                  <AlertCircle size={17} aria-hidden="true" />
-                  <span>{errorMessage}</span>
-                </div>
-              )}
-            </form>
-          </div>
-        </div>
-      )}
+              </form>
+            </div>
+          </div>,
+          document.body
+        )}
     </section>
   );
 }

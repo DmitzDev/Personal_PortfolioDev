@@ -14,9 +14,6 @@ import ciscoJSEssentials1StatementImg from '../assets/CiscoJSEssentials1Statemen
 import ciscoPythonEssentials1Img from '../assets/CiscoPythonEssentials1.webp';
 import pocketTracerImg from '../assets/PocketTracer.webp';
 import ciscoExamImg from '../assets/CiscoPacketTracerExam.webp';
-import ciscoIoTImg from '../assets/CiscoIoTPacketTracer.webp';
-import ciscoNetworkingImg from '../assets/CiscoNetworkingPacketTracer.webp';
-import ciscoGettingStartedImg from '../assets/CiscoGettingStartedPacketTracer.webp';
 import COSHSeminarImg from '../assets/COSHSeminar.webp';
 import RSTWDost from '../assets/RSTWDost.webp';
 
@@ -159,42 +156,6 @@ export const certificates = [
     image: ciscoExamImg,
     skills: ["Network Simulation", "Packet Analysis", "Diagnostics"],
     description: "Practical exam in topology design and packet diagnostics.",
-  },
-  {
-    id: 3,
-    title: "IoT with Packet Tracer",
-    organization: "Cisco Networking Academy",
-    date: "November 2025",
-    hasBadge: false,
-    certId: "01b4579b-04c2-4276-880c-027b3da872a8",
-    credentialUrl: "https://www.netacad.com/profile?tab=badges",
-    image: ciscoIoTImg,
-    skills: ["IoT Architecture", "Smart Sensors", "Microcontrollers"],
-    description: "Hands-on IoT device simulation and controller setup.",
-  },
-  {
-    id: 4,
-    title: "Networking with Packet Tracer",
-    organization: "Cisco Networking Academy",
-    date: "November 2025",
-    hasBadge: false,
-    certId: "34b0dce8-01d1-4d2d-9345-fb33adb49cbd",
-    credentialUrl: "https://www.netacad.com/profile?tab=badges",
-    image: ciscoNetworkingImg,
-    skills: ["IP Addressing", "Routing & Switching", "LAN Topologies"],
-    description: "Wired and wireless LAN configuration and troubleshooting.",
-  },
-  {
-    id: 5,
-    title: "Getting Started: Packet Tracer",
-    organization: "Cisco Networking Academy",
-    date: "November 2025",
-    hasBadge: false,
-    certId: "9e408e02-d441-4871-8abb-aee5d723edf2",
-    credentialUrl: "https://www.netacad.com/profile?tab=badges",
-    image: ciscoGettingStartedImg,
-    skills: ["Topology Modeling", "Packet Inspection", "CLI Basics"],
-    description: "Virtual network lab setup and simulation workflows.",
   },
   {
     id: 6,

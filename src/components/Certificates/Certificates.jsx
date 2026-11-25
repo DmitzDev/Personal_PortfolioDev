@@ -251,9 +251,27 @@ export function Certificates() {
                 <h3 className="cert-editorial-title">{currentCert.title}</h3>
                 <p className="cert-editorial-desc">{currentCert.description}</p>
 
-                {currentCert.skills?.length > 0 && (
+                {(currentCert.skills?.length > 0 || (currentCert.credlyBadgeId && currentCert.badgeImage)) && (
                   <div className="cert-skill-icons-row" aria-label="Key competencies">
-                    {currentCert.skills.map((skill) => (
+                    {currentCert.credlyBadgeId && currentCert.badgeImage && (
+                      <a
+                        href={`https://www.credly.com/badges/${currentCert.credlyBadgeId}/public_url`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cert-inline-credly-badge"
+                        title={`View ${currentCert.title} on Credly`}
+                        aria-label={`View ${currentCert.title} verified badge on Credly`}
+                      >
+                        <img
+                          src={currentCert.badgeImage}
+                          alt={`${currentCert.title} Verified Badge`}
+                          width="42"
+                          height="42"
+                          loading="lazy"
+                        />
+                      </a>
+                    )}
+                    {currentCert.skills?.map((skill) => (
                       <div
                         key={skill}
                         className="cert-skill-icon-item"
@@ -280,25 +298,6 @@ export function Certificates() {
                       <ExternalLink size={15} />
                       <span>Verify Credential</span>
                     </a>
-
-                    {currentCert.credlyBadgeId && currentCert.badgeImage && (
-                      <a
-                        href={`https://www.credly.com/badges/${currentCert.credlyBadgeId}/public_url`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cert-inline-credly-badge"
-                        title={`View ${currentCert.title} on Credly`}
-                        aria-label={`View ${currentCert.title} verified badge on Credly`}
-                      >
-                        <img
-                          src={currentCert.badgeImage}
-                          alt={`${currentCert.title} Verified Badge`}
-                          width="48"
-                          height="48"
-                          loading="lazy"
-                        />
-                      </a>
-                    )}
                   </div>
                 )}
               </div>

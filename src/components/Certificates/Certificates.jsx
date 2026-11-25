@@ -91,6 +91,20 @@ export function Certificates() {
   const safeIndex = total > 0 ? Math.min(activeCertIndex, total - 1) : 0;
   const currentCert = visibleCerts[safeIndex] || visibleCerts[0];
 
+  useEffect(() => {
+    if (!currentCert?.credlyBadgeId) return;
+    const existingScript = document.querySelector(
+      'script[src*="cdn.credly.com/assets/utilities/embed.js"]'
+    );
+    if (existingScript) {
+      existingScript.remove();
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdn.credly.com/assets/utilities/embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, [currentCert?.credlyBadgeId]);
+
   // Preload & decode certificate images so switching tabs or flipping never stalls
   useEffect(() => {
     certificates.forEach((cert) => {
@@ -251,27 +265,9 @@ export function Certificates() {
                 <h3 className="cert-editorial-title">{currentCert.title}</h3>
                 <p className="cert-editorial-desc">{currentCert.description}</p>
 
-                {(currentCert.skills?.length > 0 || (currentCert.credlyBadgeId && currentCert.badgeImage)) && (
+                {currentCert.skills?.length > 0 && (
                   <div className="cert-skill-icons-row" aria-label="Key competencies">
-                    {currentCert.credlyBadgeId && currentCert.badgeImage && (
-                      <a
-                        href={`https://www.credly.com/badges/${currentCert.credlyBadgeId}/public_url`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cert-inline-credly-badge"
-                        title={`View ${currentCert.title} on Credly`}
-                        aria-label={`View ${currentCert.title} verified badge on Credly`}
-                      >
-                        <img
-                          src={currentCert.badgeImage}
-                          alt={`${currentCert.title} Verified Badge`}
-                          width="42"
-                          height="42"
-                          loading="lazy"
-                        />
-                      </a>
-                    )}
-                    {currentCert.skills?.map((skill) => (
+                    {currentCert.skills.map((skill) => (
                       <div
                         key={skill}
                         className="cert-skill-icon-item"
@@ -298,6 +294,17 @@ export function Certificates() {
                       <ExternalLink size={15} />
                       <span>Verify Credential</span>
                     </a>
+
+                    {currentCert.credlyBadgeId && (
+                      <div className="cert-inline-credly-badge" key={currentCert.credlyBadgeId}>
+                        <div
+                          data-iframe-width="150"
+                          data-iframe-height="270"
+                          data-share-badge-id={currentCert.credlyBadgeId}
+                          data-share-badge-host="https://www.credly.com"
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

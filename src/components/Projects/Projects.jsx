@@ -149,6 +149,12 @@ export function Projects() {
                               <span className="device-phone-lens" />
                             </div>
                             <div className="device-phone-screen">
+                              <img
+                                src={project.image}
+                                alt=""
+                                className="device-phone-bg-blur"
+                                aria-hidden="true"
+                              />
                               <div className="device-phone-glare" aria-hidden="true" />
                               <div className="device-phone-statusbar" aria-hidden="true">
                                 <span>9:41</span>

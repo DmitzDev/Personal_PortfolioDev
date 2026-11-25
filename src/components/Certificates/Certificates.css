@@ -533,13 +533,28 @@
 /* ── INLINE CREDLY BADGE BESIDE VERIFY CREDENTIAL ── */
 .cert-editorial-actions {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 1.15rem;
+  gap: 0.9rem;
 }
 
 .cert-inline-credly-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cert-inline-credly-badge:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.cert-inline-credly-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }

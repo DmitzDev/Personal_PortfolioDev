@@ -1,3 +1,5 @@
+import ciscoHTMLEssentialsImg from '../assets/CiscoHTMLEssentials.webp';
+import ciscoHTMLEssentialsStatementImg from '../assets/CiscoHTMLEssentialsStatement.webp';
 import ciscoJSEssentials1Img from '../assets/CiscoJSEssentials1.webp';
 import ciscoJSEssentials1StatementImg from '../assets/CiscoJSEssentials1Statement.webp';
 import ciscoPythonEssentials1Img from '../assets/CiscoPythonEssentials1.webp';
@@ -10,6 +12,28 @@ import COSHSeminarImg from '../assets/COSHSeminar.webp';
 import RSTWDost from '../assets/RSTWDost.webp';
 
 export const certificates = [
+  {
+    id: 11,
+    title: "HTML Essentials — Statement of Achievement",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    hasBadge: true,
+    credentialUrl: "https://www.netacad.com/profile?tab=badges",
+    image: ciscoHTMLEssentialsStatementImg,
+    skills: ["Semantic HTML5", "Accessibility", "Web Forms"],
+    description: "Student-level HTML credential with OpenEDG JS Institute.",
+  },
+  {
+    id: 12,
+    title: "HTML Essentials",
+    organization: "Cisco Networking Academy",
+    date: "November 2026",
+    hasBadge: false,
+    credentialUrl: "https://www.netacad.com/profile?tab=badges",
+    image: ciscoHTMLEssentialsImg,
+    skills: ["HTML5", "Multimedia", "Validation"],
+    description: "Structured HTML documents, navigation, and form validation.",
+  },
   {
     id: 10,
     title: "JavaScript Essentials 1 — Statement of Achievement",

@@ -1,4 +1,6 @@
 import badgeHTMLImg from '../assets/BadgeHTML.webp';
+import badgeJSImg from '../assets/BadgeJS.webp';
+import badgePythonImg from '../assets/BadgePython.webp';
 import ciscoHTMLEssentialsImg from '../assets/CiscoHTMLEssentials.webp';
 import ciscoHTMLEssentialsStatementImg from '../assets/CiscoHTMLEssentialsStatement.webp';
 import ciscoJSEssentials1Img from '../assets/CiscoJSEssentials1.webp';
@@ -32,6 +34,8 @@ export const certificates = [
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: false,
+    badgeImage: badgeHTMLImg,
+    credlyBadgeId: "e2f52132-ae0a-49db-9897-93d47d530ec5",
     credentialUrl: "https://www.netacad.com/profile?tab=badges",
     image: ciscoHTMLEssentialsImg,
     skills: ["HTML5", "Multimedia", "Validation"],
@@ -43,6 +47,7 @@ export const certificates = [
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: true,
+    badgeImage: badgeJSImg,
     credlyBadgeId: "85d710d1-6ee0-46d8-ba62-6d3797003c1f",
     credentialUrl: "https://www.netacad.com/profile?tab=badges",
     image: ciscoJSEssentials1StatementImg,
@@ -55,6 +60,7 @@ export const certificates = [
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: true,
+    badgeImage: badgePythonImg,
     credlyBadgeId: "cd98b031-3beb-4ab0-9392-04c9a379a2f6",
     credentialUrl: "https://www.netacad.com/profile?tab=badges",
     image: ciscoPythonEssentials1Img,
@@ -78,6 +84,8 @@ export const certificates = [
     organization: "Cisco Networking Academy",
     date: "November 2026",
     hasBadge: false,
+    badgeImage: badgeJSImg,
+    credlyBadgeId: "85d710d1-6ee0-46d8-ba62-6d3797003c1f",
     credentialUrl: "https://www.netacad.com/profile?tab=badges",
     image: ciscoJSEssentials1Img,
     skills: ["JavaScript ES6+", "Control Flow", "Functions"],

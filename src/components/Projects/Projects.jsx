@@ -288,31 +288,32 @@ export function Projects() {
                 </div>
               </article>
 
-              {/* Zero-Scroll Switcher Bar: Prev / Quick Tabs / Next */}
+              {/* Zero-Scroll Pagination Bar: Prev / Numbered Pills / Next */}
               {filteredProjects.length > 1 && (
-                <div className="projects-switcher-bar">
+                <nav className="projects-switcher-bar" aria-label="Projects pagination">
                   <button
                     type="button"
                     className="projects-nav-btn"
                     onClick={handlePrev}
                     aria-label="Previous project"
                   >
-                    <ChevronLeft size={16} />
-                    <span>Prev</span>
+                    <ChevronLeft size={16} aria-hidden="true" />
+                    <span className="projects-nav-label">Prev</span>
                   </button>
 
-                  <div className="projects-quick-tabs" role="tablist" aria-label="Switch project">
+                  <div className="projects-page-dots" role="tablist" aria-label="Select project">
                     {filteredProjects.map((project, idx) => (
                       <button
                         key={project.id}
                         type="button"
                         role="tab"
                         aria-selected={idx === safeIndex}
-                        className={`projects-quick-tab ${idx === safeIndex ? 'is-active' : ''}`}
+                        aria-label={`Project ${idx + 1}: ${project.title}`}
+                        title={project.title}
+                        className={`projects-page-num ${idx === safeIndex ? 'is-active' : ''}`}
                         onClick={() => setActiveIndex(idx)}
                       >
-                        <span className="quick-tab-num">{String(idx + 1).padStart(2, '0')}</span>
-                        <span className="quick-tab-name">{project.title}</span>
+                        {idx + 1}
                       </button>
                     ))}
                   </div>
@@ -323,10 +324,10 @@ export function Projects() {
                     onClick={handleNext}
                     aria-label="Next project"
                   >
-                    <span>Next</span>
-                    <ChevronRight size={16} />
+                    <span className="projects-nav-label">Next</span>
+                    <ChevronRight size={16} aria-hidden="true" />
                   </button>
-                </div>
+                </nav>
               )}
             </div>
           </AnimateOnScroll>

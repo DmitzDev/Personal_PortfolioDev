@@ -1,7 +1,7 @@
 /* ==========================================================================
-   CONTACT SECTION — COMPACT SINGLE-ROW CTA + MODAL FORM
-   Clean horizontal CTA banner on the page; opens a sleek modal dialog
-   with recessed inputs when triggered.
+   CONTACT SECTION — BALANCED 2-COLUMN BENTO LAYOUT
+   Matches Services/Projects skeuomorphic craft: left direct-info card
+   paired with right recessed-input inquiry form card.
    ========================================================================== */
 
 .contact-section {
@@ -9,30 +9,39 @@
   background-color: var(--bg-primary);
 }
 
-/* ── COMPACT SINGLE-ROW CTA BANNER ── */
-.contact-cta-banner {
+.contact-header {
+  margin-bottom: 2.25rem;
+}
+
+.contact-bento-grid {
   max-width: 980px;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem 2.25rem;
-  border-radius: 1.25rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
+  gap: 1.5rem;
+  align-items: stretch;
 }
 
-.contact-cta-copy {
+.contact-bento-col {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   min-width: 0;
 }
 
-.contact-cta-status {
+/* ── LEFT BENTO CARD: DIRECT INFO ── */
+.contact-info-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.85rem;
+  border-radius: 1.15rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded);
+}
+
+.contact-status-row {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -42,7 +51,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
-  margin-bottom: 0.55rem;
+  margin-bottom: 1.1rem;
 }
 
 .contact-pulse-dot {
@@ -63,164 +72,43 @@
   }
 }
 
-.contact-cta-title {
+.contact-info-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  font-size: 1.45rem;
   font-weight: 800;
   letter-spacing: -0.025em;
-  line-height: 1.2;
+  line-height: 1.22;
   color: var(--text-primary);
-  margin: 0 0 0.35rem 0;
+  margin: 0 0 0.65rem 0;
 }
 
-.contact-cta-subtitle {
+.contact-info-desc {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.92rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.6;
   color: var(--text-secondary);
-  margin: 0;
+  margin: 0 0 1.75rem 0;
 }
 
-.contact-cta-actions {
+.contact-info-items {
+  margin-top: auto;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 0.75rem;
-  flex-shrink: 0;
 }
 
-.contact-cta-secondary,
-.contact-cta-primary {
-  display: inline-flex;
+.contact-info-tile {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  height: 44px;
-  padding: 0 1.2rem;
-  border-radius: 0.7rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease,
-    border-color 0.2s ease, box-shadow 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.contact-cta-secondary {
+  gap: 0.8rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.85rem;
   background: var(--bg-tertiary);
-  color: var(--text-primary);
   border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded-sm);
+  box-shadow: var(--skeuo-recessed-sm);
 }
 
-.contact-cta-secondary:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-focus);
-}
-
-.contact-cta-secondary.is-copied {
-  background: #10b981;
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.contact-cta-primary {
-  border: none;
-  background: var(--accent);
-  color: var(--accent-text);
-  box-shadow: var(--skeuo-extruded-sm);
-}
-
-.contact-cta-primary:hover {
-  background: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--skeuo-extruded);
-}
-
-/* ── MODAL OVERLAY & CARD ── */
-.contact-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
-  background: rgba(0, 0, 0, 0.58);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  animation: contactModalFade 0.2s ease;
-}
-
-@keyframes contactModalFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.contact-modal-card {
-  width: 100%;
-  max-width: 540px;
-  max-height: min(90dvh, 720px);
-  overflow-y: auto;
-  padding: 1.75rem;
-  border-radius: 1.2rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded);
-  animation: contactModalSlide 0.24s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes contactModalSlide {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.contact-modal-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.35rem;
-}
-
-.contact-modal-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.22rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin: 0 0 0.2rem 0;
-}
-
-.contact-modal-desc {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.contact-modal-email {
-  color: var(--accent);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.contact-modal-email:hover {
-  text-decoration: underline;
-}
-
-.contact-modal-close {
+.contact-tile-icon {
   width: 34px;
   height: 34px;
   border-radius: 0.55rem;
@@ -228,23 +116,85 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: var(--bg-tertiary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--accent);
+}
+
+.contact-tile-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.contact-tile-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin-bottom: 0.1rem;
+}
+
+.contact-tile-link,
+.contact-tile-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-tile-link:hover {
+  color: var(--accent);
+}
+
+.contact-tile-copy {
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
   border: 1px solid var(--border);
   color: var(--text-muted);
   cursor: pointer;
-  transition: color 0.18s ease, border-color 0.18s ease;
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.contact-modal-close:hover {
+.contact-tile-copy:hover {
   color: var(--text-primary);
   border-color: var(--border-focus);
 }
 
-/* ── FORM INPUTS INSIDE MODAL ── */
+.contact-tile-copy.is-copied {
+  background: #10b981;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* ── RIGHT BENTO CARD: INQUIRY FORM ── */
+.contact-form-card {
+  flex: 1;
+  padding: 1.85rem;
+  border-radius: 1.15rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded);
+}
+
 .inquiry-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .form-row {
@@ -270,7 +220,7 @@
 
 .form-group input,
 .form-group textarea {
-  padding: 0.78rem 0.95rem;
+  padding: 0.8rem 1rem;
   border-radius: 0.65rem;
   background: var(--bg-tertiary);
   box-shadow: var(--skeuo-recessed);
@@ -280,7 +230,7 @@
   border-right: none;
   color: var(--text-primary);
   font-family: inherit;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   outline: none;
   transition: box-shadow 0.2s ease;
 }
@@ -292,7 +242,7 @@
 
 .form-group textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 112px;
 }
 
 .required-star {
@@ -327,7 +277,7 @@
   margin-top: 0.25rem;
   width: 100%;
   min-height: 46px;
-  padding: 0.85rem 1.2rem;
+  padding: 0.88rem 1.25rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -339,7 +289,7 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.8rem 1rem;
+  padding: 0.82rem 1rem;
   border-radius: 0.65rem;
   font-size: 0.84rem;
   font-weight: 600;
@@ -360,58 +310,45 @@
 /* ==========================================================================
    RESPONSIVE TABLET & MOBILE
    ========================================================================== */
-@media (max-width: 820px) {
-  .contact-cta-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem;
-    gap: 1.35rem;
+@media (max-width: 860px) {
+  .contact-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+    max-width: 620px;
   }
 
-  .contact-cta-actions {
-    width: 100%;
-  }
-
-  .contact-cta-secondary,
-  .contact-cta-primary {
-    flex: 1;
+  .contact-info-desc {
+    margin-bottom: 1.25rem;
   }
 }
 
 @media (max-width: 600px) {
-  .contact-cta-banner {
-    padding: 1.25rem 1.15rem;
+  .contact-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-info-card,
+  .contact-form-card {
+    padding: 1.25rem 1.1rem;
     border-radius: 1rem;
-    gap: 1.15rem;
   }
 
-  .contact-cta-actions {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .contact-cta-secondary,
-  .contact-cta-primary {
-    width: 100%;
-    min-height: 44px;
-  }
-
-  .contact-modal-backdrop {
-    padding: 0.85rem;
-  }
-
-  .contact-modal-card {
-    padding: 1.3rem 1.1rem;
-    border-radius: 1rem;
+  .contact-info-title {
+    font-size: 1.24rem;
   }
 
   .form-row {
     grid-template-columns: 1fr;
-    gap: 0.9rem;
+    gap: 0.95rem;
   }
 
   .form-group input,
   .form-group textarea {
     font-size: 16px; /* Prevents iOS Safari auto-zoom */
+  }
+
+  .submit-btn {
+    min-height: 48px;
+    font-size: 0.94rem;
   }
 }

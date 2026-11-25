@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { Send, Check, AlertCircle, Copy, Mail, X, ArrowUpRight } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Send, Check, AlertCircle, Copy, Mail, MapPin } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
@@ -9,7 +8,6 @@ import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
 
 export function Contact() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,42 +22,6 @@ export function Contact() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const form = useRef();
-
-  // Allow other sections (e.g. Services "Inquire") to open the modal pre-filled
-  useEffect(() => {
-    const handleOpenContact = (event) => {
-      const serviceTitle = event?.detail?.serviceTitle;
-      if (serviceTitle) {
-        setFormData((prev) => ({
-          ...prev,
-          subject: serviceTitle,
-          message: `Hi Mitch, I'm interested in discussing a project regarding: ${serviceTitle}.`,
-        }));
-      }
-      setIsModalOpen(true);
-    };
-
-    window.addEventListener('open-contact-modal', handleOpenContact);
-    return () => window.removeEventListener('open-contact-modal', handleOpenContact);
-  }, []);
-
-  // Lock body scroll & close on Escape when modal is open
-  useEffect(() => {
-    if (!isModalOpen) return undefined;
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setIsModalOpen(false);
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isModalOpen]);
 
   const validateField = (name, value) => {
     const trimmed = (value || '').trim();
@@ -173,10 +135,7 @@ export function Contact() {
           toast.success('Message sent successfully!', {
             description: "Thanks for reaching out! I'll get back to you as soon as possible.",
           });
-          setTimeout(() => {
-            setSubmitStatus(null);
-            setIsModalOpen(false);
-          }, 1800);
+          setTimeout(() => setSubmitStatus(null), 6000);
         },
         (error) => {
           setIsSubmitting(false);
@@ -196,84 +155,67 @@ export function Contact() {
   return (
     <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
       <div className="container">
-        <AnimateOnScroll animation="fade-up" delay={40}>
-          <div className="contact-cta-banner">
-            <div className="contact-cta-copy">
-              <div className="contact-cta-status">
+        <header className="section-header contact-header">
+          <h2 id="contact-heading" className="section-title">
+            Get in Touch
+          </h2>
+          <p className="section-subtitle">
+            Have a project or role in mind? Send a message or reach out directly.
+          </p>
+        </header>
+
+        <div className="contact-bento-grid">
+          {/* Left Bento Card: Direct Contact Info */}
+          <AnimateOnScroll animation="fade-up" delay={40} className="contact-bento-col">
+            <aside className="contact-info-card">
+              <div className="contact-status-row">
                 <span className="contact-pulse-dot" aria-hidden="true" />
                 <span>{personalInfo.statusBadge || 'Available for new projects'}</span>
               </div>
-              <h2 id="contact-heading" className="contact-cta-title">
-                Let&apos;s Build Something Together
-              </h2>
-              <p className="contact-cta-subtitle">
-                Have a web project, MVP, or front-end role in mind? Let&apos;s talk.
+
+              <h3 className="contact-info-title">Let&apos;s build something great.</h3>
+              <p className="contact-info-desc">
+                Open for freelance web builds, UI engineering, and full-stack product work.
+                Typically replies within 24 hours.
               </p>
-            </div>
 
-            <div className="contact-cta-actions">
-              <button
-                type="button"
-                className={`contact-cta-secondary ${copiedEmail ? 'is-copied' : ''}`}
-                onClick={handleCopyEmail}
-                aria-label={`Copy email ${personalInfo.email}`}
-              >
-                {copiedEmail ? <Check size={15} /> : <Copy size={15} />}
-                <span>{copiedEmail ? 'Email Copied' : 'Copy Email'}</span>
-              </button>
-
-              <button
-                type="button"
-                className="contact-cta-primary"
-                onClick={() => setIsModalOpen(true)}
-              >
-                <Mail size={15} aria-hidden="true" />
-                <span>Send Message</span>
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-        </AnimateOnScroll>
-      </div>
-
-      {/* Modal Contact Form rendered via Portal to escape section stacking/overflow */}
-      {isModalOpen &&
-        createPortal(
-          <div
-            className="contact-modal-backdrop"
-            role="presentation"
-            onClick={(e) => {
-              if (e.target === e.currentTarget) setIsModalOpen(false);
-            }}
-          >
-            <div
-              className="contact-modal-card"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="contact-modal-title"
-            >
-              <div className="contact-modal-header">
-                <div>
-                  <h3 id="contact-modal-title" className="contact-modal-title">
-                    Send a Message
-                  </h3>
-                  <p className="contact-modal-desc">
-                    Or email directly at{' '}
-                    <a href={`mailto:${personalInfo.email}`} className="contact-modal-email">
+              <div className="contact-info-items">
+                <div className="contact-info-tile">
+                  <div className="contact-tile-icon" aria-hidden="true">
+                    <Mail size={16} />
+                  </div>
+                  <div className="contact-tile-body">
+                    <span className="contact-tile-label">Email</span>
+                    <a href={`mailto:${personalInfo.email}`} className="contact-tile-link">
                       {personalInfo.email}
                     </a>
-                  </p>
+                  </div>
+                  <button
+                    type="button"
+                    className={`contact-tile-copy ${copiedEmail ? 'is-copied' : ''}`}
+                    onClick={handleCopyEmail}
+                    aria-label="Copy email address"
+                  >
+                    {copiedEmail ? <Check size={14} /> : <Copy size={14} />}
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="contact-modal-close"
-                  onClick={() => setIsModalOpen(false)}
-                  aria-label="Close contact form"
-                >
-                  <X size={18} />
-                </button>
-              </div>
 
+                <div className="contact-info-tile">
+                  <div className="contact-tile-icon" aria-hidden="true">
+                    <MapPin size={16} />
+                  </div>
+                  <div className="contact-tile-body">
+                    <span className="contact-tile-label">Location</span>
+                    <span className="contact-tile-text">{personalInfo.location}</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </AnimateOnScroll>
+
+          {/* Right Bento Card: Inquiry Form */}
+          <AnimateOnScroll animation="fade-up" delay={90} className="contact-bento-col">
+            <div className="contact-form-card">
               <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
                 <div className="form-row">
                   <div className="form-group">
@@ -291,7 +233,6 @@ export function Contact() {
                       aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
                       className={touched.name && errors.name ? 'input-error' : ''}
                       placeholder="Alex Morgan"
-                      autoFocus
                     />
                     {touched.name && errors.name && (
                       <span id="name-error" className="field-error" role="alert">
@@ -404,9 +345,9 @@ export function Contact() {
                 )}
               </form>
             </div>
-          </div>,
-          document.body
-        )}
+          </AnimateOnScroll>
+        </div>
+      </div>
     </section>
   );
 }

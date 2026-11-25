@@ -36,11 +36,37 @@ const servicesStructuredData = {
 export function Services() {
   const scrollToContact = (e, serviceTitle) => {
     e.preventDefault();
-    window.dispatchEvent(
-      new CustomEvent('open-contact-modal', {
-        detail: { serviceTitle },
-      })
-    );
+    const contactEl = document.getElementById('contact');
+    if (!contactEl) return;
+
+    const subjectInput = document.getElementById('subject');
+    const messageInput =
+      document.getElementById('message') || document.querySelector('textarea[name="message"]');
+
+    const setReactValue = (el, val) => {
+      if (!el || !val) return;
+      const proto =
+        el.tagName === 'TEXTAREA'
+          ? window.HTMLTextAreaElement.prototype
+          : window.HTMLInputElement.prototype;
+      const nativeSetter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+      if (nativeSetter) {
+        nativeSetter.call(el, val);
+      } else {
+        el.value = val;
+      }
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+
+    if (serviceTitle) {
+      setReactValue(subjectInput, serviceTitle);
+      setReactValue(
+        messageInput,
+        `Hi Mitch, I'm interested in discussing a project regarding: ${serviceTitle}.`
+      );
+    }
+
+    contactEl.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (

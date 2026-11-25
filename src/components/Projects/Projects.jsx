@@ -120,6 +120,7 @@ export function Projects() {
           <div className="projects-z-list">
             {visibleProjects.map((project, idx) => {
               const isReversed = idx % 2 === 1;
+              const isMobileApp = project.category.includes('Mobile App');
               const statusClass = getStatusClass(project.status);
               const hasLive = project.liveDemo && project.liveDemo !== '#';
               const hasGithub = project.github && project.github !== '#';
@@ -131,21 +132,61 @@ export function Projects() {
                   delay={idx < 2 ? idx * 60 : 40}
                 >
                   <article className={`project-z-row ${isReversed ? 'is-reversed' : ''}`}>
-                    {/* Media Preview */}
+                    {/* Device Frame Preview: Phone for Mobile App, Laptop for Web */}
                     <button
                       type="button"
-                      className="project-z-media"
+                      className={`project-device-btn ${isMobileApp ? 'is-mobile-device' : 'is-laptop-device'}`}
                       onClick={() => setLightboxProject(project)}
                       aria-label={`Enlarge ${project.title} preview`}
                     >
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="project-z-img"
-                        width="800"
-                        height="500"
-                        loading={idx < 2 ? 'eager' : 'lazy'}
-                      />
+                      {isMobileApp ? (
+                        <div className="device-phone">
+                          <div className="device-phone-body">
+                            <div className="device-phone-island" aria-hidden="true" />
+                            <div className="device-phone-screen">
+                              <div className="device-phone-statusbar" aria-hidden="true">
+                                <span>9:41</span>
+                                <span className="device-phone-signals">•••</span>
+                              </div>
+                              <div className="device-phone-media-wrap">
+                                <img
+                                  src={project.image}
+                                  alt={project.title}
+                                  className="device-phone-img"
+                                  width="640"
+                                  height="360"
+                                  loading={idx < 2 ? 'eager' : 'lazy'}
+                                />
+                              </div>
+                              <div className="device-phone-app-meta" aria-hidden="true">
+                                <span className="device-phone-app-name">{project.title}</span>
+                                <span className="device-phone-app-tag">Mobile App</span>
+                              </div>
+                              <div className="device-phone-homebar" aria-hidden="true" />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="device-laptop">
+                          <div className="device-laptop-lid">
+                            <div className="device-laptop-cam" aria-hidden="true" />
+                            <div className="device-laptop-screen">
+                              <img
+                                src={project.image}
+                                alt={project.title}
+                                className="device-laptop-img"
+                                width="800"
+                                height="450"
+                                loading={idx < 2 ? 'eager' : 'lazy'}
+                              />
+                            </div>
+                          </div>
+                          <div className="device-laptop-base" aria-hidden="true">
+                            <div className="device-laptop-notch" />
+                          </div>
+                        </div>
+                      )}
+
                       <span className="project-z-zoom" aria-hidden="true">
                         <Maximize2 size={14} />
                       </span>

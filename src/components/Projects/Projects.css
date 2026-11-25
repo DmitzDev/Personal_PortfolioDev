@@ -69,7 +69,7 @@
   align-items: center;
 }
 
-.project-z-row.is-reversed .project-z-media {
+.project-z-row.is-reversed .project-device-btn {
   order: 2;
 }
 
@@ -77,58 +77,247 @@
   order: 1;
 }
 
-/* ── MEDIA PREVIEW ── */
-.project-z-media {
+/* ── DEVICE FRAME BUTTON WRAPPER ── */
+.project-device-btn {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  padding: 0;
-  border-radius: 1.05rem;
-  overflow: hidden;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded);
+  padding: 0.5rem 0;
+  border: none;
+  background: transparent;
   cursor: zoom-in;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   -webkit-tap-highlight-color: transparent;
 }
 
-.project-z-media:hover {
-  transform: translateY(-3px);
+.project-device-btn:hover {
+  transform: translateY(-4px);
 }
 
-.project-z-img {
+/* ── LAPTOP FRAME (WEB PROJECTS) ── */
+.device-laptop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.device-laptop-lid {
+  position: relative;
+  width: 94%;
+  padding: 12px 11px 9px 11px;
+  border-radius: 14px 14px 4px 4px;
+  background: #14171d;
+  border: 1.5px solid #2b313c;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .device-laptop-lid {
+  border-color: #363d4a;
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.55);
+}
+
+.device-laptop-cam {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2d3440;
+}
+
+.device-laptop-screen {
+  width: 100%;
+  aspect-ratio: 16 / 9.4;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0b0d11;
+}
+
+.device-laptop-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
   display: block;
   transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.project-z-media:hover .project-z-img {
+.project-device-btn:hover .device-laptop-img {
   transform: scale(1.03);
+}
+
+.device-laptop-base {
+  position: relative;
+  width: 100%;
+  height: 11px;
+  border-radius: 2px 2px 10px 10px;
+  background: linear-gradient(180deg, #d8dee6 0%, #9ca6b5 100%);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+}
+
+[data-theme="dark"] .device-laptop-base {
+  background: linear-gradient(180deg, #3c4351 0%, #232832 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.device-laptop-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 54px;
+  height: 4px;
+  border-radius: 0 0 5px 5px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+/* ── MOBILE PHONE FRAME (MOBILE APP PROJECTS) ── */
+.device-phone {
+  width: 100%;
+  max-width: 235px;
+  margin: 0 auto;
+}
+
+.device-phone-body {
+  position: relative;
+  padding: 9px;
+  border-radius: 30px;
+  background: #14171d;
+  border: 2px solid #2e3440;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22), 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .device-phone-body {
+  border-color: #3a4252;
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.58);
+}
+
+.device-phone-island {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 58px;
+  height: 13px;
+  border-radius: 9999px;
+  background: #0b0d11;
+  z-index: 3;
+}
+
+.device-phone-screen {
+  position: relative;
+  aspect-ratio: 9 / 16.5;
+  border-radius: 22px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #161b24 0%, #0d1016 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.75rem 0.7rem 0.55rem 0.7rem;
+}
+
+.device-phone-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.device-phone-signals {
+  letter-spacing: 1px;
+}
+
+.device-phone-media-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.15rem;
+  min-height: 0;
+}
+
+.device-phone-img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 0.65rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-device-btn:hover .device-phone-img {
+  transform: scale(1.04);
+}
+
+.device-phone-app-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding-bottom: 0.5rem;
+}
+
+.device-phone-app-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.device-phone-app-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.device-phone-homebar {
+  width: 72px;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.28);
+  margin: 0 auto;
 }
 
 .project-z-zoom {
   position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
+  bottom: 1.25rem;
+  right: 1.25rem;
   width: 32px;
   height: 32px;
   border-radius: 0.55rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.78);
   color: #ffffff;
   backdrop-filter: blur(6px);
   opacity: 0;
   transform: scale(0.92);
   transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 4;
 }
 
-.project-z-media:hover .project-z-zoom {
+.project-device-btn.is-mobile-device .project-z-zoom {
+  right: calc(50% - 102px);
+  bottom: 1.25rem;
+}
+
+.project-device-btn:hover .project-z-zoom {
   opacity: 1;
   transform: scale(1);
 }
@@ -416,8 +605,8 @@
     gap: 1.25rem;
   }
 
-  /* Always put image first on mobile/tablet */
-  .project-z-row.is-reversed .project-z-media,
+  /* Always put device frame first on mobile/tablet */
+  .project-z-row.is-reversed .project-device-btn,
   .project-z-row.is-reversed .project-z-details {
     order: unset;
   }
@@ -441,8 +630,18 @@
     gap: 2.25rem;
   }
 
-  .project-z-media {
-    border-radius: 0.85rem;
+  .device-laptop-lid {
+    width: 96%;
+    padding: 9px 8px 7px 8px;
+    border-radius: 11px 11px 3px 3px;
+  }
+
+  .device-laptop-base {
+    height: 9px;
+  }
+
+  .device-phone {
+    max-width: 210px;
   }
 
   .project-z-title {

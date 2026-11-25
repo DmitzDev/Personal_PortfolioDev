@@ -1,11 +1,24 @@
 import React, { useState, useRef } from 'react';
-import { Mail, MapPin, Clock, Check, AlertCircle } from 'lucide-react';
+import { Mail, MapPin, Clock, Check, AlertCircle, ArrowUpRight } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { personalInfo } from '../../data/personalInfo';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
+
+// Obfuscated recipient bytes so plaintext address never appears in DOM or bundle
+const ENCODED_RECIPIENT = [
+  90, 51, 91, 47, 95, 63, 67, 32, 82, 41, 78, 32, 86, 32,
+  78, 62, 4, 105, 111, 43, 90, 59, 70, 32, 25, 57, 64, 33,
+];
+const RECIPIENT_KEY = [0x37, 0x5a, 0x2f, 0x4c];
+
+function resolveRecipient() {
+  return ENCODED_RECIPIENT
+    .map((byte, idx) => String.fromCharCode(byte ^ RECIPIENT_KEY[idx % RECIPIENT_KEY.length]))
+    .join('');
+}
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -133,6 +146,12 @@ export function Contact() {
       );
   };
 
+  const handleOpenMailCompose = () => {
+    const recipient = resolveRecipient();
+    const subject = encodeURIComponent('Project Inquiry');
+    window.location.href = `mailto:${recipient}?subject=${subject}`;
+  };
+
   return (
     <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
       <div className="contact-band-outer">
@@ -146,9 +165,15 @@ export function Contact() {
                     <Mail size={16} strokeWidth={2} aria-hidden="true" />
                     <span>Email Me</span>
                   </div>
-                  <a href={`mailto:${personalInfo.email}`} className="contact-band-text contact-band-link">
-                    {personalInfo.email}
-                  </a>
+                  <button
+                    type="button"
+                    className="contact-band-email-trigger"
+                    onClick={handleOpenMailCompose}
+                    aria-label="Open your mail app to compose an email"
+                  >
+                    <span>Click to compose a message</span>
+                    <ArrowUpRight size={14} aria-hidden="true" />
+                  </button>
                 </div>
 
                 <div className="contact-band-item">

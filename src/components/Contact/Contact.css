@@ -1,7 +1,7 @@
 /* ==========================================================================
-   CONTACT SECTION — UNBOXED EDITORIAL SPLIT
-   Zero heavy card boxes: crisp typography + direct email on the left,
-   minimal hairline-underline inputs on the right.
+   CONTACT SECTION — COMPACT SINGLE-ROW CTA + MODAL FORM
+   Clean horizontal CTA banner on the page; opens a sleek modal dialog
+   with recessed inputs when triggered.
    ========================================================================== */
 
 .contact-section {
@@ -9,195 +9,290 @@
   background-color: var(--bg-primary);
 }
 
-.contact-editorial-grid {
+/* ── COMPACT SINGLE-ROW CTA BANNER ── */
+.contact-cta-banner {
   max-width: 980px;
   width: 100%;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.15fr);
-  gap: 3.5rem;
-  align-items: start;
+  padding: 2rem 2.25rem;
+  border-radius: 1.25rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
-/* ── LEFT COLUMN: EDITORIAL TYPOGRAPHY & META ── */
-.contact-editorial-info {
+.contact-cta-copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
 }
 
-.contact-eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  margin-bottom: 0.75rem;
-}
-
-.contact-editorial-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.7rem, 2.9vw, 2.3rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.16;
-  color: var(--text-primary);
-  margin: 0 0 0.85rem 0;
-}
-
-.contact-editorial-subtitle {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.94rem;
-  line-height: 1.62;
-  color: var(--text-secondary);
-  margin: 0 0 2rem 0;
-  max-width: 40ch;
-}
-
-.contact-meta-list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  padding-top: 1.35rem;
-  border-top: 1px solid var(--border);
-}
-
-.contact-meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.contact-meta-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-}
-
-.contact-meta-value-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-}
-
-.contact-meta-link {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.96rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.18s ease, border-color 0.18s ease;
-}
-
-.contact-meta-link:hover {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
-.contact-meta-text {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-}
-
-.contact-inline-copy {
+.contact-cta-status {
   display: inline-flex;
   align-items: center;
-  gap: 0.28rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: 9999px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.contact-inline-copy:hover {
-  color: var(--text-primary);
-  border-color: var(--border-focus);
-}
-
-.contact-inline-copy.is-copied {
-  color: #10b981;
-  border-color: rgba(16, 185, 129, 0.45);
-}
-
-/* ── RIGHT COLUMN: UNBOXED MINIMAL UNDERLINE FORM ── */
-.contact-editorial-form-col {
-  width: 100%;
-  padding-left: 3rem;
-  border-left: 1px solid var(--border);
-}
-
-.contact-minimal-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.contact-minimal-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-.contact-minimal-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.contact-minimal-field label {
+  gap: 0.45rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
+  margin-bottom: 0.55rem;
 }
 
-.contact-minimal-field input,
-.contact-minimal-field textarea {
-  width: 100%;
-  padding: 0.6rem 0;
-  border: none;
-  border-bottom: 1.5px solid var(--border);
-  border-radius: 0;
-  background: transparent;
-  color: var(--text-primary);
+.contact-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  animation: contactPulse 2s ease-in-out infinite;
+}
+
+@keyframes contactPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.08);
+  }
+}
+
+.contact-cta-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.94rem;
-  outline: none;
-  transition: border-color 0.2s ease;
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin: 0 0 0.35rem 0;
 }
 
-.contact-minimal-field input::placeholder,
-.contact-minimal-field textarea::placeholder {
+.contact-cta-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.contact-cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.contact-cta-secondary,
+.contact-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 44px;
+  padding: 0 1.2rem;
+  border-radius: 0.7rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.contact-cta-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded-sm);
+}
+
+.contact-cta-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-focus);
+}
+
+.contact-cta-secondary.is-copied {
+  background: #10b981;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.contact-cta-primary {
+  border: none;
+  background: var(--accent);
+  color: var(--accent-text);
+  box-shadow: var(--skeuo-extruded-sm);
+}
+
+.contact-cta-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--skeuo-extruded);
+}
+
+/* ── MODAL OVERLAY & CARD ── */
+.contact-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: contactModalFade 0.2s ease;
+}
+
+@keyframes contactModalFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.contact-modal-card {
+  width: 100%;
+  max-width: 540px;
+  max-height: min(90dvh, 720px);
+  overflow-y: auto;
+  padding: 1.75rem;
+  border-radius: 1.2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded);
+  animation: contactModalSlide 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes contactModalSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.contact-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.35rem;
+}
+
+.contact-modal-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.22rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 0.2rem 0;
+}
+
+.contact-modal-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.contact-modal-email {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-modal-email:hover {
+  text-decoration: underline;
+}
+
+.contact-modal-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
   color: var(--text-muted);
-  opacity: 0.65;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
 }
 
-.contact-minimal-field input:focus,
-.contact-minimal-field textarea:focus {
-  border-bottom-color: var(--accent);
+.contact-modal-close:hover {
+  color: var(--text-primary);
+  border-color: var(--border-focus);
 }
 
-.contact-minimal-field textarea {
+/* ── FORM INPUTS INSIDE MODAL ── */
+.inquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.78rem 0.95rem;
+  border-radius: 0.65rem;
+  background: var(--bg-tertiary);
+  box-shadow: var(--skeuo-recessed);
+  border-top: 1px solid var(--skeuo-bevel-bottom);
+  border-bottom: 1px solid var(--skeuo-bevel-top);
+  border-left: none;
+  border-right: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  box-shadow: var(--skeuo-recessed), 0 0 0 1px var(--accent);
+}
+
+.form-group textarea {
   resize: vertical;
-  min-height: 84px;
+  min-height: 100px;
 }
 
 .required-star {
@@ -209,14 +304,9 @@
   color: #f87171;
 }
 
-.contact-minimal-field input.input-error,
-.contact-minimal-field textarea.input-error {
-  border-bottom-color: #ef4444;
-}
-
-[data-theme="dark"] .contact-minimal-field input.input-error,
-[data-theme="dark"] .contact-minimal-field textarea.input-error {
-  border-bottom-color: #f87171;
+.form-group input.input-error,
+.form-group textarea.input-error {
+  box-shadow: var(--skeuo-recessed), 0 0 0 1px rgba(239, 68, 68, 0.7);
 }
 
 .field-error {
@@ -226,105 +316,102 @@
   font-size: 0.76rem;
   font-weight: 500;
   color: #ef4444;
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
 }
 
 [data-theme="dark"] .field-error {
   color: #f87171;
 }
 
-.contact-minimal-actions {
-  padding-top: 0.35rem;
-}
-
-.contact-minimal-submit {
+.submit-btn {
+  margin-top: 0.25rem;
+  width: 100%;
+  min-height: 46px;
+  padding: 0.85rem 1.2rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.72rem 1.65rem;
-  border-radius: 0.65rem;
-  border: none;
-  background: var(--accent);
-  color: var(--accent-text);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.88rem;
   font-weight: 700;
-  cursor: pointer;
-  box-shadow: var(--skeuo-extruded-sm);
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.contact-minimal-submit:hover:not(:disabled) {
-  background: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--skeuo-extruded);
-}
-
-.contact-minimal-submit:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
 }
 
 .submit-alert {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.75rem 0;
-  border-top: 1px solid var(--border);
-  font-size: 0.86rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.65rem;
+  font-size: 0.84rem;
   font-weight: 600;
 }
 
 .submit-alert.success {
+  background: var(--bg-tertiary);
+  box-shadow: var(--skeuo-recessed-sm);
   color: #10b981;
 }
 
 .submit-alert.error {
+  background: var(--bg-tertiary);
+  box-shadow: var(--skeuo-recessed-sm);
   color: #ef4444;
 }
 
 /* ==========================================================================
    RESPONSIVE TABLET & MOBILE
    ========================================================================== */
-@media (max-width: 860px) {
-  .contact-editorial-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    max-width: 600px;
+@media (max-width: 820px) {
+  .contact-cta-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1.35rem;
   }
 
-  .contact-editorial-form-col {
-    padding-left: 0;
-    padding-top: 1.75rem;
-    border-left: none;
-    border-top: 1px solid var(--border);
+  .contact-cta-actions {
+    width: 100%;
+  }
+
+  .contact-cta-secondary,
+  .contact-cta-primary {
+    flex: 1;
   }
 }
 
-@media (max-width: 640px) {
-  .contact-editorial-subtitle {
-    margin-bottom: 1.4rem;
+@media (max-width: 600px) {
+  .contact-cta-banner {
+    padding: 1.25rem 1.15rem;
+    border-radius: 1rem;
+    gap: 1.15rem;
   }
 
-  .contact-minimal-form {
-    gap: 1.25rem;
+  .contact-cta-actions {
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
-  .contact-minimal-row {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-
-  .contact-minimal-field input,
-  .contact-minimal-field textarea {
-    font-size: 16px; /* Prevents iOS Safari auto-zoom */
-  }
-
-  .contact-minimal-submit {
+  .contact-cta-secondary,
+  .contact-cta-primary {
     width: 100%;
-    min-height: 46px;
+    min-height: 44px;
+  }
+
+  .contact-modal-backdrop {
+    padding: 0.85rem;
+  }
+
+  .contact-modal-card {
+    padding: 1.3rem 1.1rem;
+    border-radius: 1rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px; /* Prevents iOS Safari auto-zoom */
   }
 }

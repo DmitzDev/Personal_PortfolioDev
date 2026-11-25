@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Send, Check, AlertCircle, Copy } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Send, Check, AlertCircle, Copy, Mail, X, ArrowUpRight } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
@@ -8,6 +8,7 @@ import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
 
 export function Contact() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,6 +23,42 @@ export function Contact() {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const form = useRef();
+
+  // Allow other sections (e.g. Services "Inquire") to open the modal pre-filled
+  useEffect(() => {
+    const handleOpenContact = (event) => {
+      const serviceTitle = event?.detail?.serviceTitle;
+      if (serviceTitle) {
+        setFormData((prev) => ({
+          ...prev,
+          subject: serviceTitle,
+          message: `Hi Mitch, I'm interested in discussing a project regarding: ${serviceTitle}.`,
+        }));
+      }
+      setIsModalOpen(true);
+    };
+
+    window.addEventListener('open-contact-modal', handleOpenContact);
+    return () => window.removeEventListener('open-contact-modal', handleOpenContact);
+  }, []);
+
+  // Lock body scroll & close on Escape when modal is open
+  useEffect(() => {
+    if (!isModalOpen) return undefined;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsModalOpen(false);
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isModalOpen]);
 
   const validateField = (name, value) => {
     const trimmed = (value || '').trim();
@@ -135,7 +172,10 @@ export function Contact() {
           toast.success('Message sent successfully!', {
             description: "Thanks for reaching out! I'll get back to you as soon as possible.",
           });
-          setTimeout(() => setSubmitStatus(null), 6000);
+          setTimeout(() => {
+            setSubmitStatus(null);
+            setIsModalOpen(false);
+          }, 1800);
         },
         (error) => {
           setIsSubmitting(false);
@@ -155,48 +195,86 @@ export function Contact() {
   return (
     <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
       <div className="container">
-        <div className="contact-editorial-grid">
-          {/* Left: Clean Unboxed Editorial Info */}
-          <AnimateOnScroll animation="fade-up" delay={40} className="contact-editorial-info">
-            <span className="contact-eyebrow">Contact</span>
-            <h2 id="contact-heading" className="contact-editorial-title">
-              Let&apos;s Build Something Exceptional
-            </h2>
-            <p className="contact-editorial-subtitle">
-              Have a project, MVP, or front-end role in mind? Drop a note or reach out directly.
-            </p>
+        <AnimateOnScroll animation="fade-up" delay={40}>
+          <div className="contact-cta-banner">
+            <div className="contact-cta-copy">
+              <div className="contact-cta-status">
+                <span className="contact-pulse-dot" aria-hidden="true" />
+                <span>{personalInfo.statusBadge || 'Available for new projects'}</span>
+              </div>
+              <h2 id="contact-heading" className="contact-cta-title">
+                Let&apos;s Build Something Together
+              </h2>
+              <p className="contact-cta-subtitle">
+                Have a web project, MVP, or front-end role in mind? Let&apos;s talk.
+              </p>
+            </div>
 
-            <div className="contact-meta-list">
-              <div className="contact-meta-item">
-                <span className="contact-meta-label">Email</span>
-                <div className="contact-meta-value-row">
-                  <a href={`mailto:${personalInfo.email}`} className="contact-meta-link">
+            <div className="contact-cta-actions">
+              <button
+                type="button"
+                className={`contact-cta-secondary ${copiedEmail ? 'is-copied' : ''}`}
+                onClick={handleCopyEmail}
+                aria-label={`Copy email ${personalInfo.email}`}
+              >
+                {copiedEmail ? <Check size={15} /> : <Copy size={15} />}
+                <span>{copiedEmail ? 'Email Copied' : 'Copy Email'}</span>
+              </button>
+
+              <button
+                type="button"
+                className="contact-cta-primary"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <Mail size={15} aria-hidden="true" />
+                <span>Send Message</span>
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </AnimateOnScroll>
+      </div>
+
+      {/* Modal Contact Form */}
+      {isModalOpen && (
+        <div
+          className="contact-modal-backdrop"
+          role="presentation"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsModalOpen(false);
+          }}
+        >
+          <div
+            className="contact-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
+          >
+            <div className="contact-modal-header">
+              <div>
+                <h3 id="contact-modal-title" className="contact-modal-title">
+                  Send a Message
+                </h3>
+                <p className="contact-modal-desc">
+                  Or email directly at{' '}
+                  <a href={`mailto:${personalInfo.email}`} className="contact-modal-email">
                     {personalInfo.email}
                   </a>
-                  <button
-                    type="button"
-                    className={`contact-inline-copy ${copiedEmail ? 'is-copied' : ''}`}
-                    onClick={handleCopyEmail}
-                    aria-label="Copy email address"
-                  >
-                    {copiedEmail ? <Check size={13} /> : <Copy size={13} />}
-                    <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
-                  </button>
-                </div>
+                </p>
               </div>
-
-              <div className="contact-meta-item">
-                <span className="contact-meta-label">Location</span>
-                <span className="contact-meta-text">{personalInfo.location}</span>
-              </div>
+              <button
+                type="button"
+                className="contact-modal-close"
+                onClick={() => setIsModalOpen(false)}
+                aria-label="Close contact form"
+              >
+                <X size={18} />
+              </button>
             </div>
-          </AnimateOnScroll>
 
-          {/* Right: Unboxed Minimal Underline Form */}
-          <AnimateOnScroll animation="fade-up" delay={90} className="contact-editorial-form-col">
-            <form ref={form} className="contact-minimal-form" onSubmit={handleSubmit} noValidate>
-              <div className="contact-minimal-row">
-                <div className="contact-minimal-field">
+            <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
+              <div className="form-row">
+                <div className="form-group">
                   <label htmlFor="name">
                     Name <span className="required-star">*</span>
                   </label>
@@ -211,6 +289,7 @@ export function Contact() {
                     aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
                     className={touched.name && errors.name ? 'input-error' : ''}
                     placeholder="Alex Morgan"
+                    autoFocus
                   />
                   {touched.name && errors.name && (
                     <span id="name-error" className="field-error" role="alert">
@@ -220,7 +299,7 @@ export function Contact() {
                   )}
                 </div>
 
-                <div className="contact-minimal-field">
+                <div className="form-group">
                   <label htmlFor="email">
                     Email <span className="required-star">*</span>
                   </label>
@@ -245,7 +324,7 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="contact-minimal-field">
+              <div className="form-group">
                 <label htmlFor="subject">
                   Subject <span className="required-star">*</span>
                 </label>
@@ -269,14 +348,14 @@ export function Contact() {
                 )}
               </div>
 
-              <div className="contact-minimal-field">
+              <div className="form-group">
                 <label htmlFor="message">
                   Message <span className="required-star">*</span>
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows="3"
+                  rows="4"
                   value={formData.message}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -293,22 +372,20 @@ export function Contact() {
                 )}
               </div>
 
-              <div className="contact-minimal-actions">
-                <button
-                  type="submit"
-                  className="contact-minimal-submit"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <span>Sending...</span>
-                  ) : (
-                    <>
-                      <span>Send Message</span>
-                      <Send size={15} aria-hidden="true" />
-                    </>
-                  )}
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="btn-primary submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <span>Sending...</span>
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <Send size={15} aria-hidden="true" />
+                  </>
+                )}
+              </button>
 
               {submitStatus === 'success' && (
                 <div className="submit-alert success" role="status">
@@ -324,9 +401,9 @@ export function Contact() {
                 </div>
               )}
             </form>
-          </AnimateOnScroll>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

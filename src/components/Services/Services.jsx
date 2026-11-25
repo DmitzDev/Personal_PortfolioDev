@@ -36,27 +36,11 @@ const servicesStructuredData = {
 export function Services() {
   const scrollToContact = (e, serviceTitle) => {
     e.preventDefault();
-    const contactEl = document.getElementById('contact');
-    if (!contactEl) return;
-
-    const messageInput =
-      document.getElementById('message') || document.querySelector('textarea[name="message"]');
-
-    if (messageInput && serviceTitle) {
-      const nativeSetter = Object.getOwnPropertyDescriptor(
-        window.HTMLTextAreaElement.prototype,
-        'value'
-      )?.set;
-      const text = `Hi Mitch, I'm interested in discussing a project regarding: ${serviceTitle}.`;
-      if (nativeSetter) {
-        nativeSetter.call(messageInput, text);
-      } else {
-        messageInput.value = text;
-      }
-      messageInput.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-
-    contactEl.scrollIntoView({ behavior: 'smooth' });
+    window.dispatchEvent(
+      new CustomEvent('open-contact-modal', {
+        detail: { serviceTitle },
+      })
+    );
   };
 
   return (

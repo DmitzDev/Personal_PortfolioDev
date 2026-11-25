@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ExternalLink,
   Code2,
   Server,
   Mail,
-  ChevronDown,
-  ChevronUp,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { projects, projectCategories } from '../../data/projects';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
@@ -55,21 +55,50 @@ const getStatusClass = (status) => {
 
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [showAll, setShowAll] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef(null);
 
   const filteredProjects = projects.filter(
     (project) => activeCategory === 'All' || project.category.includes(activeCategory)
   );
 
-  const visibleProjects =
-    activeCategory === 'All' && !showAll
-      ? filteredProjects.slice(0, 4)
-      : filteredProjects;
+  const safeIndex =
+    filteredProjects.length > 0 ? Math.min(activeIndex, filteredProjects.length - 1) : 0;
+  const currentProject = filteredProjects[safeIndex] || null;
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
-    setShowAll(false);
+    setActiveIndex(0);
   };
+
+  const handlePrev = () => {
+    if (filteredProjects.length <= 1) return;
+    setActiveIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
+  };
+
+  const handleNext = () => {
+    if (filteredProjects.length <= 1) return;
+    setActiveIndex((prev) => (prev + 1) % filteredProjects.length);
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 45) {
+      if (diff > 0) handleNext();
+      else handlePrev();
+    }
+    touchStartX.current = null;
+  };
+
+  const isMobileApp = currentProject?.category.includes('Mobile App');
+  const statusClass = currentProject ? getStatusClass(currentProject.status) : '';
+  const hasLive = currentProject?.liveDemo && currentProject.liveDemo !== '#';
+  const hasGithub = currentProject?.github && currentProject.github !== '#';
 
   return (
     <section id="projects" className="section projects-section" aria-labelledby="projects-heading">
@@ -97,201 +126,213 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Alternating Z-Pattern Editorial Rows */}
-        {visibleProjects.length > 0 ? (
-          <div className="projects-z-list">
-            {visibleProjects.map((project, idx) => {
-              const isReversed = idx % 2 === 1;
-              const isMobileApp = project.category.includes('Mobile App');
-              const statusClass = getStatusClass(project.status);
-              const hasLive = project.liveDemo && project.liveDemo !== '#';
-              const hasGithub = project.github && project.github !== '#';
-
-              return (
-                <AnimateOnScroll
-                  key={project.id}
-                  animation="fade-up"
-                  delay={idx < 2 ? idx * 60 : 40}
+        {/* Zero-Scroll Single-Stage Showcase */}
+        {currentProject ? (
+          <AnimateOnScroll animation="fade-up" delay={40}>
+            <div
+              className="projects-stage-wrap"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              <article key={currentProject.id} className="project-z-row project-stage-card">
+                {/* Device Frame Preview: Phone for Mobile App, Laptop for Web */}
+                <div
+                  className={`project-device-frame ${isMobileApp ? 'is-mobile-device' : 'is-laptop-device'}`}
                 >
-                  <article className={`project-z-row ${isReversed ? 'is-reversed' : ''}`}>
-                    {/* Device Frame Preview: Phone for Mobile App, Laptop for Web */}
-                    <div
-                      className={`project-device-frame ${isMobileApp ? 'is-mobile-device' : 'is-laptop-device'}`}
-                    >
-                      {isMobileApp ? (
-                        <div className="device-phone">
-                          <span className="device-phone-btn-vol-up" aria-hidden="true" />
-                          <span className="device-phone-btn-vol-down" aria-hidden="true" />
-                          <span className="device-phone-btn-power" aria-hidden="true" />
-                          <div className="device-phone-body">
-                            <div className="device-phone-island" aria-hidden="true">
-                              <span className="device-phone-lens" />
-                            </div>
-                            <div className="device-phone-screen">
-                              <div className="device-phone-glare" aria-hidden="true" />
-                              <div className="device-phone-statusbar" aria-hidden="true">
-                                <span>9:41</span>
-                                <span className="device-phone-icons">
-                                  <svg width="13" height="9" viewBox="0 0 13 9" fill="currentColor">
-                                    <rect x="0" y="5" width="2" height="4" rx="0.5" />
-                                    <rect x="3.5" y="3.5" width="2" height="5.5" rx="0.5" />
-                                    <rect x="7" y="2" width="2" height="7" rx="0.5" />
-                                    <rect x="10.5" y="0" width="2" height="9" rx="0.5" />
-                                  </svg>
-                                  <svg width="16" height="9" viewBox="0 0 16 9" fill="none">
-                                    <rect x="0.5" y="0.5" width="13" height="8" rx="2" stroke="currentColor" strokeOpacity="0.6" />
-                                    <rect x="2" y="2" width="9" height="5" rx="1" fill="currentColor" />
-                                    <rect x="14.5" y="2.8" width="1.5" height="3.4" rx="0.7" fill="currentColor" fillOpacity="0.6" />
-                                  </svg>
-                                </span>
-                              </div>
-                              <div className="device-phone-media-wrap">
-                                <img
-                                  src={project.image}
-                                  alt={project.title}
-                                  className="device-phone-img"
-                                  width="640"
-                                  height="360"
-                                  loading={idx < 2 ? 'eager' : 'lazy'}
-                                />
-                              </div>
-                              <div className="device-phone-app-meta" aria-hidden="true">
-                                <span className="device-phone-app-name">{project.title}</span>
-                                <span className="device-phone-app-tag">Mobile App</span>
-                              </div>
-                              <div className="device-phone-homebar" aria-hidden="true" />
-                            </div>
-                          </div>
+                  {isMobileApp ? (
+                    <div className="device-phone">
+                      <span className="device-phone-btn-vol-up" aria-hidden="true" />
+                      <span className="device-phone-btn-vol-down" aria-hidden="true" />
+                      <span className="device-phone-btn-power" aria-hidden="true" />
+                      <div className="device-phone-body">
+                        <div className="device-phone-island" aria-hidden="true">
+                          <span className="device-phone-lens" />
                         </div>
-                      ) : (
-                        <div className="device-laptop">
-                          <div className="device-laptop-lid">
-                            <div className="device-laptop-notch-top" aria-hidden="true">
-                              <span className="device-laptop-cam" />
-                            </div>
-                            <div className="device-laptop-screen">
-                              <div className="device-laptop-glare" aria-hidden="true" />
-                              <img
-                                src={project.image}
-                                alt={project.title}
-                                className="device-laptop-img"
-                                width="800"
-                                height="450"
-                                loading={idx < 2 ? 'eager' : 'lazy'}
-                              />
-                            </div>
-                          </div>
-                          <div className="device-laptop-base" aria-hidden="true">
-                            <div className="device-laptop-groove" />
-                          </div>
-                          <div className="device-laptop-shadow" aria-hidden="true" />
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Project Details */}
-                    <div className="project-z-details">
-                      <div className="project-z-meta">
-                        <span className="project-z-index">
-                          {String(idx + 1).padStart(2, '0')}
-                        </span>
-                        <span className="project-z-category">{project.category[0]}</span>
-                        <span className={`project-z-status ${statusClass}`}>
-                          <span className="status-dot" aria-hidden="true" />
-                          <span>{project.status}</span>
-                        </span>
-                        {project.timeline && (
-                          <span className="project-z-year">{project.timeline}</span>
-                        )}
-                      </div>
-
-                      <h3 className="project-z-title">{project.title}</h3>
-                      <p className="project-z-desc">{project.description}</p>
-
-                      {/* Tech Stack Icons */}
-                      <div className="project-z-tech" aria-label="Tech stack">
-                        {project.technologies.map((tech) => {
-                          const info = getTechIconInfo(tech);
-                          return (
-                            <span key={tech} className="project-z-tech-chip" title={tech}>
-                              {info.type === 'devicon' ? (
-                                <img
-                                  src={info.src}
-                                  alt=""
-                                  width="15"
-                                  height="15"
-                                  loading="lazy"
-                                  onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
-                                  }}
-                                />
-                              ) : info.icon === 'server' ? (
-                                <Server size={14} aria-hidden="true" />
-                              ) : info.icon === 'mail' ? (
-                                <Mail size={14} aria-hidden="true" />
-                              ) : (
-                                <Code2 size={14} aria-hidden="true" />
-                              )}
-                              <span>{tech}</span>
+                        <div className="device-phone-screen">
+                          <div className="device-phone-glare" aria-hidden="true" />
+                          <div className="device-phone-statusbar" aria-hidden="true">
+                            <span>9:41</span>
+                            <span className="device-phone-icons">
+                              <svg width="13" height="9" viewBox="0 0 13 9" fill="currentColor">
+                                <rect x="0" y="5" width="2" height="4" rx="0.5" />
+                                <rect x="3.5" y="3.5" width="2" height="5.5" rx="0.5" />
+                                <rect x="7" y="2" width="2" height="7" rx="0.5" />
+                                <rect x="10.5" y="0" width="2" height="9" rx="0.5" />
+                              </svg>
+                              <svg width="16" height="9" viewBox="0 0 16 9" fill="none">
+                                <rect x="0.5" y="0.5" width="13" height="8" rx="2" stroke="currentColor" strokeOpacity="0.6" />
+                                <rect x="2" y="2" width="9" height="5" rx="1" fill="currentColor" />
+                                <rect x="14.5" y="2.8" width="1.5" height="3.4" rx="0.7" fill="currentColor" fillOpacity="0.6" />
+                              </svg>
                             </span>
-                          );
-                        })}
-                      </div>
-
-                      {/* Action Links */}
-                      {(hasLive || hasGithub) && (
-                        <div className="project-z-actions">
-                          {hasLive && (
-                            <a
-                              href={project.liveDemo}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="project-z-btn-primary"
-                            >
-                              <span>Live Demo</span>
-                              <ExternalLink size={14} aria-hidden="true" />
-                            </a>
-                          )}
-                          {hasGithub && (
-                            <a
-                              href={project.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="project-z-btn-secondary"
-                            >
-                              <GithubIcon size={14} />
-                              <span>GitHub</span>
-                            </a>
-                          )}
+                          </div>
+                          <div className="device-phone-media-wrap">
+                            <img
+                              src={currentProject.image}
+                              alt={currentProject.title}
+                              className="device-phone-img"
+                              width="640"
+                              height="360"
+                            />
+                          </div>
+                          <div className="device-phone-app-meta" aria-hidden="true">
+                            <span className="device-phone-app-name">{currentProject.title}</span>
+                            <span className="device-phone-app-tag">Mobile App</span>
+                          </div>
+                          <div className="device-phone-homebar" aria-hidden="true" />
                         </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="device-laptop">
+                      <div className="device-laptop-lid">
+                        <div className="device-laptop-notch-top" aria-hidden="true">
+                          <span className="device-laptop-cam" />
+                        </div>
+                        <div className="device-laptop-screen">
+                          <div className="device-laptop-glare" aria-hidden="true" />
+                          <img
+                            src={currentProject.image}
+                            alt={currentProject.title}
+                            className="device-laptop-img"
+                            width="800"
+                            height="450"
+                          />
+                        </div>
+                      </div>
+                      <div className="device-laptop-base" aria-hidden="true">
+                        <div className="device-laptop-groove" />
+                      </div>
+                      <div className="device-laptop-shadow" aria-hidden="true" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Project Details */}
+                <div className="project-z-details">
+                  <div className="project-z-meta">
+                    <span className="project-z-index">
+                      {String(safeIndex + 1).padStart(2, '0')} /{' '}
+                      {String(filteredProjects.length).padStart(2, '0')}
+                    </span>
+                    <span className="project-z-category">{currentProject.category[0]}</span>
+                    <span className={`project-z-status ${statusClass}`}>
+                      <span className="status-dot" aria-hidden="true" />
+                      <span>{currentProject.status}</span>
+                    </span>
+                    {currentProject.timeline && (
+                      <span className="project-z-year">{currentProject.timeline}</span>
+                    )}
+                  </div>
+
+                  <h3 className="project-z-title">{currentProject.title}</h3>
+                  <p className="project-z-desc">{currentProject.description}</p>
+
+                  {/* Tech Stack Icons */}
+                  <div className="project-z-tech" aria-label="Tech stack">
+                    {currentProject.technologies.map((tech) => {
+                      const info = getTechIconInfo(tech);
+                      return (
+                        <span key={tech} className="project-z-tech-chip" title={tech}>
+                          {info.type === 'devicon' ? (
+                            <img
+                              src={info.src}
+                              alt=""
+                              width="15"
+                              height="15"
+                              loading="lazy"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
+                          ) : info.icon === 'server' ? (
+                            <Server size={14} aria-hidden="true" />
+                          ) : info.icon === 'mail' ? (
+                            <Mail size={14} aria-hidden="true" />
+                          ) : (
+                            <Code2 size={14} aria-hidden="true" />
+                          )}
+                          <span>{tech}</span>
+                        </span>
+                      );
+                    })}
+                  </div>
+
+                  {/* Action Links */}
+                  {(hasLive || hasGithub) && (
+                    <div className="project-z-actions">
+                      {hasLive && (
+                        <a
+                          href={currentProject.liveDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-z-btn-primary"
+                        >
+                          <span>Live Demo</span>
+                          <ExternalLink size={14} aria-hidden="true" />
+                        </a>
+                      )}
+                      {hasGithub && (
+                        <a
+                          href={currentProject.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-z-btn-secondary"
+                        >
+                          <GithubIcon size={14} />
+                          <span>GitHub</span>
+                        </a>
                       )}
                     </div>
-                  </article>
-                </AnimateOnScroll>
-              );
-            })}
-          </div>
+                  )}
+                </div>
+              </article>
+
+              {/* Zero-Scroll Switcher Bar: Prev / Quick Tabs / Next */}
+              {filteredProjects.length > 1 && (
+                <div className="projects-switcher-bar">
+                  <button
+                    type="button"
+                    className="projects-nav-btn"
+                    onClick={handlePrev}
+                    aria-label="Previous project"
+                  >
+                    <ChevronLeft size={16} />
+                    <span>Prev</span>
+                  </button>
+
+                  <div className="projects-quick-tabs" role="tablist" aria-label="Switch project">
+                    {filteredProjects.map((project, idx) => (
+                      <button
+                        key={project.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={idx === safeIndex}
+                        className={`projects-quick-tab ${idx === safeIndex ? 'is-active' : ''}`}
+                        onClick={() => setActiveIndex(idx)}
+                      >
+                        <span className="quick-tab-num">{String(idx + 1).padStart(2, '0')}</span>
+                        <span className="quick-tab-name">{project.title}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="projects-nav-btn"
+                    onClick={handleNext}
+                    aria-label="Next project"
+                  >
+                    <span>Next</span>
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </AnimateOnScroll>
         ) : (
           <div className="no-projects">
             <p>No projects matched this category.</p>
-          </div>
-        )}
-
-        {/* Show More / Less Toggle when viewing All */}
-        {activeCategory === 'All' && filteredProjects.length > 4 && (
-          <div className="projects-more-wrap">
-            <button
-              type="button"
-              className="projects-more-btn"
-              onClick={() => setShowAll((prev) => !prev)}
-            >
-              <span>
-                {showAll
-                  ? 'Show Featured Only'
-                  : `View All ${filteredProjects.length} Projects`}
-              </span>
-              {showAll ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            </button>
           </div>
         )}
       </div>

@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Send, Check, AlertCircle, Copy, Mail, MapPin } from 'lucide-react';
+import { Send, Check, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
-import { personalInfo } from '../../data/personalInfo';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
 
@@ -19,7 +18,6 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const form = useRef();
 
@@ -73,17 +71,6 @@ export function Contact() {
     setTouched((prev) => ({ ...prev, [name]: true }));
     const fieldError = validateField(name, value);
     setErrors((prev) => ({ ...prev, [name]: fieldError }));
-  };
-
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(personalInfo.email);
-      setCopiedEmail(true);
-      toast.success('Email copied!');
-      setTimeout(() => setCopiedEmail(false), 2000);
-    } catch {
-      toast.error('Could not copy email.');
-    }
   };
 
   const handleSubmit = (e) => {
@@ -141,7 +128,7 @@ export function Contact() {
           setIsSubmitting(false);
           setSubmitStatus('error');
           const err =
-            error.text || error.message || 'Failed to dispatch email. Please email directly.';
+            error.text || error.message || 'Failed to dispatch email. Please try again later.';
           setErrorMessage(err);
           toast.error('Failed to send message', {
             description: err,
@@ -160,193 +147,142 @@ export function Contact() {
             Get in Touch
           </h2>
           <p className="section-subtitle">
-            Have a project or role in mind? Send a message or reach out directly.
+            Have a project or opportunity in mind? Send me a message below.
           </p>
         </header>
 
-        <div className="contact-bento-grid">
-          {/* Left Bento Card: Direct Contact Info */}
-          <AnimateOnScroll animation="fade-up" delay={40} className="contact-bento-col">
-            <aside className="contact-info-card">
-              <div className="contact-status-row">
-                <span className="contact-pulse-dot" aria-hidden="true" />
-                <span>{personalInfo.statusBadge || 'Available for new projects'}</span>
-              </div>
-
-              <h3 className="contact-info-title">Let&apos;s build something great.</h3>
-              <p className="contact-info-desc">
-                Open for freelance web builds, UI engineering, and full-stack product work.
-                Typically replies within 24 hours.
-              </p>
-
-              <div className="contact-info-items">
-                <div className="contact-info-tile">
-                  <div className="contact-tile-icon" aria-hidden="true">
-                    <Mail size={16} />
-                  </div>
-                  <div className="contact-tile-body">
-                    <span className="contact-tile-label">Email</span>
-                    <a href={`mailto:${personalInfo.email}`} className="contact-tile-link">
-                      {personalInfo.email}
-                    </a>
-                  </div>
-                  <button
-                    type="button"
-                    className={`contact-tile-copy ${copiedEmail ? 'is-copied' : ''}`}
-                    onClick={handleCopyEmail}
-                    aria-label="Copy email address"
-                  >
-                    {copiedEmail ? <Check size={14} /> : <Copy size={14} />}
-                  </button>
-                </div>
-
-                <div className="contact-info-tile">
-                  <div className="contact-tile-icon" aria-hidden="true">
-                    <MapPin size={16} />
-                  </div>
-                  <div className="contact-tile-body">
-                    <span className="contact-tile-label">Location</span>
-                    <span className="contact-tile-text">{personalInfo.location}</span>
-                  </div>
-                </div>
-              </div>
-            </aside>
-          </AnimateOnScroll>
-
-          {/* Right Bento Card: Inquiry Form */}
-          <AnimateOnScroll animation="fade-up" delay={90} className="contact-bento-col">
-            <div className="contact-form-card">
-              <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="name">
-                      Name <span className="required-star">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-invalid={touched.name && Boolean(errors.name)}
-                      aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
-                      className={touched.name && errors.name ? 'input-error' : ''}
-                      placeholder="Alex Morgan"
-                    />
-                    {touched.name && errors.name && (
-                      <span id="name-error" className="field-error" role="alert">
-                        <AlertCircle size={13} aria-hidden="true" />
-                        <span>{errors.name}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="email">
-                      Email <span className="required-star">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-invalid={touched.email && Boolean(errors.email)}
-                      aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
-                      className={touched.email && errors.email ? 'input-error' : ''}
-                      placeholder="alex@company.com"
-                    />
-                    {touched.email && errors.email && (
-                      <span id="email-error" className="field-error" role="alert">
-                        <AlertCircle size={13} aria-hidden="true" />
-                        <span>{errors.email}</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-
+        <AnimateOnScroll animation="fade-up" delay={60} className="contact-form-wrap">
+          <div className="contact-form-card">
+            <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
+              <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="subject">
-                    Subject <span className="required-star">*</span>
+                  <label htmlFor="name">
+                    Name <span className="required-star">*</span>
                   </label>
                   <input
                     type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    aria-invalid={touched.subject && Boolean(errors.subject)}
-                    aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
-                    className={touched.subject && errors.subject ? 'input-error' : ''}
-                    placeholder="Web App / UI Engineering"
+                    aria-invalid={touched.name && Boolean(errors.name)}
+                    aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                    className={touched.name && errors.name ? 'input-error' : ''}
+                    placeholder="Alex Morgan"
                   />
-                  {touched.subject && errors.subject && (
-                    <span id="subject-error" className="field-error" role="alert">
+                  {touched.name && errors.name && (
+                    <span id="name-error" className="field-error" role="alert">
                       <AlertCircle size={13} aria-hidden="true" />
-                      <span>{errors.subject}</span>
+                      <span>{errors.name}</span>
                     </span>
                   )}
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="message">
-                    Message <span className="required-star">*</span>
+                  <label htmlFor="email">
+                    Email <span className="required-star">*</span>
                   </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    value={formData.message}
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    aria-invalid={touched.message && Boolean(errors.message)}
-                    aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
-                    className={touched.message && errors.message ? 'input-error' : ''}
-                    placeholder="Tell me briefly about your project and timeline..."
+                    aria-invalid={touched.email && Boolean(errors.email)}
+                    aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                    className={touched.email && errors.email ? 'input-error' : ''}
+                    placeholder="alex@company.com"
                   />
-                  {touched.message && errors.message && (
-                    <span id="message-error" className="field-error" role="alert">
+                  {touched.email && errors.email && (
+                    <span id="email-error" className="field-error" role="alert">
                       <AlertCircle size={13} aria-hidden="true" />
-                      <span>{errors.message}</span>
+                      <span>{errors.email}</span>
                     </span>
                   )}
                 </div>
+              </div>
 
-                <button
-                  type="submit"
-                  className="btn-primary submit-btn"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <span>Sending...</span>
-                  ) : (
-                    <>
-                      <span>Send Message</span>
-                      <Send size={15} aria-hidden="true" />
-                    </>
-                  )}
-                </button>
-
-                {submitStatus === 'success' && (
-                  <div className="submit-alert success" role="status">
-                    <Check size={17} aria-hidden="true" />
-                    <span>Message received! I&apos;ll get back to you shortly.</span>
-                  </div>
+              <div className="form-group">
+                <label htmlFor="subject">
+                  Subject <span className="required-star">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={touched.subject && Boolean(errors.subject)}
+                  aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
+                  className={touched.subject && errors.subject ? 'input-error' : ''}
+                  placeholder="Web App / UI Engineering"
+                />
+                {touched.subject && errors.subject && (
+                  <span id="subject-error" className="field-error" role="alert">
+                    <AlertCircle size={13} aria-hidden="true" />
+                    <span>{errors.subject}</span>
+                  </span>
                 )}
+              </div>
 
-                {submitStatus === 'error' && (
-                  <div className="submit-alert error" role="alert">
-                    <AlertCircle size={17} aria-hidden="true" />
-                    <span>{errorMessage}</span>
-                  </div>
+              <div className="form-group">
+                <label htmlFor="message">
+                  Message <span className="required-star">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  value={formData.message}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={touched.message && Boolean(errors.message)}
+                  aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
+                  className={touched.message && errors.message ? 'input-error' : ''}
+                  placeholder="Tell me briefly about your project and timeline..."
+                />
+                {touched.message && errors.message && (
+                  <span id="message-error" className="field-error" role="alert">
+                    <AlertCircle size={13} aria-hidden="true" />
+                    <span>{errors.message}</span>
+                  </span>
                 )}
-              </form>
-            </div>
-          </AnimateOnScroll>
-        </div>
+              </div>
+
+              <button
+                type="submit"
+                className="btn-primary submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <span>Sending...</span>
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <Send size={15} aria-hidden="true" />
+                  </>
+                )}
+              </button>
+
+              {submitStatus === 'success' && (
+                <div className="submit-alert success" role="status">
+                  <Check size={17} aria-hidden="true" />
+                  <span>Message received! I&apos;ll get back to you shortly.</span>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="submit-alert error" role="alert">
+                  <AlertCircle size={17} aria-hidden="true" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+            </form>
+          </div>
+        </AnimateOnScroll>
       </div>
     </section>
   );

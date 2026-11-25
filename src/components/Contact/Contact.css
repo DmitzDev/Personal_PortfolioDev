@@ -1,7 +1,5 @@
 /* ==========================================================================
-   CONTACT SECTION — BALANCED 2-COLUMN BENTO LAYOUT
-   Matches Services/Projects skeuomorphic craft: left direct-info card
-   paired with right recessed-input inquiry form card.
+   CONTACT SECTION — CLEAN SINGLE FORM
    ========================================================================== */
 
 .contact-section {
@@ -10,181 +8,17 @@
 }
 
 .contact-header {
-  margin-bottom: 2.25rem;
+  margin-bottom: 2rem;
 }
 
-.contact-bento-grid {
-  max-width: 980px;
+.contact-form-wrap {
+  max-width: 640px;
   width: 100%;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
-  gap: 1.5rem;
-  align-items: stretch;
 }
 
-.contact-bento-col {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-/* ── LEFT BENTO CARD: DIRECT INFO ── */
-.contact-info-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1.85rem;
-  border-radius: 1.15rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded);
-}
-
-.contact-status-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  margin-bottom: 1.1rem;
-}
-
-.contact-pulse-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-  animation: contactPulse 2s ease-in-out infinite;
-}
-
-@keyframes contactPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
-  }
-  50% {
-    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.08);
-  }
-}
-
-.contact-info-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.45rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.22;
-  color: var(--text-primary);
-  margin: 0 0 0.65rem 0;
-}
-
-.contact-info-desc {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  margin: 0 0 1.75rem 0;
-}
-
-.contact-info-items {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.contact-info-tile {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.85rem 0.95rem;
-  border-radius: 0.85rem;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-recessed-sm);
-}
-
-.contact-tile-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 0.55rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  color: var(--accent);
-}
-
-.contact-tile-body {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  flex: 1;
-}
-
-.contact-tile-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.64rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text-muted);
-  margin-bottom: 0.1rem;
-}
-
-.contact-tile-link,
-.contact-tile-text {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  text-decoration: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.contact-tile-link:hover {
-  color: var(--accent);
-}
-
-.contact-tile-copy {
-  width: 32px;
-  height: 32px;
-  border-radius: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.contact-tile-copy:hover {
-  color: var(--text-primary);
-  border-color: var(--border-focus);
-}
-
-.contact-tile-copy.is-copied {
-  background: #10b981;
-  color: #ffffff;
-  border-color: transparent;
-}
-
-/* ── RIGHT BENTO CARD: INQUIRY FORM ── */
 .contact-form-card {
-  flex: 1;
-  padding: 1.85rem;
+  padding: 2rem;
   border-radius: 1.15rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
@@ -194,24 +28,24 @@
 .inquiry-form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.15rem;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.42rem;
 }
 
 .form-group label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -220,7 +54,7 @@
 
 .form-group input,
 .form-group textarea {
-  padding: 0.8rem 1rem;
+  padding: 0.82rem 1rem;
   border-radius: 0.65rem;
   background: var(--bg-tertiary);
   box-shadow: var(--skeuo-recessed);
@@ -242,7 +76,7 @@
 
 .form-group textarea {
   resize: vertical;
-  min-height: 112px;
+  min-height: 115px;
 }
 
 .required-star {
@@ -308,33 +142,16 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE TABLET & MOBILE
+   RESPONSIVE MOBILE
    ========================================================================== */
-@media (max-width: 860px) {
-  .contact-bento-grid {
-    grid-template-columns: 1fr;
-    gap: 1.15rem;
-    max-width: 620px;
-  }
-
-  .contact-info-desc {
-    margin-bottom: 1.25rem;
-  }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .contact-header {
     margin-bottom: 1.5rem;
   }
 
-  .contact-info-card,
   .contact-form-card {
     padding: 1.25rem 1.1rem;
     border-radius: 1rem;
-  }
-
-  .contact-info-title {
-    font-size: 1.24rem;
   }
 
   .form-row {

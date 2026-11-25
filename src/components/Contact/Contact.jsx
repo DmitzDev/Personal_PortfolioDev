@@ -1,5 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { Send, Check, AlertCircle } from 'lucide-react';
+import {
+  Send,
+  Check,
+  AlertCircle,
+  User,
+  AtSign,
+  Layers,
+  MessageSquare,
+} from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
@@ -139,6 +147,10 @@ export function Contact() {
       );
   };
 
+  const filledCount = ['name', 'email', 'subject', 'message'].filter(
+    (k) => formData[k].trim().length > 0
+  ).length;
+
   return (
     <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
       <div className="container">
@@ -153,24 +165,38 @@ export function Contact() {
 
         <AnimateOnScroll animation="fade-up" delay={60} className="contact-form-wrap">
           <div className="contact-form-card">
+            {/* Sleek Studio Bar */}
+            <div className="contact-studio-bar">
+              <div className="contact-studio-left">
+                <span className="contact-studio-dot" aria-hidden="true" />
+                <span className="contact-studio-title">Direct Inquiry</span>
+              </div>
+              <span className="contact-studio-progress">
+                {filledCount}/4 completed
+              </span>
+            </div>
+
             <form ref={form} className="inquiry-form" onSubmit={handleSubmit} noValidate>
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="name">
                     Name <span className="required-star">*</span>
                   </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    aria-invalid={touched.name && Boolean(errors.name)}
-                    aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
-                    className={touched.name && errors.name ? 'input-error' : ''}
-                    placeholder="Alex Morgan"
-                  />
+                  <div className="input-icon-wrap">
+                    <User size={15} className="input-leading-icon" aria-hidden="true" />
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-invalid={touched.name && Boolean(errors.name)}
+                      aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                      className={touched.name && errors.name ? 'input-error' : ''}
+                      placeholder="Alex Morgan"
+                    />
+                  </div>
                   {touched.name && errors.name && (
                     <span id="name-error" className="field-error" role="alert">
                       <AlertCircle size={13} aria-hidden="true" />
@@ -183,18 +209,21 @@ export function Contact() {
                   <label htmlFor="email">
                     Email <span className="required-star">*</span>
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    aria-invalid={touched.email && Boolean(errors.email)}
-                    aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
-                    className={touched.email && errors.email ? 'input-error' : ''}
-                    placeholder="alex@company.com"
-                  />
+                  <div className="input-icon-wrap">
+                    <AtSign size={15} className="input-leading-icon" aria-hidden="true" />
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-invalid={touched.email && Boolean(errors.email)}
+                      aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                      className={touched.email && errors.email ? 'input-error' : ''}
+                      placeholder="alex@company.com"
+                    />
+                  </div>
                   {touched.email && errors.email && (
                     <span id="email-error" className="field-error" role="alert">
                       <AlertCircle size={13} aria-hidden="true" />
@@ -208,18 +237,21 @@ export function Contact() {
                 <label htmlFor="subject">
                   Subject <span className="required-star">*</span>
                 </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={touched.subject && Boolean(errors.subject)}
-                  aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
-                  className={touched.subject && errors.subject ? 'input-error' : ''}
-                  placeholder="Web App / UI Engineering"
-                />
+                <div className="input-icon-wrap">
+                  <Layers size={15} className="input-leading-icon" aria-hidden="true" />
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    aria-invalid={touched.subject && Boolean(errors.subject)}
+                    aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
+                    className={touched.subject && errors.subject ? 'input-error' : ''}
+                    placeholder="Web App / UI Engineering"
+                  />
+                </div>
                 {touched.subject && errors.subject && (
                   <span id="subject-error" className="field-error" role="alert">
                     <AlertCircle size={13} aria-hidden="true" />
@@ -232,18 +264,21 @@ export function Contact() {
                 <label htmlFor="message">
                   Message <span className="required-star">*</span>
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  value={formData.message}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={touched.message && Boolean(errors.message)}
-                  aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
-                  className={touched.message && errors.message ? 'input-error' : ''}
-                  placeholder="Tell me briefly about your project and timeline..."
-                />
+                <div className="input-icon-wrap is-textarea">
+                  <MessageSquare size={15} className="input-leading-icon" aria-hidden="true" />
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    value={formData.message}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    aria-invalid={touched.message && Boolean(errors.message)}
+                    aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
+                    className={touched.message && errors.message ? 'input-error' : ''}
+                    placeholder="Tell me briefly about your project and timeline..."
+                  />
+                </div>
                 {touched.message && errors.message && (
                   <span id="message-error" className="field-error" role="alert">
                     <AlertCircle size={13} aria-hidden="true" />
@@ -258,11 +293,11 @@ export function Contact() {
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
-                  <span>Sending...</span>
+                  <span>Sending Message...</span>
                 ) : (
                   <>
                     <span>Send Message</span>
-                    <Send size={15} aria-hidden="true" />
+                    <Send size={15} className="submit-send-icon" aria-hidden="true" />
                   </>
                 )}
               </button>

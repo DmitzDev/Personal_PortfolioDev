@@ -1,220 +1,271 @@
 /* ==========================================================================
-   CONTACT SECTION — SWISS-GRID CONNECTED FORM
-   Single architectural frame with hairline-divided input cells,
-   clean focus states, and compact action bar. Zero clutter.
+   CONTACT SECTION — OVERLAPPING CONTRAST BAND + ELEVATED FORM CARD
+   Matches user reference layout using the portfolio's native theme tokens
+   (var(--accent) band + var(--bg-secondary) elevated card).
    ========================================================================== */
 
 .contact-section {
   position: relative;
   background-color: var(--bg-primary);
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
-.contact-header {
-  margin-bottom: 2rem;
-}
-
-.contact-frame-wrap {
-  max-width: 680px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.contact-grid-form {
-  width: 100%;
-  border-radius: 0.95rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded-sm);
-  overflow: hidden;
-}
-
-.contact-grid-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.contact-cell {
+.contact-band-outer {
   position: relative;
+  background: var(--accent);
+  color: var(--accent-text);
+  padding: 2.75rem 0;
+}
+
+.contact-band-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr);
+  gap: 3rem;
+  align-items: center;
+}
+
+/* ── LEFT SIDE: INFO INSIDE CONTRAST BAND ── */
+.contact-band-info {
   display: flex;
   flex-direction: column;
-  padding: 1.05rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-  transition: background-color 0.18s ease;
+  gap: 1.85rem;
+  padding: 0.75rem 0;
 }
 
-.contact-grid-row .contact-cell:first-child {
-  border-right: 1px solid var(--border);
+.contact-band-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-.contact-cell:focus-within {
-  background: var(--bg-tertiary);
-}
-
-.contact-cell.has-error {
-  box-shadow: inset 3px 0 0 #ef4444;
-}
-
-.contact-cell label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
+.contact-band-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin-bottom: 0.45rem;
+  letter-spacing: 0.06em;
+  color: var(--accent-text);
 }
 
-.contact-cell input,
-.contact-cell textarea {
+.contact-band-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--accent-text);
+  opacity: 0.86;
+  margin: 0;
+  padding-left: 1.55rem;
+}
+
+.contact-band-link {
+  text-decoration: none;
+  transition: opacity 0.18s ease;
+}
+
+.contact-band-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ── RIGHT SIDE: ELEVATED OVERLAPPING CARD ── */
+.contact-overlap-card {
+  position: relative;
+  margin-top: -5rem;
+  margin-bottom: -5rem;
+  padding: 2.5rem 2.35rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.16), 0 6px 18px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+}
+
+[data-theme="dark"] .contact-overlap-card {
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.52), 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.contact-overlap-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.75rem, 2.8vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin: 0 0 1.75rem 0;
+}
+
+.contact-overlap-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.contact-underline-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-underline-group input,
+.contact-underline-group textarea {
   width: 100%;
-  padding: 0.15rem 0;
+  padding: 0.55rem 0;
   border: none;
+  border-bottom: 1.5px solid var(--border-focus);
+  border-radius: 0;
   background: transparent;
   color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.94rem;
-  font-weight: 500;
+  font-size: 0.92rem;
   outline: none;
+  transition: border-color 0.2s ease;
 }
 
-.contact-cell input::placeholder,
-.contact-cell textarea::placeholder {
+.contact-underline-group input::placeholder,
+.contact-underline-group textarea::placeholder {
   color: var(--text-muted);
-  opacity: 0.55;
+  opacity: 0.78;
 }
 
-.contact-cell textarea {
+.contact-underline-group input:focus,
+.contact-underline-group textarea:focus {
+  border-bottom-color: var(--text-primary);
+}
+
+.contact-underline-group textarea {
   resize: vertical;
-  min-height: 104px;
-  line-height: 1.55;
+  min-height: 78px;
 }
 
-.contact-cell-error {
+.contact-underline-group input.is-invalid,
+.contact-underline-group textarea.is-invalid {
+  border-bottom-color: #ef4444;
+}
+
+.contact-underline-error {
   display: inline-flex;
   align-items: center;
-  gap: 0.32rem;
-  margin-top: 0.4rem;
-  font-size: 0.75rem;
+  gap: 0.3rem;
+  margin-top: 0.32rem;
+  font-size: 0.74rem;
   font-weight: 500;
   color: #ef4444;
 }
 
-[data-theme="dark"] .contact-cell-error {
+[data-theme="dark"] .contact-underline-error {
   color: #f87171;
 }
 
-/* ── BOTTOM ACTION BAR ── */
-.contact-form-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 1.25rem;
-  background: var(--bg-tertiary);
+.contact-overlap-actions {
+  margin-top: 0.4rem;
 }
 
-.contact-form-note {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
-.contact-form-submit {
+.contact-outline-submit {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
-  height: 40px;
-  padding: 0 1.35rem;
-  border-radius: 0.55rem;
-  border: none;
-  background: var(--accent);
-  color: var(--accent-text);
+  min-width: 126px;
+  height: 42px;
+  padding: 0 1.75rem;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid var(--text-primary);
+  border-radius: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
-  box-shadow: var(--skeuo-extruded-sm);
-  transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.18s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.contact-form-submit:hover:not(:disabled) {
-  background: var(--accent-hover);
+.contact-outline-submit:hover:not(:disabled) {
+  background: var(--text-primary);
+  color: var(--bg-primary);
   transform: translateY(-1px);
-  box-shadow: var(--skeuo-extruded);
 }
 
-.contact-submit-arrow {
-  transition: transform 0.18s ease;
-}
-
-.contact-form-submit:hover:not(:disabled) .contact-submit-arrow {
-  transform: translateX(3px);
-}
-
-.contact-form-submit:disabled {
-  opacity: 0.65;
+.contact-outline-submit:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-.contact-status-banner {
+.contact-overlap-alert {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.85rem 1.25rem;
-  border-top: 1px solid var(--border);
+  padding-top: 0.6rem;
   font-size: 0.84rem;
   font-weight: 600;
 }
 
-.contact-status-banner.success {
+.contact-overlap-alert.success {
   color: #10b981;
 }
 
-.contact-status-banner.error {
+.contact-overlap-alert.error {
   color: #ef4444;
 }
 
 /* ==========================================================================
-   RESPONSIVE MOBILE
+   RESPONSIVE TABLET & MOBILE
    ========================================================================== */
-@media (max-width: 640px) {
-  .contact-header {
-    margin-bottom: 1.4rem;
+@media (max-width: 860px) {
+  .contact-section {
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
   }
 
-  .contact-grid-row {
+  .contact-band-outer {
+    padding: 2rem 0 2.5rem 0;
+  }
+
+  .contact-band-inner {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
 
-  .contact-grid-row .contact-cell:first-child {
-    border-right: none;
+  .contact-band-info {
+    gap: 1.25rem;
+    padding: 0;
   }
 
-  .contact-cell {
-    padding: 0.95rem 1.05rem;
+  .contact-overlap-card {
+    margin-top: 0;
+    margin-bottom: -3.25rem;
+    padding: 1.75rem 1.45rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-band-outer {
+    padding: 1.65rem 0 2.25rem 0;
   }
 
-  .contact-cell input,
-  .contact-cell textarea {
+  .contact-overlap-card {
+    margin-bottom: -2.75rem;
+    padding: 1.5rem 1.2rem;
+  }
+
+  .contact-overlap-title {
+    font-size: 1.55rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-underline-group input,
+  .contact-underline-group textarea {
     font-size: 16px; /* Prevents iOS Safari auto-zoom */
   }
 
-  .contact-form-bar {
-    flex-direction: column-reverse;
-    align-items: stretch;
-    gap: 0.65rem;
-    padding: 0.95rem 1.05rem;
-  }
-
-  .contact-form-note {
-    text-align: center;
-  }
-
-  .contact-form-submit {
+  .contact-outline-submit {
     width: 100%;
-    height: 44px;
-    font-size: 0.9rem;
+    height: 46px;
   }
 }

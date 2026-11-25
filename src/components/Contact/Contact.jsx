@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { ArrowRight, Check, AlertCircle } from 'lucide-react';
+import { Mail, MapPin, Clock, Check, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
+import { personalInfo } from '../../data/personalInfo';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import './Contact.css';
 
@@ -29,7 +30,7 @@ export function Contact() {
         if (trimmed.length < 2) return 'Name must be at least 2 characters.';
         return '';
       case 'email':
-        if (!trimmed) return 'Please enter your email address.';
+        if (!trimmed) return 'Please enter a valid email address.';
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmed)) {
           return 'Please enter a valid email address.';
         }
@@ -134,131 +135,164 @@ export function Contact() {
 
   return (
     <section id="contact" className="section contact-section" aria-labelledby="contact-heading">
-      <div className="container">
-        <header className="section-header contact-header">
-          <h2 id="contact-heading" className="section-title">
-            Get in Touch
-          </h2>
-          <p className="section-subtitle">
-            Have a project or role in mind? Send a message below.
-          </p>
-        </header>
+      <div className="contact-band-outer">
+        <div className="container">
+          <AnimateOnScroll animation="fade-up" delay={40}>
+            <div className="contact-band-inner">
+              {/* Left Side: Info inside Contrast Band */}
+              <div className="contact-band-info">
+                <div className="contact-band-item">
+                  <div className="contact-band-heading">
+                    <Mail size={16} strokeWidth={2} aria-hidden="true" />
+                    <span>Email Me</span>
+                  </div>
+                  <a href={`mailto:${personalInfo.email}`} className="contact-band-text contact-band-link">
+                    {personalInfo.email}
+                  </a>
+                </div>
 
-        <AnimateOnScroll animation="fade-up" delay={50} className="contact-frame-wrap">
-          <form ref={form} className="contact-grid-form" onSubmit={handleSubmit} noValidate>
-            <div className="contact-grid-row">
-              <div className={`contact-cell ${touched.name && errors.name ? 'has-error' : ''}`}>
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={touched.name && Boolean(errors.name)}
-                  aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
-                  placeholder="Alex Morgan"
-                />
-                {touched.name && errors.name && (
-                  <span id="name-error" className="contact-cell-error" role="alert">
-                    <AlertCircle size={12} aria-hidden="true" />
-                    <span>{errors.name}</span>
-                  </span>
-                )}
+                <div className="contact-band-item">
+                  <div className="contact-band-heading">
+                    <MapPin size={16} strokeWidth={2} aria-hidden="true" />
+                    <span>Location</span>
+                  </div>
+                  <p className="contact-band-text">{personalInfo.location}</p>
+                </div>
+
+                <div className="contact-band-item">
+                  <div className="contact-band-heading">
+                    <Clock size={16} strokeWidth={2} aria-hidden="true" />
+                    <span>Availability</span>
+                  </div>
+                  <p className="contact-band-text">
+                    Mon – Sat · 9 AM – 8 PM (UTC+8)
+                  </p>
+                </div>
               </div>
 
-              <div className={`contact-cell ${touched.email && errors.email ? 'has-error' : ''}`}>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={touched.email && Boolean(errors.email)}
-                  aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
-                  placeholder="alex@company.com"
-                />
-                {touched.email && errors.email && (
-                  <span id="email-error" className="contact-cell-error" role="alert">
-                    <AlertCircle size={12} aria-hidden="true" />
-                    <span>{errors.email}</span>
-                  </span>
-                )}
+              {/* Right Side: Elevated Overlapping Form Card */}
+              <div className="contact-overlap-card">
+                <h2 id="contact-heading" className="contact-overlap-title">
+                  CONTACT ME
+                </h2>
+
+                <form ref={form} className="contact-overlap-form" onSubmit={handleSubmit} noValidate>
+                  <div className="contact-underline-group">
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-label="Your Name"
+                      aria-invalid={touched.name && Boolean(errors.name)}
+                      aria-describedby={touched.name && errors.name ? 'name-error' : undefined}
+                      className={touched.name && errors.name ? 'is-invalid' : ''}
+                      placeholder="Enter your Name"
+                    />
+                    {touched.name && errors.name && (
+                      <span id="name-error" className="contact-underline-error" role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
+                        <span>{errors.name}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="contact-underline-group">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-label="Your Email"
+                      aria-invalid={touched.email && Boolean(errors.email)}
+                      aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                      className={touched.email && errors.email ? 'is-invalid' : ''}
+                      placeholder="Enter a valid email address"
+                    />
+                    {touched.email && errors.email && (
+                      <span id="email-error" className="contact-underline-error" role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
+                        <span>{errors.email}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="contact-underline-group">
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-label="Subject"
+                      aria-invalid={touched.subject && Boolean(errors.subject)}
+                      aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
+                      className={touched.subject && errors.subject ? 'is-invalid' : ''}
+                      placeholder="Subject / Project Scope"
+                    />
+                    {touched.subject && errors.subject && (
+                      <span id="subject-error" className="contact-underline-error" role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
+                        <span>{errors.subject}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="contact-underline-group">
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows="3"
+                      value={formData.message}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-label="Message"
+                      aria-invalid={touched.message && Boolean(errors.message)}
+                      aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
+                      className={touched.message && errors.message ? 'is-invalid' : ''}
+                      placeholder="Enter your message"
+                    />
+                    {touched.message && errors.message && (
+                      <span id="message-error" className="contact-underline-error" role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
+                        <span>{errors.message}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="contact-overlap-actions">
+                    <button
+                      type="submit"
+                      className="contact-outline-submit"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'SENDING...' : 'SUBMIT'}
+                    </button>
+                  </div>
+
+                  {submitStatus === 'success' && (
+                    <div className="contact-overlap-alert success" role="status">
+                      <Check size={16} aria-hidden="true" />
+                      <span>Message sent! I&apos;ll get back to you shortly.</span>
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="contact-overlap-alert error" role="alert">
+                      <AlertCircle size={16} aria-hidden="true" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
+                </form>
               </div>
             </div>
-
-            <div className={`contact-cell contact-cell-full ${touched.subject && errors.subject ? 'has-error' : ''}`}>
-              <label htmlFor="subject">Subject</label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={touched.subject && Boolean(errors.subject)}
-                aria-describedby={touched.subject && errors.subject ? 'subject-error' : undefined}
-                placeholder="Web App / UI Engineering"
-              />
-              {touched.subject && errors.subject && (
-                <span id="subject-error" className="contact-cell-error" role="alert">
-                  <AlertCircle size={12} aria-hidden="true" />
-                  <span>{errors.subject}</span>
-                </span>
-              )}
-            </div>
-
-            <div className={`contact-cell contact-cell-full ${touched.message && errors.message ? 'has-error' : ''}`}>
-              <label htmlFor="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="4"
-                value={formData.message}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={touched.message && Boolean(errors.message)}
-                aria-describedby={touched.message && errors.message ? 'message-error' : undefined}
-                placeholder="Tell me briefly about your project and timeline..."
-              />
-              {touched.message && errors.message && (
-                <span id="message-error" className="contact-cell-error" role="alert">
-                  <AlertCircle size={12} aria-hidden="true" />
-                  <span>{errors.message}</span>
-                </span>
-              )}
-            </div>
-
-            <div className="contact-form-bar">
-              <span className="contact-form-note">All fields required</span>
-              <button
-                type="submit"
-                className="contact-form-submit"
-                disabled={isSubmitting}
-              >
-                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-                {!isSubmitting && <ArrowRight size={15} className="contact-submit-arrow" aria-hidden="true" />}
-              </button>
-            </div>
-
-            {submitStatus === 'success' && (
-              <div className="contact-status-banner success" role="status">
-                <Check size={16} aria-hidden="true" />
-                <span>Message received. I&apos;ll get back to you shortly.</span>
-              </div>
-            )}
-
-            {submitStatus === 'error' && (
-              <div className="contact-status-banner error" role="alert">
-                <AlertCircle size={16} aria-hidden="true" />
-                <span>{errorMessage}</span>
-              </div>
-            )}
-          </form>
-        </AnimateOnScroll>
+          </AnimateOnScroll>
+        </div>
       </div>
     </section>
   );

@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimateOnScroll } from '../shared/AnimateOnScroll';
 import { useTheme } from '../../hooks/useTheme';
 import { Tech3DIcon } from '../shared/Tech3DIcon';
+import ceoMitchNoBg from '../../assets/Mitch-NoBG.webp';
 import './Hero.css';
-
-const ceoMitchNoBg = '/CeoMitch-NoBG.webp';
 
 /* Light Theme Philippine Destination Mapping for each letter in MITCHELLE SALAZAR */
 const FIRST_NAME_LETTERS = [
@@ -243,8 +242,8 @@ export function Hero() {
             className="portrait-img"
             loading="eager"
             fetchPriority="high"
-            width="480"
-            height="592"
+            width="500"
+            height="500"
           />
         </div>
       </div>

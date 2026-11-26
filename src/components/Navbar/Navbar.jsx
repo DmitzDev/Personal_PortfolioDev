@@ -3,9 +3,8 @@ import { useScrollSpy } from '../../hooks/useScrollSpy';
 import { ThemeToggle } from '../shared/ThemeToggle';
 import { personalInfo } from '../../data/personalInfo';
 import { MobileBottomNav } from './MobileBottomNav';
+import ceoMitchNoBg from '../../assets/Mitch-NoBG.webp';
 import './Navbar.css';
-
-const ceoMitchNoBg = `${import.meta.env.BASE_URL}CeoMitch-NoBG.webp`;
 
 const navLinks = [
   { id: 'hero', label: 'Home' },

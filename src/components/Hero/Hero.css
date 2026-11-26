@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 6.5rem 2.5rem 2.5rem 2.5rem;
-  background: linear-gradient(90deg, #ffffff 0%, #ffffff 50%, #cbd5e1 50%, #cbd5e1 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 50%, #a3adb8 50%, #a3adb8 100%);
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -41,7 +41,7 @@
 }
 
 [data-theme="light"] .hero-atmosphere-backdrop {
-  opacity: 0.35;
+  opacity: 0;
   transition: opacity 0.8s ease;
 }
 

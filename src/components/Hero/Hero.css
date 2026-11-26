@@ -409,6 +409,37 @@
   pointer-events: none;
 }
 
+.hero-portrait-pedestal-pill {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 1.15rem;
+  border-radius: 9999px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  box-shadow: var(--skeuo-extruded);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.hero-pedestal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+}
+
 .portrait-backlight {
   position: absolute;
   top: 15%;
@@ -745,6 +776,10 @@
     width: auto;
     margin: 0 auto;
     transform: none;
+  }
+
+  .hero-portrait-pedestal-pill {
+    display: none;
   }
 
   /* Layered IN FRONT of the picture at the bottom of the portrait */

@@ -245,6 +245,10 @@ export function Hero() {
             width="500"
             height="500"
           />
+          <div className="hero-portrait-pedestal-pill" aria-hidden="true">
+            <span className="hero-pedestal-dot" />
+            <span>Open for Projects &amp; Collaboration</span>
+          </div>
         </div>
       </div>
 

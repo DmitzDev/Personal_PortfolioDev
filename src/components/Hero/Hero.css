@@ -385,7 +385,7 @@
   max-height: 64vh;
   width: auto;
   margin: 0 auto;
-  transform: translateX(10px);
+  transform: translate(10px, -26px);
   transition: transform 0.3s ease;
   pointer-events: none; /* Passes pointer events to the name letters underneath! */
 }
@@ -411,9 +411,9 @@
   height: 100%;
   width: auto;
   max-width: 100%;
-  aspect-ratio: 480 / 592;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
-  object-position: bottom center;
+  object-position: center center;
   filter: contrast(1.04) brightness(1.02);
   display: block;
   flex-shrink: 0;
@@ -673,7 +673,7 @@
   .hero-portrait-stage {
     height: 640px;
     max-height: 68vh;
-    transform: translateX(12px);
+    transform: translate(12px, -28px);
   }
 }
 
@@ -696,7 +696,7 @@
   .hero-portrait-stage {
     height: 500px;
     max-height: 60vh;
-    transform: translateX(8px);
+    transform: translate(8px, -20px);
   }
 }
 

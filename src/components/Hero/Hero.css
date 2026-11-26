@@ -381,63 +381,13 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: 580px;
-  max-height: 64vh;
+  height: clamp(540px, 72vh, 720px);
+  max-height: 76vh;
   width: auto;
-  margin: 0 auto;
-  transform: translate(10px, -26px);
+  margin: 0 auto -135px auto;
+  transform: translateX(10px);
   transition: transform 0.3s ease;
   pointer-events: none; /* Passes pointer events to the name letters underneath! */
-}
-
-.hero-portrait-stage::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(320px, 76%);
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--border-focus) 28%,
-    var(--border-focus) 72%,
-    transparent 100%
-  );
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-.hero-portrait-pedestal-pill {
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 6;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.5rem 1.15rem;
-  border-radius: 9999px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  box-shadow: var(--skeuo-extruded);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.hero-pedestal-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
 }
 
 .portrait-backlight {
@@ -463,7 +413,7 @@
   max-width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  object-position: center center;
+  object-position: bottom center;
   filter: contrast(1.04) brightness(1.02);
   display: block;
   flex-shrink: 0;
@@ -719,9 +669,10 @@
   }
 
   .hero-portrait-stage {
-    height: 640px;
-    max-height: 68vh;
-    transform: translate(12px, -28px);
+    height: clamp(580px, 75vh, 760px);
+    max-height: 78vh;
+    margin-bottom: -145px;
+    transform: translateX(12px);
   }
 }
 
@@ -742,9 +693,10 @@
   }
 
   .hero-portrait-stage {
-    height: 500px;
-    max-height: 60vh;
-    transform: translate(8px, -20px);
+    height: clamp(500px, 70vh, 640px);
+    max-height: 72vh;
+    margin-bottom: -120px;
+    transform: translateX(8px);
   }
 }
 
@@ -776,10 +728,6 @@
     width: auto;
     margin: 0 auto;
     transform: none;
-  }
-
-  .hero-portrait-pedestal-pill {
-    display: none;
   }
 
   /* Layered IN FRONT of the picture at the bottom of the portrait */

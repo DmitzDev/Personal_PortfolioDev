@@ -1,4 +1,4 @@
-import mitchImage from '../assets/Mitch.webp';
+import mitchImage from '../assets/Mitch-NoBG.webp';
 import mdLogo from '../assets/MDLogo.webp';
 
 export const personalInfo = {

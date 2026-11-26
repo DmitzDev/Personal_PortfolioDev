@@ -381,10 +381,10 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: clamp(540px, 72vh, 720px);
-  max-height: 76vh;
+  height: 580px;
+  max-height: 64vh;
   width: auto;
-  margin: 0 auto -135px auto;
+  margin: 0 auto;
   transform: translateX(10px);
   transition: transform 0.3s ease;
   pointer-events: none; /* Passes pointer events to the name letters underneath! */
@@ -669,9 +669,9 @@
   }
 
   .hero-portrait-stage {
-    height: clamp(580px, 75vh, 760px);
-    max-height: 78vh;
-    margin-bottom: -145px;
+    height: 640px;
+    max-height: 68vh;
+    margin-bottom: 0;
     transform: translateX(12px);
   }
 }
@@ -693,9 +693,9 @@
   }
 
   .hero-portrait-stage {
-    height: clamp(500px, 70vh, 640px);
-    max-height: 72vh;
-    margin-bottom: -120px;
+    height: 500px;
+    max-height: 60vh;
+    margin-bottom: 0;
     transform: translateX(8px);
   }
 }

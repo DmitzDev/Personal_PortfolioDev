@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 6.5rem 2.5rem 2.5rem 2.5rem;
-  background: linear-gradient(90deg, #ffffff 0%, #ffffff 50%, #e2e8f0 50%, #e2e8f0 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 50%, #cbd5e1 50%, #cbd5e1 100%);
   overflow: hidden;
   box-sizing: border-box;
 }
